@@ -5,7 +5,7 @@
 # before starting this lesson
 #  import the python3 print capabilities
 #  using the following statement
-#  NB since now you *must* always use 
+#  NB since now you *must* always use
 #     parenthesis with print!
 from __future__ import print_function
 
@@ -21,7 +21,6 @@ def introducing_lists():
     print(list_a)
     # see its length
     len(list_a)
-
 
     a = 11
     #range in python 2 returns a list
