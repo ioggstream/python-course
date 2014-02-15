@@ -4,7 +4,14 @@ The course requires:
 * python 2.7+
 * easy_install or pip as package manager
 * ipython
-* psutil
+* psutil matplotlib scipi numpy nose
+
+Use the following instructions to setup your environment
+and try the python crash course reading and typing on 
+you shiny ipython console the exercises contained in 
+
+ * intro_01.py
+ * intro_02.py
 
 ## Linux Ubuntu
 Just run
@@ -24,10 +31,16 @@ Then install ipython and python-pip
 Install Python from python.org http://www.python.org/getit/windows/
 Install easy_install following the instructions provided here https://pypi.python.org/pypi/setuptools#windows
 From the console, install pyreadline, psutil and ipython 
-    c:\python27\scripts\easy_install pyreadline
-    c:\python27\scripts\easy_install psutil
-    c:\python27\scripts\easy_install ipython
 
+    c:\python27\Scripts\easy_install pyreadline 
+    c:\python27\Scripts\easy_install psutil
+    c:\python27\Scripts\easy_install ipython matplotlib scipy numpy nose
+
+Test your ipython installation running it
+    c:\python27\Scripts\ipython
 
 ## Mac OS
 Follow the instruction on this website http://ipython.org/install.html
+To install other packages you can use enpkg or another package manager of your choiche.
+
+     sudo enpkg pyreadline psutil matplotlib scipy numpy nose
