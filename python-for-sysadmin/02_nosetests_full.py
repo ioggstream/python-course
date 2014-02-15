@@ -22,11 +22,11 @@ class TestB:
 
     def setup(self):
         # Before every test, like populate a table
-        print "before_every_test"
+        print("before_every_test")
 
     def teardown(self):
         # After every test, eg truncate a table
-        print "after_every_test"
+        print("after_every_test")
 
     def test_a(self):
         assert os.path.isfile("/tmp/test2.out")
