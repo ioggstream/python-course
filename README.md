@@ -1,4 +1,9 @@
 python-course
 =============
 
-Stuff for python courses
+Python exercises and materials for various courses:
+
+* basic python
+* intermediate python
+* python for performance testing 
+

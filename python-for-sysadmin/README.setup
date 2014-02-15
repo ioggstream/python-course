@@ -1,0 +1,33 @@
+# Python for System Administrators
+
+The course requires:
+* python 2.7+
+* easy_install or pip as package manager
+* ipython
+* psutil
+
+## Linux Ubuntu
+Just run
+    apt-get install ipython python-pip python-psutil
+
+## Linux Red Hat / Centos 6
+Install the EPEL repository
+
+    rpm -ivh http://ftp.tu-chemnitz.de/pub/linux/fedora-epel/6/i386/epel-release-6-8.noarch.rpm
+
+Then install ipython and python-pip
+
+    yum install ipython python-pip python-psutil
+
+
+## Windows 
+Install Python from python.org http://www.python.org/getit/windows/
+Install easy_install following the instructions provided here https://pypi.python.org/pypi/setuptools#windows
+From the console, install pyreadline, psutil and ipython 
+    c:\python27\scripts\easy_install pyreadline
+    c:\python27\scripts\easy_install psutil
+    c:\python27\scripts\easy_install ipython
+
+
+## Mac OS
+Follow the instruction on this website http://ipython.org/install.html
