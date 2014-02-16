@@ -30,14 +30,28 @@ Then install ipython and python-pip
 ## Windows 
 Install Python from python.org http://www.python.org/getit/windows/
 Install easy_install following the instructions provided here https://pypi.python.org/pypi/setuptools#windows
+My python directory is python27: replace it with your python installation path.
 From the console, install pyreadline, psutil and ipython 
 
     c:\python27\Scripts\easy_install pyreadline 
     c:\python27\Scripts\easy_install psutil
-    c:\python27\Scripts\easy_install ipython matplotlib scipy numpy nose
+    c:\python27\Scripts\easy_install ipython nose
+
+To install numpy scipy matplotlib just download and install the binaries for your windows version in the given order from 
+
+    http://www.lfd.uci.edu/~gohlke/pythonlibs/#numpy
+    http://www.lfd.uci.edu/~gohlke/pythonlibs/#scipy
+    http://www.lfd.uci.edu/~gohlke/pythonlibs/#matplotlib
 
 Test your ipython installation running it
     c:\python27\Scripts\ipython
+
+Test if the libraries are fine 
+- download the test_course_environment.py from github
+- running ipython *after* you've installed all of them
+- run the following command
+  c:\python27\Scripts\nosetests test_course_environment.py
+  
 
 ## Mac OS
 Follow the instruction on this website http://ipython.org/install.html
