@@ -1,7 +1,7 @@
 # Python for System Administrators
 
 The course requires:
-* python 2.7+
+* python 2.7+ (see notes on python3)
 * easy_install or pip as package manager
 * ipython
 * psutil matplotlib scipi numpy nose
@@ -12,6 +12,12 @@ you shiny ipython console the exercises contained in
 
  * intro_01.py
  * intro_02.py
+
+
+NB Python3.0 is not the default python version on many distributions so it's still not time
+   to switch to it for system administration tasks. Moreover you may not find
+   precompiled packages. Anyway once you have a compiler and the needed headers, pip should build 
+   everything you need (at least to me it worked). 
 
 ## Linux Ubuntu
 Just run
@@ -31,16 +37,18 @@ Then install ipython and python-pip
 Install Python from python.org http://www.python.org/getit/windows/
 Install easy_install following the instructions provided here https://pypi.python.org/pypi/setuptools#windows
 My python directory is python27: replace it with your python installation path.
-From the console, install pyreadline, psutil and ipython 
+From the console, install pyreadline, psutil, ipython and pyparsing
 
     c:\python27\Scripts\easy_install pyreadline 
     c:\python27\Scripts\easy_install psutil
-    c:\python27\Scripts\easy_install ipython nose
+    c:\python27\Scripts\easy_install ipython nose pyparsing
 
 To install numpy scipy matplotlib just download and install the binaries for your windows version in the given order from 
 
     http://www.lfd.uci.edu/~gohlke/pythonlibs/#numpy
     http://www.lfd.uci.edu/~gohlke/pythonlibs/#scipy
+    http://www.lfd.uci.edu/~gohlke/pythonlibs/#six
+    http://www.lfd.uci.edu/~gohlke/pythonlibs/#dateutil
     http://www.lfd.uci.edu/~gohlke/pythonlibs/#matplotlib
 
 Test your ipython installation running it

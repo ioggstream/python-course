@@ -27,13 +27,6 @@ def simple_path_management()
         print("Normalized path is", hosts)
 
 
-def how_threads_information_using_glob_and_list_comprehensions_Linux():
-    """Glob provides shell globbing (the non-variable part of expansion)
-
-        goal:
-    """
-
-
 def linux_threads(pid):
     """"Glob emulates shell expansion of * and ?
 
@@ -43,20 +36,34 @@ def linux_threads(pid):
     """
     import glob
     path = "/proc/{}/task/*/status".format(pid)
-    t_info = ('Pid', 'Tgid', 'voluntary') # this is a tuple!
+    t_info = ('Pid', 'Tgid', 'voluntary')  # this is a tuple!
     for t in glob.glob(path):
         t_info = [x for x in open(t) if x.startswith(t_info)]
         print(t_info)
 
 
-def Get_iostat_information_from_diskstats():
-        #_(Linux)_with_string_concatenation_to_increase_readability
+def multiplatform_stats():
+    """Get data in a multiplatform way
+
+    """
+    import psutil
+    import time
+    cpu_percent, io_stat, io_stat_0 = 0, 0, 0
+    print("cpu%", "iops(r+w)")
+    while True:
+        cpu_percent = psutil.cpu_percent()
+        read_io, write_io = psutil.disk_io_counters()[:2]
+        io_stat = read_io + write_io
+        print(cpu_percent, io_stat - io_stat_0)
+        io_stat_0 = io_stat
+        time.sleep(1)
+
 
 def linux_diskstats(disk):
     """Get I/O information from /proc/diskstats
 
        @param disk def sda
-       goal: usage of time.sleep 
+       goal: usage of time.sleep
        goal: use string concatenation to increase readability
        goal: use *magic with print+sep, splitting and slicing
     """
@@ -71,10 +78,10 @@ def linux_diskstats(disk):
         for x in disk_l:
             info = x.split()
             # the first 3 fields are disk informations
-            old.setdefault(part, [0]*11 )
+            old.setdefault(part, [0] * 11)
             part = info[2]
             info[part] = map(int, info[3:])
-            delta = [x - y for x,y in zip(info[part],old[part]) ]
+            delta = [x - y for x, y in zip(info[part], old[part])]
             print(*delta, sep=",")
             old[part] = info[part]
         sleep(1)
@@ -86,10 +93,12 @@ def sh(cmd, timeout=0, shell=False):
     output = check_output(cmd.split(), timeout=timeout, shell=shell)
     return output.splitlines()
 
+
 def pgrep(expr):
     return grep(expr, sh("ps -fe"))
+
 
 def wpgrep(expr):
     return grep(expr, sh("tasklist"))
 
-print wpgrep("explorer.exe")
+print(wpgrep("explorer.exe"))
