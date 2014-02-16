@@ -1,0 +1,23 @@
+#!/usr/bin/ipython
+"""Python for System Administrators
+
+   An ipython script should be run using 
+    the .ipy extension
+"""
+
+
+# iPython allows running command
+#  and redirect output in a variable
+# don't need to quote using the ! magic
+# on unix
+ret = !cat /etc/hosts
+# windows has etc\hosts too ;)
+ret = !type c: windows\system32\drivers\etc\hosts
+
+# ipython returned objects can be filtered
+#  with the grep and fields methods
+ret.grep('localhost')
+# return the first space-splitted column of
+#  the output
+ret.fields(0)
+ret.grep('localhost').fields(0)
