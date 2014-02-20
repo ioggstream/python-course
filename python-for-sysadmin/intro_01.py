@@ -36,8 +36,9 @@ def basic_arithmetic():
     # This is a comment, while
     a = 1  # is an integer variable
     b = 0x10  # is another integer in hex notation
-    c = 011  # ...another one in oct on python 2...
-    c = 0o11  # ...in python 3
+    # c = 011  # ...another one in C-style oct on python 2...
+    c = 0o11  # ...in python 2 and 3
+
 
     # I can sum, multiply, and modulus
     print(a + b, 5 % 2)
@@ -64,5 +65,22 @@ def old_formatting():
     s_a += "that can %s extended" % "be"
     s_a = "%s even with %.6s formatting.\n" % (s_a, "positional")
     s_a = "Align %-10d%% python!" % 100
+
+    print("just prints a string")
+
+
+def new_formatting():
+    # The new str.format function just replaces
+    #  %s or %d with {}.
+    s_a = "is a string "
+    s_a += "that can {} extended".format("be")
+
+    # Further formatting is done using ":", eg.
+    #  %.6s -> {:.6}
+    #  %3.2d -> {:3.2}
+    s_a = "{} even with {:.6} formatting.\n".format(s_a, "positional")
+
+    # Alignment identifiers are simpler: < left , ^ center,  > right
+    s_a = "Align {:>10}% python!".format(100)
 
     print("just prints a string")

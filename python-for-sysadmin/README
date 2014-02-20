@@ -1,0 +1,29 @@
+# Python for System Administrators
+
+## Setup
+See README.setup
+
+## Outline
+- If you are a novice, consider reading the 
+   introductory crash course:
+  - intro_01.py  
+  - intro_02.py  
+
+- Gathering system data
+  - 01_system_data_gathering.py
+
+- Introduction to nosetest
+  - 02_nosetests_simple.py
+  - 02_nosetests_full.py
+
+- Parsing 101
+  - 03_parsing_test.py
+  - 03_parsing_benchmarks.py
+
+- Data processing
+  - 04_simple_processing.py
+
+data_gathering.py
+test_prerequisites.py
+
+
