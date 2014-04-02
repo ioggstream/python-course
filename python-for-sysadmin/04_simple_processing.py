@@ -18,7 +18,7 @@ def ping_rtt():
        goal: using zip to transpose data
     """
     cmd = "ping -c10 www.google.it"
-    if 'win' in sys.platform:
+    if 'win' and not 'darwin' in sys.platform:
         cmd = "ping -n10 www.google.it"
 
     ping_output = sh(cmd)
@@ -60,9 +60,9 @@ def netfishing_correlation():
     from itertools import combinations
     from scipy.stats.stats import pearsonr
     table = {
-        'cpu_percent': [10, 23, 55, ...]
-        'iops': [2132, 3212, 3942, ...]
-        'netio': [1.32e+9, 1.45e+9, ...]
+        'cpu_percent': [10, 23, 55],
+        'iops': [2132, 3212, 3942],
+        'netio': [1.32e+9, 1.45e+9]
     }
     for k1, k2 in combinations(table, 2):
         r_coeff, probability = pearsonr(table[k1], table[k2])

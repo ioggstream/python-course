@@ -30,7 +30,7 @@ def simple_path_management():
     import os
     import sys
     hosts, basedir = "etc/hosts", "/"
-    if 'win' in sys.platform:
+    if 'win' and not 'darwin' in sys.platform:
         basedir = 'c:/windows/system32/drivers'
     hosts = os.path.join(basedir, hosts)
     hosts = os.path.normpath(hosts)
