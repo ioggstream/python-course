@@ -30,7 +30,7 @@ def simple_path_management():
     import os
     import sys
     hosts, basedir = "etc/hosts", "/"
-    if 'win' in sys.platform:
+    if sys.platform.startswith('win'):
         basedir = 'c:/windows/system32/drivers'
     hosts = os.path.join(basedir, hosts)
     hosts = os.path.normpath(hosts)
@@ -69,6 +69,9 @@ def multiplatform_stats(count):
         if x:
             time.sleep(1)
 
+def multiplatform_stats(count):
+    """Multiplatform stats with numpy.array"""
+    ...
 
 def sh(cmd, timeout=0, shell=False):
     """"Running commands"""
