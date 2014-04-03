@@ -30,7 +30,7 @@ def simple_path_management():
     import os
     import sys
     hosts, basedir = "etc/hosts", "/"
-    if 'win' in sys.platform:
+    if sys.platform.startswith('win'):
         basedir = 'c:/windows/system32/drivers'
     hosts = os.path.join(basedir, hosts)
     hosts = os.path.normpath(hosts)
@@ -69,6 +69,9 @@ def multiplatform_stats(count):
         if x:
             time.sleep(1)
 
+def multiplatform_stats(count):
+    """Multiplatform stats with numpy.array"""
+    raise NotImplemented
 
 def sh(cmd, timeout=0, shell=False):
     """"Running commands"""
@@ -100,9 +103,12 @@ def zip_iterables():
     """The zip method joins list elements pairwise
         like a zip fastener
     """
+    from sys import version_info as python_version
     a_list = [0, 1, 2, 3]
-    b_list = ["a", "b", "c"]
+    b_list = ["a", "b", "c", "d"]
     zipper = zip(a_list, b_list)
+    if python_version >= (3,):
+        zipper = list(zipper)
     assert zipper == [(0, "a"), (1, "b"), (2, "c"), (3, "d")]
 
 
