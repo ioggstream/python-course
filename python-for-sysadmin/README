@@ -6,8 +6,14 @@ See README.setup
 ## Outline
 - If you are a novice, consider reading the 
    introductory crash course:
-  - intro_01.py  
-  - intro_02.py  
+  - 00_intro_01.py  
+  - 00_intro_02.py  
+
+- Introducing ipython
+  - 01_ipython.ipy
+
+- Managing files
+  - 02_file_management.py
 
 - Gathering system data
   - 01_system_data_gathering.py

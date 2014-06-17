@@ -1,20 +1,30 @@
 #!/usr/bin/ipython
 """Python for System Administrators
 
+   iPython - an interactive interpreter with tonns of 
+    functionalities, and the main tool of our training.
+
+   It's the funniest way to learn and use python!
+
+   Supports tab-completion, inline help and elementary
+    benchmarking
+
    An ipython script should be run using 
     the .ipy extension
 """
+# iPython supports inline-help
+#  appending ? to an object
+str?
 
-
-# iPython allows running command
-#  and redirect output in a variable
+# We can run commands
+#  and capture the output in a variable
 # don't need to quote using the ! magic
 # on unix
 ret = !cat /etc/hosts
 # windows has etc\hosts too ;)
 ret = !type c: windows\system32\drivers\etc\hosts
 
-# ipython returned objects can be filtered
+# returned objects can be filtered
 #  with the grep and fields methods
 ret.grep('localhost')
 # return the first space-splitted column of

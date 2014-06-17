@@ -21,20 +21,7 @@ def grep(needle, fpath):
     return [x for x in open(fpath) if needle in x]
 
 
-def simple_path_management():
-    """Show multiplatform path management
 
-        goal: sys.platform shows the current operating system
-        goal: os.path.normpath fixes the "/" orientation
-    """
-    import os
-    import sys
-    hosts, basedir = "etc/hosts", "/"
-    if sys.platform.startswith('win'):
-        basedir = 'c:/windows/system32/drivers'
-    hosts = os.path.join(basedir, hosts)
-    hosts = os.path.normpath(hosts)
-    print("Normalized path is", hosts)
 
 
 def linux_threads(pid):

@@ -1,12 +1,49 @@
 """
     Simple file management with shutil and globbing
      this section includes handling basic unicode issues
+
+    modules: os, sys, shutil, glob
 """
 from __future__ import unicode_literals, print_function
 basedir = "/tmp/course"
 
 
+def simple_path_management():
+    """S1 Show multiplatform path management
+
+        goal: sys.platform shows the current operating system
+        goal: os.path.normpath fixes the "/" orientation
+        
+    """
+    # .1- The os.path module seems verbose
+    #  but it's the *best* way to manage paths. It's:
+    #  - safe
+    #  - multiplatform
+    # .2- Here we check the operating system
+    #  and prepend the right path
+    import os
+    import sys
+    hosts, basedir = "etc/hosts", "/"
+    if sys.platform.startswith('win'):
+        basedir = 'c:/windows/system32/drivers'
+    hosts = os.path.join(basedir, hosts)
+    hosts = os.path.normpath(hosts)
+    print("Normalized path is", hosts)
+
 def create_and_move_tree():
+    """S2
+    
+        modules: os.path, shutil, errno
+        goal: manage directory trees
+        goal: manage basic errors
+        
+        os.path can be used to test file existence
+        while os and shutil supports basic file operations
+        like recursive copy and tree creation.
+        
+        We can use exception handlers to check 
+         what happened.
+    """
     from os import makedirs
     from os.path import isdir
     from shutil import copytree, rmtree
@@ -29,6 +66,20 @@ def create_and_move_tree():
     rmtree("/tmp/course/foo")
     assert not isdir("/tmp/course/foo/bar")
 
+
+def encoding_basic():
+    """S3
+        When the child was a child, 
+        strings were a list of bytes.
+        In 21th century, that's False (and python2 was mainly
+        developed in 20th century;).
+        
+        bytes is a list of bytes
+        A string is a couple: (bytes, encoding).
+        
+        An encoding is a one-to-one map between a byte-sequence
+         and a typographical character.
+    """
 
 def touch_encoded_filenames(dirname, prefix, ext='txt', encoding='utf-8'):
     """ Create filenames with a given encoding
