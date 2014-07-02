@@ -21,7 +21,7 @@ NB Python3.0 is not the default python version on many distributions so it's sti
 
 ## Linux Ubuntu
 Just run
-    apt-get install ipython python-pip python-psutil
+    apt-get install ipython python-pip python-psutil python-nose python-scipy python-numpy python-matplotlib
 
 ## Linux Red Hat / Centos 6
 Install the EPEL repository
@@ -58,7 +58,7 @@ Test if the libraries are fine
 - download the test_course_environment.py from github
 - running ipython *after* you've installed all of them
 - run the following command
-  c:\python27\Scripts\nosetests test_course_environment.py
+  c:\python27\Scripts\nosetests test_prerequisites.py
   
 
 ## Mac OS
