@@ -6,19 +6,21 @@
 
 from __future__ import unicode_literals, print_function
 
+
 def encoding_basic():
     """S3
-        When the child was a child, 
+        When the child was a child,
         strings were a list of bytes.
         In 21th century, that's False (and python2 was mainly
         developed in 20th century;).
-        
+
         bytes is a list of bytes
         A string is a couple: (bytes, encoding).
-        
+
         An encoding is a one-to-one map between a byte-sequence
          and a typographical character.
     """
+
 
 def touch_encoded_filenames(dirname, prefix, ext='txt', encoding='utf-8'):
     """ Create filenames with a given encoding
@@ -35,12 +37,6 @@ def touch_encoded_filenames(dirname, prefix, ext='txt', encoding='utf-8'):
             fh.write("My name is: ")
             fh.write(bytepath)
             fh.write("\n")
-
-def create_encoded_files(dirname="/tmp"):
-    """Creates 3 cp1252-encoded filenames"""
-    win = 'cp1252'
-    prefix = "w\u00fcrstelstra\u00dfe"
-    touch_encoded_filenames("/tmp/course", prefix, encoding=win)
 
 
 def windows_filenames():
@@ -73,7 +69,7 @@ def windows_filenames():
     for b in ls(bytebasedir):
         try:
             byte_path = pjoin(bytebasedir, b)
-            print("bytefile: {!r}".format(byte_path))
+            print("file: {!r}".format(utf_path))
         except UnicodeDecodeError as e:
             print("Error decoding {!r}".format(b))
 
@@ -112,4 +108,3 @@ def windows_filenames_short():
             print("file: {!r}".format(f))
         except UnicodeDecodeError as e:
             print("Error decoding {!r}".format(f))
-

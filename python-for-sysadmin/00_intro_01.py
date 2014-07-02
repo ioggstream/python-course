@@ -1,8 +1,26 @@
-"""This file contains an introduction
+"""
+  Author: roberto.polli@babel.it
+
+  This file contains an introduction
     to the python for sysadmins course.
     You are welcome to run the follwing examples
     in your ipython shell.
 """
+
+
+def importing_new_features():
+    # ..is easy. Features are collected
+    # in packages or modules. Just
+    import telnetlib  # to use a
+    telnetlib.Telnet  # client
+
+    # We can even import single classes
+    #  from a module, like
+    from telnetlib import Telnet
+
+    # And read the module or class docs
+    help(telnetlib)
+    help(Telnet)
 
 
 def string_formatting():
@@ -38,7 +56,6 @@ def basic_arithmetic():
     b = 0x10  # is another integer in hex notation
     # c = 011  # ...another one in C-style oct on python 2...
     c = 0o11  # ...in python 2 and 3
-
 
     # I can sum, multiply, and modulus
     print(a + b, 5 % 2)

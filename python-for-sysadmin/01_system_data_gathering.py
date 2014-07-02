@@ -21,9 +21,6 @@ def grep(needle, fpath):
     return [x for x in open(fpath) if needle in x]
 
 
-
-
-
 def linux_threads(pid):
     """"Glob emulates shell expansion of * and ?
 
@@ -56,12 +53,22 @@ def multiplatform_stats(count):
         if x:
             time.sleep(1)
 
+
 def multiplatform_stats(count):
     """Multiplatform stats with numpy.array"""
     raise NotImplemented
 
-def sh(cmd, timeout=0, shell=False):
-    """"Running commands"""
+
+def sh(cmd, shell=False, timeout=0):
+    """"Execute a command returning a line-splitted list
+
+       @param cmd - a command string
+       @param shell - run command in a shell
+       @param timeout - (for python 3.3+) in seconds
+
+       goal: use sys to check python features
+       goal: use subprocess.check_output
+    """
     from sys import version_info as python_version
     from subprocess import check_output
     if python_version < (3, 3):
@@ -69,21 +76,18 @@ def sh(cmd, timeout=0, shell=False):
             raise ValueError("Timeout not supported until Python 3.3")
         output = check_output(cmd.split(), shell=shell)
     else:
-        output = check_output(cmd.split(), timeout=timeout, shell=shell)
+        output = check_output(cmd.split(), shell=shell, timeout=timeout)
     return output.splitlines()
 
 
 def system_info_from_command_output():
+    """Exercise: write a multiplatform
+        pgrep-like function
+
+       Solution is at the EOF
+    """
     def pgrep(expr):
-        # linux
-        return grep(expr, sh("ps -fe"))
-
-    def wpgrep(expr):
-        # windows
-        return grep(expr, sh("tasklist"))
-
-    # All explorer.exe processes
-    print(wpgrep("explorer.exe"))
+        raise NotImplementedError
 
 
 def zip_iterables():
@@ -131,6 +135,22 @@ def linux_diskstats(disk):
 #
 # A more complex exercise using a lot of stuff
 #
+
+
+def system_info_from_command_output_solution():
+    """Exercise: write a multiplatform
+        pgrep-like function
+    """
+    def pgrep(expr):
+        # linux
+        return grep(expr, sh("ps -fe"))
+
+    def wpgrep(expr):
+        # windows
+        return grep(expr, sh("tasklist"))
+
+    # All explorer.exe processes
+    print(wpgrep("explorer.exe"))
 
 
 def linux_diskstats(disk):

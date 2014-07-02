@@ -18,6 +18,8 @@ def test_drive_parsing():
 def grep(expr, fpath):
     """grep reloaded with regular expressions and path normalization
 
+        GOAL: re.search matches anywhere (eg. '.*XXX.*')
+                re.match matches from the beginning of the line.
 
     """
     import re
@@ -25,7 +27,7 @@ def grep(expr, fpath):
     re_expr = re.compile(expr)
     fpath = os.path.normpath(fpath)
     with open(fpath) as fp:
-        return [x for x in fp if re_expr.match(x)]
+        return [x for x in fp if re_expr.search(x)]
 
 
 def splitting_with_re():
@@ -39,10 +41,14 @@ def splitting_with_re():
 
 
 def splitting_with_findall():
-    """splitting hex digits by ":" using re.findall
+    """re.findall for splitting: a shortcut or a misuse?
+
+       goal: improve string readability
     """
+    from re import findall  # can be misused too;
+    # eg for adding the ":" to a
+    mac_address = "00""24""e8""b4""33""20"
     re_s_1 = "[0-9a-fA-F]"
-    mac = "0024e8b43320"
     mac = ':'.join(re.findall(re_s_1, mac))
     print("The mac address is ", mac)
 

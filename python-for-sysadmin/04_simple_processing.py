@@ -30,7 +30,6 @@ def ping_rtt():
     return map(float, rtt)
 
 
-
 def ping_stats():
     """
        goal: remember to convert to numeric / float

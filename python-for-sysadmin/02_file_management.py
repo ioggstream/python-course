@@ -13,7 +13,7 @@ def simple_path_management():
 
         goal: sys.platform shows the current operating system
         goal: os.path.normpath fixes the "/" orientation
-        
+
     """
     # .1- The os.path module seems verbose
     #  but it's the *best* way to manage paths. It's:
@@ -30,18 +30,19 @@ def simple_path_management():
     hosts = os.path.normpath(hosts)
     print("Normalized path is", hosts)
 
+
 def create_and_move_tree():
     """S2
-    
+
         modules: os.path, shutil, errno
         goal: manage directory trees
         goal: manage basic errors
-        
+
         os.path can be used to test file existence
         while os and shutil supports basic file operations
         like recursive copy and tree creation.
-        
-        We can use exception handlers to check 
+
+        We can use exception handlers to check
          what happened.
     """
     from os import makedirs
@@ -65,5 +66,3 @@ def create_and_move_tree():
     assert isdir("/tmp/course/foo2/bar")
     rmtree("/tmp/course/foo")
     assert not isdir("/tmp/course/foo/bar")
-
-

@@ -1,7 +1,7 @@
 #!/usr/bin/ipython
 """Python for System Administrators
 
-   iPython - an interactive interpreter with tonns of 
+   iPython - an interactive interpreter with tonns of
     functionalities, and the main tool of our training.
 
    It's the funniest way to learn and use python!
@@ -9,7 +9,7 @@
    Supports tab-completion, inline help and elementary
     benchmarking
 
-   An ipython script should be run using 
+   An ipython script should be run using
     the .ipy extension
 """
 # iPython supports inline-help
@@ -22,7 +22,7 @@ str?
 # on unix
 ret = !cat /etc/hosts
 # windows has etc\hosts too ;)
-ret = !type c: windows\system32\drivers\etc\hosts
+ret = !type c:\windows\system32\drivers\etc\hosts
 
 # returned objects can be filtered
 #  with the grep and fields methods
