@@ -1,6 +1,7 @@
-\section{Path management}
+\section{Path management: 10'}
 
 \begin{frame}[fragile]{Path management: os.path, sys}
+% This slide is the core one. Required for data gathering!
 \begin{minted}[mathescape]{python}
 hosts, basedir = "etc/hosts", "/"
 # Check the hosting platform with the sys module
@@ -17,27 +18,29 @@ print("Normalized path is", hosts)
 \end{frame}
 
 \begin{frame}[fragile]{Path management: os.path, sys}
+\Large
 \begin{itemize}
-\item os.path is the best way to manage paths!
+\item \emph{os.path} is the best way to manage paths!
 \begin{itemize}
- \item  multiplatform
+ \Large
+ \item multiplatform
  \item safe
  \end{itemize}
  
 \item os.path.normpath fixes "/" orientation!
- \item os.path.join 
+\item os.path.join 
  \end{itemize}
+And now, let's rapidly see some other tools $\ldots$
 \end{frame}
 
 \begin{frame}[fragile]{Move trees: shutil, os, os.path}
 \begin{minted}[mathescape]{python}
-# os and shutil have some file operations
-# like recursive copy and tree creation
-from os import makedirs          
+# os and shutil can perform...
+from os import makedirs     # ...tree creation...
 from shutil import copytree, rmtree 
 makedirs("/tmp/course/foo/bar")
 
-# while os.path can test file existence
+# ...while os.path can test file existence
 from os.path import isdir            
 assert isdir("/tmp/course/foo/bar")
 

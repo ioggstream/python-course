@@ -1,4 +1,4 @@
-\section{Data Gathering}
+\section{Data Gathering: 20'}
 %
 % NOTE: minted allows mathescape in #comments ;)
 %       not outside
@@ -35,10 +35,10 @@ grep("localhost", "/etc/hosts")
 \end{pythoncode}
 \end{frame}
 
-
+\subsection{module: psutil}
 \begin{frame}[fragile]{Data Gathering: psutil}
 \begin{pythoncode}
-# The psutil module is very nice
+# The psutil module is very nice!
 import psutil
 
 # Works on Windows, Linux and MacOS
@@ -58,10 +58,11 @@ Write a vmstat-like function printing every second:
 \item cpu usage \% ;
 \item bytes read;
 \item bytes written;
-\item Hint: use psutil
+\item Hint: use psutil, time.sleep(1)
 \end{itemize}
 \end{frame}
 
+\subsection{module: subprocess}
 \begin{frame}[fragile]{Data Gathering: subprocess}
 \begin{pythoncode}
 # While 
@@ -132,25 +133,28 @@ def linux_threads(pid):
 
 
 \begin{frame}[fragile]{Data Gathering: Parsing /proc II}
+%% NOTE: avoid inserting print() statements in the slides. Students must do their inspection and check returned values
 \begin{pythoncode}
-# Linux speaks with us via the /proc filesystem
-#  and /proc/diskstats is the source of our I/O infos
+# Linux speaks via the /proc filesystem
+#  and /proc/diskstats is the source of I/O infos
 disk_l = grep("sda", "/proc/diskstats")
 print(disk_l)
 
 # To gather that data we define a headers using a multi-line string
-info = ('reads reads_merged reads_sectors reads_ms'
+info = ('major minor device'
+        ' reads reads_merged reads_sectors reads_ms'
         ' writes writes_merged writes_sectors writes_ms'
-        ' io_in_progress io_ms_weight').split()
+        ' io_in_progress io_ms_spent io_ms_weight').split()
 
 # Then just take the 1st entry, split the data ...
 disk_info = disk_l[0].split()
+zip(info, disk_info)    # ...and tie them with the info
 
-# ... and drop the first 3 fields containing disk name
-disk_info = disk_info[3:]
-
-# Now tie infos and numbers ;)
-zip(info, disk_info)
+# Or create a reusable commodity structure
+from collections import namedtuple
+DiskStats=namedtuple('DiskStat', info)
+dstat = DiskStats(*disk_info)
+dstat.device, dstat.writes_ms
 \end{pythoncode}
 \end{frame}
 
