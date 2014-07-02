@@ -1,0 +1,69 @@
+\section{Path management}
+
+\begin{frame}[fragile]{Path management: os.path, sys}
+\begin{minted}[mathescape]{python}
+hosts, basedir = "etc/hosts", "/"
+# Check the hosting platform with the sys module
+from sys import platform
+if platform.startswith('win'):
+    basedir = 'c:/windows/system32/drivers'
+
+# Always use the os.path module!
+from os.path import join, normpath 
+hosts = join(basedir, hosts)
+hosts = normpath(hosts)
+print("Normalized path is", hosts)
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Path management: os.path, sys}
+\begin{itemize}
+\item os.path is the best way to manage paths!
+\begin{itemize}
+ \item  multiplatform
+ \item safe
+ \end{itemize}
+ 
+\item os.path.normpath fixes "/" orientation!
+ \item os.path.join 
+ \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Move trees: shutil, os, os.path}
+\begin{minted}[mathescape]{python}
+# os and shutil have some file operations
+# like recursive copy and tree creation
+from os import makedirs          
+from shutil import copytree, rmtree 
+makedirs("/tmp/course/foo/bar")
+
+# while os.path can test file existence
+from os.path import isdir            
+assert isdir("/tmp/course/foo/bar")
+
+# copy a whole tree... check it...
+copytree("/tmp/course/foo", "/tmp/course/foo2") 
+assert isdir("/tmp/course/foo2/bar")            
+
+rmtree("/tmp/course/foo") # ... and delete it
+assert not isdir("/tmp/course/foo/bar")
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Move trees: errno}
+\begin{minted}[mathescape]{python}
+
+# We can use exception handlers to investigate errors
+   try:
+        # python2 does not allow to ignore
+        #  already existing directories
+        #  and raises an OSError
+        makedirs("/tmp/course/foo/bar")
+    except OSError as e:
+        # Just use the errno module to
+        #  check the error value
+        import errno
+        assert e.errno == errno.EEXIST
+\end{minted}
+\end{frame}
+

@@ -1,0 +1,53 @@
+\section{ipython}
+
+
+
+\begin{frame}{iPython I}
+\begin{itemize}
+\item an interactive interpreter with tonns of                                                                                                        functionalities, and the main tool of our training.                                                                                                      
+
+\item   It's the funniest way to learn and use python!
+
+\item   Supports tab-completion, inline help and elementary
+    benchmarking
+
+\item   Run it: \\
+\mintinline{bash}{ipython}
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}[fragile]{iPython II}
+\begin{minted}[mathescape]{python}
+# iPython supports inline-help
+#  appending ? to an object
+str?
+
+# We can run commands
+#  and capture the output in a variable
+# don't need to quote using the ! magic
+# on unix
+ret = !cat /etc/hosts
+# windows has etc\hosts too ;)
+ret = !type c: windows\system32\drivers\etc\hosts
+
+\end{minted}
+\end{frame}
+
+
+\begin{frame}[fragile]{iPython III}
+\begin{minted}[mathescape]{python}
+# returned objects can be filtered
+#  with the grep and fields methods
+ret.grep('localhost')
+# return the first space-splitted column of
+#  the output
+ret.fields(0)
+ret.grep('localhost').fields(0)
+
+# an ipython script must have the 
+#  .ipy extension
+\end{minted}
+\end{frame}
+

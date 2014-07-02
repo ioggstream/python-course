@@ -1,0 +1,196 @@
+\documentclass{beamer}[10]
+\usepackage{pgf}
+\usepackage[italian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{beamerthemesplit}
+\usepackage{graphics,epsfig, subfigure}
+\usepackage{url}
+\usepackage{srcltx}
+\usepackage{hyperref}
+\usepackage{minted}
+
+\definecolor{kugreen}{RGB}{50,93,61}
+\definecolor{kugreenlys}{RGB}{132,158,139}
+\definecolor{kugreenlyslys}{RGB}{173,190,177}
+\definecolor{kugreenlyslyslys}{RGB}{214,223,216}
+\setbeamercovered{transparent}
+\mode<presentation>
+\usetheme[numbers,totalnumber,compress,sidebarshades]{Babel}
+% \setbeamertemplate{footline}[frame number]
+
+  % \usecolortheme[named=orange]{structure}
+  % \useinnertheme{circles}
+  % \usefonttheme[onlymath]{serif}
+  % \setbeamercovered{transparent}
+  % \setbeamertemplate{blocks}[rounded][shadow=true]
+
+\logo{\includegraphics[width=5cm, bb=0 0 168 87]{babel.eps}}
+%\useoutertheme{infolines} 
+\title{Python for System Administrator \\ EuroPython 2014, Berlin}
+\author{Roberto Polli}
+\em
+\institute{Babel srl \\ www.babel.it}
+\date{24 July 2014}
+
+
+
+\begin{document}
+\frame{\titlepage \vspace{-0.5cm}
+}
+
+\frame
+{
+\frametitle{Overview}
+\tableofcontents%[pausesection]
+}
+
+\section{First section}
+
+%% pagina
+\frame{
+\frametitle{Sample Frame Title No. 1}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+}
+
+\subsection{Sample subsection}
+
+\frame{
+\frametitle{Sample Frame Title No. 2}
+\begin{itemize}
+\item First item
+\item Second item
+\item Third item
+\end{itemize}
+}
+
+\section{Second section}
+
+\frame{
+\frametitle{Sample Frame Title No. 3}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+\begin{block}{Something important}
+Einstein's formula
+$$E=mc^2$$
+\end{block}
+}
+
+\section{3rd section}
+
+\begin{frame}[fragile]{Path management: os.path, sys}
+\begin{minted}[mathescape]{python}
+hosts, basedir = "etc/hosts", "/"
+# Check the hosting platform with the sys module
+from sys import platform
+if platform.startswith('win'):
+    basedir = 'c:/windows/system32/drivers'
+
+# Always use the os.path module!
+from os.path import join, normpath 
+hosts = join(basedir, hosts)
+hosts = normpath(hosts)
+print("Normalized path is", hosts)
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Path management: os.path, sys}
+os.path is the best way to manage paths!
+ - multiplatform
+ - safe
+eg. 
+ - os.path.normpath fixes "/" orientation!
+ - os.path.join 
+\end{frame}
+
+\begin{frame}[fragile]{Move trees: shutil, os, os.path}
+\begin{minted}[mathescape]{python}
+# os and shutil have some file operations
+# like recursive copy and tree creation
+from os import makedirs			 
+from shutil import copytree, rmtree 
+makedirs("/tmp/course/foo/bar")
+
+# while os.path can test file existence
+from os.path import isdir			 
+assert isdir("/tmp/course/foo/bar")
+
+# copy a whole tree... check it...
+copytree("/tmp/course/foo", "/tmp/course/foo2") 
+assert isdir("/tmp/course/foo2/bar")			
+
+rmtree("/tmp/course/foo") # ... and delete it
+assert not isdir("/tmp/course/foo/bar")
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Move trees: errno}
+\begin{minted}[mathescape]{python}
+
+# We can use exception handlers to investigate errors
+   try:
+        # python2 does not allow to ignore
+        #  already existing directories
+        #  and raises an OSError
+        makedirs("/tmp/course/foo/bar")
+    except OSError as e:
+        # Just use the errno module to
+        #  check the error value
+        import errno
+        assert e.errno == errno.EEXIST
+\end{minted}
+\end{frame}
+
+\section{encoding}
+\begin{frame}{Song of Childhod}
+\emph{""When the child was a child,\\
+characters were bytes, and\\
+strings list of bytes""}
+\end{frame}
+
+\begin{frame}{Enters Encoding}
+Encoding: one-to-one map between a typographical character and a byte-sequence
+\\
+A bytes is a byte-sequence
+\\
+A string is a couple: (bytes, encoding)
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Enters Encoding II}
+%%TODO semplificare la funzione!
+\begin{minted}[mathescape]{python}
+
+# Filenames are binary data! Be careful when reading from
+#  a (eg. vfat) filesystem!
+from 02_file_management import touch_encoded_filenames
+
+# Create 3 windows-encoded filenames using the provided 
+#   function
+win = 'cp1252'
+prefix = "w\u00fcrstelstra\u00dfe"
+touch_encoded_filenames("/tmp/course", prefix, encoding=win)
+
+\end{minted}
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Enters Encoding II}
+%%TODO semplificare la funzione!
+\begin{minted}[mathescape]{python}
+# Let's see what happens when mangling those files!
+from os.path import join as pjoin
+from os import listdir as ls		# similar to unix ls!
+for f in ls(basedir):
+    # ooops! Got an encoding error?
+    utf_path = pjoin(basedir, f)
+
+# os.path fail mangling those files as encoded strings
+#  so we ask it to mangle them as bytes
+bytebasedir = bytes(basedir)
+
+\end{minted}
+\end{frame}
+
+\end{document}
+

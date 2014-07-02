@@ -1,0 +1,149 @@
+\section{encoding}
+
+
+
+
+
+\begin{frame}{Song of Childhod}
+\begin{verse}
+\begin{center}
+\emph{""When the child was a child,\\
+\\
+characters were bytes, and\\
+\\
+strings list of bytes""}
+
+\end{center}
+\end{verse}
+\end{frame}
+
+\begin{frame}[fragile]{Enters Encoding}
+\begin{itemize}
+
+\item Encoding: one-to-one map between a typographical character and a byte-sequence - Decoding is the reverse map.
+\begin{tabular}{|c||c|c|c|}\hline 
+            & \multicolumn{3}{|c|}{bytes}  \\ \hline
+char        & ascii     & utf-8         & cp1252     \\ \hline
+a           & [97]      & [97]          & [97]      \\ \hline     
+$\ddot{u}$  & -         & [195, 188]    & [252]              \\ \hline
+\`{e}     &  - & [196, 168] & [232]\\ \hline
+\end{tabular}
+
+\item bytes are byte-sequence 
+
+\item A string is a couple: (bytes, encoding) - the same string can be encoded using different maps.
+\begin{tabular}{|c||c|l|} \hline 
+string              & bytes &, encoding \\ \hline 
+ $w\ddot{u}rstel$   & ([119, \emphred{195, 188,} 114, 115, 116, 101, 108]&, utf-8) \\
+ $w\ddot{u}rstel$   & ([119, \emphred{252,} 114, 115, 116, 101, 108]&, cp1252) \\
+\hline
+\end{tabular}
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Enters Encoding}
+\begin{verse}
+\begin{center}
+"""
+\Huge{\~{A}\"{ }}
+"""
+\end{center}
+\end{verse}
+\`{e} $\xRightarrow[encode]{utf-8}$ [\red{196}, \blue{168}] 
+    $\xRightarrow[decode]{cp1252}$ \red{\~{A}} \blue{\"{ }}
+\end{frame}
+
+\begin{frame}[fragile]{Enters Encoding II}
+\begin{minted}[mathescape]{python}
+# Filenames are binary data! $\emph{Be careful}$ when reading from
+#  a (eg. vfat) filesystem!
+# To make python2 encoding-aware we should
+from __future__ import unicode_literals
+
+# Create 3 windows-encoded filenames in 
+basedir = "/tmp/course"
+
+# using the provided function
+from exercises import create_wuerstelstrasse
+create_wuerstelstrasse(basedir)
+\end{minted}
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Encoded filenames}
+\begin{minted}[mathescape]{python}
+# What happens mangling them with the $\emph{os}$ module?
+from os.path import join as pjoin
+from os import listdir as ls       # similar to unix ls ;)
+
+list_files_with = ls(basedir)
+
+# ooops! Got an encoding error?
+create_full_path = pjoin(basedir, files[0])
+
+# $\emphred{UnicodeDecodeError:}$ 'ascii' codec can't decode byte $\emph{0xfc}$
+#    in position 2: ordinal not in range(128)
+0xfc == 252 # remember the $\ddot{u}$ in cp1252 map? 
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Encoded filenames II}
+\begin{minted}[mathescape]{python}
+
+# $\emph{os.path}$ fails mangling those files as encoded strings
+#  so we ask it to mangle them as $\emph{bytes}$
+bytebasedir = bytes(basedir)
+
+for f in files: # listdir is already safe ;)
+    byte_full_path = pjoin(basedir, f)
+    # we use "{!r}".format to avoid further encoding
+    #     issues in the printing part
+    print("file: {!r}".format(utf_path))
+    
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Encoded filenames: glob}
+\begin{minted}[mathescape]{python}
+# $\emph{glob.glob}$ expands wildcards like a shell. 
+from glob import glob
+
+# To avoid encoding issues like the following...
+try:
+    files = glob("/tmp/course/*.txt")
+except UnicodeDecodeError as e:
+    print("Error decoding files in {!r}".format("/tmp/course"))
+
+# we explicitly ask to  mangle paths as mere byte-sequences
+for f in glob(b"/tmp/course/*.txt"):
+    try:
+        print("file: {!r}".format(f))
+    except UnicodeDecodeError as e:
+        print("Error decoding {!r}".format(f))
+
+\end{minted}
+\end{frame}
+
+
+\begin{frame}[fragile]{Complete Example}
+\begin{minted}[mathescape]{python}
+
+    for f in ls(basedir):
+        try:
+            utf_path = pjoin(basedir, f)
+            print("file: {!r}".format(utf_path))
+        except UnicodeDecodeError as e:
+            print("Error decoding {!r}".format(f))
+
+    bytebasedir = bytes(basedir)
+    for b in ls(bytebasedir):
+        try:
+            byte_path = pjoin(bytebasedir, b)
+            print("file: {!r}".format(utf_path))
+        except UnicodeDecodeError as e:
+            print("Error decoding {!r}".format(b))
+    
+\end{minted}
+\end{frame}

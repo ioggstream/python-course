@@ -1,0 +1,69 @@
+%
+% style
+%
+
+\setbeamercovered{transparent}
+\mode<presentation>
+
+%\geometry{top=5pt, margin=5pt}
+%The outertheme defines the head and the footline of each slide
+% \setbeamercolor{block title}{bg=orange}
+% \useinnertheme{circles}
+% \useoutertheme{split}
+%\beamertemplatenavigationsymbolsempty
+
+%\usetheme[numbers,totalnumber,compress,sidebarshades]{Babel}
+\setbeamertemplate{headline}{
+ \leavevmode%
+  \hbox{%
+%,bb=0 0 5cm 2cm
+    \hskip5pt
+    \includegraphics[height=1.2cm]{babel-logo.eps}
+    \hskip155pt
+    \includegraphics[height=1.2cm]{ep14-logo.eps}
+    }
+}
+\setbeamertemplate{footline}{
+    \centerline{
+        \gray{
+            Roberto Polli - \href{mailto:roberto.polli@babel.it}{roberto.polli@babel.it}
+        }
+    }
+}
+%\useinnertheme[shadow=false]{rounded}
+% frametitle
+\setbeamertemplate{frametitle}[default][center]
+\setbeamercolor*{frametitle}{bg=white,fg=gray,parent=palette primary}
+\setbeamerfont{frametitle}{series=\bfseries,size={\fontsize{16}{8}}}
+%title
+\setbeamercolor{title}{fg=black,bg=white}
+\setbeamerfont{title}{series=\bfseries,size={\fontsize{24.88}{32}}}
+%subtitle
+\setbeamercolor{subtitle}{fg=gray}
+\setbeamerfont{subtitle}{series=\bfseries,size={\fontsize{14}{}}}
+%titlepage
+\setbeamertemplate{title page}[default][center]
+% bullets
+\setbeamercolor{itemize item}{fg=gray}
+\setbeamertemplate{itemize items}[circle]
+\setbeamercolor{itemize item}{fg=light-gray}
+\setbeamercolor{itemize items}{fg=light-gray}
+% enumerations
+\setbeamercolor{enumerate item}{fg=black}
+\setbeamercolor{local structure}{fg=black}
+
+%
+% increase itemize spacing
+%
+\newlength{\wideitemsep}
+\setlength{\wideitemsep}{\itemsep}
+\addtolength{\wideitemsep}{14pt}
+\let\olditem\item
+\renewcommand{\item}{\setlength{\itemsep}{\wideitemsep}\olditem}
+
+  % \usecolortheme[named=orange]{structure}
+  % \useinnertheme{circles}
+  % \usefonttheme[onlymath]{serif}
+  \setbeamercovered{transparent}
+  % \setbeamertemplate{blocks}[rounded][shadow=true]
+
