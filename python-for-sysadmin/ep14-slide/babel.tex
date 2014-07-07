@@ -10,6 +10,7 @@
 \usepackage{minted}
 \usepackage{import}
 \usepackage{mathtools}
+
 %
 % macro
 %
@@ -23,6 +24,15 @@
 \newcommand{\grey}[1] { {\color{gray} #1} }
 \newcommand{\pymodule}[1] { \textbf{#1} }
 \newcommand{\keyword}[1] { \texttt{#1} }
+\newcommand{\code}[1] { \texttt{#1} }
+\newcommand{\mymapsto}{\operatornamewithlimits{\longmapsto}}
+
+\makeatletter
+\newcommand{\xMapsto}[2][]{\ext@arrow 0599{\Mapstofill@}{#1}{#2}}
+\def\Mapstofill@{\arrowfill@{\Mapstochar\Relbar}\Relbar\Rightarrow}
+\makeatother
+
+
 
 \input{babelstyle.tex}
 
@@ -30,7 +40,8 @@
 \subtitle{EuroPython 2014, $24^{th}$ July - Berlin}
 \author{Roberto Polli}
 \date{24 July 2014}
-\institute{Babel Srl P.zza S. Benedetto da Norcia, 33\\ 00040, Pomezia (RM) – www.babel.it}
+\institute{Babel Srl P.zza S. Benedetto da Norcia, 33\\ 
+    00040, Pomezia (RM) - www.babel.it}
 
 %
 %
@@ -50,20 +61,23 @@
 }
 
 
+%\input{teststyle.tex}
 
-\input{teststyle.tex}
-
-%\input{intro.tex}
+\input{intro.tex}
 
 \input{ipython.tex}
 
-%\input{path_management.tex}
+\input{path_management.tex}
 
-%\input{encoding.tex}
+\input{encoding.tex}
 
-%\input{data_gathering.tex}
+\input{data_gathering.tex}
 
 \input{parsing.tex}
 
-\end{document}
+\input{nosetesting.tex}
 
+\input{statistics.tex}
+
+
+\end{document}

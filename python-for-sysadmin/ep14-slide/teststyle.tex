@@ -1,17 +1,26 @@
 
 \section{Test}
+
 \begin{frame}[fragile]{Test Slide with styles}
 \begin{itemize}
 \item Bullet item 1
 \item Bullet item 2 with code
-\begin{minted}[mathescape]{python}
+\begin{minted}[mathescape,fontsize=\small]{python}
+    # footnotesize
     for  a in range(10):
         yield a
+    # $\xmapsto[encode]{utf-8}$
     # $a \rightarrow b^{c}$
     return False
 \end{minted}
 \item Bullet Item 3
-\end{itemize}
+\begin{pythoncode}
+@decorator
+def foo(tmp):
+    def bar(*args):
+        return tmp(*args)
+    return bar
+\end{pythoncode}
 \begin{enumerate}
 \item Enumerate1
     \begin{enumerate}
@@ -19,7 +28,106 @@
     \item \texttt{Inline minted ipython}
     \end{enumerate}
 
-\item Enumerate2
+\item Enumerate2 \`{e} 
+ [\red{196}, \blue{168}] 
+
 \end{enumerate}
+\end{itemize}
+
 \end{frame}
 
+\begin{frame}[fragile]{Tabular and image}
+A Tabular follows \\
+\begin{tabular}{|c|c|}\hline
+Cell 1 & Cell 2 \\
+\hline 
+\end{tabular}
+\\
+\begin{table}
+\begin{tabular}{|c|c|}\hline
+\includegraphics[height=4cm]{ping_distribution.pdf}   & \includegraphics[height=4cm]{ping_distribution.pdf}  \\
+\hline 
+\end{tabular}
+\end{table}
+\end{frame}
+
+\begin{frame}[fragile]{Simple Column}
+\begin{columns}
+\column[t]{5cm}
+\begin{pythoncode}
+"""using set and dict
+"""
+distro = {x: rtt.count(x) 
+  for x in set(rtt)}
+# or using a
+from collections import defaultdict
+distro = defaultdict(int)
+for x in rtt:
+    distro[x] += 1
+    
+
+\end{pythoncode}
+\column[t]{5cm}
+-skip-\\
+-skip-\\
+\includegraphics[height=4cm]{ping_distribution.pdf}  
+\end{columns}
+\end{frame}
+
+
+\begin{frame}[fragile]{2-columns and verbatim}
+Two columns
+\begin{columns}
+
+\column[t]{5cm}
+1
+2
+3
+\begin{verbatim}
+4
+5
+6
+\end{verbatim}
+
+\column[t]{5cm}
+\includegraphics[height=4cm]{ping_distribution.pdf}  
+\end{columns}
+
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Simple processing: distribution}
+\begin{columns}
+\column[t]{5cm}
+\begin{pythoncode}
+"""using set and dict
+"""
+distro = {x: rtt.count(x) 
+  for x in set(rtt)}
+# or using a
+from collections import defaultdict
+distro = defaultdict(int)
+for x in rtt:
+    distro[x] += 1
+    
+a
+a
+a
+a
+a
+a
+a
+a
+a
+
+    
+    
+    
+    
+\end{pythoncode}
+\column[t]{5cm}
+\includegraphics[width=4cm]{ping_distribution.pdf}  
+\end{columns}
+%Homework: which is faster?
+\end{frame}

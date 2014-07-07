@@ -1,7 +1,16 @@
-\section{encoding}
+\section{Encoding: 10'}
 
 
 
+\begin{frame}[fragile]{Encoding: Goal}
+\begin{itemize}
+\item A string is not a sequence of bytes
+\item A string is not a sequence of bytes
+\item Manage differently encoded filenames 
+\item A string is not a sequence of bytes
+\item modules: \emph{os, os.path, glob}
+\end{itemize}
+\end{frame}
 
 
 \begin{frame}{Song of Childhod}
@@ -45,13 +54,16 @@ string              & bytes &, encoding \\ \hline
 \begin{frame}[fragile]{Enters Encoding}
 \begin{verse}
 \begin{center}
+\Huge
+"""\~{A}\"{ }
 """
-\Huge{\~{A}\"{ }}
-"""
-\end{center}
+
 \end{verse}
-\`{e} $\xRightarrow[encode]{utf-8}$ [\red{196}, \blue{168}] 
-    $\xRightarrow[decode]{cp1252}$ \red{\~{A}} \blue{\"{ }}
+
+\begin{center}
+\`{e} $\xmapsto[encode]{utf-8}$ [\red{196}, \blue{168}] 
+    $\xmapsto[decode]{cp1252}$ \red{\~{A}} \blue{\"{ }}
+\end{center}
 \end{frame}
 
 \begin{frame}[fragile]{Enters Encoding II}

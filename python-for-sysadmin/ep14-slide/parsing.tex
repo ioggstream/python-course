@@ -64,8 +64,8 @@ hour, host, dest = fields[3], fields[4], fields[7]
 \begin{frame}[fragile]{Parse: Exercise I }
 In \emph{another} window
 \begin{itemize}
-\item open 03\_ parsing\_ test.py
-\item complete the parse\_ line(line) function
+\item edit 03\_ parsing\_ test.py
+\item complete the \code{parse\_line(line)} function
 \begin{pythoncode}
 def parse_line(line):
     """Write your function and test it
@@ -74,26 +74,9 @@ def parse_line(line):
     raise NotImplementedError
 \end{pythoncode}
 \end{itemize}
-Paste your solution code in your iPython console
+\emph{\%paste} your solution's code in iPython and run manually
+the test functions
 \end{frame}
-
-
-\begin{frame}[fragile]{Parsing logs: II}
-\begin{pythoncode}
-# Now another test for the delivered messages
-def test_delivered():
-    hour, host, destination = parse_line(test_str_2)
-    assert hour == '08:30:55'
-    assert host == 'test-fe1'
-    # Delivery logs should have destination == None
-    assert destination is None
-
-# Exercise: fix parse_line to work with both tests
-#  and save test
-\end{pythoncode}
-\end{frame}
-
-\subsection{Testing Intermezzo: 15'}
 
 
 
@@ -157,8 +140,9 @@ Actually this does a bit of validation,
 
 
 \begin{frame}[fragile]{Benchmarking I}
-Parsing big files may need some benchmarks.
-iPython magic is a good starting point.
+\begin{itemize}
+\item Parsing big files may need some benchmarks.
+iPython \emph{\%timeit} magic is a good starting point.
 \begin{pythoncode}
 
 test_all_regexps = ("..", "[a-f0-9]{2}")
@@ -166,7 +150,7 @@ for re_s in test_all_regexps:
     %timeit ':'.join(findall(re_s, mac_address))
 
 \end{pythoncode}
-We can even compare compiled and inline regexp
+\item We can even compare compiled and inline regexp
 \begin{pythoncode}
 
 test_all_regexps = ("..", "[a-f0-9]{2}")
@@ -175,21 +159,25 @@ for re_s in test_all_regexps:
     %timeit ':'.join(re_c.findall(mac_address))
 
 \end{pythoncode}
+\end{itemize}
 \end{frame}
 
 
 
 \begin{frame}[fragile]{Benchmarking II}
-Or find other methods: complex...
+Or find other methods: 
+\begin{itemize}
+\item complex...
 \begin{pythoncode}
-from re import subn as sed
-%timeit sed(r'(..)', r'\1:', mac_address
+from re import sub as sed
+%timeit sed(r'(..)', r'\1:', mac_address)
 \end{pythoncode}
-...or simple
+\item ...or simple
 \begin{pythoncode}
-%timeit ':'.join([ mac_address[i:i+2] 
+\%timeit ':'.join([ mac_address[i:i+2] 
     for i in xrange(0,12,2)])
 \end{pythoncode}
+\end{itemize}
 \end{frame}
 
 %
@@ -203,6 +191,7 @@ for x in glob.glob(fc_id_path):
     # ...we boldly skip an explicit close()
     pwwn = open(x).read()  # 0x500143802427e66c
     pwwn = pwwn[2:]
+    # ...and even use the slower but readable
     pwwn = re.findall(r'..', pwwn)
     print("member pwwn ", ':'.join(pwwn))
 

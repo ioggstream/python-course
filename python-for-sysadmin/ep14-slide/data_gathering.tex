@@ -5,15 +5,15 @@
 %
 
 
-\begin{frame}{Data Gathering}
+\begin{frame}{Data Gathering: Goal}
     Gathering System Data with multiplatform
-     and platform-dependent tools like command
-     line output and files.
-
+     and platform-dependent tools.
 \begin{itemize}
-\item Get infos from files with a grep function
+\item Get infos from files, /proc and /sys with a grep function
+\item Run and capture command output
 \item Use psutil to get IO, CPU and memory data
-\item Parse stuff
+\item Parse files with a strategy
+\item module: \emph{psutil, subprocess, os}
 \end{itemize}
 
 \end{frame}
