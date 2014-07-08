@@ -101,6 +101,7 @@
 \minted@define@switch{startinline}{-P startinline}
 \minted@define@switch[-P funcnamehighlighting=False]%
   {funcnamehighlighting}{-P funcnamehighlighting}
+\minted@define@opt{escapeinside}{-O escapeinside="#1"}
 \minted@define@opt{gobble}{-F gobble:n=#1}
 \minted@define@opt{bgcolor}{#1}
 \minted@define@extra{frame}
@@ -145,7 +146,7 @@
   \immediate\closeout\minted@code}
 \newcommand\minted@pygmentize[2][\jobname.pyg]{
   \def\minted@cmd{pygmentize -l #2 -f latex -F tokenmerge
-    \minted@opt{gobble} \minted@opt{texcl} \minted@opt{mathescape}
+    \minted@opt{gobble} \minted@opt{texcl} \minted@opt{mathescape} \minted@opt{escapeinside}
     \minted@opt{startinline} \minted@opt{funcnamehighlighting}
     \minted@opt{linenos} -P "verboptions=\minted@opt{extra}"
     -o \jobname.out.pyg #1}
