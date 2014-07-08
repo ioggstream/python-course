@@ -1,3 +1,35 @@
+\usepackage[beamer]{hf-tikz}
+%\usepackage[baw]{fvrb-ex}
+%\usepackage{fancyvrb}
+
+%
+% Macros
+%
+
+\definecolor{light-gray}{gray}{.80}
+
+
+\newcommand{\red}[1] { {\color{red} #1} }
+\newcommand{\blue}[1] { {\color{blue} #1} }
+\newcommand{\green}[1] { {\color{green} #1} }
+\newcommand{\gray}[1] { {\color{gray} #1} }
+\newcommand{\grey}[1] { {\color{gray} #1} }
+\newcommand{\pymodule}[1] { \textbf{#1} }
+\newcommand{\keyword}[1] { \texttt{#1} }
+\newcommand{\code}[1] { \texttt{#1} }
+\newcommand{\mymapsto}{\operatornamewithlimits{\longmapsto}}
+\newcommand{\pyver}[1]{\colorbox{yellow}{#1}}
+\newcommand{\pyvers}[1]{\raisebox{0em}{\colorbox{yellow}{#1}}}
+
+\makeatletter
+\newcommand{\xMapsto}[2][]{\ext@arrow 0599{\Mapstofill@}{#1}{#2}}
+\def\Mapstofill@{\arrowfill@{\Mapstochar\Relbar}\Relbar\Rightarrow}
+\makeatother
+
+
+\newminted{python}{mathescape} 
+
+
 %
 % style
 %
@@ -55,11 +87,11 @@
 %
 % increase itemize spacing
 %
-\newlength{\wideitemsep}
-\setlength{\wideitemsep}{\itemsep}
-\addtolength{\wideitemsep}{14pt}
-\let\olditem\item
-\renewcommand{\item}{\setlength{\itemsep}{\wideitemsep}\olditem}
+%\newlength{\wideitemsep}
+%\setlength{\wideitemsep}{\itemsep}
+%\addtolength{\wideitemsep}{14pt}
+%\let\olditem\item
+%\renewcommand{\item}{\setlength{\itemsep}{\wideitemsep}\olditem}
 
   % \usecolortheme[named=orange]{structure}
   % \useinnertheme{circles}

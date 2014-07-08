@@ -3,36 +3,40 @@
 
 \begin{frame}[fragile]{Test Slide with styles}
 \begin{itemize}
-\item Bullet item 1
-\item Bullet item 2 with code
-\begin{minted}[mathescape,fontsize=\small]{python}
+\item Bullet item 0 $\tikzmarkin<1>{a1}a_i\tikzmarkend{a1} + b_j = 10 $
+\item Bullet item 2 with code\footnote{Do you like footnotes?}
+\begin{minted}[mathescape,label=Foo,commentchar=!]{python}
     # footnotesize
     for  a in range(10):
-        yield a
+    !  \tikzmarkin<1->{b}yield a\tkizmarkend{b}
     # $\xmapsto[encode]{utf-8}$
     # $a \rightarrow b^{c}$
     return False
 \end{minted}
-\item Bullet Item 3
-\begin{pythoncode}
-@decorator
-def foo(tmp):
-    def bar(*args):
-        return tmp(*args)
-    return bar
-\end{pythoncode}
+\item Bullet Item 3 $\tikzmarkin<1>{a2}a_i\tikzmarkend{a2} + b_j = 10 $
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Test Slide with styles}
 \begin{enumerate}
 \item Enumerate1
     \begin{enumerate}
-    \item EnumerateA
+    \item EnumerateA  \pyver{w\"urstel re}sults
     \item \texttt{Inline minted ipython}
+    \item w\"urstelstra\ss e
     \end{enumerate}
 
 \item Enumerate2 \`{e} 
  [\red{196}, \blue{168}] 
+\begin{pythoncode*}{showspaces}
+  \@ decorator
+  def foo(tmp):
+    def bar(*args):
+        return tmp(*args)
+    HLCBWzµ return bar
+\end{pythoncode*}
 
 \end{enumerate}
-\end{itemize}
 
 \end{frame}
 

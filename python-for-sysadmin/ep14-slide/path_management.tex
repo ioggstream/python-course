@@ -39,7 +39,7 @@ print("Normalized path is", hosts)
 \item os.path.normpath fixes "/" orientation!
 \item os.path.join 
  \end{itemize}
-And now, let's rapidly see some other tools $\ldots$
+And now, a rapid glance to other tools $\ldots$
 \end{frame}
 
 \begin{frame}[fragile]{Move trees: shutil, os, os.path}
@@ -68,9 +68,9 @@ assert not isdir("/tmp/course/foo/bar")
 # We can use exception handlers to investigate errors
    try:
         # python2 does not allow to ignore
-        #  already existing directories
-        #  and raises an OSError
+        #  already existing directories...
         makedirs("/tmp/course/foo/bar")
+        #  ...and raises an OSError
     except OSError as e:
         # Just use the errno module to
         #  check the error value

@@ -1,0 +1,29 @@
+\documentclass[12pt]{article}
+\usepackage[]{minted}
+
+\usepackage{tikz}
+\makeatletter
+
+\edef\minted@resetoptions{\minted@resetoptions\def\minted@opt@bgcolor{foo}}
+\tikzset{mintedbox/.style={draw=red,rectangle,fill=yellow!20}}
+\renewenvironment{minted@colorbg}[1]{%
+  \noindent
+  \begin{lrbox}{\minted@bgbox}
+  \begin{minipage}{.8\linewidth}}
+ {\end{minipage}
+  \end{lrbox}%
+  \tikz\node[mintedbox,text width=10em,] 
+         {\usebox{\minted@bgbox}};
+ }
+
+\newmint[jscode]{javascript}{}
+\begin{document}
+\begin{minted}[]{javascript}
+a=b;
+c=d;
+e=fffffff; dsaf safsaf sa: Fas fSA fas;f as F,saFas
+\end{minted}
+
+\jscode+foo+ bar e tutto il resto
+\end{document}
+

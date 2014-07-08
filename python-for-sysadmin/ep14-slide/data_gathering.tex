@@ -13,7 +13,7 @@
 \item Run and capture command output
 \item Use psutil to get IO, CPU and memory data
 \item Parse files with a strategy
-\item module: \emph{psutil, subprocess, os}
+\item modules: \emph{psutil, subprocess, os}
 \end{itemize}
 
 \end{frame}
@@ -47,8 +47,8 @@ psutil.cpu_percent()
 # And its output is easy to manage
 psutil.disk_io_counters()
 
-# Exercise: Which other information can we get with psutil?
 \end{pythoncode}
+Exercise: Which other information can we get with psutil?
 \end{frame}
 
 
@@ -84,18 +84,17 @@ print(ret, out)
 \begin{frame}[fragile]{Data Gathering: subprocess, sys}
 \begin{pythoncode}
 def sh(cmd, timeout=0, shell=False):
-    """"Returns the output of a given command using... """
-    from subprocess import check_output
-    # ...and checks...
-    from sys import version_info as python_version}
-    if python_version < (3, 3):
-        # ..before using...
-        if timeout:
-            raise ValueError("Timeout not supported until Python 3.3")
-        output = check_output(cmd.split(), shell=shell)
-    else:
-        output = check_output(cmd.split(), shell=shell, timeout=timeout)
-    return output.splitlines()
+  """"Returns the output of a given command using... """
+  from subprocess import check_output # ...and tests...
+  from sys import version_info as python_version
+  if python_version < (3, 3): # ..before using...
+    if timeout:
+      raise ValueError("Timeout not supported until v3.3")
+    output = check_output(cmd.split(), shell=shell)
+  else:
+    output = check_output(cmd.split(), shell=shell, \
+                          timeout=timeout)
+  return output.splitlines()
     
 \end{pythoncode}
 \end{frame}
@@ -110,60 +109,69 @@ Write a simple pgrep-like function for your OS which:
 \end{frame}
 
 
-
+\subsection{The /proc filesystem}
 \begin{frame}[fragile]{Data Gathering: Parsing /proc I}
 \begin{pythoncode}
 
 def linux_threads(pid):
-    """The linux /proc filesystem is a cool place 
-        to get infos."""
-    # $\emph{glob}$ emulates shell expansion of * and ?
-    import glob
-    path = "/proc/{}/task/*/status".format(pid)
-    
-    # Pick a set of fields to gather
-    t_info = ('Pid', 'Tgid', 'voluntary')  # this is a tuple!
-    for t in glob.glob(path):
-        # And use comprehension to get interesting data
-        t_info = [x for x in open(t) if x.startswith(t_info)]
-        print(t_info)
+  """The Linux /proc filesystem is a cool place 
+      to get infos."""
+  import glob # emulates shell expansion of * and ?
+  path = "/proc/{}/task/*/status".format(pid)
+  
+  # Pick a set of fields to gather...
+  t_info = ('Pid', 'Tgid', 'voluntary') # a tuple
+  for t in glob.glob(path):
+    # ...and use comprehension to get interesting data
+    t_data = [x for x in open(t) 
+        if x.startswith(t_info)] # startswith accepts tuples!
+    print(t_data)
 \end{pythoncode}
 \end{frame}
 
 
 
 \begin{frame}[fragile]{Data Gathering: Parsing /proc II}
-%% NOTE: avoid inserting print() statements in the slides. Students must do their inspection and check returned values
 \begin{pythoncode}
 # Linux speaks via the /proc filesystem
 #  and /proc/diskstats is the source of I/O infos
 disk_l = grep("sda", "/proc/diskstats")
-print(disk_l)
 
-# To gather that data we define a headers using a multi-line string
+# To gather that data we put the headers in a multi-line string
 info = ('major minor device'
         ' reads reads_merged reads_sectors reads_ms'
         ' writes writes_merged writes_sectors writes_ms'
-        ' io_in_progress io_ms_spent io_ms_weight').split()
+        ' io_in_progress io_ms_spent io_ms_weight'
+        ).split()
 
 # Then just take the 1st entry, split the data ...
 disk_info = disk_l[0].split()
 zip(info, disk_info)    # ...and tie them with the info
 
-# Or create a reusable commodity structure
+\end{pythoncode}
+\end{frame}
+
+\begin{frame}[fragile]{Data Gathering: Parsing /proc III}
+\begin{pythoncode}
+# Or create a reusable commodity structure with
 from collections import namedtuple
-DiskStats=namedtuple('DiskStat', info)
+DiskStats = namedtuple('DiskStat', info, verbose=True)
+
 dstat = DiskStats(*disk_info)
 dstat.device, dstat.writes_ms
+
+# Homework: check further features with
+help(collections) 
 \end{pythoncode}
 \end{frame}
 
 
-
 %%
+\iffalse
 \begin{frame}[fragile]{Data Gathering: subprocess}
 \begin{pythoncode}
 # foo
 \end{pythoncode}
 \end{frame}
 
+\fi

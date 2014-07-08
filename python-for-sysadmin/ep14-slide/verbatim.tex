@@ -1,0 +1,39 @@
+\documentclass{article}
+\usepackage{minted}
+\usepackage{fancyvrb}
+\usepackage{listings}
+
+\lstset{
+  language=python,%
+  commentstyle=\itshape,%
+  keywordstyle=\bfseries,%
+  fancyvrb=true % !!
+}
+
+\begin{document}
+Ciao belli
+
+
+\begin{Verbatim}[frame=single,numbers=right,commandchars=\\\{\}]
+   \fbox{First} verbatim line.
+   Second verbatim line.
+   Third verbatim line.
+\end{Verbatim}
+
+\begin{minted}[frame=single,numbers=right,commandchars=\\\{\}]{python}
+   \fbox{First} verbatim line.
+   Second verbatim line.
+   Third verbatim line.
+\end{minted}
+
+\begin{lstlisting}
+@deco
+def rator(foo, bar=1):
+  print(foo)
+  yield bar
+  for x in y:
+      while y:
+        raise StopIteration
+\end{lstlisting}
+
+\end{document}
