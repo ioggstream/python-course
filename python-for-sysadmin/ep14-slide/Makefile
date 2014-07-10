@@ -18,4 +18,4 @@ backup:
 	zip -r ep14-python-sysadmin.zip *.tex Makefile *.png
 
 clean:
-	rm -vf *.aux *.dvi *.log *.nav *.out *.snm *.toc *.vrb 
+	rm -vf *.aux *.dvi *.log *.nav *.out *.snm *.toc *.vrb *.idx *.ind *.upa
