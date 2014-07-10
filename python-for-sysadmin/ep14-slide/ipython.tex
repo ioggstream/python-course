@@ -4,12 +4,14 @@
 
 \begin{frame}{iPython I}
 \begin{itemize}
-\item an interactive interpreter with tonns of                                                                                                        functionalities, and the main tool of our training.                                                                                                      
+\item Interactive interpreter with tonns of                                                                                                        functionalities, and the main tool of our training.                                                                                                      
 
-\item   It's the funniest way to learn and use python!
+\item   The funniest way to learn and use python!
 
-\item   Supports tab-completion, inline help and elementary
-    benchmarking
+\item   Supports \pyver{tab-completion}, inline help 
+
+\item   Allows pasting from clipboard with \pyver{\%paste} , elementary
+    benchmarking with \pyver{\%timeit}, and multi-line editing with \pyver{\%edit}
 
 \item   Run it: \\
 \code{\# ipython}
@@ -19,39 +21,33 @@
 
 
 \begin{frame}[fragile]{iPython II}
-\begin{minted}[mathescape]{python}
-# iPython supports inline-help
-#  appending ? to an object
+\begin{pythoncode}
+# iPython supports inline-help appending ? to an object
 str?
 
-# We can run commands
-#  and capture the output in a variable
-# don't need to quote using the ! magic
-# on unix
+# We can run commands and capture the output in a variable
+# don't need to quote using the ! magic on unix
 ret = !cat /etc/hosts
 
 # windows has etc\hosts too ;)
 ret = !type c: windows\system32\drivers\etc\hosts
-\end{minted}
+\end{pythoncode}
 \end{frame}
 
 
 \begin{frame}[fragile]{iPython III}
-\begin{minted}[mathescape]{python}
-# returned objects can be filtered
-#  with its grep and fields methods
-ret.grep('localhost')
-# return the first space-splitted column of
-#  the output
-ret.fields(0)
+\begin{pythoncode*}{escapeinside=||}
+# returned objects can be filtered with  
+ret.|\pyver{grep}|('localhost')
+# Now get the first space-splitted column of the output
+ret.|\pyver{fields}|(0)
 ret.grep('localhost').fields(0)
 
 # And the last returned value is stored in 
 localip = _
 
-# An ipython script $\emph{must}$ have the 
-#  .ipy extension and begin with
-#!/usr/bin/ipython 
-\end{minted}
+# An ipython script $\emph{must}$ have the $\pyver{.ipy}$ extension
+#  and begin with #!/usr/bin/ipython 
+\end{pythoncode*}
 \end{frame}
 

@@ -64,8 +64,7 @@ class Test(object):
         open("/tmp/test2.out", "w").write("0")
 
     @classmethod
-    def teardown_class(self): # is run once after 
-        # all tests to...
+    def teardown_class(self): # is run once after all tests to...
         print("cleanup testsuite environment")
         os.unlink("/tmp/test2.out")
 
@@ -76,8 +75,7 @@ class Test(object):
 
 \begin{frame}[fragile]{Complete Test Script: II}
 \begin{itemize}
-\item A more flexible script is 02\_ nosetests\_ full.py 
-which uses a Test class
+\item allowing pre-post testsuite and pre-post test fixtures
 \begin{minted}[mathescape]{python}
 class Test(object):
     ...

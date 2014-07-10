@@ -1,18 +1,19 @@
 \section{Path management: 10'}
 
 \begin{frame}[fragile]{Path management: Goal}
+\Large
 \begin{itemize}
 \item Normalize paths on different platform
 \item Create, copy and remove folders
 \item Handle errors
-\item modules: \emph{os, os.path, shutil, errno}
 \end{itemize}
+modules: \emph{os, os.path, shutil, errno}
 \end{frame}
 
 \begin{frame}[fragile]{Path management: os.path, sys}
 % This slide is the core one. Required for data gathering!
 \begin{minted}[mathescape]{python}
-hosts, basedir = "etc/hosts", "/"
+basedir, hosts = "/", "etc/hosts"
 # Check the hosting platform with the sys module
 from sys import platform
 if platform.startswith('win'):
@@ -36,9 +37,9 @@ print("Normalized path is", hosts)
  \item safe
  \end{itemize}
  
-\item os.path.normpath fixes "/" orientation!
-\item os.path.join 
- \end{itemize}
+\item \emph{normpath} fixes "/" orientation and sanitizes ".."
+\item \emph{join} removes redundant "/"
+\end{itemize}
 And now, a rapid glance to other tools $\ldots$
 \end{frame}
 

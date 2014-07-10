@@ -1,33 +1,52 @@
+\usepackage[orientation=landscape,size=custom,width=16,height=9,scale=0.5,debug]{beamerposter} 
 \usepackage[beamer]{hf-tikz}
-%\usepackage[baw]{fvrb-ex}
-%\usepackage{fancyvrb}
+\usepackage{xfrac}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{makeidx}
 
 %
 % Macros
 %
 
 \definecolor{light-gray}{gray}{.80}
+\definecolor{light-yellow}{rgb}{255,255,153}
 
-
+% colorized font
 \newcommand{\red}[1] { {\color{red} #1} }
 \newcommand{\blue}[1] { {\color{blue} #1} }
 \newcommand{\green}[1] { {\color{green} #1} }
 \newcommand{\gray}[1] { {\color{gray} #1} }
 \newcommand{\grey}[1] { {\color{gray} #1} }
+
+
+% environments
+\newminted{python}{mathescape} 
+\newenvironment{theindex}
+ {\let\item\par
+  %definitions for subitem etc
+  }{}
+\newcommand\indexspace{}
+\newenvironment{xframe}[2][]
+  {\begin{frame}[fragile,environment=xframe,#1]
+  \frametitle{#2}}
+  {\end{frame}}
+  
+% python highlights: module, method
 \newcommand{\pymodule}[1] { \textbf{#1} }
-\newcommand{\keyword}[1] { \texttt{#1} }
-\newcommand{\code}[1] { \texttt{#1} }
-\newcommand{\mymapsto}{\operatornamewithlimits{\longmapsto}}
+\newcommand{\pyfunction}[1] {\textit{#1}}
+\newcommand{\keyword}[1] {\texttt{#1}}
 \newcommand{\pyver}[1]{\colorbox{yellow}{#1}}
 \newcommand{\pyvers}[1]{\raisebox{0em}{\colorbox{yellow}{#1}}}
+
+% special symbils
+\newcommand{\mymapsto}{\operatornamewithlimits{\longmapsto}}
 
 \makeatletter
 \newcommand{\xMapsto}[2][]{\ext@arrow 0599{\Mapstofill@}{#1}{#2}}
 \def\Mapstofill@{\arrowfill@{\Mapstochar\Relbar}\Relbar\Rightarrow}
 \makeatother
 
-
-\newminted{python}{mathescape} 
+\newcommand{\code}[1] { \texttt{#1} }
 
 
 %
@@ -51,7 +70,7 @@
 %,bb=0 0 5cm 2cm
     \hskip5pt
     \includegraphics[height=1.2cm]{babel-logo.eps}
-    \hskip155pt
+    \hskip245pt
     \includegraphics[height=1.2cm]{ep14-logo.eps}
     }
 }
@@ -99,3 +118,4 @@
   \setbeamercovered{transparent}
   % \setbeamertemplate{blocks}[rounded][shadow=true]
 
+\makeindex

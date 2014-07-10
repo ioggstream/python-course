@@ -1,7 +1,6 @@
 \section{Data Gathering: 20'}
 %
-% NOTE: minted allows mathescape in #comments ;)
-%       not outside
+% NOTE: minted allows mathescape everywhere now;)
 %
 
 
@@ -9,13 +8,12 @@
     Gathering System Data with multiplatform
      and platform-dependent tools.
 \begin{itemize}
-\item Get infos from files, /proc and /sys with a grep function
+\item Get infos from files, /proc and /sys 
 \item Run and capture command output
 \item Use psutil to get IO, CPU and memory data
 \item Parse files with a strategy
-\item modules: \emph{psutil, subprocess, os}
 \end{itemize}
-
+modules: \pymodule{psutil, subprocess, os}
 \end{frame}
 
 
@@ -48,7 +46,7 @@ psutil.cpu_percent()
 psutil.disk_io_counters()
 
 \end{pythoncode}
-Exercise: Which other information can we get with psutil?
+Exercise: Which other information does psutil provide?
 \end{frame}
 
 
@@ -82,13 +80,13 @@ print(ret, out)
 \end{frame}
 
 \begin{frame}[fragile]{Data Gathering: subprocess, sys}
-\begin{pythoncode}
+\begin{pythoncode*}{escapeinside=||}
 def sh(cmd, timeout=0, shell=False):
   """"Returns the output of a given command using... """
-  from subprocess import check_output # ...and tests...
-  from sys import version_info as python_version
+  from subprocess import |\emph{check_output}| # ...and tests...
+  from sys import version_info as |\emph{python_version}|
   if python_version < (3, 3): # ..before using...
-    if timeout:
+    if |\emph{timeout}|:
       raise ValueError("Timeout not supported until v3.3")
     output = check_output(cmd.split(), shell=shell)
   else:
@@ -96,7 +94,7 @@ def sh(cmd, timeout=0, shell=False):
                           timeout=timeout)
   return output.splitlines()
     
-\end{pythoncode}
+\end{pythoncode*}
 \end{frame}
 
 \begin{frame}[fragile]{Data Gathering: Exercises}
@@ -104,51 +102,47 @@ Write a simple pgrep-like function for your OS which:
 \begin{itemize}
 \item takes one parameter: `program`;
 \item return a list of processes executing `program`;
-\item Hint: use subprocess, os, and list-comprehension
+\item Hint: use \pymodule{subprocess, os}, and list-comprehension
 \end{itemize}
 \end{frame}
 
 
 \subsection{The /proc filesystem}
 \begin{frame}[fragile]{Data Gathering: Parsing /proc I}
-\begin{pythoncode}
+\begin{pythoncode*}{escapeinside=||}
 
 def linux_threads(pid):
-  """The Linux /proc filesystem is a cool place 
-      to get infos."""
+  """The Linux /proc filesystem is a cool place to get infos."""
   import glob # emulates shell expansion of * and ?
   path = "/proc/{}/task/*/status".format(pid)
   
   # Pick a set of fields to gather...
   t_info = ('Pid', 'Tgid', 'voluntary') # a tuple
   for t in glob.glob(path):
-    # ...and use comprehension to get interesting data
+    # ...and use comprehension to get interesting data.
     t_data = [x for x in open(t) 
-        if x.startswith(t_info)] # startswith accepts tuples!
+        if x.|\pyver{startswith}|(t_info)] #  accepts tuples!
     print(t_data)
-\end{pythoncode}
+\end{pythoncode*}
 \end{frame}
 
 
 
 \begin{frame}[fragile]{Data Gathering: Parsing /proc II}
-\begin{pythoncode}
-# Linux speaks via the /proc filesystem
-#  and /proc/diskstats is the source of I/O infos
+\begin{pythoncode*}{escapeinside=||}
+# On Linux, /proc/diskstats is the source of I/O infos
 disk_l = grep("sda", "/proc/diskstats")
 
 # To gather that data we put the headers in a multi-line string
-info = ('major minor device'
+head = ('major minor device'
         ' reads reads_merged reads_sectors reads_ms'
         ' writes writes_merged writes_sectors writes_ms'
-        ' io_in_progress io_ms_spent io_ms_weight'
-        ).split()
-
-# Then just take the 1st entry, split the data ...
-disk_info = disk_l[0].split()
-zip(info, disk_info)    # ...and tie them with the info
-
-\end{pythoncode}
+        ' io_in_progress io_ms_spent io_ms_weight').|\pyver{split()}|
+        
+disk_info = disk_l[0].split() # Take the 1st entry, split the datas ...
+zip(head, disk_info)          # ...and tie them with the headers
+list(_) # On py3 you need to iterate the generator!
+\end{pythoncode*}
 \end{frame}
 
 \begin{frame}[fragile]{Data Gathering: Parsing /proc III}

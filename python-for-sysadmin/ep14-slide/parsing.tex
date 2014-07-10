@@ -1,21 +1,33 @@
 \section{Parsing: 60'}
 
+\begin{frame}[fragile]{Parsing: Goal}
+\begin{itemize}
+\item Plan a parsing strategy
+\item Use basic regular expressions: match, search, sub
+\item Benchmarking a parser
+\item Running nosetests
+\item Write a simple parser
+\end{itemize}
+modules: \pymodules{re, nose, \%timeit}
+\end{frame}
 
 
 \begin{frame}[fragile]{Parsing is hard...}
 \begin{verse}
-"In 2000-2010, System Administrators spent $24\%$ of their life parsing files."$^{*}$\\
-\hfill Independent analysis by The GASP Society
+"System Administrators spent $24\%$ of
+ their work-life parsing files."$^{*}$\\
+\hfill *Independent analysis by The GASP Society ;)
 \end{verse}
 \end{frame}
 
 
 \begin{frame}[fragile]{...use a strategy!}
 \begin{enumerate}
+\Large
 \item Collect parsing samples
 \item Play in ipython
-\item Write tests
-\item Write parser
+\item Write tests, then the parser
+\item \emph{Eventually} benchmark
 \end{enumerate}
 \end{frame}
 
@@ -27,14 +39,11 @@
 #  the interesting lines. For now just 
 from examples import mail_sent, mail_delivered
 
-# have a look 
-print (log_mail_sent, log_mail_delivered)
-
 # and write a simple 
 def test_for_sent_mail():
     hour, host, destination = parse_line(mail_sent)
     assert hour == '08:30:55'
-    assert host = 'test-fe1'
+    assert host == 'test-fe1'
     assert destination = 'antani2@example.it'
 
 \end{pythoncode}
@@ -43,14 +52,12 @@ def test_for_sent_mail():
 
 \begin{frame}[fragile]{Parsing lines: split, zip}
 \begin{pythoncode}
-# Start using basic strings in ipython
-mail_sent.split()
+mail_sent.split()   # Start using basic strings in ipython
 
 # Then tie them with zip/zip() 
 fields, counting  = _, zip(range(20), _)
 
-# We just care for the first 7 values
-fields = fields[:7]
+fields = fields[:7] # We just care for the first 7 values
 
 # and we can use _ to discard values too
 _, _, hour, host, _, _, dest = fields
@@ -69,12 +76,11 @@ In \emph{another} window
 \begin{pythoncode}
 def parse_line(line):
     """Write your function and test it
-        with test_sent()
-    """
+        with test_sent()"""
     raise NotImplementedError
 \end{pythoncode}
 \end{itemize}
-\emph{\%paste} your solution's code in iPython and run manually
+\pyver{\\\%paste} your solution's code in iPython and run manually
 the test functions
 \end{frame}
 
@@ -83,7 +89,7 @@ the test functions
 \subsection{Regular Expressions}
 
 \begin{frame}[fragile]{Python Regexp}
-\begin{pythoncode}
+\begin{pythoncode*}{escapeinside=||}
 # Python supports regular expressions via
 import re
 
@@ -91,12 +97,12 @@ import re
 def grep(expr, fpath):
     one = re.compile(expr) 
     # ...has two lookup methods...
-    assert ( one.match    # which searches from ^
-         and one.search ) # that searches anywhere
+    assert ( one.|\emph{match}|     # which searches from ^ the beginning
+         and one.|\pyver{search}| ) # that searches $\pyver{anywhere}$
     with open(fpath) as fp:
-        return [x for x in fp if one.search(x)]
+        return [x for x in fp if one.|\emph{search}|(x)]
 
-\end{pythoncode}
+\end{pythoncode*}
 \end{frame}
 
 \begin{frame}[fragile]{Splitting with re.split}
@@ -104,7 +110,6 @@ def grep(expr, fpath):
 from re import split # is a very nice function
 
 # Let's gather some ping stats
-
 if sys.platform.startswith('linux'):
     cmd = "ping -c10 -w10 www.google.it"
 elif sys.platform.startswith('win'):
@@ -112,7 +117,7 @@ elif sys.platform.startswith('win'):
 else: # 'darwin' in sys.platform?
     raise ValueError("Are you really using OSX?")
     
-ping_output = [ split("[ =", x) for x in ping_output]
+ping_output = [ split("[ =", x) for x in sh(cmd)]
 
 \end{pythoncode}
 \end{frame}
@@ -128,7 +133,7 @@ mac_address = "00""24""e8""b4""33""20"
 # ...using this 
 re_hex = '[0-9a-fA-F]'
 mac = ':'.join(findall(re_hex, mac_address))
-print("The mac address is ", mac_address)
+print("The mac address is ", mac)
 
 \end{pythoncode}
 \emph{
@@ -139,32 +144,32 @@ Actually this does a bit of validation,
 
 
 
-\begin{frame}[fragile]{Benchmarking I}
+\begin{frame}[fragile]{Benchmarking in iPython I}
 \begin{itemize}
-\item Parsing big files may need some benchmarks.
+\item Parsing big files needs benchmarks.
 iPython \emph{\%timeit} magic is a good starting point.
-\begin{pythoncode}
+\begin{pythoncode*}{escapeinside=||}
 
 test_all_regexps = ("..", "[a-f0-9]{2}")
 for re_s in test_all_regexps:
-    %timeit ':'.join(findall(re_s, mac_address))
+    |\pyver{%timeit}| ':'.join(|\pyfunction{findall}|(re_s, mac_address))
 
-\end{pythoncode}
+\end{pythoncode*}
 \item We can even compare compiled and inline regexp
-\begin{pythoncode}
+\begin{pythoncode*}{escapeinside=||}
 
 test_all_regexps = ("..", "[a-f0-9]{2}")
 for re_s in test_all_regexps:
-    re_c = re.compile(re_s)
-    %timeit ':'.join(re_c.findall(mac_address))
+    re_c = re.|\pyfunction{compile}|(re_s)
+    |\pyver{%timeit}| ':'.join(re_c.|\pyfunction{findall}|(mac_address))
 
-\end{pythoncode}
+\end{pythoncode*}
 \end{itemize}
 \end{frame}
 
 
 
-\begin{frame}[fragile]{Benchmarking II}
+\begin{frame}[fragile]{Benchmarking in iPython II}
 Or find other methods: 
 \begin{itemize}
 \item complex...
@@ -174,15 +179,15 @@ from re import sub as sed
 \end{pythoncode}
 \item ...or simple
 \begin{pythoncode}
-\%timeit ':'.join([ mac_address[i:i+2] 
-    for i in xrange(0,12,2)])
+%timeit ':'.join([ mac_address[i:i+2] for i in range(0,12,2)])
 \end{pythoncode}
+\item Outside iPython check the \pymodule{timeit} module
 \end{itemize}
 \end{frame}
 
 %
 
-\begin{frame}[fragile]{Real World Example}
+\begin{frame}[fragile]{Parsing: a real world Example}
 \begin{pythoncode}
 # Generate a VSAN configuration using linux 
 #  FC information from /sys filesystem
