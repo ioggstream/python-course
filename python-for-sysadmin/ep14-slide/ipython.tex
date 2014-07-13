@@ -2,7 +2,7 @@
 
 
 
-\begin{frame}{iPython I}
+\begin{pyframe}{iPython I}
 \begin{itemize}
 \item Interactive interpreter with tonns of                                                                                                        functionalities, and the main tool of our training.                                                                                                      
 
@@ -17,10 +17,10 @@
 \code{\# ipython}
 \end{itemize}
 
-\end{frame}
+\end{pyframe}
 
 
-\begin{frame}[fragile]{iPython II}
+\begin{pyframe}{iPython II}
 \begin{pythoncode}
 # iPython supports inline-help appending ? to an object
 str?
@@ -32,10 +32,10 @@ ret = !cat /etc/hosts
 # windows has etc\hosts too ;)
 ret = !type c: windows\system32\drivers\etc\hosts
 \end{pythoncode}
-\end{frame}
+\end{pyframe}
 
 
-\begin{frame}[fragile]{iPython III}
+\begin{pyframe}{iPython III}
 \begin{pythoncode*}{escapeinside=||}
 # returned objects can be filtered with  
 ret.|\pyver{grep}|('localhost')
@@ -49,5 +49,5 @@ localip = _
 # An ipython script $\emph{must}$ have the $\pyver{.ipy}$ extension
 #  and begin with #!/usr/bin/ipython 
 \end{pythoncode*}
-\end{frame}
+\end{pyframe}
 

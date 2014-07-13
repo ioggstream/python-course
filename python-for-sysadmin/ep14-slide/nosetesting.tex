@@ -1,7 +1,7 @@
 \section{Nosetest Intermezzo}
 
 
-\begin{frame}[fragile]{Parsing logs: II}
+\begin{pyframe}{Parsing logs: II}
 \begin{pythoncode}
 # Now another test for the delivered messages
 def test_delivered():
@@ -14,10 +14,10 @@ def test_delivered():
 # Exercise: fix parse_line to work with both tests
 #  and save test
 \end{pythoncode}
-\end{frame}
+\end{pyframe}
 
 
-\begin{frame}[fragile]{Running nosetest}
+\begin{pyframe}{Running nosetest}
 \begin{itemize}
 \item Now run the following command from a shell
 
@@ -31,11 +31,11 @@ Ran 2 tests in 0.001s
 \item Nose runs every function matching test\_ *
 \item Nose runs every file matching test\_ *
 \end{itemize}
-\end{frame}
+\end{pyframe}
 
-\begin{frame}[fragile]{Simple Test Script}
+\begin{pyframe}{Simple Test Script}
 \begin{itemize}
-\item A simple nosetest script is 02\_ nosetests \_ simple.py
+\item Open a  \href{https://github.com/ioggstream/python-course/blob/master/python-for-sysadmin/02_nosetests_simple.py}{02\_nosetests\_simple.py} file
 \begin{pythoncode}
 def setup():
     print("is run before the testsuite, while")
@@ -49,11 +49,11 @@ def test_two():
     assert 1 == 0, "I was expecting 0" 
 \end{pythoncode}
 \end{itemize}
-\end{frame}
+\end{pyframe}
 
-\begin{frame}[fragile]{Complete Test Script: I}
+\begin{pyframe}{Complete Test Script: I}
 \begin{itemize}
-\item A more flexible script is 02\_ nosetests\_ full.py 
+\item A more flexible script is \href{https://github.com/ioggstream/python-course/blob/master/python-for-sysadmin/02_nosetests_full.py}{02\_nosetests\_full.py}
 which uses a Test class
 \begin{minted}[mathescape]{python}
 class Test(object):
@@ -71,9 +71,9 @@ class Test(object):
  
 \end{minted} 
 \end{itemize}
-\end{frame}
+\end{pyframe}
 
-\begin{frame}[fragile]{Complete Test Script: II}
+\begin{pyframe}{Complete Test Script: II}
 \begin{itemize}
 \item allowing pre-post testsuite and pre-post test fixtures
 \begin{minted}[mathescape]{python}
@@ -93,4 +93,4 @@ class Test(object):
  
 \end{minted}
 \end{itemize}
-\end{frame}
+\end{pyframe}

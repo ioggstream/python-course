@@ -1,6 +1,6 @@
 \section{Parsing: 60'}
 
-\begin{frame}[fragile]{Parsing: Goal}
+\begin{pyframe}{Parsing: Goal}
 \begin{itemize}
 \item Plan a parsing strategy
 \item Use basic regular expressions: match, search, sub
@@ -8,32 +8,32 @@
 \item Running nosetests
 \item Write a simple parser
 \end{itemize}
-modules: \pymodules{re, nose, \%timeit}
-\end{frame}
+modules: \pymodule{re, nose, \%timeit}
+\end{pyframe}
 
 
-\begin{frame}[fragile]{Parsing is hard...}
+\begin{pyframe}{Parsing is hard...}
 \begin{verse}
-"System Administrators spent $24\%$ of
+"System Administrators spent $24.3\%$ of
  their work-life parsing files."$^{*}$\\
-\hfill *Independent analysis by The GASP Society ;)
+\hfill *Independent analysis by The GASP\footnote{Grep Awk Sed Perl} Society ;)
 \end{verse}
-\end{frame}
+\end{pyframe}
 
 
-\begin{frame}[fragile]{...use a strategy!}
+\begin{pyframe}{...use a strategy!}
 \begin{enumerate}
 \Large
 \item Collect parsing samples
 \item Play in ipython
-\item Write tests, then the parser
+\item Write tests, \emph{then} the parser
 \item \emph{Eventually} benchmark
 \end{enumerate}
-\end{frame}
+\end{pyframe}
 
 
 
-\begin{frame}[fragile]{Parsing postfix logs}
+\begin{pyframe}{Parsing postfix logs}
 \begin{pythoncode}
 # Before writing the parser, collect samples of
 #  the interesting lines. For now just 
@@ -47,10 +47,10 @@ def test_for_sent_mail():
     assert destination = 'antani2@example.it'
 
 \end{pythoncode}
-\end{frame}
+\end{pyframe}
 
 
-\begin{frame}[fragile]{Parsing lines: split, zip}
+\begin{pyframe}{Parsing lines: split, zip}
 \begin{pythoncode}
 mail_sent.split()   # Start using basic strings in ipython
 
@@ -65,10 +65,10 @@ _, _, hour, host, _, _, dest = fields
 hour, host, dest = fields[3], fields[4], fields[7]
 
 \end{pythoncode}
-\end{frame}
+\end{pyframe}
 
 
-\begin{frame}[fragile]{Parse: Exercise I }
+\begin{pyframe}{Parse: Exercise I }
 In \emph{another} window
 \begin{itemize}
 \item edit 03\_ parsing\_ test.py
@@ -82,13 +82,13 @@ def parse_line(line):
 \end{itemize}
 \pyver{\\\%paste} your solution's code in iPython and run manually
 the test functions
-\end{frame}
+\end{pyframe}
 
 
 
 \subsection{Regular Expressions}
 
-\begin{frame}[fragile]{Python Regexp}
+\begin{pyframe}{Python Regexp}
 \begin{pythoncode*}{escapeinside=||}
 # Python supports regular expressions via
 import re
@@ -103,9 +103,9 @@ def grep(expr, fpath):
         return [x for x in fp if one.|\emph{search}|(x)]
 
 \end{pythoncode*}
-\end{frame}
+\end{pyframe}
 
-\begin{frame}[fragile]{Splitting with re.split}
+\begin{pyframe}{Splitting with re.split}
 \begin{pythoncode}
 from re import split # is a very nice function
 
@@ -120,10 +120,10 @@ else: # 'darwin' in sys.platform?
 ping_output = [ split("[ =", x) for x in sh(cmd)]
 
 \end{pythoncode}
-\end{frame}
+\end{pyframe}
 
 
-\begin{frame}[fragile]{Splitting with re.findall}
+\begin{pyframe}{Splitting with re.findall}
 \begin{pythoncode}
 from re import findall # can be misused too ;)
 
@@ -136,15 +136,14 @@ mac = ':'.join(findall(re_hex, mac_address))
 print("The mac address is ", mac)
 
 \end{pythoncode}
-\emph{
-Actually this does a bit of validation, 
+\emph{Actually this does a bit of validation, 
  requiring all chars to be in the 0-F range}
-\end{frame}
+\end{pyframe}
 
 
 
 
-\begin{frame}[fragile]{Benchmarking in iPython I}
+\begin{pyframe}{Benchmarking in iPython I}
 \begin{itemize}
 \item Parsing big files needs benchmarks.
 iPython \emph{\%timeit} magic is a good starting point.
@@ -152,7 +151,7 @@ iPython \emph{\%timeit} magic is a good starting point.
 
 test_all_regexps = ("..", "[a-f0-9]{2}")
 for re_s in test_all_regexps:
-    |\pyver{%timeit}| ':'.join(|\pyfunction{findall}|(re_s, mac_address))
+    |\pyver{\%timeit}| ':'.join(|\pyfunction{findall}|(re_s, mac_address))
 
 \end{pythoncode*}
 \item We can even compare compiled and inline regexp
@@ -161,15 +160,15 @@ for re_s in test_all_regexps:
 test_all_regexps = ("..", "[a-f0-9]{2}")
 for re_s in test_all_regexps:
     re_c = re.|\pyfunction{compile}|(re_s)
-    |\pyver{%timeit}| ':'.join(re_c.|\pyfunction{findall}|(mac_address))
+    |\pyver{\%timeit}| ':'.join(re_c.|\pyfunction{findall}|(mac_address))
 
 \end{pythoncode*}
 \end{itemize}
-\end{frame}
+\end{pyframe}
 
 
 
-\begin{frame}[fragile]{Benchmarking in iPython II}
+\begin{pyframe}{Benchmarking in iPython II}
 Or find other methods: 
 \begin{itemize}
 \item complex...
@@ -183,11 +182,11 @@ from re import sub as sed
 \end{pythoncode}
 \item Outside iPython check the \pymodule{timeit} module
 \end{itemize}
-\end{frame}
+\end{pyframe}
 
 %
 
-\begin{frame}[fragile]{Parsing: a real world Example}
+\begin{pyframe}{Parsing: a real world Example}
 \begin{pythoncode}
 # Generate a VSAN configuration using linux 
 #  FC information from /sys filesystem
@@ -201,10 +200,10 @@ for x in glob.glob(fc_id_path):
     print("member pwwn ", ':'.join(pwwn))
 
 \end{pythoncode}
-\end{frame}
+\end{pyframe}
 
 %%
-\begin{frame}[fragile]{Parsing logs: a simple solution}
+\begin{pyframe}{Parsing logs: a simple solution}
 \begin{pythoncode}
 def parse_line(line):
     import re
@@ -218,4 +217,4 @@ def parse_line(line):
         dest = None
     return (hour, host, dest)
 \end{pythoncode}
-\end{frame}
+\end{pyframe}

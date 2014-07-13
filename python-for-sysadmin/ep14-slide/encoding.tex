@@ -1,18 +1,19 @@
 \section{Encoding: 10'}
 
-\begin{frame}[fragile]{Encoding: Goal}
+\begin{pyframe}{Encoding: Goal}
 \Large
 \begin{itemize}
-\item A string is not a sequence of bytes
+\item A string more than a sequence of bytes
+\item \emph{A string is a couple (bytes, encoding)}
 \item Use unicode\_literals in python2
 \item Manage differently encoded filenames 
 \item A string is not a sequence of bytes
 \end{itemize}
 modules: \pymodule{os, os.path, glob}
-\end{frame}
+\end{pyframe}
 
 
-\begin{frame}{Song of \emph{C}hildhood}
+\begin{pyframe}{Song of \emph{C}hildhood}
 \begin{columns}
 
 \column[c]{.15\textwidth}
@@ -63,13 +64,12 @@ wartete es auf den ersten Schnee,
 und wartet so immer noch.
 }
 \end{columns}
-\end{frame}
+\end{pyframe}
 
-
-\begin{frame}[fragile]{Enters Encoding}
+\iffalse
+\begin{pyframe}{Encoding is a map}
 \begin{itemize}
 \item The \emph{type()} of a byte-sequence is bytes
-
 \item Encoding is a one-to-one map between a typographical character and a byte-sequence 
 \item Decoding is its reverse map
 \end{itemize}
@@ -98,15 +98,64 @@ str == bytes
             & \multicolumn{3}{|c|}{bytes}  \\ \hline
 char        & ascii     & utf-8         & cp1252     \\ \hline
 a           & [97]      & [97]          & [97]      \\ \hline     
-$\ddot{u}$  & -         & [195, 188]    & [252]              \\ \hline
+$\ddot{u}$  & -         & [195, 188]    & [\pyver{252}]              \\ \hline
 \`{e}     &  - & [196, 168] & [232]\\ \hline
 \end{tabular}
 \end{columns}
 
-\end{frame}
+\end{pyframe}
+\fi
+%%
+\begin{pyframe}{Encoding is a map}
+\begin{columns}
+\column[c]{.6\textwidth}
 
 
-\begin{frame}[fragile]{Enters Encoding}
+\begin{pythoncode*}{escapeinside=||}
+# heading $\pyver{u}$ only in py2
+the_string = |\pyver{u}|"S\u00fcd" # $S\"ud$
+
+# can be encoded in different
+in_utf8 =  the_string.encode('utf-8')
+in_win = the_string.encode('cp1252')
+
+type(in_utf8) == bytes # byte-sequences
+
+# Decoding bytes using the wrong map..
+# ...gives weird results
+in_utf8.decode('cp1252') # $S\~A\sfrac{1}{4}d$
+
+
+
+
+
+\end{pythoncode*}
+
+\column[c]{.4\textwidth}
+\begin{itemize}
+\item Encoding is a one-to-one map between a typographical character and a byte-sequence 
+\item Decoding is its reverse map
+%\item The \emph{type()} of a byte-sequence is bytes
+\end{itemize}
+
+\small
+\begin{tabular}{|c||c|c|c|}\hline 
+%            & \multicolumn{3}{|c|}{bytes}  \\ \hline
+char        & ascii     & utf-8         & cp1252     \\ \hline
+a           & [97]      & [97]          & [97]      \\ \hline     
+$\ddot{u}$  & -         & [195, 188]    & [252]              \\ \hline
+%\`{e}     &  - & [196, 168] & [232]\\ \hline
+\end{tabular}
+\end{columns}
+
+\end{pyframe}
+
+
+
+%%
+
+\iffalse
+\begin{pyframe}{De}
 \begin{itemize}
 \item A string is a couple: (bytes, encoding) 
 \item The same string can be encoded using different maps.
@@ -135,9 +184,10 @@ cp1252 &([83, \pyver{252}, 100]\\
     \red{\~{A}} \blue{$\sfrac{1}{4}$}
 \end{center}
 
-\end{frame}
+\end{pyframe}
+\fi
 
-\begin{frame}[fragile]{Enters Encoding II}
+\begin{pyframe}{Enters Encoding}
 \begin{minted}[mathescape]{python}
 # Filenames are binary data! $\emph{Be careful}$ when reading from
 #  a (eg. vfat) filesystem!
@@ -151,11 +201,11 @@ basedir = "/tmp/course"
 from exercises import create_wuerstelstrasse
 create_wuerstelstrasse(basedir)
 \end{minted}
-\end{frame}
+\end{pyframe}
 
 
-
-\begin{frame}[fragile]{Encoded filenames}
+\iffalse
+\begin{pyframe}{Encoded filenames}
 \begin{pythoncode*}{escapeinside=||}
 # What happens mangling them with the $\emph{os}$ module?
 from os.path import join as pjoin
@@ -170,9 +220,9 @@ create_full_path = pjoin(basedir, list_files_with[0])
 #    in position 2: ordinal not in range(128)
 |\pyver{0xFC}| == 252 # remember the $\"u$ in cp1252 map? 
 \end{pythoncode*}
-\end{frame}
+\end{pyframe}
 
-\begin{frame}[fragile]{Encoded filenames II}
+\begin{pyframe}{Encoded filenames II}
 \begin{pythoncode*}{escapeinside=||}
 
 # $\emph{os.path}$ on py2 fails mangling those files as encoded strings
@@ -186,26 +236,28 @@ for f in files: # listdir is already safe ;)
     print("file: {!r}".format(utf_path))
     
 \end{pythoncode*}
-\end{frame}
+\end{pyframe}
+\fi
 
-\begin{frame}[fragile]{Encoded filenames: glob}
+\begin{pyframe}{Encoded filenames: glob}
 \begin{pythoncode*}{escapeinside=||}
-from glob import glob # expands wildcards like a shell. 
+from glob import glob as ls # expands wildcards like a shell. 
+files = ls("/tmp/course/*.txt") # To avoid encoding issues ...
+# $\red{UnicodeDecodeError:}$ 'ascii' codec can't decode $\pyver{byte 0xFC}$
+|\pyver{0xFC}| == 252 # remember the $\"u$ in cp1252 map? 
 
-# To avoid encoding issues like the following...
-files = glob("/tmp/course/*.txt") 
-
-for f in glob(|\pyver{b}|"/tmp/course/*.txt"):
+for f in ls(|\pyver{b}|"/tmp/course/*.txt"):
     try: # ...we explicitly use byte-sequences
-        print("file: {!r}".format(f))
+        print("file: {!s}".format(f))
     except UnicodeDecodeError as e:
+        # and use $\pyver{"{!r}"}$.format to avoid further encoding
         print("Error decoding {!r}".format(f))
 
 \end{pythoncode*}
-\end{frame}
+\end{pyframe}
 
 
-\begin{frame}[fragile]{Encoded filenames: Complete Example}
+\begin{pyframe}{Encoded filenames: Complete Example}
 \begin{minted}[mathescape]{python}
 def list_files(basedir):
     """Works both if isinstance(basedir, unicode)
@@ -213,7 +265,7 @@ def list_files(basedir):
     for f in ls(basedir):
         try:
             utf_or_byte_path = pjoin(basedir, f)
-            print("file: {!r}".format(utf_or_byte_path))
+            print("file: {!s}".format(utf_or_byte_path))
         except UnicodeDecodeError as e:
             print("Error decoding {!r}".format(f))
 
@@ -222,4 +274,4 @@ list_files(basedir)     # which one ...
 list_files(bytebasedir) # ...will work?
     
 \end{minted}
-\end{frame}
+\end{pyframe}

@@ -1,19 +1,19 @@
 \section{Path management: 10'}
 
-\begin{frame}[fragile]{Path management: Goal}
+\begin{pyframe}{Path management: Goal}
 \Large
 \begin{itemize}
 \item Normalize paths on different platform
 \item Create, copy and remove folders
 \item Handle errors
 \end{itemize}
-modules: \emph{os, os.path, shutil, errno}
-\end{frame}
+modules: \pymodule{os, os.path, shutil, errno}
+\end{pyframe}
 
-\begin{frame}[fragile]{Path management: os.path, sys}
+\begin{pyframe}{Path management: os.path, sys}
 % This slide is the core one. Required for data gathering!
-\begin{minted}[mathescape]{python}
-basedir, hosts = "/", "etc/hosts"
+\begin{pythoncode*}{escapeinside=||}
+basedir, hosts = "/", "etc/hosts" 
 # Check the hosting platform with the sys module
 from sys import platform
 if platform.startswith('win'):
@@ -24,10 +24,10 @@ from os.path import join, normpath
 hosts = join(basedir, hosts)
 hosts = normpath(hosts)
 print("Normalized path is", hosts)
-\end{minted}
-\end{frame}
+\end{pythoncode*}
+\end{pyframe}
 
-\begin{frame}[fragile]{Path management: os.path, sys}
+\begin{pyframe}{Path management: os.path, sys}
 \Large
 \begin{itemize}
 \item \emph{os.path} is the best way to manage paths!
@@ -37,15 +37,15 @@ print("Normalized path is", hosts)
  \item safe
  \end{itemize}
  
-\item \emph{normpath} fixes "/" orientation and sanitizes ".."
 \item \emph{join} removes redundant "/"
+\item \emph{normpath} fixes "/" orientation and redundant ".."
+\item \emph{realpath} resolves symlinks
 \end{itemize}
-And now, a rapid glance to other tools $\ldots$
-\end{frame}
+And now, a rapid glance to other tools \ellipsis
+\end{pyframe}
 
-\begin{frame}[fragile]{Move trees: shutil, os, os.path}
-\begin{minted}[mathescape]{python}
-# os and shutil can perform...
+\begin{pyframe}{Move trees: shutil, os, os.path}
+\begin{pythoncode}
 from os import makedirs     # ...tree creation...
 from shutil import copytree, rmtree 
 makedirs("/tmp/course/foo/bar")
@@ -54,29 +54,28 @@ makedirs("/tmp/course/foo/bar")
 from os.path import isdir            
 assert isdir("/tmp/course/foo/bar")
 
-# copy a whole tree... check it...
+# We can copy a whole tree... check it...
 copytree("/tmp/course/foo", "/tmp/course/foo2") 
 assert isdir("/tmp/course/foo2/bar")            
-
 rmtree("/tmp/course/foo") # ... and delete it
 assert not isdir("/tmp/course/foo/bar")
-\end{minted}
-\end{frame}
+\end{pythoncode}
+\end{pyframe}
 
-\begin{frame}[fragile]{Move trees: errno}
-\begin{minted}[mathescape]{python}
+\begin{pyframe}{Move trees: errno}
+\begin{pythoncode}
 
 # We can use exception handlers to investigate errors
-   try:
-        # python2 does not allow to ignore
-        #  already existing directories...
-        makedirs("/tmp/course/foo/bar")
-        #  ...and raises an OSError
-    except OSError as e:
-        # Just use the errno module to
-        #  check the error value
-        import errno
-        assert e.errno == errno.EEXIST
-\end{minted}
-\end{frame}
+try:
+    # python2 does not allow to ignore existing directories...
+    makedirs("/tmp/course/foo/bar")
+    #  ...and raises an OSError
+except OSError as e:
+    # Just use the errno module to heck the error value
+    import errno
+    assert e.errno == errno.EEXIST
+    
+help(makedirs)
+\end{pythoncode}
+\end{pyframe}
 

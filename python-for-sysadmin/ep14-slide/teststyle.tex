@@ -1,30 +1,33 @@
 
 \section{Test}
 
+\begin{pyframe}{Title}
+Antani
+\end{pyframe}
 
-\begin{frame}[fragile]{Test Slide with styles}
+\begin{pyframe}{Test Slide with styles}
 \begin{itemize}
-\item Bullet \index{Bullet} item 0 $\tikzmarkin<1>{a1}a_i\tikzmarkend{a1} + b_j = 10 $
+\item Bullet \index{Bullet} item 0 $a_i + b_j = 10 $
 \item Bullet \index{Bullet} item 2 with code\footnote{Do you like footnotes?}
 \begin{minted}[mathescape]{python}
     # footnotesize
     for  a in range(10):
-    !  \tikzmarkin<1->{b}yield a\tkizmarkend{b}
+        yield a
     # $\xmapsto[encode]{utf-8}$
     # $a \rightarrow b^{c}$
     |\index{return}return| False
-\end{minted}
-\item Bullet Item 3 \pdfmarkupcomment[markup=Underline,color=black,author=Foo]{$a_i$}{Comment} $ + b_j = 10 $
+\end{minted}gre
+\item Bullet Item 3 
 \end{itemize}
-\end{frame}
+\end{pyframe}
 
-\begin{frame}[fragile]{Test Slide with styles}
+\begin{pyframe}{Test Slide with styles}
 \begin{enumerate}
 \item Enumerate1 \index{enumerate} \pdfcomment{Pdf Comment Test Slide with styles}
     \begin{enumerate}
     \item EnumerateA  \pyver{w\"urstel re}sults
     \item \texttt{Inline minted ipython}
-    \item Una linea \pdfmarkupcomment[markup=Underline,color=black,author=Gumbo]{Altro commento  \#}{This is the injected part of a SQL injection}
+    \item Una linea 
     \item w\"urstelstra\ss e
     \end{enumerate}
 
@@ -40,9 +43,9 @@ def foo(tmp):
 
 \end{enumerate}
 
-\end{frame}
+\end{pyframe}
 
-\begin{frame}[fragile]{Tabular and image}
+\begin{pyframe}{Tabular and image}
 A Tabular follows \\
 \begin{tabular}{|c|c|}\hline
 Cell 1 & Cell 2 \\
@@ -55,9 +58,9 @@ Cell 1 & Cell 2 \\
 \hline 
 \end{tabular}
 \end{table}
-\end{frame}
+\end{pyframe}
 
-\begin{frame}[fragile]{Simple Column}
+\begin{pyframe}{Simple Column}
 \begin{columns}
 \column[t]{5cm}
 \begin{pythoncode}
@@ -78,10 +81,10 @@ for x in rtt:
 -skip-\\
 \includegraphics[height=4cm]{ping_distribution.pdf}  
 \end{columns}
-\end{frame}
+\end{pyframe}
 
 
-\begin{frame}[fragile]{2-columns and verbatim}
+\begin{pyframe}{2-columns and verbatim}
 Two columns
 \begin{columns}
 
@@ -99,11 +102,11 @@ Two columns
 \includegraphics[height=4cm]{ping_distribution.pdf}  
 \end{columns}
 
-\end{frame}
+\end{pyframe}
 
 
 
-\begin{frame}[fragile]{Simple processing: distribution}
+\begin{pyframe}{Simple processing: distribution}
 \begin{columns}
 \column[t]{5cm}
 \begin{pythoncode}
@@ -136,11 +139,11 @@ a
 \includegraphics[width=4cm]{ping_distribution.pdf}  
 \end{columns}
 %Homework: which is faster?
-\end{frame}
+\end{pyframe}
 
-\begin{frame}{Index}
+\begin{pyframe}{Index}
 \printindex
 
 fooo bar
 
-\end{frame}
+\end{pyframe}

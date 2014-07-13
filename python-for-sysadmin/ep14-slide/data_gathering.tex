@@ -4,7 +4,7 @@
 %
 
 
-\begin{frame}{Data Gathering: Goal}
+\begin{pyframe}{Data Gathering: Goal}
     Gathering System Data with multiplatform
      and platform-dependent tools.
 \begin{itemize}
@@ -14,10 +14,10 @@
 \item Parse files with a strategy
 \end{itemize}
 modules: \pymodule{psutil, subprocess, os}
-\end{frame}
+\end{pyframe}
 
 
-\begin{frame}[fragile]{Data Gathering: grep}
+\begin{pyframe}{Data Gathering: grep}
 \begin{pythoncode}
 def grep(needle, fpath):
     """is a minimal grep implementation
@@ -31,10 +31,10 @@ def grep(needle, fpath):
 # Do we have "localhost" in our "/etc/hosts"?
 grep("localhost", "/etc/hosts")
 \end{pythoncode}
-\end{frame}
+\end{pyframe}
 
 \subsection{module: psutil}
-\begin{frame}[fragile]{Data Gathering: psutil}
+\begin{pyframe}{Data Gathering: psutil}
 \begin{pythoncode}
 # The psutil module is very nice!
 import psutil
@@ -47,10 +47,10 @@ psutil.disk_io_counters()
 
 \end{pythoncode}
 Exercise: Which other information does psutil provide?
-\end{frame}
+\end{pyframe}
 
 
-\begin{frame}[fragile]{Data Gathering: Exercises}
+\begin{pyframe}{Data Gathering: Exercises}
 Write a vmstat-like function printing every second:
 \begin{itemize}
 \item cpu usage \% ;
@@ -58,15 +58,13 @@ Write a vmstat-like function printing every second:
 \item bytes written;
 \item Hint: use psutil, time.sleep(1)
 \end{itemize}
-\end{frame}
+\end{pyframe}
 
 \subsection{module: subprocess}
-\begin{frame}[fragile]{Data Gathering: subprocess}
+\begin{pyframe}{Data Gathering: subprocess}
 \begin{pythoncode}
-# While 
-from os import system
+from os import system # is a shortcut to run programs using a shell
 
-# is a shortcut to run programs using a shell
 ret = system("ping -w1 -c1 www.google.com")
 assert ret == 0, "Can't ping google"
 
@@ -77,38 +75,40 @@ out = check_output("ping -w1 -c1 www.google.com")
 
 print(ret, out)
 \end{pythoncode}
-\end{frame}
+\end{pyframe}
 
-\begin{frame}[fragile]{Data Gathering: subprocess, sys}
+\begin{pyframe}{Data Gathering: subprocess, sys}
 \begin{pythoncode*}{escapeinside=||}
 def sh(cmd, timeout=0, shell=False):
-  """"Returns the output of a given command using... """
-  from subprocess import |\emph{check_output}| # ...and tests...
-  from sys import version_info as |\emph{python_version}|
-  if python_version < (3, 3): # ..before using...
-    if |\emph{timeout}|:
-      raise ValueError("Timeout not supported until v3.3")
-    output = check_output(cmd.split(), shell=shell)
-  else:
-    output = check_output(cmd.split(), shell=shell, \
+    """"Returns the output of a given command using... """
+    from subprocess import |\emph{check_output}| # ...and tests...
+    from sys import version_info as |\emph{python_version}|
+    if python_version < (3, 3): # ..before using...
+      if |\emph{timeout}|:
+        raise ValueError("Timeout not supported until v3.3")
+      output = check_output(cmd.split(), shell=shell)
+    else:
+      output = check_output(cmd.split(), shell=shell, \
                           timeout=timeout)
-  return output.splitlines()
+    return output.splitlines()
+    
+    
     
 \end{pythoncode*}
-\end{frame}
+\end{pyframe}
 
-\begin{frame}[fragile]{Data Gathering: Exercises}
+\begin{pyframe}{Data Gathering: Exercises}
 Write a simple pgrep-like function for your OS which:
 \begin{itemize}
 \item takes one parameter: `program`;
-\item return a list of processes executing `program`;
+\item prints a list of processes executing `program`;
 \item Hint: use \pymodule{subprocess, os}, and list-comprehension
 \end{itemize}
-\end{frame}
+\end{pyframe}
 
 
 \subsection{The /proc filesystem}
-\begin{frame}[fragile]{Data Gathering: Parsing /proc I}
+\begin{pyframe}{Data Gathering: Parsing /proc I}
 \begin{pythoncode*}{escapeinside=||}
 
 def linux_threads(pid):
@@ -124,32 +124,32 @@ def linux_threads(pid):
         if x.|\pyver{startswith}|(t_info)] #  accepts tuples!
     print(t_data)
 \end{pythoncode*}
-\end{frame}
+\end{pyframe}
 
 
 
-\begin{frame}[fragile]{Data Gathering: Parsing /proc II}
+\begin{pyframe}{Data Gathering: Parsing /proc II}
 \begin{pythoncode*}{escapeinside=||}
 # On Linux, /proc/diskstats is the source of I/O infos
 disk_l = grep("sda", "/proc/diskstats")
 
 # To gather that data we put the headers in a multi-line string
-head = ('major minor device'
+headers = ('major minor device'
         ' reads reads_merged reads_sectors reads_ms'
         ' writes writes_merged writes_sectors writes_ms'
         ' io_in_progress io_ms_spent io_ms_weight').|\pyver{split()}|
         
 disk_info = disk_l[0].split() # Take the 1st entry, split the datas ...
-zip(head, disk_info)          # ...and tie them with the headers
+zip(headers, disk_info)          # ...and tie them with the headers
 list(_) # On py3 you need to iterate the generator!
 \end{pythoncode*}
-\end{frame}
+\end{pyframe}
 
-\begin{frame}[fragile]{Data Gathering: Parsing /proc III}
+\begin{pyframe}{Data Gathering: Parsing /proc III}
 \begin{pythoncode}
 # Or create a reusable commodity structure with
 from collections import namedtuple
-DiskStats = namedtuple('DiskStat', info, verbose=True)
+DiskStats = namedtuple('DiskStat', headers, verbose=True)
 
 dstat = DiskStats(*disk_info)
 dstat.device, dstat.writes_ms
@@ -157,15 +157,15 @@ dstat.device, dstat.writes_ms
 # Homework: check further features with
 help(collections) 
 \end{pythoncode}
-\end{frame}
+\end{pyframe}
 
 
 %%
 \iffalse
-\begin{frame}[fragile]{Data Gathering: subprocess}
+\begin{pyframe}{Data Gathering: subprocess}
 \begin{pythoncode}
 # foo
 \end{pythoncode}
-\end{frame}
+\end{pyframe}
 
 \fi
