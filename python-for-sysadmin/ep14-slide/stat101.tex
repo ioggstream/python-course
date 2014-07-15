@@ -1,0 +1,110 @@
+\documentclass{beamer}[10]
+
+
+%
+% macro
+%
+
+\input{babelstyle.tex}
+
+\title{Python for System Administrator}
+\subtitle{EuroPython 2014, $24^{th}$ July - Berlin}
+\author{Roberto Polli - \href{mailto:roberto.polli@babel.it}{roberto.polli@babel.it}}
+\date{24 July 2014}
+\institute{Babel Srl P.zza S. Benedetto da Norcia, 33\\ 
+    00040, Pomezia (RM) - www.babel.it}
+
+%
+%
+\begin{document}
+
+%% cover
+\frame{\titlepage 
+\vspace{-0.5cm}
+}
+
+%% agenda
+\frame{\frametitle{Agenda}
+\tiny
+\tableofcontents%[pausesection]
+}
+
+
+%\input{teststyle.tex}
+
+\input{intro.tex}
+
+\begin{pyframe}{A Communication Issue}
+- A message-forwarding infrastructure
+- Episodic delays on some nodes
+- Logs traces: message size, #peers, errors, retries
+- Find the conditions related to the delays
+\end{pyframe}
+
+
+\begin{pyframe}{Gathering data}
+The most time-consuming part of the analysis
+- Parse log file with a strategy
+- Collect log samples and tinker in ipython
+- Write simple parsing library with tests
+\end{pyframe}
+
+
+\begin{pyframe}{Gathering data}
+\begin{pycode}
+# Use dict + zip to convert
+data = [('timestamp', 'elapsed', 'error', 'retry', 'size', 'peers'),
+(1379703191, 0.12, 2, 1, 123, 2313),
+(1379703192, 12.43, 0, 1, 3223, 2303),
+...
+(1379 709000, 0.43, 0, 1, 3223, 2303)
+]
+# in
+table = dict(zip(data[0],  zip(*data[1:]) ))
+> { 'timestamp' : [ 1379703191, 1379703191, ..., 1379709000],
+'elapsed': [0.12, 12.43, ..., 0.43],
+... }
+
+\end{pycode}
+\end{pyframe}
+
+\begin{pyframe}{Basic statistics}
+Python provides basic statistics
+\begin{pycode}
+from scipy.stats import mean, std
+print([k, max(v), min(v), mean(v), std(v) ] 
+    for k,v in table.items() ])
+\end{pycode}
+\end{pyframe}
+
+
+\begin{pyframe}{Distributions}
+Data distribution shows event frequency. 
+The plot shows a ping rtt distribution: the event is 
+ expressed by range (eg. rtt in $[0,5)ms,[5,10)ms$)
+\begin{pycode}
+# The fastest way to get a distribution is
+from matplotlib import pyplot as plt
+frequency, values, _  = plt.hist(table['elapsed'])
+zip(values, frequency)
+\end{pycode}
+\includegraphics[width=5cm,height=5cm]{ping_distribution.pdf}
+\end{pyframe}
+
+
+\begin{pyframe}{Time and Size distribution}
+Frequency can be calculate on time or size
+Time distribution: mail sent in 4hours bucket
+\begin{pycode}
+from matplotlib import pyplot as plt
+frequency, values, _  = plt.hist(table['elapsed'])
+zip(values, frequency)
+\end{pycode}
+\includegraphics[width=5cm,height=5cm]{distribution.pdf}
+\end{pyframe}
+
+
+
+
+
+\end{document}
