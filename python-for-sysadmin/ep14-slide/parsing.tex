@@ -34,7 +34,7 @@ modules: \pymodule{re, nose, \%timeit}
 
 
 \begin{pyframe}{Parsing postfix logs}
-\begin{pythoncode}
+\begin{pycode}
 # Before writing the parser, collect samples of
 #  the interesting lines. For now just 
 from examples import mail_sent, mail_delivered
@@ -46,12 +46,12 @@ def test_for_sent_mail():
     assert host == 'test-fe1'
     assert destination = 'antani2@example.it'
 
-\end{pythoncode}
+\end{pycode}
 \end{pyframe}
 
 
 \begin{pyframe}{Parsing lines: split, zip}
-\begin{pythoncode}
+\begin{pycode}
 mail_sent.split()   # Start using basic strings in ipython
 
 # Then tie them with zip/zip() 
@@ -64,7 +64,7 @@ _, _, hour, host, _, _, dest = fields
 # or pick fields singularly
 hour, host, dest = fields[3], fields[4], fields[7]
 
-\end{pythoncode}
+\end{pycode}
 \end{pyframe}
 
 
@@ -73,12 +73,12 @@ In \emph{another} window
 \begin{itemize}
 \item edit 03\_ parsing\_ test.py
 \item complete the \code{parse\_line(line)} function
-\begin{pythoncode}
+\begin{pycode}
 def parse_line(line):
     """Write your function and test it
         with test_sent()"""
     raise NotImplementedError
-\end{pythoncode}
+\end{pycode}
 \end{itemize}
 \pyver{\\\%paste} your solution's code in iPython and run manually
 the test functions
@@ -89,7 +89,7 @@ the test functions
 \subsection{Regular Expressions}
 
 \begin{pyframe}{Python Regexp}
-\begin{pythoncode*}{escapeinside=||}
+\begin{pycode*}{escapeinside=||}
 # Python supports regular expressions via
 import re
 
@@ -102,11 +102,11 @@ def grep(expr, fpath):
     with open(fpath) as fp:
         return [x for x in fp if one.|\emph{search}|(x)]
 
-\end{pythoncode*}
+\end{pycode*}
 \end{pyframe}
 
 \begin{pyframe}{Splitting with re.split}
-\begin{pythoncode}
+\begin{pycode}
 from re import split # is a very nice function
 
 # Let's gather some ping stats
@@ -119,12 +119,12 @@ else: # 'darwin' in sys.platform?
     
 ping_output = [ split("[ =", x) for x in sh(cmd)]
 
-\end{pythoncode}
+\end{pycode}
 \end{pyframe}
 
 
 \begin{pyframe}{Splitting with re.findall}
-\begin{pythoncode}
+\begin{pycode}
 from re import findall # can be misused too ;)
 
 # eg. for adding the ":" to a 
@@ -135,7 +135,7 @@ re_hex = '[0-9a-fA-F]'
 mac = ':'.join(findall(re_hex, mac_address))
 print("The mac address is ", mac)
 
-\end{pythoncode}
+\end{pycode}
 \emph{Actually this does a bit of validation, 
  requiring all chars to be in the 0-F range}
 \end{pyframe}
@@ -147,22 +147,22 @@ print("The mac address is ", mac)
 \begin{itemize}
 \item Parsing big files needs benchmarks.
 iPython \emph{\%timeit} magic is a good starting point.
-\begin{pythoncode*}{escapeinside=||}
+\begin{pycode*}{escapeinside=||}
 
 test_all_regexps = ("..", "[a-f0-9]{2}")
 for re_s in test_all_regexps:
     |\pyver{\%timeit}| ':'.join(|\pyfunction{findall}|(re_s, mac_address))
 
-\end{pythoncode*}
+\end{pycode*}
 \item We can even compare compiled and inline regexp
-\begin{pythoncode*}{escapeinside=||}
+\begin{pycode*}{escapeinside=||}
 
 test_all_regexps = ("..", "[a-f0-9]{2}")
 for re_s in test_all_regexps:
     re_c = re.|\pyfunction{compile}|(re_s)
     |\pyver{\%timeit}| ':'.join(re_c.|\pyfunction{findall}|(mac_address))
 
-\end{pythoncode*}
+\end{pycode*}
 \end{itemize}
 \end{pyframe}
 
@@ -172,14 +172,14 @@ for re_s in test_all_regexps:
 Or find other methods: 
 \begin{itemize}
 \item complex...
-\begin{pythoncode}
+\begin{pycode}
 from re import sub as sed
 %timeit sed(r'(..)', r'\1:', mac_address)
-\end{pythoncode}
+\end{pycode}
 \item ...or simple
-\begin{pythoncode}
+\begin{pycode}
 %timeit ':'.join([ mac_address[i:i+2] for i in range(0,12,2)])
-\end{pythoncode}
+\end{pycode}
 \item Outside iPython check the \pymodule{timeit} module
 \end{itemize}
 \end{pyframe}
@@ -187,7 +187,7 @@ from re import sub as sed
 %
 
 \begin{pyframe}{Parsing: a real world Example}
-\begin{pythoncode}
+\begin{pycode}
 # Generate a VSAN configuration using linux 
 #  FC information from /sys filesystem
 fc_id_path = "/sys/class/fc_host/host*/port_name"
@@ -199,12 +199,12 @@ for x in glob.glob(fc_id_path):
     pwwn = re.findall(r'..', pwwn)
     print("member pwwn ", ':'.join(pwwn))
 
-\end{pythoncode}
+\end{pycode}
 \end{pyframe}
 
 %%
 \begin{pyframe}{Parsing logs: a simple solution}
-\begin{pythoncode}
+\begin{pycode}
 def parse_line(line):
     import re
     # using _ we improve readability
@@ -216,5 +216,5 @@ def parse_line(line):
         # ...we set it to None
         dest = None
     return (hour, host, dest)
-\end{pythoncode}
+\end{pycode}
 \end{pyframe}

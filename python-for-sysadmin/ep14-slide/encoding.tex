@@ -76,8 +76,8 @@ und wartet so immer noch.
 
 \begin{columns}
 \column[c]{.6\textwidth}
-\begin{pythoncode*}{escapeinside=||}
-# heading $\pyver{u}$ only in py2
+\begin{pycode*}{escapeinside=||}
+# heading $\pyver{u}$ only py2 and py3.3+
 b1 = |\pyver{u}|"S\u00fcd".encode('utf-8') 
 b2 = |\pyver{u}|"S\u00fcd".encode('cp1252')
 
@@ -90,7 +90,7 @@ str == bytes
 
 
 
-\end{pythoncode*}
+\end{pycode*}
 
 \column[c]{.4\textwidth}
 \small
@@ -111,9 +111,9 @@ $\ddot{u}$  & -         & [195, 188]    & [\pyver{252}]              \\ \hline
 \column[c]{.6\textwidth}
 
 
-\begin{pythoncode*}{escapeinside=||}
+\begin{pycode*}{escapeinside=||}
 # heading $\pyver{u}$ only in py2
-the_string = |\pyver{u}|"S\u00fcd" # $S\"ud$
+the_string = |\pyver{u}|"S\u00fcd" # $S\ddot{u}d$
 
 # can be encoded in different
 in_utf8 =  the_string.encode('utf-8')
@@ -123,13 +123,13 @@ type(in_utf8) == bytes # byte-sequences
 
 # Decoding bytes using the wrong map..
 # ...gives weird results
-in_utf8.decode('cp1252') # $S\~A\sfrac{1}{4}d$
+in_utf8.decode('cp1252') # $S\tilde{A}\sfrac{1}{4}d$
 
 
 
 
 
-\end{pythoncode*}
+\end{pycode*}
 
 \column[c]{.4\textwidth}
 \begin{itemize}
@@ -206,8 +206,8 @@ create_wuerstelstrasse(basedir)
 
 \iffalse
 \begin{pyframe}{Encoded filenames}
-\begin{pythoncode*}{escapeinside=||}
-# What happens mangling them with the $\emph{os}$ module?
+\begin{pycode*}{escapeinside=||}
+# What happens mangling them with the $\pymodule{os}$ module?
 from os.path import join as pjoin
 from os import listdir as ls       # similar to unix ls ;)
 
@@ -218,14 +218,14 @@ create_full_path = pjoin(basedir, list_files_with[0])
 
 # $\emphred{UnicodeDecodeError:}$ 'ascii' codec can't decode $\pyver{byte 0xFC}$
 #    in position 2: ordinal not in range(128)
-|\pyver{0xFC}| == 252 # remember the $\"u$ in cp1252 map? 
-\end{pythoncode*}
+|\pyver{0xFC}| == 252 # remember the $\ddot{u}$ in cp1252 map? 
+\end{pycode*}
 \end{pyframe}
 
 \begin{pyframe}{Encoded filenames II}
-\begin{pythoncode*}{escapeinside=||}
+\begin{pycode*}{escapeinside=||}
 
-# $\emph{os.path}$ on py2 fails mangling those files as encoded strings
+# $\pymodule{os.path}$ on py2 fails mangling those files as encoded strings
 #  so we ask it to mangle them as $\emph{bytes}$
 bytebasedir = bytes(basedir)
 
@@ -235,30 +235,26 @@ for f in files: # listdir is already safe ;)
     #     issues when printing or logging
     print("file: {!r}".format(utf_path))
     
-\end{pythoncode*}
+\end{pycode*}
 \end{pyframe}
 \fi
 
 \begin{pyframe}{Encoded filenames: glob}
-\begin{pythoncode*}{escapeinside=||}
+\begin{pycode*}{escapeinside=||}
 from glob import glob as ls # expands wildcards like a shell. 
+
 files = ls("/tmp/course/*.txt") # To avoid encoding issues ...
 # $\red{UnicodeDecodeError:}$ 'ascii' codec can't decode $\pyver{byte 0xFC}$
-|\pyver{0xFC}| == 252 # remember the $\"u$ in cp1252 map? 
+|\pyver{0xFC}| == 252 # remember the $\ddot{u}$ in cp1252 map? 
 
-for f in ls(|\pyver{b}|"/tmp/course/*.txt"):
-    try: # ...we explicitly use byte-sequences
-        print("file: {!s}".format(f))
-    except UnicodeDecodeError as e:
-        # and use $\pyver{"{!r}"}$.format to avoid further encoding
-        print("Error decoding {!r}".format(f))
+files = ls(|\pyver{b}|"/tmp/course/*.txt") #..we explicitly use bytes
 
-\end{pythoncode*}
+\end{pycode*}
 \end{pyframe}
 
-
+\iffalse
 \begin{pyframe}{Encoded filenames: Complete Example}
-\begin{minted}[mathescape]{python}
+\begin{pycode}
 def list_files(basedir):
     """Works both if isinstance(basedir, unicode)
         or isinstance(basedir, bytes)"""
@@ -273,5 +269,6 @@ bytebasedir = bytes(basedir)
 list_files(basedir)     # which one ...
 list_files(bytebasedir) # ...will work?
     
-\end{minted}
+\end{pycode}
 \end{pyframe}
+\fi

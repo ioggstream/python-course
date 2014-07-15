@@ -18,7 +18,7 @@ modules: \pymodule{psutil, subprocess, os}
 
 
 \begin{pyframe}{Data Gathering: grep}
-\begin{pythoncode}
+\begin{pycode}
 def grep(needle, fpath):
     """is a minimal grep implementation
 
@@ -30,12 +30,12 @@ def grep(needle, fpath):
     
 # Do we have "localhost" in our "/etc/hosts"?
 grep("localhost", "/etc/hosts")
-\end{pythoncode}
+\end{pycode}
 \end{pyframe}
 
 \subsection{module: psutil}
 \begin{pyframe}{Data Gathering: psutil}
-\begin{pythoncode}
+\begin{pycode}
 # The psutil module is very nice!
 import psutil
 
@@ -45,7 +45,7 @@ psutil.cpu_percent()
 # And its output is easy to manage
 psutil.disk_io_counters()
 
-\end{pythoncode}
+\end{pycode}
 Exercise: Which other information does psutil provide?
 \end{pyframe}
 
@@ -62,7 +62,7 @@ Write a vmstat-like function printing every second:
 
 \subsection{module: subprocess}
 \begin{pyframe}{Data Gathering: subprocess}
-\begin{pythoncode}
+\begin{pycode}
 from os import system # is a shortcut to run programs using a shell
 
 ret = system("ping -w1 -c1 www.google.com")
@@ -74,27 +74,26 @@ from subprocess import check_output
 out = check_output("ping -w1 -c1 www.google.com")
 
 print(ret, out)
-\end{pythoncode}
+\end{pycode}
 \end{pyframe}
 
 \begin{pyframe}{Data Gathering: subprocess, sys}
-\begin{pythoncode*}{escapeinside=||}
+\begin{pycode*}{escapeinside=||}
 def sh(cmd, timeout=0, shell=False):
-    """"Returns the output of a given command using... """
-    from subprocess import |\emph{check_output}| # ...and tests...
-    from sys import version_info as |\emph{python_version}|
+    """Returns the output of a given command using... """
+    from subprocess import |\emph{check\_output}| # ...and tests...
+    from sys import version_info as |\emph{python\_version}|
     if python_version < (3, 3): # ..before using...
       if |\emph{timeout}|:
         raise ValueError("Timeout not supported until v3.3")
       output = check_output(cmd.split(), shell=shell)
     else:
-      output = check_output(cmd.split(), shell=shell, \
-                          timeout=timeout)
+      output = check_output(cmd.split(), shell=shell, timeout=timeout)
     return output.splitlines()
     
     
     
-\end{pythoncode*}
+\end{pycode*}
 \end{pyframe}
 
 \begin{pyframe}{Data Gathering: Exercises}
@@ -109,27 +108,27 @@ Write a simple pgrep-like function for your OS which:
 
 \subsection{The /proc filesystem}
 \begin{pyframe}{Data Gathering: Parsing /proc I}
-\begin{pythoncode*}{escapeinside=||}
+\begin{pycode*}{escapeinside=||}
 
 def linux_threads(pid):
   """The Linux /proc filesystem is a cool place to get infos."""
-  import glob # emulates shell expansion of * and ?
+  from glob import glob  # replaces * and ?
   path = "/proc/{}/task/*/status".format(pid)
   
   # Pick a set of fields to gather...
   t_info = ('Pid', 'Tgid', 'voluntary') # a tuple
-  for t in glob.glob(path):
+  for t in glob(path):
     # ...and use comprehension to get interesting data.
     t_data = [x for x in open(t) 
         if x.|\pyver{startswith}|(t_info)] #  accepts tuples!
     print(t_data)
-\end{pythoncode*}
+\end{pycode*}
 \end{pyframe}
 
 
 
 \begin{pyframe}{Data Gathering: Parsing /proc II}
-\begin{pythoncode*}{escapeinside=||}
+\begin{pycode*}{escapeinside=||}
 # On Linux, /proc/diskstats is the source of I/O infos
 disk_l = grep("sda", "/proc/diskstats")
 
@@ -142,30 +141,32 @@ headers = ('major minor device'
 disk_info = disk_l[0].split() # Take the 1st entry, split the datas ...
 zip(headers, disk_info)          # ...and tie them with the headers
 list(_) # On py3 you need to iterate the generator!
-\end{pythoncode*}
+\end{pycode*}
 \end{pyframe}
 
 \begin{pyframe}{Data Gathering: Parsing /proc III}
-\begin{pythoncode}
-# Or create a reusable commodity structure with
+\begin{pycode*}{escapeinside=||}
+# Or create a reusable commodity class with
 from collections import namedtuple
-DiskStats = namedtuple('DiskStat', headers, verbose=True)
+# using $\pyver{headers}$ as attributes
+DiskStats = namedtuple('DiskStat', |\pyver{headers}|, verbose=True)
 
+# ... and disk_info as values
 dstat = DiskStats(*disk_info)
 dstat.device, dstat.writes_ms
 
 # Homework: check further features with
 help(collections) 
-\end{pythoncode}
+\end{pycode*}
 \end{pyframe}
 
 
 %%
 \iffalse
 \begin{pyframe}{Data Gathering: subprocess}
-\begin{pythoncode}
+\begin{pycode}
 # foo
-\end{pythoncode}
+\end{pycode}
 \end{pyframe}
 
 \fi

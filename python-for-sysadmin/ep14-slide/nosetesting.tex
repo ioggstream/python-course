@@ -2,7 +2,7 @@
 
 
 \begin{pyframe}{Parsing logs: II}
-\begin{pythoncode}
+\begin{pycode}
 # Now another test for the delivered messages
 def test_delivered():
     hour, host, destination = parse_line(test_str_2)
@@ -13,7 +13,7 @@ def test_delivered():
 
 # Exercise: fix parse_line to work with both tests
 #  and save test
-\end{pythoncode}
+\end{pycode}
 \end{pyframe}
 
 
@@ -22,21 +22,21 @@ def test_delivered():
 \item Now run the following command from a shell
 
 \begin{minted}{bash}
-# nosetests -vs 03\_ parsing\_ test.py  
+# nosetests -vs 03\_parsing\_test.py  
 03_parsing_test.test_sent ... ok        
 03_parsing_test.test_delivered ... ok 
 Ran 2 tests in 0.001s                 
 \end{minted}
 \item Nose is a test framework.
-\item Nose runs every function matching test\_ *
-\item Nose runs every file matching test\_ *
+\item Nose runs every function matching test\_*
+\item Nose runs every file matching test\_*
 \end{itemize}
 \end{pyframe}
 
 \begin{pyframe}{Simple Test Script}
 \begin{itemize}
-\item Open a  \href{https://github.com/ioggstream/python-course/blob/master/python-for-sysadmin/02_nosetests_simple.py}{02\_nosetests\_simple.py} file
-\begin{pythoncode}
+\item Open the \href{https://github.com/ioggstream/python-course/blob/master/python-for-sysadmin/02\_nosetests\_simple.py}{02\_nosetests\_simple.py} file
+\begin{pycode}
 def setup():
     print("is run before the testsuite, while")
 def teardown():
@@ -47,15 +47,15 @@ def test_one():
 def test_two():
     # and use assert to test for success
     assert 1 == 0, "I was expecting 0" 
-\end{pythoncode}
+\end{pycode}
 \end{itemize}
 \end{pyframe}
 
 \begin{pyframe}{Complete Test Script: I}
 \begin{itemize}
-\item A more flexible script is \href{https://github.com/ioggstream/python-course/blob/master/python-for-sysadmin/02_nosetests_full.py}{02\_nosetests\_full.py}
+\item A more flexible script is \href{https://github.com/ioggstream/python-course/blob/master/python-for-sysadmin/02\_nosetests\_full.py}{02\_nosetests\_full.py}
 which uses a Test class
-\begin{minted}[mathescape]{python}
+\begin{pycode}
 class Test(object):
     @classmethod
     def setup_class(self): # is run once at startup, 
@@ -69,14 +69,14 @@ class Test(object):
         os.unlink("/tmp/test2.out")
 
  
-\end{minted} 
+\end{pycode} 
 \end{itemize}
 \end{pyframe}
 
 \begin{pyframe}{Complete Test Script: II}
 \begin{itemize}
 \item allowing pre-post testsuite and pre-post test fixtures
-\begin{minted}[mathescape]{python}
+\begin{pycode}
 class Test(object):
     ...
     # Using a Test class...
@@ -91,6 +91,6 @@ class Test(object):
     def test_a(self): 
         assert os.path.isfile("/tmp/test2.out")
  
-\end{minted}
+\end{pycode}
 \end{itemize}
 \end{pyframe}

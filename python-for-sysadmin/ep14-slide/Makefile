@@ -1,4 +1,6 @@
-all:
+OBJ=babel.pdf test.pdf
+
+all:	
 	pdflatex --shell-escape -interaction=nonstopmode babel.tex
 
 allsilent:
@@ -18,4 +20,8 @@ backup:
 	zip -r ep14-python-sysadmin.zip *.tex Makefile *.png
 
 clean:
-	rm -vf *.aux *.dvi *.log *.nav *.out *.snm *.toc *.vrb *.idx *.ind *.upa
+	rm -vf *.aux *.dvi *.log *.nav *.out *.snm *.toc *.vrb *.idx *.ind *.upa ep14-python-sysadmin.zip
+
+distclean:
+	clean
+	rm -vf babel.pdf test.pdf

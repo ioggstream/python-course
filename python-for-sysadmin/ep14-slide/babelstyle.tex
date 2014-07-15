@@ -3,17 +3,21 @@
 \usepackage[utf8]{inputenc} % use unicode chars
 \usepackage{lmodern}% http://ctan.org/pkg/lm
 \usepackage{beamerthemesplit}
-\usepackage{graphics,epsfig, subfigure}
-\usepackage{url, srcltx, hyperref}
+\usepackage{graphics,epsfig,subfigure}
+\usepackage{url,srcltx,hyperref}
 %\usepackage{srcltx}
 %\usepackage{hyperref}
 \usepackage[mathescape,escapeinside=||]{minted}
 \usepackage{import}
 \usepackage{mathtools}
+\usepackage{amsmath}
 \usepackage[usenames,dvipsnames]{color}
-\usepackage[beamer]{hf-tikz}
+%\usepackage[beamer]{hf-tikz}
 \usepackage{xfrac}
 \usepackage{makeidx}
+
+%\showboxdepth=5
+%\showboxbreadth=5
 
 % Slides in 16:9
 \usepackage[orientation=landscape,size=custom,width=16,height=9,scale=0.5,debug]{beamerposter} 
@@ -24,20 +28,21 @@
 %
 % Macros
 %
-
+\definecolor{darkred}{rgb}{0.55, 0.0, 0.0}
 \definecolor{light-gray}{gray}{.80}
 \definecolor{light-yellow}{rgb}{255,255,153}
-
+\definecolor{alizarin}{rgb}{0.82, 0.1, 0.26}
 % colorized font
-\newcommand{\red}[1] { {\color{red} #1} }
-\newcommand{\blue}[1] { {\color{blue} #1} }
-\newcommand{\green}[1] { {\color{green} #1} }
-\newcommand{\gray}[1] { {\color{gray} #1} }
-\newcommand{\grey}[1] { {\color{gray} #1} }
+\newcommand{\red}[1] {{\color{red} #1}}
+\newcommand{\darkred}[1] {{\color{darkred} #1}}
+\newcommand{\blue}[1] {{\color{blue} #1}}
+\newcommand{\green}[1] {{\color{green} #1}}
+\newcommand{\gray}[1] {{\color{gray} #1}}
+\newcommand{\grey}[1] {{\color{gray} #1}}
 
 
 % environments
-\newminted{python}{mathescape} 
+\newminted{py}{mathescape,escapeinside=||} 
 
 \newenvironment{pyframe}[2][]
   {\begin{frame}[fragile,environment=pyframe,#1]
@@ -45,11 +50,13 @@
   {\end{frame}}
   
 % python highlights: module, method
-\newcommand{\pymodule}[1] { \textbf{#1} }
-\newcommand{\pyfunction}[1] {\textit{#1}}
-\newcommand{\keyword}[1] {\texttt{#1}}
+\newcommand{\pymodule}[1]{\darkred{\textbf{#1}}}
+\newcommand{\pyfunction}[1]{\textit{#1}}
+\newcommand{\keyword}[1]{\texttt{#1}}
 \newcommand{\pyver}[1]{\colorbox{yellow}{#1}}
+\newcommand{\typeonly}[1]{\colorbox{green}{#1}}
 \newcommand{\pyvers}[1]{\raisebox{0em}{\colorbox{yellow}{#1}}}
+\newcommand{\code}[1] { \texttt{#1} }
 
 % special symbils
 \newcommand{\mymapsto}{\operatornamewithlimits{\longmapsto}}
@@ -59,7 +66,6 @@
 \def\Mapstofill@{\arrowfill@{\Mapstochar\Relbar}\Relbar\Rightarrow}
 \makeatother
 
-\newcommand{\code}[1] { \texttt{#1} }
 
 
 
@@ -82,17 +88,13 @@
  \leavevmode%
   \hbox{%
 %,bb=0 0 5cm 2cm
-    \hskip5pt
-    \includegraphics[height=1.2cm]{babel-logo.eps}
-    \hskip245pt
-    \includegraphics[height=1.2cm]{ep14-logo.eps}
+    \hspace{5pt}\includegraphics[height=1.2cm]{babel-logo.eps}
+    \hspace{240pt}\includegraphics[height=1.2cm]{ep14-logo.eps}
     }
 }
 \setbeamertemplate{footline}{
-    \hskip5pt \insertsection : \insertsubsection
-    \centerline{
-        \gray{\insertshortauthor}
-    }
+\noindent\textbf{\hspace{5pt}\insertsection \insertsubsection\hfill}\textbf{\hfill{\color{gray}\insertshortauthor}\hfill}\textbf{\hfill }
+   % \textline[t]{ \insertsection  \insertsubsection}{\gray{\insertshortauthor}}{right}
 }
 %\useinnertheme[shadow=false]{rounded}
 % frametitle

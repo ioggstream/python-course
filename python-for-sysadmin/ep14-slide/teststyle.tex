@@ -1,22 +1,23 @@
-
 \section{Test}
+\usepackage{pdfcomment}
 
 \begin{pyframe}{Title}
 Antani
+module: \pymodule{subprocess, psutil}
 \end{pyframe}
 
 \begin{pyframe}{Test Slide with styles}
 \begin{itemize}
 \item Bullet \index{Bullet} item 0 $a_i + b_j = 10 $
 \item Bullet \index{Bullet} item 2 with code\footnote{Do you like footnotes?}
-\begin{minted}[mathescape]{python}
+\begin{pycode*}{escapeinside=||}
     # footnotesize
     for  a in range(10):
         yield a
     # $\xmapsto[encode]{utf-8}$
     # $a \rightarrow b^{c}$
     |\index{return}return| False
-\end{minted}gre
+\end{pycode*}
 \item Bullet Item 3 
 \end{itemize}
 \end{pyframe}
@@ -33,13 +34,13 @@ Antani
 
 \item Enumerate2 \`{e} 
  [\red{196}, \blue{168}] 
-\begin{pythoncode*}{escapeinside=||}
+\begin{pycode*}{escapeinside=||}
 @|\pyver{decorator}|
 def foo(tmp):
     def bar(*args):
         |\index{return}return| tmp(|$*args_{i}$|)
     |\index{return}return| bar
-\end{pythoncode*}
+\end{pycode*}
 
 \end{enumerate}
 
@@ -62,8 +63,8 @@ Cell 1 & Cell 2 \\
 
 \begin{pyframe}{Simple Column}
 \begin{columns}
-\column[t]{5cm}
-\begin{pythoncode}
+\column[t]{6cm}
+\begin{pycode}
 """using set and dict
 """
 distro = {x: rtt.count(x) 
@@ -75,11 +76,11 @@ for x in rtt:
     distro[x] += 1
     
 
-\end{pythoncode}
+\end{pycode}
 \column[t]{5cm}
 -skip-\\
 -skip-\\
-\includegraphics[height=4cm]{ping_distribution.pdf}  
+\includegraphics[height=4cm, width=4dm]{ping_distribution.pdf}  
 \end{columns}
 \end{pyframe}
 
@@ -99,7 +100,7 @@ Two columns
 \end{verbatim}
 
 \column[t]{5cm}
-\includegraphics[height=4cm]{ping_distribution.pdf}  
+\includegraphics[height=4cm,width=5cm]{ping_distribution.pdf}  
 \end{columns}
 
 \end{pyframe}
@@ -108,10 +109,9 @@ Two columns
 
 \begin{pyframe}{Simple processing: distribution}
 \begin{columns}
-\column[t]{5cm}
-\begin{pythoncode}
-"""using set and dict
-"""
+\column[t]{6cm}
+\begin{pycode}
+"""using set and dict """
 distro = {x: rtt.count(x) 
   for x in set(rtt)}
 # or using a
@@ -119,30 +119,13 @@ from collections import defaultdict
 distro = defaultdict(int)
 for x in rtt:
     distro[x] += 1
-    
-a
-a
-a
-a
-a
-a
-a
-a
-a
-
-    
-    
-    
-    
-\end{pythoncode}
-\column[t]{5cm}
-\includegraphics[width=4cm]{ping_distribution.pdf}  
+\end{pycode}
+\column[t]{4cm}
+\includegraphics[width=4cm,height=4cm]{ping_distribution.pdf}  
 \end{columns}
-%Homework: which is faster?
 \end{pyframe}
 
 \begin{pyframe}{Index}
-\printindex
 
 fooo bar
 
