@@ -52,12 +52,13 @@ def touch_encoded_filenames(dirname, prefix, ext='txt', encoding='utf-8'):
 
 
 #
-# for data gathering section 
+# for data gathering section
 #
 diskstats_headers = ('major minor device'
-        ' reads reads_merged reads_sectors reads_ms'
-        ' writes writes_merged writes_sectors writes_ms'
-        ' io_in_progress io_ms_spent io_ms_weight').split()
+                     ' reads reads_merged reads_sectors reads_ms'
+                     ' writes writes_merged writes_sectors writes_ms'
+                     ' io_in_progress io_ms_spent io_ms_weight').split()
+
 
 def sh(cmd):
     """A quick and dirty check_output wrapper.
@@ -66,4 +67,3 @@ def sh(cmd):
     """
     from subprocess import check_output
     return check_output(cmd.split()).splitlines()
-

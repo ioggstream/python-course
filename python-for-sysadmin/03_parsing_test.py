@@ -33,6 +33,6 @@ def test_delivered():
 
 def parse_line(line):
     """ Complete the parse line function.
- 
+
         Without watching the solution: ICAgIGltcG9ydCByZQogICAgXywgXywgaG91ciwgaG9zdCwgXywgXywgZGVzdCA9IGxpbmUuc3BsaXQoKVs6N10KICAgIHRyeToKICAgICAgICBkZXN0ID0gcmUuc3BsaXQocidbPD5dJywgZGVzdClbMV0KICAgIGV4Y2VwdDoKICAgICAgICBkZXN0ID0gTm9uZQogICAgcmV0dXJuIChob3VyLCBob3N0LCBkZXN0KQoK"""
     raise NotImplementedError("Write me!")
