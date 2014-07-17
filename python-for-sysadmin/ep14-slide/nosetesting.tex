@@ -4,10 +4,10 @@
 \begin{pyframe}{Parsing logs: II}
 \begin{pycode}
 # Now another test for the delivered messages
+#  %edit 03_parsing_test
 def test_delivered():
     hour, host, destination = parse_line(test_str_2)
-    assert hour == '08:30:55'
-    assert host == 'test-fe1'
+    assert hour == '08:00:00'
     # Delivery logs should have destination == None
     assert destination is None
 
@@ -22,7 +22,7 @@ def test_delivered():
 \item Now run the following command from a shell
 
 \begin{minted}{bash}
-# nosetests -vs 03\_parsing\_test.py  
+# nosetests -vs 03_parsing_test.py  
 03_parsing_test.test_sent ... ok        
 03_parsing_test.test_delivered ... ok 
 Ran 2 tests in 0.001s                 
@@ -57,16 +57,16 @@ def test_two():
 which uses a Test class
 \begin{pycode}
 class Test(object):
-    @classmethod
-    def setup_class(self): # is run once at startup, 
-        # ..eg. to create database structure
-        print("setup testsuite environment")
-        open("/tmp/test2.out", "w").write("0")
+  @classmethod
+  def setup_class(self): # is run once at startup, 
+    # ..eg. to create database structure
+    print("setup testsuite environment")
+    open("/tmp/test2.out", "w").write("0")
 
-    @classmethod
-    def teardown_class(self): # is run once after all tests to...
-        print("cleanup testsuite environment")
-        os.unlink("/tmp/test2.out")
+  @classmethod
+  def teardown_class(self): # is run once after all tests to...
+    print("cleanup testsuite environment")
+    os.unlink("/tmp/test2.out")
 
  
 \end{pycode} 
@@ -78,18 +78,16 @@ class Test(object):
 \item allowing pre-post testsuite and pre-post test fixtures
 \begin{pycode}
 class Test(object):
-    ...
-    # Using a Test class...
-    def setup(self): 
-        print("is_run_before_every_test")
+  ...
+  # Using a Test class...
+  def setup(self): 
+    print("is_run_before_every_test") #..and..
+  def teardown(self): 
+    print("after_every_test") # eg truncate a table
 
-    def teardown(self): # and the same for teardown
-        # After every test, eg truncate a table
-        print("after_every_test")
-
-    # each test can use the prepared environment
-    def test_a(self): 
-        assert os.path.isfile("/tmp/test2.out")
+  # each test can use the prepared environment
+  def test_a(self): 
+    assert os.path.isfile("/tmp/test2.out")
  
 \end{pycode}
 \end{itemize}

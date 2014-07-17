@@ -48,18 +48,16 @@ And now, a rapid glance to other tools \ellipsis
 \begin{pyframe}{Move trees: shutil, os, os.path}
 \begin{pycode}
 from os import makedirs     # ...tree creation...
+from os.path import isdir   # ...checking...         
 from shutil import copytree, rmtree 
-makedirs("/tmp/course/foo/bar")
+makedirs("/tmp/py/foo/bar")
 
-# ...while os.path can test file existence
-from os.path import isdir            
-assert isdir("/tmp/course/foo/bar")
+# We can copy a whole tree and test it
+copytree("/tmp/py/foo", "/tmp/py/foo2") 
+assert isdir("/tmp/py/foo2/bar")            
 
-# We can copy a whole tree... check it...
-copytree("/tmp/course/foo", "/tmp/course/foo2") 
-assert isdir("/tmp/course/foo2/bar")            
-rmtree("/tmp/course/foo") # ... and delete it
-assert not isdir("/tmp/course/foo/bar")
+rmtree("/tmp/py/foo") # ... and finally delete it
+assert not isdir("/tmp/py/foo/bar")
 \end{pycode}
 \end{pyframe}
 
@@ -69,7 +67,7 @@ assert not isdir("/tmp/course/foo/bar")
 # We can use exception handlers to investigate errors
 try:
     # python2 does not allow to ignore existing directories...
-    |\typeonly{makedirs}|("/tmp/course/foo/bar") # (type ONLY this line)
+    |\typeonly{makedirs}|("/tmp/py/foo/bar") 
     #  ...and raises an OSError
 except OSError as e:
     # Just use the errno module to check the error value

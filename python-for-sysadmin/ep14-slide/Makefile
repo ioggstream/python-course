@@ -1,5 +1,11 @@
 OBJ=babel.pdf test.pdf
 
+default:
+	make all
+
+check:
+	lacheck babel.tex | egrep -v "Dots should be |Whitespace before punctation|to (begin|end) quotation|possible unwanted space"
+
 all:	
 	pdflatex --shell-escape -interaction=nonstopmode babel.tex
 

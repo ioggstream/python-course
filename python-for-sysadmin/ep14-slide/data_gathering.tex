@@ -54,10 +54,10 @@ Exercise: Which other information does psutil provide?
 Write a vmstat-like function printing every second:
 \begin{itemize}
 \item cpu usage \% ;
-\item bytes read;
-\item bytes written;
+\item bytes read and written in the given interval;
 \item Hint: use psutil, time.sleep(1)
-\item Hint: try on ipython and then use \%edit to write the function
+\item Hint: try on ipython and \emph{then} write the function using \\\\
+ \code{\%edit vmstat.py}
 \end{itemize}
 \end{pyframe}
 
@@ -76,7 +76,7 @@ from subprocess import check_output
 # It takes a list as an argument!
 out = check_output("ping -w1 -c1 www.google.com".split())
 
-# and returns a string
+# and returns a $\pyver{string}$
 print(out)
 \end{pycode}
 \end{pyframe}
@@ -85,17 +85,17 @@ print(out)
 % TODO pulire?
 \begin{pycode*}{escapeinside=||}
 def sh(cmd, timeout=0, shell=False):
-    """Returns the output of a given command using... """
-    from subprocess import |\emph{check\_output}| # ...and tests...
-    from sys import version_info as |\emph{python\_version}|
-    if python_version < (3, 3): # ..before using...
-      if |\emph{timeout}|:
-        raise ValueError("Timeout not supported until v3.3")
-      output = check_output(cmd.split(), shell=shell)
-    else:
-      output = check_output(cmd.split(), shell=shell, timeout=timeout)
-    return output.splitlines()
-    
+  """Returns the output of a given command using... """
+  from subprocess import |\emph{check\_output}| # ...and tests...
+  from sys import version_info as |\emph{python\_version}|
+  if python_version < (3, 3): # ..before using...
+    if |\emph{timeout}|:
+      raise ValueError("Timeout not supported")
+    output = check_output(cmd.split(), shell=shell)
+  else:
+    output = check_output(cmd.split(), shell=shell, timeout=timeout)
+  return output.splitlines()
+  
     
     
 \end{pycode*}
@@ -104,11 +104,16 @@ def sh(cmd, timeout=0, shell=False):
 \begin{pyframe}{Data Gathering: Exercises}
 Write a simple pgrep-like function for your OS which:
 \begin{itemize}
-\item takes one parameter: `program`;
+\item ppgrep signature is the following
+\begin{pycode}
+def ppgrep(program):
+    """@param program - eg. firefox, explorer.exe"""
+    raise NotImplementedError
+\end{pycode}
 \item prints a list of processes executing `program`;
 \item Hint: use \pymodule{subprocess, os}, and list-comprehension
 \begin{pycode}
-items = [ x for x in a_list if 'jon' in x]
+items = [ x for x in a_list if 'firefox' in x]
 \end{pycode}
 \end{itemize}
 \end{pyframe}
@@ -141,9 +146,7 @@ def linux_threads(pid):
 disk_l = grep("sda", "/proc/diskstats")
 
 # To gather that data we put the headers in a multi-line string
-#  but just do $\typeonly{from exercises import headers}$
-from exercises import diskstats_headers as headers
-
+from course import diskstats_headers as headers
         
 disk_info = disk_l[0].split() # Take the 1st entry, split the datas ...
 zip(headers, disk_info)          # ...and tie them with the headers

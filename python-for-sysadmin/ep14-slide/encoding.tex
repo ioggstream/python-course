@@ -112,7 +112,7 @@ $\ddot{u}$  & -         & [195, 188]    & [\pyver{252}]              \\ \hline
 
 
 \begin{pycode*}{escapeinside=||}
-# heading $\pyver{u}$ only in py2
+# Py3 doesn't need the $\pyver{u}$ 
 the_string = |\pyver{u}|"S\u00fcd" # $S\ddot{u}d$
 
 # can be encoded in different
@@ -195,10 +195,10 @@ cp1252 &([83, \pyver{252}, 100]\\
 from __future__ import unicode_literals
 
 # Create 3 windows-encoded filenames in 
-basedir = "/tmp/course"
+basedir = "/tmp/py"
 
 # using the provided function
-from exercises import create_wuerstelstrasse
+from course import create_wuerstelstrasse
 create_wuerstelstrasse(basedir)
 \end{minted}
 \end{pyframe}
@@ -243,11 +243,11 @@ for f in files: # listdir is already safe ;)
 \begin{pycode*}{escapeinside=||}
 from glob import glob as ls # expands wildcards like a shell. 
 
-files = ls("/tmp/course/*.txt") # To avoid encoding issues ...
+files = ls("/tmp/py/*.txt") # To avoid encoding issues ...
 # $\red{UnicodeDecodeError:}$ 'ascii' codec can't decode $\pyver{byte 0xFC}$
 |\pyver{0xFC}| == 252 # remember the $\ddot{u}$ in cp1252 map? 
 
-files = ls(|\pyver{b}|"/tmp/course/*.txt") #..we explicitly use bytes
+files = ls(|\pyver{b}|"/tmp/py/*.txt") #..we explicitly use bytes
 
 \end{pycode*}
 \end{pyframe}

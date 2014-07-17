@@ -2,11 +2,11 @@
 
 \begin{pyframe}{Simple processing: Goal}
 \begin{itemize}
-\item Handle gathered data with dicts and zip
-\item Find relation between them with scipy
+\item Handle gathered data with dict() and zip()
+\item Find data relation with scipy
 \item Get essential information like standard deviation $\sigma$ and distributions $\delta$
 \item Linear correlation: what's that, when can help
-distribution and linear correlation.
+\item Plotting
 \end{itemize}
 modules: \pymodule{numpy, scipy, scipy.stats.stats, collections, random, time}
 \end{pyframe}
@@ -33,17 +33,22 @@ Somebody will surely eat two.''' \\
 
 \subsection{Distributions}
 \begin{pyframe}{Simple processing: Exercise}
-Let's gather some data and try to dismantle the chicken paradox
+Let's gather some data and dismantle the chicken paradox
 \begin{itemize}
-\item Write the following function
+\item Write the following function using our parsing strategy
 \begin{pycode}
 def ping_rtt():
+    from course import sh
+    # get sample output
+    # find a solution in ipython
+    # test and paste the code
     raise NotImplementedError
 \end{pycode}
 \item Gather 10 seconds of ping output, return a list of float RTT
-\item Hint: use the sh() function to gather ping output
-\item Homework: modify ping\_rtt() to return both RTT and TTL
-\item Homework Hint: use zip to put TTL and RTT in two series
+\item Hint: reuse the sh() function
+\item Hint: slice and filter lists using comprehension
+%\item Homework: modify ping\_rtt() to return both RTT and TTL
+%\item Homework Hint: use zip to put TTL and RTT in two series
 \end{itemize}
 \end{pyframe}
 
@@ -73,13 +78,12 @@ how many people ate $x$ chickens ;)
 \begin{columns}
 \column[t]{.6\textwidth}
 \begin{pycode}
-#Create a simple $\delta$ with
-#    set and dict is easy
-distro = {x: rtt.count(x) 
-    for x in set(rtt)}
+#Create a simple $\delta$ with set and dict 
+d = {x: rtt.count(x) for x in set(rtt)}
+
 # We can even use
 from collections import defaultdict
-distro = defaultdict(int)
+d = defaultdict(int)
 for x in rtt:
     distro[x] += 1
     
@@ -102,10 +106,10 @@ Distributions and Mean are both important!
 \begin{itemize}
 \item Standard deviation or $\sigma$ formula is {\large  $\sigma^{2}(X) := \frac{ \sum(x-\bar{x})^{2} }{n} $ }
 \item $\sigma$ tells if $\delta$ is fair or not, and how much the mean ($\bar{x}$) is representative
-\item The \pymodule{matplotlib.mlab}.normpdf function smoothly approximates the histogram
+\item \pymodule{matplotlib.mlab}.normpdf is a smooth function approximating the histogram
 % Gauss function smoothly approximates the histogram {\Large 
 %	$ \frac{n}{\sigma \sqrt{2\pi}}e^{-\frac{1}{2}  \big( \frac{x-\bar{x}} {\sigma} \big)^{2} } $ 
-} 
+%} 
 \end{itemize}
 
 \column[t]{.6\textwidth}
@@ -133,11 +137,14 @@ Check your computed values vs the $\sigma$ returned by ping
    goal: check stdev"""
 from scipy import std, mean # max,min are builtin
 rtt = ping_rtt()
-fmt_s = 'stdev: {}, mean: {}, min: {}, max: {}'
-rtt_std, rtt_mean = |\pyver{std}|(rtt), |\emph{mean}|(ping_rtt)
-rtt_max, rtt_min = max(rtt), min(ping_rtt)
-print(fmt_s.format(rtt_std, rtt_mean, rtt_max, rtt_min))
+
+print(max(rtt), min(rtt), mean(rtt), std(rtt))
+
 \end{pycode*}
+%fmt_s = 'stdev: {}, mean: {}, min: {}, max: {}'
+%rtt_std, rtt_mean = |\pyver{std}|(rtt), |\emph{mean}|(ping_rtt)
+%rtt_max, rtt_min = max(rtt), min(ping_rtt)
+%print(fmt_s.format(rtt_std, rtt_mean, rtt_max, rtt_min))
 \end{pyframe}
 
 \begin{pyframe}{Time Distributions: Exercise}
@@ -145,7 +152,7 @@ print(fmt_s.format(rtt_std, rtt_mean, rtt_max, rtt_min))
 \item Parse the \href{https://github.com/ioggstream/python-course/blob/master/python-for-sysadmin/data/maillog}{provided maillog} in ipython using its ! magic and get a 4-hourly email $\delta$
 \item Expected output: 
 \begin{pycode}
-time_d = {  # mail sent between
+time_d = {  # mail delivered (removed) between
     0: xxx  #  00:00 - 03:59
     4: xxx  #  04:00 - 07:59
     ..
@@ -157,16 +164,15 @@ time_d = {  # mail sent between
 \iftrue
 \begin{pyframe}{Time Distributions: Exercise Solution}
 \begin{pycode}
-# deliveder emails are like the following
-line = "May 14 16:00:04 rpolli postfix/qmgr[11922]: 4AD0C934DA: removed"
+# deliveder emails are like the following 
+#May 14 16:00:04 rpolli postfix/qmgr[122]: 4DC3DA: removed"
 def get_slot(ts):
     n = int(ts[:2])
     return n - (n%4)
     
-# get the interesting lines
-ret = !bzgrep removed maillog
-# find the timestamp
-ts = ret.fields(2) # 3rd column
+ret = !grep removed maillog # get the interesting lines
+
+ts = ret.fields(2) # find the timestamp (3rd column)
 hours = [ get_slot(ts)  for x in ts ]
 time_d = {x:count(x) for x in set(hours)}
 \end{pycode}
@@ -174,18 +180,31 @@ time_d = {x:count(x) for x in set(hours)}
 
 \fi 
 
+\begin{pyframe}{Plotting distributions}
+\begin{pycode}
+# To plot data..
+from matplotlib import pyplot as plt
+# and set the interactive mode
+plt.ion()
+
+# Plotting an histogram... 
+frequency, slots, _ = hist(hours)
+# .. returns a 
+distribution = dict(zip(slots,frequency))
+\end{pycode}
+\end{pyframe}
+
 \begin{pyframe}{Size Distributions: Exercise}
 \begin{itemize}
-\item Parse the provided maillog file and get a size $\delta$
-\item Expected output: 
+\item Create a size $\delta$ using hist
 \begin{pycode}
 size_d = {  # mail size between
-    0: xxx  #  0 - 100k
-    1: xxx  #  100k - 200k
+    0: xxx  #  0 - 10k
+    1: xxx  #  10k - 20k
     ..
     }
 \end{pycode}
-\item Use the $\delta$ to find size\_mean and size\_sigma
+\item Homework: Use the size $\delta$ to find size\_mean and size\_sigma and compare with $\sigma$ and mean evaluated from the original data-series
 \end{itemize}
 \end{pyframe}
 
@@ -207,17 +226,6 @@ mail_per_minute = time_d[hour] / |\pyver{(4 * 60)}| # minutes in 4hours
 \end{pycode*}
 \end{pyframe}
 
-\begin{pyframe}{Plotting distributions}
-\begin{pycode}
-# To plot data..
-from matplotlib import pyplot as plt
-# and set the interactive mode
-plt.ion()
-
-# Plotting an histogram returns a 
-distribution = hist(hours)
-\end{pycode}
-\end{pyframe}
 
 
 \subsection{Correlation}
@@ -264,7 +272,7 @@ correlation, probability = ret
 \end{pycode}
 \end{pyframe}
 
-\begin{pyframe}{You \emph{must plot!}}
+\begin{pyframe}{You \emph{must (scatter) plot!}}
 \LARGE
 \begin{center}
 PearsonR does not detect non-linear correlation \\
@@ -278,17 +286,17 @@ PearsonR does not detect non-linear correlation \\
 \column[t]{.6\textwidth}
 \begin{pycode}
 # Given a table with many data series
-table = {
-  'cpu_percent': [10, 23, 55, ..],
-  'iops': [2132, 3212, 3942, ..],
-  'netio': [1.32e+9, 1.45e+9, ..]}
+from course import table
+table = {...
+  'cpu_usr': [10, 23, 55, ..],
+  'byte_in': [2132, 3212, 3942, ..], }
 
 # We can combine all their names with
 from itertools import combinations
 list(combinations(table,2))
->[('iops', 'netio'), 
-  ('iops', 'cpu_percent'), 
-  ('netio', 'cpu_percent')]
+>[('swap_in', 'cpu_sys'),
+ ('swap_in', 'csw'),  ('cpu_sys', 'csw')... ]
+
 
 
 
@@ -305,14 +313,15 @@ Combinating 5 numbers, 3 at a time.
 
 
 \begin{pyframe}{Netfishing correlation}
+We can try every combination between data series and check if there's some linear correlation.
 \begin{pycode}
 for k1, k2 in combinations(table, 2):
-    r_coeff, probability = pearsonr(table[k1], table[k2])
-    if r_coeff < 0.5 or probability < 0.1:
-        # I'm not interested to data under this threshold
-        continue
-    print("linear correlation between {} and {} is {}".format(
-        k1, k2, r_coeff))
+  corr, probability = pearsonr(table[k1], table[k2])
+  if corr < 0.5:
+    # I'm *still* not interested in data under this threshold
+    continue
+  print("linear correlation between {} and {} is {}".format(
+    k1, k2, corr))
 
 \end{pycode}
 \end{pyframe}
@@ -322,11 +331,11 @@ for k1, k2 in combinations(table, 2):
 from matplotlib import pyplot as plt
 # create all combined plot
 for k1, k2 in combinations(table, 2):
-    r_coeff, probability = pearsonr(table[k1], table[k2])
+    corr, probability = pearsonr(table[k1], table[k2])
     plt.scatter(table[k1], table[k2])
 
     # 3 digit precision on title
-    plt.title("R={:0.3f} P={:0.3f}".format(r_coeff, probability))
+    plt.title("R={:0.3f} P={:0.3f}".format(corr, probability))
     plt.xlabel(k1); plt.ylabel(k2)
 
     # save and close the plot
@@ -358,7 +367,7 @@ print(in_chunks(range(10, size=3)))
 # Get combined data directly via $\pyver{iteritems}$
 #  TODO: add some plot figures of this section
 for (k1, v1), (k2, v2) in combinations(table.|\pyver{iteritems}|(), 2):
-    r_coeff, probability = pearsonr(v1, v2)
+    corr, probability = pearsonr(v1, v2)
 
     # Two nice generators
     time_chunked = zip(in_chunks(v1), in_chunks(v2))
