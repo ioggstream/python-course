@@ -5,13 +5,13 @@
 \begin{pyframe}{iPython I}
 \begin{itemize}
 \item Interactive interpreter with tons of                                                                                                        functionalities, and the main tool of our training.                                                                                                      
-
-\item   The funniest way to learn and use python!
+\item   The most fun way to learn and use python!
 
 \item   Supports \pyver{tab-completion}, inline help 
 
-\item   Allows pasting from clipboard with \pyver{\%paste} , elementary
-    benchmarking with \pyver{\%timeit}, and multi-line editing with \pyver{\%edit}
+\item   Allows pasting from clipboard with \pyver{\%paste} , 
+    %elementary benchmarking with \pyver{\%timeit}, 
+    and multi-line editing with \pyver{\%edit}
 
 \item   Run it: \\
 \code{\# ipython}
@@ -46,8 +46,12 @@ ret.grep('localhost').fields(0)
 # And the last returned value is stored in 
 localip = _
 
-# An ipython script $must$ have the $\pyver{.ipy}$ extension
-#  and begin with #!/usr/bin/ipython 
+# We can type long commands in an editor like `vi' using
+%edit mytmp.py  # type print(ret[0]), then exit (eg. wq!)
+> Editing... done. Executing edited code...
+
 \end{pycode*}
+%# An ipython script $must$ have the $\pyver{.ipy}$ extension
+%#  and begin with #!/usr/bin/ipython 
 \end{pyframe}
 

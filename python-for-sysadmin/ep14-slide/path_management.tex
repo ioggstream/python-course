@@ -72,7 +72,7 @@ try:
     |\typeonly{makedirs}|("/tmp/course/foo/bar") # (type ONLY this line)
     #  ...and raises an OSError
 except OSError as e:
-    # Just use the errno module to heck the error value
+    # Just use the errno module to check the error value
     import errno
     assert e.errno == errno.EEXIST
     

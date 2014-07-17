@@ -57,27 +57,32 @@ Write a vmstat-like function printing every second:
 \item bytes read;
 \item bytes written;
 \item Hint: use psutil, time.sleep(1)
+\item Hint: try on ipython and then use \%edit to write the function
 \end{itemize}
 \end{pyframe}
 
 \subsection{module: subprocess}
 \begin{pyframe}{Data Gathering: subprocess}
+
+%from os import system # is a shortcut to run programs using a shell
+%
+%ret = system("ping -w1 -c1 www.google.com")
+%assert ret == 0, "Can't ping google"
+
 \begin{pycode}
-from os import system # is a shortcut to run programs using a shell
-
-ret = system("ping -w1 -c1 www.google.com")
-assert ret == 0, "Can't ping google"
-
 # The check_output function returns the command stdout
 from subprocess import check_output
 
-out = check_output("ping -w1 -c1 www.google.com")
+# It takes a list as an argument!
+out = check_output("ping -w1 -c1 www.google.com".split())
 
-print(ret, out)
+# and returns a string
+print(out)
 \end{pycode}
 \end{pyframe}
 
 \begin{pyframe}{Data Gathering: subprocess, sys}
+% TODO pulire?
 \begin{pycode*}{escapeinside=||}
 def sh(cmd, timeout=0, shell=False):
     """Returns the output of a given command using... """
@@ -102,6 +107,9 @@ Write a simple pgrep-like function for your OS which:
 \item takes one parameter: `program`;
 \item prints a list of processes executing `program`;
 \item Hint: use \pymodule{subprocess, os}, and list-comprehension
+\begin{pycode}
+items = [ x for x in a_list if 'jon' in x]
+\end{pycode}
 \end{itemize}
 \end{pyframe}
 
@@ -117,11 +125,11 @@ def linux_threads(pid):
   
   # Pick a set of fields to gather...
   t_info = ('Pid', 'Tgid', 'voluntary') # a tuple
-  for t in glob(path):
+  for t_path in glob(path):
     # ...and use comprehension to get interesting data.
-    t_data = [x for x in open(t) 
+    print([x for x in open(t_path) 
         if x.|\pyver{startswith}|(t_info)] #  accepts tuples!
-    print(t_data)
+    )
 \end{pycode*}
 \end{pyframe}
 
@@ -133,10 +141,9 @@ def linux_threads(pid):
 disk_l = grep("sda", "/proc/diskstats")
 
 # To gather that data we put the headers in a multi-line string
-headers = ('major minor device'
-        ' reads reads_merged reads_sectors reads_ms'
-        ' writes writes_merged writes_sectors writes_ms'
-        ' io_in_progress io_ms_spent io_ms_weight').|\pyver{split()}|
+#  but just do $\typeonly{from exercises import headers}$
+from exercises import diskstats_headers as headers
+
         
 disk_info = disk_l[0].split() # Take the 1st entry, split the datas ...
 zip(headers, disk_info)          # ...and tie them with the headers
@@ -149,7 +156,8 @@ list(_) # On py3 you need to iterate the generator!
 # Or create a reusable commodity class with
 from collections import namedtuple
 # using $\pyver{headers}$ as attributes
-DiskStats = namedtuple('DiskStat', |\pyver{headers}|, verbose=True)
+#  like the one provided by psutil
+DiskStats = namedtuple('DiskStat', |\pyver{headers}|)
 
 # ... and disk_info as values
 dstat = DiskStats(*disk_info)
