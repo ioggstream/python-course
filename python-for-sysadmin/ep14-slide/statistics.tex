@@ -221,13 +221,12 @@ size_d = {  # mail size between
 
 
 
-\begin{pyframe}{Simulating data with $\sigma$ and $\bar{x}$}
-We can use  mean and a stdev to simulate data using the gaussian distribution.
-This is obviously \emph{just a starting point}.
+\begin{pyframe}{\pyoptional{Simulating data with $\sigma$ and $\bar{x}$}}
+Mean and a stdev are useful starting point to simulate data using the gaussian distribution.
 \begin{pycode*}{escapeinside=||}
+# A mail load generator creating attachments of a given size...
 from random import gauss
-# In a mail load generator script we can simulate a
-mail_size = int(gauss(mean, sigma_s))
+mail_size = gauss(mean, sigma_s) # a random number
 
 # and use time_d to simulate the load during the day
 from time import localtime
@@ -243,9 +242,9 @@ mail_per_minute = time_d[hour] / |\pyver{60}| # minutes in hour
 \begin{columns}
 \column[t]{.6\textwidth}
 \begin{pycode}
-#Let's plot the following 
-# datasets
-mail_sent = [1, 5, 500, 250, 100, 7]
+# Let's plot the following datasets
+#  taken from a 4-hour distribution
+mail_sent = [1, 5, 500, 250, 100, 7] 
 kB_s = [70, 300, 29000, 12500, 450, 500]
 
 # A scatter plot can suggest relations 
@@ -260,19 +259,25 @@ plt.scatter(mail_sent, kB_s)
 \column[t]{.4\textwidth}
 \footnotesize
 Correlating Mail and Thruput
-\includegraphics[height=5cm,width=7cm]{scatter_mail.pdf}
+\includegraphics[height=5cm,width=6cm]{scatter_mail.pdf}
 \end{columns}
 \end{pyframe}
 
 
 \begin{pyframe}{Linear Correlation}
-The Pearson Coefficient is a relation indicator. 
+The Pearson Coefficient $\rho$ is a relation indicator. 
 \begin{description}
 \item[0]  no relation
 \item[1]  direct relation (both dataset increase together)
 \item[-1]  inverse relation (one increase as the other decrease) 
 \end{description}
-
+\begin{equation}
+\rho(X,Y) = \frac{
+    \big(\sum (x-\bar{x})(y-\bar{y}) \big)
+    }{
+    \sqrt{\deltasumsq{x}}\sqrt{\deltasumsq{y}}
+}
+\end{equation}
 \begin{pycode}
 from scipy.stats.stats import pearsonr
 ret = pearsonr(mail_sent, kB_s)
@@ -285,7 +290,7 @@ correlation, probability = ret
 \begin{pyframe}{You \emph{must (scatter) plot!}}
 \LARGE
 \begin{center}
-PearsonR does not detect non-linear correlation \\
+$\rho$ does not detect non-linear correlation \\
 \includegraphics[width=.8\textwidth]{correlation.pdf} \\
 \end{center}
 \end{pyframe}
@@ -333,7 +338,7 @@ Combinating 4 suites, 2 at a time.\\
 
 
 \begin{pyframe}{Netfishing correlation}
-We can try every combination between data series and check if there's some linear correlation.
+We can try every combination between data series and check if there's some $\rho$.
 \begin{pycode}
 for k1, k2 in combinations(table, 2):
   corr, probability = pearsonr(table[k1], table[k2])
@@ -346,7 +351,7 @@ for k1, k2 in combinations(table, 2):
 \end{pycode}
 \end{pyframe}
 
-
+\subsection{Plotting Time}
 \begin{pyframe}{Correlating I/O and Context Switch}
 {\footnotesize Now we'll generate some correlation plots from $table$ data, like this one.}
 \includegraphics[height=6cm,width=14cm]{byte_in_csw.pdf}
@@ -379,9 +384,8 @@ my_list = range(10)
 
 # then import a function to chunk datasets
 from course import in_chunks
-in_chunks(my_list, size=4))
-> <generator object ...>
-list(_)
+in_chunks(my_list, size=4)) # returns a <generator object ...>
+list(_) # ... which iterates to...
 > [[0, 1, 2, 3], # Plotted in Red
    [4, 5, 6, 7], # ..Green
    [8, 9]]       # ..Blue 
@@ -391,14 +395,13 @@ list(_)
 \begin{pyframe}{Mark time with colors}
 \begin{pycode*}{escapeinside=||}
 # Get combined data directly via $\pyver{items}$
-#  TODO: add some plot figures of this section
 for (k1, v1), (k2, v2) in combinations(table.|\pyver{items}|(), 2):
     corr, probability = pearsonr(v1, v2)
 
     # Two nice generators
     time_chunked = zip(in_chunks(v1, size=8*3600),
                       in_chunks(v2, size=8*3600))
-    [plt.scatter(t1, t2, color=next(colors)) 
+    [plt.scatter(t1, t2, color=|\pyver{next(colors)}|) # iterate colors!
         for t1, t2 in time_chunked]
 
     # save and close the plot
@@ -406,9 +409,5 @@ for (k1, v1), (k2, v2) in combinations(table.|\pyver{items}|(), 2):
 \end{pycode*}
 \end{pyframe}
 
-\section{End}
-\begin{pyframe}{That's all folks!}
-Thank you for the attention!
-\end{pyframe}
 
 
