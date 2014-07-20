@@ -33,18 +33,19 @@ Somebody will surely eat two.''' \\
 
 \subsection{Distributions}
 \begin{pyframe}{Simple processing: Exercise}
-Let's gather some data and dismantle the chicken paradox
+How to dismantle the chicken paradox? Gather data!
 \begin{itemize}
 \item Write the following function using our parsing strategy
 \begin{pycode}
-def ping_rtt():
+def ping_rtt(seconds=10):
+    """@return: a list of ping RTT"""
     from course import sh
     # get sample output
     # find a solution in ipython
     # test and paste the code
     raise NotImplementedError
 \end{pycode}
-\item Gather 10 seconds of ping output, return a list of float RTT
+\item Gather 10 seconds of ping output
 \item Hint: reuse the sh() function
 \item Hint: slice and filter lists using comprehension
 %\item Homework: modify ping\_rtt() to return both RTT and TTL
@@ -231,8 +232,7 @@ mail_size = int(gauss(mean, sigma_s))
 # and use time_d to simulate the load during the day
 from time import localtime
 hour = localtime().tm_hour
-hour = hour - (hour % 4)
-mail_per_minute = time_d[hour] / |\pyver{(4 * 60)}| # minutes in 4hours
+mail_per_minute = time_d[hour] / |\pyver{60}| # minutes in hour
 \end{pycode*}
 \end{pyframe}
 
@@ -316,15 +316,17 @@ list(combinations(table,2))
 
 \end{pycode}
 \column[t]{.3\textwidth}
-Combinating 4 suites, 2 at a time.
+Combinating 4 suites, 2 at a time.\\
+\begin{center}
+\\
 \hearts \spades \\
 \hearts \clubs \\
 \hearts \diamonds \\
 \spades \clubs \\
 \spades \diamonds \\
 \clubs \diamonds \\
-
-
+\end{center}
+% complex image with 5-3-combination
 %\includegraphics[width=4cm]{combinations_3.pdf}
 \end{columns}
 \end{pyframe}
@@ -344,9 +346,15 @@ for k1, k2 in combinations(table, 2):
 \end{pycode}
 \end{pyframe}
 
+
+\begin{pyframe}{Correlating I/O and Context Switch}
+{\footnotesize Now we'll generate some correlation plots from $table$ data, like this one.}
+\includegraphics[height=6cm,width=14cm]{byte_in_csw.pdf}
+\end{pyframe}
+
+
 \begin{pyframe}{Netfishing correlation II}
 \begin{pycode}
-from matplotlib import pyplot as plt
 # create all combined plot
 for k1, k2 in combinations(table, 2):
     corr, probability = pearsonr(table[k1], table[k2])
@@ -364,17 +372,19 @@ for k1, k2 in combinations(table, 2):
 
 \begin{pyframe}{Mark time with colors}
 \begin{pycode*}{escapeinside=||}
-# Use 6 colors to mark time-slots
+# Use 3 colors to mark time-slots
 from itertools import cycle
-colors = cycle('rygcbm') # Red Yellow Green ...
+colors = cycle('rgb') # Red Green Blue
+my_list = range(10)
 
 # then import a function to chunk datasets
 from course import in_chunks
-
-list(in_chunks(range(10), size=4)))
-> [[0, 1, 2, 3], 
-  [4, 5, 6, 7], 
-  [8, 9]]
+in_chunks(my_list, size=4))
+> <generator object ...>
+list(_)
+> [[0, 1, 2, 3], # Plotted in Red
+   [4, 5, 6, 7], # ..Green
+   [8, 9]]       # ..Blue 
 \end{pycode*}
 \end{pyframe}
 
@@ -386,13 +396,13 @@ for (k1, v1), (k2, v2) in combinations(table.|\pyver{items}|(), 2):
     corr, probability = pearsonr(v1, v2)
 
     # Two nice generators
-    time_chunked = zip(in_chunks(v1, size=4*3600),
-                      in_chunks(v2, size=4*3600))
+    time_chunked = zip(in_chunks(v1, size=8*3600),
+                      in_chunks(v2, size=8*3600))
     [plt.scatter(t1, t2, color=next(colors)) 
         for t1, t2 in time_chunked]
 
     # save and close the plot
-    plt.savefig("time_4h_{}_{}.png".format(k1, k2)); plt.close()
+    plt.savefig("timed_{}_{}.png".format(k1, k2)); plt.close()
 \end{pycode*}
 \end{pyframe}
 

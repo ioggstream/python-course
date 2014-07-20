@@ -65,7 +65,23 @@ def sh(cmd):
         quoted spaces like "my document.docx"
     """
     from subprocess import check_output
+    if any(x in cmd for x in r'" \''.split()):
+        raise ValueError("Command string can't contain spaces or quote-characters")
     return check_output(cmd.split()).splitlines()
+
+def grep(expr, fpath):
+    """grep reloaded with regular expressions and path normalization
+
+        GOAL: re.search matches anywhere (eg. '.*XXX.*')
+                re.match matches from the beginning of the line.
+
+    """
+    import re
+    import os
+    re_expr = re.compile(expr)
+    fpath = os.path.normpath(fpath)
+    with open(fpath) as fp:
+        return [x for x in fp if re_expr.search(x)]
 
 
 #

@@ -9,7 +9,7 @@
      and platform-dependent tools.
 \begin{itemize}
 \item Get infos from files, /proc and /sys 
-\item Run and capture command output
+\item Capture command output
 \item Use psutil to get IO, CPU and memory data
 \item Parse files with a strategy
 \end{itemize}
@@ -69,24 +69,23 @@ Write a vmstat-like function printing every second:
 %ret = system("ping -w1 -c1 www.google.com")
 %assert ret == 0, "Can't ping google"
 
-\begin{pycode}
+\begin{pycode*}{escapeinside=||}
 # The check_output function returns the command stdout
 from subprocess import check_output
 
-# It takes a list as an argument!
-out = check_output("ping -w1 -c1 www.google.com".split())
+# It takes a $\pyver{list}$ as an argument!
+out = check_output("ping -w1 -c1 www.google.com".|\pyver{split}|())
 
 # and returns a $\pyver{string}$
 print(out)
-\end{pycode}
+\end{pycode*}
 \end{pyframe}
 
 \begin{pyframe}{Data Gathering: subprocess, sys}
 % TODO pulire?
 \begin{pycode*}{escapeinside=||}
-def sh(cmd, timeout=0, shell=False):
-  """Returns the output of a given command using... """
-  from subprocess import |\emph{check\_output}| # ...and tests...
+def sh(cmd, shell=False, timeout=0):
+  """Returns an iterable output of a command string, checking ... """
   from sys import version_info as |\emph{python\_version}|
   if python_version < (3, 3): # ..before using...
     if |\emph{timeout}|:
@@ -94,7 +93,8 @@ def sh(cmd, timeout=0, shell=False):
     output = check_output(cmd.split(), shell=shell)
   else:
     output = check_output(cmd.split(), shell=shell, timeout=timeout)
-  return output.splitlines()
+
+  return output.|\pyver{splitlines}|()
   
     
     
@@ -120,7 +120,7 @@ items = [ x for x in a_list if 'firefox' in x]
 
 
 \subsection{The /proc filesystem}
-\begin{pyframe}{Data Gathering: Parsing /proc I}
+\begin{pyframe}{\pyoptional{Data Gathering: Parsing /proc I}}
 \begin{pycode*}{escapeinside=||}
 
 def linux_threads(pid):
