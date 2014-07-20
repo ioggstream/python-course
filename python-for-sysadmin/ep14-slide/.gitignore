@@ -4,9 +4,7 @@
 *.nav
 *.out
 *.snm
-*.idx
 *.toc
 *.vrb
 minted/
 *.pdf
-*.swp
