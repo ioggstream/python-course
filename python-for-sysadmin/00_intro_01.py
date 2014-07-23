@@ -81,11 +81,11 @@ def formatting_numbers():
     # bin() and hex() returns a string representation
     # of a number
     a, b1 = hex(10), bin(1)
-
+    
     # while the format() function can be more flexible
     #  10 = 8ciphers + 2chars for the '0b' header
-    binary_with_leading_zeroes = format(1, '#010b')
-
+    binary_with_leading_zeroes = format(1, '#010b') 
+    
     # and reversible with
     b1 == int(binary_with_leading_zeroes, base=2)
 

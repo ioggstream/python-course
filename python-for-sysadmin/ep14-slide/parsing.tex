@@ -1,0 +1,221 @@
+\section{Parsing: 60'}
+
+\begin{pyframe}{Parsing: Goal}
+\begin{itemize}
+\item Plan a parsing strategy
+\item Use basic regular expressions: match, search, sub
+\item Benchmarking a parser
+\item Running nosetests
+\item Write a simple parser
+\end{itemize}
+modules: \pymodule{re, nose, \%timeit}
+\end{pyframe}
+
+
+\begin{pyframe}{Parsing is hard...}
+\begin{verse}
+"System Administrators spent $24.3\%$ of
+ their work-life parsing files."$^{*}$\\
+\hfill *Independent analysis by The GASP\footnote{Grep Awk Sed Perl} Society ;)
+\end{verse}
+\end{pyframe}
+
+
+\begin{pyframe}{...use a strategy!}
+\begin{enumerate}
+\Large
+\item Collect parsing samples
+\item Play in ipython and collect \pyver{\%history}
+\item Write tests, \emph{then} the parser
+\item \emph{Eventually} benchmark
+\end{enumerate}
+\end{pyframe}
+
+
+
+\begin{pyframe}{Parsing postfix logs}
+\begin{pycode}
+# Before writing the parser, collect samples of
+#  the interesting lines. For now just 
+from course import mail_sent, mail_delivered
+
+# and \%edit a simple 
+def test_sent():
+    hour, host, to = parse_line(mail_sent)
+    assert hour == '08:00:00'
+    assert to = 'jon@doe.it'
+
+\end{pycode}
+\end{pyframe}
+
+
+\begin{pyframe}{Parsing lines: split, zip}
+{\footnotesize May 31 08:00:00 test-1 postfix/smtp[169]: 7CD8E730020: to=$\langle joe@foo.it\rangle$, relay=mx2.foo.it[10.0.4.5]:25, ...  }
+\begin{pycode*}{escapeinside=||}
+mail_sent.split()   # Start using basic strings in ipython
+
+# Then tie them with zip/zip() 
+fields, counting  = _, zip(range(20), _)
+fields = fields[:7] # We just care for the first 7 values
+
+# and pick fields singularly
+hour, host, dest = fields[2], fields[3], fields[6]
+
+\end{pycode*}
+\end{pyframe}
+
+
+\begin{pyframe}{Parse: Exercise I }
+In \emph{another} window
+\begin{itemize}
+\item edit 03\_ parsing\_ test.py
+\item complete the \code{parse\_line(line)} function
+\begin{pycode}
+def parse_line(line):
+    """Write your function and test it
+        with test_sent()"""
+    raise NotImplementedError
+\end{pycode}
+\end{itemize}
+\pyver{\\\%paste} your solution's code in iPython and run manually
+the test functions
+\end{pyframe}
+
+
+
+\subsection{Regular Expressions}
+
+\begin{pyframe}{Python Regexp}
+\begin{pycode*}{escapeinside=||}
+# Python supports regular expressions via
+import re
+
+# We start showing a grep-reloaded function
+def grep(expr, fpath):
+    one = re.compile(expr) # ...has two lookup methods...
+    assert ( one.|\emph{match}|     # which searches from ^ the beginning
+         and one.|\pyver{search}| ) # that searches $\pyver{anywhere}$
+
+    with open(fpath) as fp:
+        return [x for x in fp if one.|\emph{search}|(x)]
+
+\end{pycode*}
+\end{pyframe}
+
+\begin{pyframe}{Splitting with re.split}
+\begin{pycode}
+from re import split # is a very nice function
+
+# Let's gather some ping stats
+if sys.platform.startswith('win'):
+    cmd = "ping -n10 www.google.it"    
+else:
+    cmd = "ping -c10 -w10 www.google.it"
+
+# Split for both space and =
+ping_output = [ split("[ =]", x) for x in sh(cmd)]
+
+\end{pycode}
+\end{pyframe}
+
+%if sys.platform.startswith('linux'):
+%    cmd = "ping -c10 -w10 www.google.it"
+%elif sys.platform.startswith('win'):
+%    cmd = "ping -n10 www.google.it"    
+%else: # 'darwin' in sys.platform?
+%    raise ValueError("Are you really using OSX?")
+%
+\begin{pyframe}{Splitting with re.findall}
+\begin{pycode}
+from re import findall # can be misused too ;)
+
+# eg. for adding the ":" to a 
+mac = "00""24""e8""b4""33""20"
+
+# ...using this 
+re_hex = '[0-9A-Fa-f]{2}'
+mac_address = ':'.join(findall(re_hex, mac))
+print("The mac address is ", mac_address)
+
+\end{pycode}
+\emph{Actually this does a bit of validation, 
+ requiring all chars to be in the 0-F range}
+\end{pyframe}
+
+
+
+
+\begin{pyframe}{Benchmarking in iPython I}
+\begin{itemize}
+\item Parsing big files needs benchmarks.
+iPython \emph{\%timeit} magic is a good starting point.
+\begin{pycode*}{escapeinside=||}
+
+test_regexps = ("..", "[a-fA-F0-9]{2}")
+for re_s in test_regexps:
+    |\pyver{\%timeit}| ':'.join(|\pyfunction{findall}|(re_s, mac))
+
+\end{pycode*}
+\item We can even compare compiled and inline regexp
+\begin{pycode*}{escapeinside=||}
+import re
+for re_s in test_regexps:
+    re_c = re.|\pyfunction{compile}|(re_s)
+    |\pyver{\%timeit}| ':'.join(re_c.|\pyfunction{findall}|(mac))
+
+\end{pycode*}
+\end{itemize}
+\end{pyframe}
+
+
+
+\begin{pyframe}{Benchmarking in iPython II}
+Or find other methods: 
+\begin{itemize}
+\item complex...
+\begin{pycode}
+from re import sub as sed
+%timeit sed(r'(..)', r'\1:', mac)
+\end{pycode}
+\item ...or simple
+\begin{pycode}
+%timeit ':'.join([ mac[i:i+2] for i in range(0,12,2)])
+\end{pycode}
+\item Outside iPython check the \pymodule{timeit} module
+\end{itemize}
+\end{pyframe}
+
+%
+
+\begin{pyframe}{\pyoptional{Parsing: a real world Example}}
+\begin{pycode}
+# Don't need to type this VSAN configuration script
+#  which uses linux FC information from /sys filesystem
+fc_id_path = "/sys/class/fc_host/host*/port_name"
+for x in glob(fc_id_path):
+    # ...we boldly skip an explicit close()
+    pwwn = open(x).read()  # 0x500143802427e66c
+    pwwn = pwwn[2:]
+    # ...and even use the slower but readable
+    pwwn = re.findall(r'..', pwwn)
+    print("member pwwn ", ':'.join(pwwn))
+
+\end{pycode}
+\end{pyframe}
+
+%%
+\begin{pyframe}{Parsing logs: a simple solution}
+\begin{pycode}
+def parse_line(line):
+    import re
+    # using _ we improve readability
+    _, _, hour, host, _, _, dest = line.split()[:7]
+    try:
+        # and if dest isn't what we expect...
+        dest = re.split(r'[<>]',dest)[1]
+    except IndexError:
+        # ...we set it to None
+        dest = None
+    return (hour, host, dest)
+\end{pycode}
+\end{pyframe}

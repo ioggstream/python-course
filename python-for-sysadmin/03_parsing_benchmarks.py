@@ -8,11 +8,11 @@
 
 def test_drive_parsing():
 
-    testline = "May 31 08:30:55 test-fe1 postfix/smtp[16669]: 7CD8E730020: removed"
+    testline = "May 31 08:00:00 test-fe1 postfix/smtp[16669]: 7CD8E730020: removed"
 
     def test_one():
         ret = parse_maillog(testline)
-        assert ret == ('08:30:55', 'test-fe1', '7CD8E730020'), "Error %r" % ret
+        assert ret == ('08:00:00', 'test-fe1', '7CD8E730020'), "Error %r" % ret
 
 
 def grep(expr, fpath):

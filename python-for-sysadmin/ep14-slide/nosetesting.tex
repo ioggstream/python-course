@@ -1,0 +1,94 @@
+\section{Nosetest Intermezzo: 15'}
+
+
+\begin{pyframe}{Parsing logs: II}
+\begin{pycode}
+# Now another test for the delivered messages
+#  %edit 03_parsing_test
+def test_delivered():
+    hour, host, destination = parse_line(test_str_2)
+    assert hour == '08:00:00'
+    # Delivery logs should have destination == None
+    assert destination is None
+
+# Exercise: fix parse_line to work with both tests
+#  and save test
+\end{pycode}
+\end{pyframe}
+
+
+\begin{pyframe}{Running nosetest}
+\begin{itemize}
+\item Now run the following command from a shell
+
+\begin{minted}{bash}
+# nosetests -vs 03_parsing_test.py  
+03_parsing_test.test_sent ... ok        
+03_parsing_test.test_delivered ... ok 
+Ran 2 tests in 0.001s                 
+\end{minted}
+\item Nose is a test framework.
+\item Nose runs every file matching test\_*
+\item Nose runs every function matching test\_*
+\end{itemize}
+\end{pyframe}
+
+\begin{pyframe}{Simple Test Script}
+\begin{itemize}
+\item Open the \href{https://github.com/ioggstream/python-course/blob/master/python-for-sysadmin/02\_nosetests\_simple.py}{02\_nosetests\_simple.py} file
+\begin{pycode}
+def setup():
+    print("is run before the testsuite, while")
+def teardown():
+    print("after all tests")
+def test_one():
+    # name a function like test_* to run it!
+    assert 1 == 1 
+def test_two():
+    # and use assert to test for success
+    assert 1 == 0, "I was expecting 0" 
+\end{pycode}
+\end{itemize}
+\end{pyframe}
+
+\begin{pyframe}{\pyoptional{Complete Test Script: I}}
+\begin{itemize}
+\item A more flexible script is \href{https://github.com/ioggstream/python-course/blob/master/python-for-sysadmin/02\_nosetests\_full.py}{02\_nosetests\_full.py}
+which uses a Test class
+\begin{pycode}
+class Test(object):
+  @classmethod
+  def setup_class(self): # is run once at startup, 
+    # ..eg. to create database structure
+    print("setup testsuite environment")
+    open("/tmp/test2.out", "w").write("0")
+
+  @classmethod
+  def teardown_class(self): # is run once after all tests to...
+    print("cleanup testsuite environment")
+    os.unlink("/tmp/test2.out")
+
+ 
+\end{pycode} 
+\end{itemize}
+\end{pyframe}
+
+\begin{pyframe}{\pyoptional{Complete Test Script: II}}
+\begin{itemize}
+\item allowing pre-post testsuite and pre-post test fixtures
+\begin{pycode}
+class Test(object):
+  ...
+  # Using a Test class...
+  def setup(self): 
+    print("is_run_before_every_test") #..and..
+  def teardown(self): 
+    print("after_every_test") # eg truncate a table
+
+  # each test can use the prepared environment
+  def test_a(self): 
+    assert os.path.isfile("/tmp/test2.out")
+ 
+\end{pycode}
+\end{itemize}
+\end{pyframe}

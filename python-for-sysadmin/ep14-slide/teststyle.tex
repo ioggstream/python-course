@@ -1,0 +1,133 @@
+\section{Test}
+\usepackage{pdfcomment}
+
+\begin{pyframe}{Title}
+Antani
+module: \pymodule{subprocess, psutil}
+symbols: $\clubsuit \diamondsuit \heartsuit \spadesuit$
+\end{pyframe}
+
+\begin{pyframe}{\pyoptional{Test Slide with styles}}
+\begin{itemize}
+\item Bullet \index{Bullet} item 0 $a_i + b_j = 10 $
+\item Bullet \index{Bullet} item 2 with code\footnote{Do you like footnotes?}
+\begin{pycode*}{escapeinside=||}
+    # footnotesize
+    for  a in range(10):
+        yield a
+    # $\xmapsto[encode]{utf-8}$
+    # $a \rightarrow b^{c}$
+    |\index{return}return| False
+\end{pycode*}
+\item Bullet Item 3 
+\end{itemize}
+\end{pyframe}
+
+\begin{pyframe}{Test Slide with styles}
+\begin{enumerate}
+\item Enumerate1 \index{enumerate} \pdfcomment{Pdf Comment Test Slide with styles}
+    \begin{enumerate}
+    \item EnumerateA  \pyver{w\"urstel re}sults
+    \item \texttt{Inline minted ipython}
+    \item Una linea 
+    \item w\"urstelstra\ss e
+    \end{enumerate}
+
+\item Enumerate2 \`{e} 
+ [\red{196}, \blue{168}] 
+\begin{pycode*}{escapeinside=||}
+@|\pyver{decorator}|
+def foo(tmp):
+    def bar(*args):
+        |\index{return}return| tmp(|$*args_{i}$|)
+    |\index{return}return| bar
+\end{pycode*}
+
+\end{enumerate}
+
+\end{pyframe}
+
+\begin{pyframe}{Tabular and image}
+A Tabular follows \\
+\begin{tabular}{|c|c|}\hline
+Cell 1 & Cell 2 \\
+\hline 
+\end{tabular}
+\\
+\begin{table}
+\begin{tabular}{|c|c|}\hline
+\includegraphics[height=4cm]{ping_distribution.pdf}   & \includegraphics[height=4cm]{ping_distribution.pdf}  \\
+\hline 
+\end{tabular}
+\end{table}
+\end{pyframe}
+
+\begin{pyframe}{Simple Column}
+\begin{columns}
+\column[t]{6cm}
+\begin{pycode}
+"""using set and dict
+"""
+distro = {x: rtt.count(x) 
+  for x in set(rtt)}
+# or using a
+from collections import defaultdict
+distro = defaultdict(int)
+for x in rtt:
+    distro[x] += 1
+    
+
+\end{pycode}
+\column[t]{5cm}
+-skip-\\
+-skip-\\
+\includegraphics[height=4cm, width=4dm]{ping_distribution.pdf}  
+\end{columns}
+\end{pyframe}
+
+
+\begin{pyframe}{2-columns and verbatim}
+Two columns
+\begin{columns}
+
+\column[t]{5cm}
+1
+2
+3
+\begin{verbatim}
+4
+5
+6
+\end{verbatim}
+
+\column[t]{5cm}
+\includegraphics[height=4cm,width=5cm]{ping_distribution.pdf}  
+\end{columns}
+
+\end{pyframe}
+
+
+
+\begin{pyframe}{Simple processing: distribution}
+\begin{columns}
+\column[t]{6cm}
+\begin{pycode}
+"""using set and dict """
+distro = {x: rtt.count(x) 
+  for x in set(rtt)}
+# or using a
+from collections import defaultdict
+distro = defaultdict(int)
+for x in rtt:
+    distro[x] += 1
+\end{pycode}
+\column[t]{4cm}
+\includegraphics[width=4cm,height=4cm]{ping_distribution.pdf}  
+\end{columns}
+\end{pyframe}
+
+\begin{pyframe}{Index}
+
+fooo bar
+
+\end{pyframe}
