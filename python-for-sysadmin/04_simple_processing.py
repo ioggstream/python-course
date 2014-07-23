@@ -58,12 +58,52 @@ def distributions():
 def netfishing_correlation():
     from itertools import combinations
     from scipy.stats.stats import pearsonr
-    table = {
+    from course import table
+    """table = {
         'cpu_percent': [10, 23, 55, ...]
         'iops': [2132, 3212, 3942, ...]
         'netio': [1.32e+9, 1.45e+9, ...]
     }
+    """
     for k1, k2 in combinations(table, 2):
         r_coeff, probability = pearsonr(table[k1], table[k2])
         print("linear correlation between {} and {} is {}".format(
             k1, k2, r_coeff))
+
+def netfishing_correlation_plot():
+    from itertools import combinations, cycle
+    from scipy.stats.stats import pearsonr
+    from course import table
+    from matplotlib import pyplot as plt
+    for (k1, v1), (k2,v2) in combinations(table.items(), 2):
+        r_coeff, probability = pearsonr(table[k1], table[k2])
+        if r_coeff < 0.6:
+            continue
+        plt.scatter(v1, v2)
+        plt.xlabel(k1); plt.ylabel(k2)
+        plt.title("r={:0.3f} p={:0.3f}".format(r_coeff, probability))
+        plt.savefig("monochromo_{}_{}.png".format(k1, k2))
+        plt.close()
+
+
+def netfishing_correlation_colored_plot():
+    from itertools import combinations, cycle
+    from scipy.stats.stats import pearsonr
+    from course import table, in_chunks
+    from matplotlib import pyplot as plt
+    max_color, nbins = 1<<23, 12
+    colors = cycle('#'+format(x, '06X')  for x in range(0, max_color, max_color / nbins))
+
+    for (k1, v1), (k2,v2) in combinations(table.items(), 2):
+        r_coeff, probability = pearsonr(table[k1], table[k2])
+        if r_coeff < 0.6:
+            continue
+        l = len(v1) / nbins
+        chunks = zip(in_chunks(v1, l), in_chunks(v2, l))
+        [ plt.scatter(c1, c2, color=next(colors)) for c1, c2 in chunks ]
+        plt.xlabel(k1); plt.ylabel(k2)
+        plt.title("r={:0.3f} p={:0.3f}".format(r_coeff, probability))
+        plt.savefig("tmp_{}_{}.png".format(k1, k2))
+        plt.close()
+
+
