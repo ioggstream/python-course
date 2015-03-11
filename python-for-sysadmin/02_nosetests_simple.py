@@ -23,5 +23,3 @@ def test_two():
     # This test fails and the backtrace is printed
     a = 2
     assert a == 1, "Expecting a == 1. Was %r" % a
-
-

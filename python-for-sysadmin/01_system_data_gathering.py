@@ -56,7 +56,7 @@ def multiplatform_stats(count):
 
 def multiplatform_stats(count):
     """Multiplatform stats with numpy.array"""
-    raise NotImplemented
+    raise NotImplementedError
 
 
 def sh(cmd, shell=False, timeout=0):
