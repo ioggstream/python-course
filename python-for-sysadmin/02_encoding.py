@@ -34,9 +34,10 @@ def touch_encoded_filenames(dirname, prefix, ext='txt', encoding='utf-8'):
         fpath = pjoin(dirname, fpath)
         bytepath = fpath.encode(encoding)
         with open(bytepath, 'wb') as fh:
-            fh.write("My name is: ")
+            # in python3 you always convert to bytes
+            fh.write(b"My name is: ")
             fh.write(bytepath)
-            fh.write("\n")
+            fh.write(b"\n")
 
 
 def windows_filenames():

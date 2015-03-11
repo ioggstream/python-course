@@ -6,8 +6,25 @@
      Students are not required to understand its
      content during the course, though they should
      understand all of that at the end!
+
+Pinging example.microsoft.com [192.168.239.132] with 32 bytes of data:
+Reply from 192.168.239.132: bytes=32 time=101ms TTL=124
+Reply from 192.168.239.132: bytes=32 time=100ms TTL=124
+Reply from 192.168.239.132: bytes=32 time=120ms TTL=124
+Reply from 192.168.239.132: bytes=32 time=120ms TTL=124
+
 """
 from __future__ import print_function, unicode_literals, division
+
+#
+# For hiding solutions
+#
+import base64
+
+
+def show_solution(bcode):
+    s = base64.decodestring(bcode)
+    print(s.decode())
 
 
 #
@@ -29,6 +46,18 @@ def create_wuerstelstrasse(dirname="/tmp"):
     from os.path import isdir
     win = 'cp1252'
     prefix = "w\u00fcrstelstra\u00dfe"
+    assert isdir(dirname), "Directory not found: %s" % dirname
+    touch_encoded_filenames(dirname, prefix, encoding=win)
+
+
+def create_espana(dirname="/tmp"):
+    """Creates 3 files using cp1252 encoding
+
+       @param dirname - The base directory, default '/tmp'
+    """
+    from os.path import isdir
+    win = 'cp1252'
+    prefix = "Espa\u00e9a"
     assert isdir(dirname), "Directory not found: %s" % dirname
     touch_encoded_filenames(dirname, prefix, encoding=win)
 
@@ -66,8 +95,10 @@ def sh(cmd):
     """
     from subprocess import check_output
     if any(x in cmd for x in r'" \''.split()):
-        raise ValueError("Command string can't contain spaces or quote-characters")
+        raise ValueError(
+            "Command string can't contain spaces or quote-characters")
     return check_output(cmd.split()).splitlines()
+
 
 def grep(expr, fpath):
     """grep reloaded with regular expressions and path normalization

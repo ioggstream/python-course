@@ -6,7 +6,11 @@
 
 
 def setup():
-    print("This function is run before the testlist")
+    print("This function is run before the testsuite, while")
+
+
+def teardown():
+    print("after all tests")
 
 
 def test_one():
@@ -21,5 +25,3 @@ def test_two():
     assert a == 1, "Expecting a == 1. Was %r" % a
 
 
-def teardown():
-    print("after all tests")
