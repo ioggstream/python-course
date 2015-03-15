@@ -1,0 +1,7 @@
+scipy
+ipython
+matplotlib
+shutil
+nose
+psutil
+numpy
