@@ -4,6 +4,6 @@ python:
     - 3.2
     - 3.3
 before_install:
-    - pip install -r requirements.txt
+    - pip install -r python-for-sysadmin/requirements.txt
 script:
     - nosetests 
