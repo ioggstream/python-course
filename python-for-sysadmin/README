@@ -1,7 +1,20 @@
 # Python for System Administrators
 
 ## Setup
-See README.setup
+See README.setup for detailed instruction on:
+
+    - Linux
+    - Windows
+    - Mac OS
+
+## Playing the course
+The easiest way to run the course is on Linux with:
+
+    #pip install -r requirements.txt    # install dependencies
+    #nosetests -v                       # check is everything is ok
+    #ipython notebook                   # ;)
+
+Each notebook is associated to a python file.
 
 ## Outline
 - If you are a novice, consider reading the 
