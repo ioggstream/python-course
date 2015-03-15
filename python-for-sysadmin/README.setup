@@ -19,8 +19,20 @@ NB Python3.0 is not the default python version on many distributions so it's sti
    precompiled packages. Anyway once you have a compiler and the needed headers, pip should build 
    everything you need (at least to me it worked). 
 
+
+## Docker image
+TODO
+
+    docker pull ioggstream/python-course # WIP
+
+## Generic Python
+Just
+
+    pip install -r requirements.txt
+
 ## Linux Ubuntu
 Just run
+
     apt-get install ipython python-pip python-psutil python-nose python-scipy python-numpy python-matplotlib
 
 ## Linux Red Hat / Centos 6
