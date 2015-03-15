@@ -4,7 +4,7 @@ The course requires:
 * python 2.7+ (see notes on python3)
 * easy_install or pip as package manager
 * ipython
-* psutil matplotlib scipi numpy nose
+* psutil matplotlib scipy numpy nose
 
 Use the following instructions to setup your environment
 and try the python crash course reading and typing on 
@@ -63,6 +63,6 @@ Test if the libraries are fine
 
 ## Mac OS
 Follow the instruction on this website http://ipython.org/install.html
-To install other packages you can use enpkg or another package manager of your choiche.
+To install other packages you can use enpkg or another package manager of your choice.
 
      sudo enpkg pyreadline psutil matplotlib scipy numpy nose
