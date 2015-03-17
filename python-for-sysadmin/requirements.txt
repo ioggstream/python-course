@@ -3,4 +3,3 @@ ipython
 matplotlib
 nose
 psutil
-numpy
