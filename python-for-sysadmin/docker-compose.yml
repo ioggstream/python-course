@@ -1,0 +1,11 @@
+sysadminpy:
+    build: .
+    hostname: sysadminpy
+    environment:
+        - USE_HTTP=1
+    ports:
+        - 8888:8888
+    volumes:
+        - ./:/notebooks
+    command: ipython notebook --ip=0.0.0.0
+       

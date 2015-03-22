@@ -7,6 +7,11 @@ See README.setup for detailed instruction on:
     - Windows
     - Mac OS
 
+If you use docker, just run:
+
+    # docker-compose up
+    # firefox http://localhost:8888
+
 ## Playing the course
 The easiest way to run the course is on Linux with:
 
