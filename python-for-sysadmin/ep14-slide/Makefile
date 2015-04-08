@@ -17,6 +17,8 @@ allsilent:
 	tail babel.log
 test:
 	pdflatex --shell-escape -interaction=nonstopmode test.tex
+testdebug:
+	pdflatex --shell-escape test.tex
 pytest:
 	rm snippet.tex snippet.pdf; true
 	pygmentize -o snippet.tex -f latex -l python -P mathescape -F tokenmerge -O full=true,escapeinside="||" snippet.py
@@ -32,5 +34,5 @@ clean:
 	rm -vf *.aux *.dvi *.log *.nav *.out *.snm *.toc *.vrb *.idx *.ind *.upa ep14-python-sysadmin.zip
 
 distclean:
-	clean
+	make clean
 	rm -vf babel.pdf test.pdf

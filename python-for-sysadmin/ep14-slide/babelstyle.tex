@@ -11,7 +11,7 @@
 \usepackage{import}
 \usepackage{mathtools}
 \usepackage{amsmath}
-\usepackage[usenames,dvipsnames]{color}
+\usepackage{color}
 %\usepackage[beamer]{hf-tikz}
 \usepackage{xfrac}
 \usepackage{makeidx}
@@ -47,13 +47,18 @@
 \newcommand{\deltasum}[1]{\sum (#1 - \bar{#1})}
 \newcommand{\deltasumsq}[1]{\sum (#1 - \bar{#1})^{2}}
 
-% environments
-\newminted{py}{mathescape,escapeinside=||} 
+%
+% Take care of the newline after \frametitle
+%
+\newenvironment{pyframe}[1]
+{\begin{frame}[fragile,environment=pyframe]\frametitle{#1}
+ 
+}
+{\end{frame}}
 
-\newenvironment{pyframe}[2][]
-  {\begin{frame}[fragile,environment=pyframe,#1]
-  \frametitle{#2}}
-  {\end{frame}}
+
+% environments
+\newminted{py}{mathescape,escapeinside=||}% 
   
 % python highlights: module, method
 \newcommand{\pymodule}[1]{\darkred{\textbf{#1}}}
@@ -144,7 +149,7 @@
   % \usecolortheme[named=orange]{structure}
   % \useinnertheme{circles}
   % \usefonttheme[onlymath]{serif}
-  \setbeamercovered{transparent}
+\setbeamercovered{transparent}
   % \setbeamertemplate{blocks}[rounded][shadow=true]
 
 \makeindex
