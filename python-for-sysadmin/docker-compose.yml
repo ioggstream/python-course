@@ -7,5 +7,5 @@ sysadminpy:
     ports:
         - 8888:8888
     volumes:
-        - ./:/notebooks
+        - ./rendered_notebooks:/notebooks
        

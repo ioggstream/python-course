@@ -3,3 +3,4 @@ ipython
 matplotlib
 nose
 psutil
+simplejson
