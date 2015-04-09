@@ -49,13 +49,14 @@ def splitting_with_findall():
     # eg for adding the ":" to a
     mac_address = "00""24""e8""b4""33""20"
     re_s_1 = "[0-9a-fA-F]"
-    mac = ':'.join(re.findall(re_s_1, mac))
+    mac = ':'.join(findall(re_s_1, mac))
     print("The mac address is ", mac)
 
 
 def testing_regexps():
     """time the above exercise replacing re_s_1 with the followings
     """
+    import re
     test_all_regexps = ("..", "[a-f0-9]{2}")
     for re_s in test_all_regexps:
         %timeit ':'.join(re.findall(re_s, mac))
@@ -63,9 +64,11 @@ def testing_regexps():
 
 def fcswitch_configuration_script():
     """Generate a vsan configuration using linux fc_informations"""
+    from glob import glob
+    from re import findall
     fc_id_path = "/sys/class/fc_host/host*/port_name"
-    for x in glob.glob(fc_id_path):
+    for x in glob(fc_id_path):
         pwwn = open(x).read()  # 0x500143802427e66c
         pwwn = pwwn[2:]
-        pwwn = re.findall(r'..', pwwn)
+        pwwn = findall(r'..', pwwn)
         print("member pwwn ", ':'.join(pwwn))
