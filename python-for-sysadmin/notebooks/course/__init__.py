@@ -17,7 +17,7 @@ Reply from 192.168.239.132: bytes=32 time=120ms TTL=124
 from __future__ import print_function, unicode_literals, division
 
 #
-# For hiding solutions
+# For hiding course
 #
 import base64
 

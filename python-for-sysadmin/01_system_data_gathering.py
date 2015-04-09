@@ -37,24 +37,6 @@ def linux_threads(pid):
 
 
 def multiplatform_stats(count):
-    """Get data in a multiplatform way
-
-    """
-    import psutil
-    import time
-    cpu_percent, io_stat, io_stat_0 = 0, 0, 0
-    print("cpu%", "iops(r+w)")
-    for x in range(-count, 1):
-        cpu_percent = psutil.cpu_percent()
-        read_io, write_io = psutil.disk_io_counters()[:2]
-        io_stat = read_io + write_io
-        print(cpu_percent, io_stat - io_stat_0)
-        io_stat_0 = io_stat
-        if x:
-            time.sleep(1)
-
-
-def multiplatform_stats(count):
     """Multiplatform stats with numpy.array"""
     raise NotImplementedError
 
@@ -136,47 +118,3 @@ def linux_diskstats(disk):
 # A more complex exercise using a lot of stuff
 #
 
-
-def system_info_from_command_output_solution():
-    """Exercise: write a multiplatform
-        pgrep-like function
-    """
-    def pgrep(expr):
-        # linux
-        return grep(expr, sh("ps -fe"))
-
-    def wpgrep(expr):
-        # windows
-        return grep(expr, sh("tasklist"))
-
-    # All explorer.exe processes
-    print(wpgrep("explorer.exe"))
-
-
-def linux_diskstats(disk):
-    """Get I/O information from /proc/diskstats
-
-       @param disk def sda
-       goal: usage of time.sleep
-       goal: usage of dict.setdefault
-       goal: use string concatenation to increase readability
-       goal: use *magic with print+sep, splitting and slicing
-    """
-    from time import sleep
-    info = ('reads reads_merged reads_sectors reads_ms'
-            ' writes writes_merged writes_sectors writes_ms'
-            ' io_in_progress io_ms_weight').split()
-    print(*info, sep=",")
-    old, cur = dict(), dict()
-    while True:
-        disk_l = grep(disk, "/proc/diskstats")
-        for x in disk_l:
-            info = x.split()
-            # the first 3 fields are disk informations
-            part = info[2]
-            old.setdefault(part, [0] * 11)
-            cur[part] = map(int, info[3:])
-            delta = [x - y for x, y in zip(cur[part], old[part])]
-            print(*delta, sep=",")
-            old[part] = cur[part]
-        sleep(1)
