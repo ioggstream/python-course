@@ -17,7 +17,7 @@ def ping_rtt():
        goal: slicing data
        goal: using zip to transpose data
     """
-    from course import sh
+    from notebooks.course import sh
     import sys
     cmd = "ping -c10 www.google.it"
     if 'win' in sys.platform:

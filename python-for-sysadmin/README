@@ -17,7 +17,7 @@ The easiest way to run the course is on Linux with:
 
     #pip install -r requirements.txt    # install dependencies
     #nosetests -v                       # check is everything is ok
-    #ipython notebook                   # ;)
+    #ipython notebook notebooks/        # ;)
 
 Each notebook is associated to a python file.
 
