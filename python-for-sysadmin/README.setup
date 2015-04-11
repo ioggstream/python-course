@@ -4,15 +4,13 @@ The course requires:
 * python 2.7+ (see notes on python3)
 * easy_install or pip as package manager
 * ipython
-* psutil matplotlib scipy numpy nose
+* see requirements.txt
 
 Use the following instructions to setup your environment
 and try the python crash course reading and typing on 
 you shiny ipython console the exercises contained in 
 
- * intro_01.py
- * intro_02.py
-
+    #python-basic
 
 NB Python3.0 is not the default python version on many distributions so it's still not time
    to switch to it for system administration tasks. Moreover you may not find
@@ -20,15 +18,17 @@ NB Python3.0 is not the default python version on many distributions so it's sti
    everything you need (at least to me it worked). 
 
 
-## Docker image
-TODO
-
-    docker pull ioggstream/python-course # WIP
-
 ## Generic Python
 Just
 
-    pip install -r requirements.txt
+    #pip install -r requirements.txt
+
+
+## Docker via Compose (downloads a 1GB image)
+Just run:
+
+    #docker-compose up
+
 
 ## Linux Ubuntu
 Just run
@@ -45,15 +45,23 @@ Then install ipython and python-pip
     yum install ipython python-pip python-psutil
 
 
-## Windows 
+## Windows (easy way)
+
+Install the Anaconda Python distribution from continuum.io https://store.continuum.io/cshop/anaconda/
+then install all the requirements.txt.
+
+
+
+## Windows (hard way)
 Install Python from python.org http://www.python.org/getit/windows/
 Install easy_install following the instructions provided here https://pypi.python.org/pypi/setuptools#windows
 My python directory is python27: replace it with your python installation path.
 From the console, install pyreadline, psutil, ipython and pyparsing
 
-    c:\python27\Scripts\easy_install pyreadline 
-    c:\python27\Scripts\easy_install psutil
-    c:\python27\Scripts\easy_install ipython nose pyparsing
+    c:\python27\Scripts\easy_install pyreadline \
+        ipython nose pyparsing pyzmq \
+        markupsafe tornado jsonschema psutil
+
 
 To install numpy scipy matplotlib just download and install the binaries for your windows version in the given order from 
 

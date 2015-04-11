@@ -1,0 +1,11 @@
+sysadminpy:
+    build: .
+    hostname: sysadminpy
+    environment:
+        - USE_HTTP=1
+        - PASSWORD=
+    ports:
+        - "9999:8888"
+    volumes:
+        - ./notebooks:/notebooks
+       

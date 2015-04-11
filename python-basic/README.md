@@ -17,6 +17,13 @@ Install the dependencies either with:
     - #sudo yum install ipython-notebook
 
 
+## Setup with Docker Compose
+
+If you have docker and compose you can just:
+
+    #docker-compose up
+
+
 ## Setup on Windows
 
-Install
+Install python via python.org or

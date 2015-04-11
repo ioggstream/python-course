@@ -4,3 +4,7 @@ matplotlib
 nose
 psutil
 simplejson
+pyzmq
+markupsafe
+tornado
+jsonschema
