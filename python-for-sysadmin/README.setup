@@ -35,7 +35,8 @@ Just run
 
     apt-get install ipython python-pip python-psutil python-nose python-scipy python-numpy python-matplotlib
 
-## Linux Red Hat / Centos 6
+
+## Linux Red Hat / Centos / Fedora
 Install the EPEL repository
 
     rpm -ivh http://ftp.tu-chemnitz.de/pub/linux/fedora-epel/6/i386/epel-release-6-8.noarch.rpm
@@ -47,9 +48,8 @@ Then install ipython and python-pip
 
 ## Windows (easy way)
 
-Install the Anaconda Python distribution from continuum.io https://store.continuum.io/cshop/anaconda/
-then install all the requirements.txt.
-
+Download python from (Continuum)[http://continuum.io/downloads] and
+install following the (provided instructions)[http://docs.continuum.io/anaconda/install.html]
 
 
 ## Windows (hard way)
@@ -83,7 +83,12 @@ Test if the libraries are fine
   
 
 ## Mac OS
-Follow the instruction on this website http://ipython.org/install.html
-To install other packages you can use enpkg or another package manager of your choice.
+Download python from Continuum http://continuum.io/downloads and
+install following the provided instructions
+http://docs.continuum.io/anaconda/install.html#mac-install
 
-     sudo enpkg pyreadline psutil matplotlib scipy numpy nose
+Then from the terminal:
+
+    #conda update conda
+    #conda update ipython ipython-notebook ipython-qtconsole \
+        pyreadline psutil matplotlib scipy numpy nose
