@@ -12,20 +12,20 @@ If you use docker, just run:
     # docker-compose up
     # firefox http://localhost:8888
 
+
 ## Playing the course
-The easiest way to run the course is on Linux with:
+An easy way to run the course is on Linux with:
 
     #pip install -r requirements.txt    # install dependencies
-    #nosetests -v                       # check is everything is ok
+    #nosetests -v                       # check if everything is ok
     #ipython notebook notebooks/        # ;)
 
-Each notebook is associated to a python file.
+Each notebook is associated to a python file in scripts/.
+
 
 ## Outline
 - If you are a novice, consider reading the 
-   introductory crash course:
-  - 00_intro_01.py  
-  - 00_intro_02.py  
+   introductory crash course in ../python-basic/
 
 - Introducing ipython
   - 01_ipython.ipy
@@ -46,8 +46,5 @@ Each notebook is associated to a python file.
 
 - Data processing
   - 04_simple_processing.py
-
-data_gathering.py
-test_prerequisites.py
 
 

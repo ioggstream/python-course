@@ -54,7 +54,8 @@ then install all the requirements.txt.
 
 ## Windows (hard way)
 Install Python from python.org http://www.python.org/getit/windows/
-Install easy_install following the instructions provided here https://pypi.python.org/pypi/setuptools#windows
+Install pip following the instructions provided here https://pip.pypa.io/en/latest/installing.html
+
 My python directory is python27: replace it with your python installation path.
 From the console, install pyreadline, psutil, ipython and pyparsing
 
