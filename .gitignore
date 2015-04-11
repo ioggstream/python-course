@@ -44,3 +44,13 @@ nosetests.xml
 .idea
 *.out
 .venv
+
+#tex
+*.aux
+*.dvi
+*.log
+*.nav
+*.snm
+*.toc
+*.vrb
+*.idx

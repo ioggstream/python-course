@@ -1,5 +1,5 @@
 OBJ=babel.pdf test.pdf
-export TEXINPUTS=:.:../../texinputs
+export TEXINPUTS = ../texinputs/:.:
 
 default:
 	make all
@@ -39,4 +39,4 @@ distclean:
 	rm -vf babel.pdf test.pdf
 
 listpdf:
-	egrep -o '[a-z_]+\.pdf' *.tex
+	egrep -o '[a-z_]+.pdf' *.tex
