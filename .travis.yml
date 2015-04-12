@@ -17,7 +17,7 @@ before_install:
 # Install packages
 install:
   - conda install --yes python=$TRAVIS_PYTHON_VERSION atlas numpy scipy matplotlib nose dateutil pandas statsmodels conda-env
-  - conda install --yes python=$TRAVIS_PYTHON_VERSION --file python-for-sysadmin/requirements.txt
+  - conda install --yes python=$TRAVIS_PYTHON_VERSION $(python-for-sysadmin/requirements.txt)
  
 # Run test
 script:
