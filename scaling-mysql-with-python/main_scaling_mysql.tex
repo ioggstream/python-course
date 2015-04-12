@@ -245,99 +245,93 @@ GTIDs avoid loops in replication!
 \begin{pyframe}{Configuring replication}
 \begin{itemize}
 \item In MySQL replication is configured on the slave only.
-\item The slave connects to the master and gets its changelog.
+\item The slave connects to the master with a provisioned
+ user and gets its changelog (binlog).
 \end{itemize}
 %% IMAGE
+If binlog had been purged, you need to import the
+master database first!
+\end{pyframe}
+
+
+\begin{pyframe}{Configuring replication}
+mysqlreplicate takes care of
+\begin{itemize}
+\item provisioning the replica user on the master;
+\item get a suitable GTID;
+\item configure the slave to point to the master.
+\end{itemize}
 \begin{minted}
+mysqlreplicate \
+ --master=root:pass@master \
+ --slave=root:pass@slave \
+ --rpl-user=repl:rpass \
+ -b
 
+# master on 192.168.1.1: ... connected.
+# slave on 192.168.1.2: ... connected.
+# Checking for binary logging on master...
+# Setting up replication...
+# ...done.
 \end{minted}
+Obviously
+\end{pyframe}
 
+\begin{pyframe}{Configuring replication -II}
+You can provision a new slave creating a suitable dump
+with mysqldbexport. Just:
+\begin{itemize}
+\item check that replica user is provisioned on the master;
+\item create a custom dump.sql;
+\item add --export=master;
+\end{itemize}
+\begin{minted}
+cat > data.sql <<EOF
+-- ignore previous changelogs
+-- and trust the backup only
+STOP SLAVE;
+RESET MASTER;
+COMMIT;
+
+EOF
+
+mysqldbexport >> data.sql \
+ --server=root:pass@master \
+ --rpl-user=repl:rpass \
+ --export=master \
+ --rpl=master \
+ --all
+
+mysqldbimport --server=root:root@slave \
+ data.sql
+\end{minted}
 \end{pyframe}
 
 
 
-\begin{pyframe}{Netfishing correlation I}
-\begin{pycode}
-# Now we have all the ingredients for
-#  net-fishing relations between our data!
-for (k1,v1), (k2,v2) in combinations(T.items(), 2):
-  # Look for correlations between every dataset!
-  corr, prob = pearsonr(v1, v2)
-  
-  if corr > .6:
-    print("Series", k1, k2, "can be correlated", corr)
-  elif prob < 0.05:
-    print("Series", k1, k2, "probability lower than 5%%", prob)
-   
-\end{pycode}
+\begin{pyframe}{Failover - I}
+mysqlfailover, requires report-host
 \end{pyframe}
 
 
-\begin{pyframe}{Netfishing correlation II}
-Now plot all combinations: there's more to meet with eyes!
-\begin{pycode}
-# Plot everything, and insert data in plots!
-for (k1,v1), (k2,v2) in combinations(T.items(), 2):
-    corr, prob = pearsonr(v1, v2)
-    plt.scatter(v1, v2)
-
-    # 3 digit precision on title
-    plt.title("R={:0.3f} P={:0.3f}".format(corr, prob))
-    plt.xlabel(k1); plt.ylabel(k2)
-
-    # save and close the plot
-    plt.savefig("{}_{}.png".format(k1, k2)); plt.close()   
-\end{pycode}
+\begin{pyframe}{Failover - II}
+example failover
 \end{pyframe}
 
-\begin{pyframe}{Plotting Correlation}
+\begin{pyframe}{Fabric - I}
 \includegraphics[height=6.6cm,width=12cm]{monochromo_cpu_wait_buff.pdf}
 \end{pyframe}
 
-\begin{pyframe}{Color is the 3rd dimension}
-\begin{pycode*}{escapeinside=||}
-
-from itertools import cycle
-colors = cycle("rgb")   # use more than 3 colors!
-labels = cycle("morning afternoon night".split())
-size = datalen / 3      # 3 colors, right?
-for (k1,v1), (k2,v2) in combinations(T.items(), 2):  
-  [    plt.scatter(|\pyver{t1[i:i+size]}|, t2[i:i+size], 
-        color=next(colors), 
-        label=next(labels)
-        ) for i in range(0, datalen, size) ]
-  # set title, save plot & co
-
-   
-\end{pycode*}
-\end{pyframe}
-
-\iffalse
-\begin{pyframe}{Example Correlation}
-\includegraphics[height=7cm,width=15cm]{latency_thruput_colored.pdf}
-\end{pyframe}
-\fi
-
-\begin{pyframe}{Example Correlation}
-\includegraphics[height=7cm,width=15cm]{retry_size_colored.pdf}
-\end{pyframe}
-
-
-\begin{pyframe}{Latency Solution}
-\begin{itemize}
-\item Latency wasn't related to packet size or system throughput
-\item Errors were not related to packet size
-\item Discovered system throughput 
-\end{itemize}
+\begin{pyframe}{Fabric - II}
 \end{pyframe}
 
 
 \begin{pyframe}{Wrap Up}
 \begin{itemize}
-\item Use statistics: it's easy
-\item Don't use $\rho$ to \emph{exclude} relations
-\item Plot, Plot, Plot
-\item Continue collecting results
+\item Use MySQL Utilities
+\item Enjoy replicatioon
+\item Don't reingest failed master
+\item Try Fabric
 \end{itemize}
 \end{pyframe}
 
