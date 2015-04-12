@@ -88,4 +88,3 @@ Test if the libraries are fine
 - run the following command
   c:\python27\Scripts\nosetests test_prerequisites.py
 
-  

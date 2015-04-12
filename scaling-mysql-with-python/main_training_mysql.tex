@@ -7,7 +7,7 @@
 
 \input{partecstyle.tex}
 
-\title{Scaling MySQL with Python}
+\title{Scaling MySQL with Python and Fabric}
 \subtitle{EuroPython 2015, $22^{th}$ July - Bilbao}
 \author{Roberto Polli - \href{mailto:roberto.polli@par-tec.it}{roberto.polli@par-tec.it}}
 \date{21-27 July 2015}
@@ -23,6 +23,7 @@
 \frame{\titlepage 
 \vspace{-0.5cm}
 }
+
 
 %% agenda
 \iffalse
@@ -54,6 +55,7 @@ solutions + Vertical Applications for the financial market.
 
 \begin{pyframe}{Agenda}
 \begin{itemize}
+\item Prepare setup
 \item MySQL architecture
 \item Getting informations
 \item Comparing databases
@@ -63,7 +65,19 @@ solutions + Vertical Applications for the financial market.
 \end{itemize}
 \end{pyframe}
 
+\begin{pyframe}{Setup}
+\begin{minted}
+git clone https://github.com/ioggstream/mysql-community
+pip install -r requirements.txt
+sudo apt-get install lxc-docker ||
+yum -y install docker
+docker pull ioggstream/mysql-community
 
+\end{minted}
+\end{pyframe}
+
+
+\section{MySQL 101}
 \begin{pyframe}{MySQL Architecture}
 \begin{itemize}
 \item MySQL is not only SQL

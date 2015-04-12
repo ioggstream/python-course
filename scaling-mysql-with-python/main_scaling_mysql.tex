@@ -8,12 +8,14 @@
 \input{partecstyle.tex}
 
 \title{Scaling MySQL with Python}
-\subtitle{EuroPython 2015, $22^{th}$ July - Bilbao}
+%\subtitle{EuroPython 2015, $21-27^{th}$ July - Bilbao}
+\subtitle{draft2}
 \author{Roberto Polli - \href{mailto:roberto.polli@par-tec.it}{roberto.polli@par-tec.it}}
 \date{21-27 July 2015}
 \institute{Par-Tec Spa - Rome Operation Unit\\
     P.zza S. Benedetto da Norcia, 33\\
-    00040, Pomezia (RM) - www.par-tec.it}
+    00040, Pomezia \(RM\) - www.par-tec.it
+    }%
 
 %
 %
@@ -25,12 +27,12 @@
 }
 
 %% agenda
-\iffalse
+%\iffalse
 \frame{\frametitle{Agenda}
 \tiny
 \tableofcontents%[pausesection]
 }
-\fi
+%\fi
 
 %% Starting doc
 \section{Intro}
@@ -63,7 +65,7 @@ solutions + Vertical Applications for the financial market.
 \end{itemize}
 \end{pyframe}
 
-
+\section{Architecture}
 \begin{pyframe}{MySQL Architecture}
 \begin{itemize}
 \item MySQL is not only SQL
@@ -100,118 +102,127 @@ We should manage and monitor
 Can all of this be simpler?
 \end{pyframe}
 
-
+\section{Utilities}
 \begin{pyframe}{Make it simple}
 Yes!
+\iffalse
+    % https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-utilities-1.6.1.tar.gz
+    \begin{minted}{bash}
+    # wget http://bit.ly/1CxNuZe
+    # tar xf mysql-utilities-1.6.1.tar.gz
+    # python setup.py install
+    \end{minted}{bash}
+    or
+\fi
+% # yum -y install https://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm
 \begin{minted}{bash}
-# wget https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-utilities-1.6.1.tar.gz
-# tar xf mysql-utilities-1.6.1.tar.gz
-# python setup.py install
+# Fedora / RHEL / Centos
+yum -y install http://bit.ly/1yhSViu # MySQL Community repo
+yum -y install mysql-utilites
 \end{minted}{bash}
-or
+\\or\\
 \begin{minted}{bash}
-# yum -y install https://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm
-# yum -y install mysql-utilites
-\end{minted}{bash}
-\end{pyframe}
-
-
-\begin{pyframe}{Preparing your setup}
-Avoid typing credentials!
-\begin{minted}{bash}
-# cat /etc/my.cnf
-# This is the client stanza of my.cnf
-[mysql]
-user=fabric
-password=fabric
-\end{minted}{bash}
-and
-\begin{minted}{bash}
-
+# Ubuntu
+apt-get -y install mysql-utilites
 \end{minted}{bash}
 \end{pyframe}
-
-
 
 
 \begin{pyframe}{Single Entrypoint: mysqluc}
 Start with \code{mysqluc}
-
 \begin{itemize}
 \item An entrypoint for all utilities
 \item Contextual help
 \item TAB completion
 \end{itemize}
+Or call each method separately
+\begin{itemize}
+\item mysqldiskusage
+\item mysqldbexport / mysqldbimport
+\item mysqlcompare / mysqldiff
+\item ...
+\item mysqlfailover
+\end{itemize}
 \end{pyframe}
 
 
-\iffalse
-\begin{pyframe}{Managing binlog}
-Managing binlog with \code{mysqlbinlogmove} and
-\code{mysqlbinlogpurge}
+\begin{pyframe}{Syntax}
+A SERVER is identified by the following string
+\begin{minted}{bash}
+user:password@hostname[:port] # default port 3306
+\end{minted}{bash}
+You can define credentials in the \code{~/.mylogin.cnf}
+encrypted file.
+\\\\
+We will use the \href{http://dev.mysql.com/doc/index-other.html}
+{sakila database} as example throughout
+the slide.
+
 \end{pyframe}
-\fi
 
-
+\subsection{Administration}
 \begin{pyframe}{Disk usage}
 A single command to show all disk usage infos (excluded system logs)
 
 \begin{minted}{bash}
-$ mysqldiskusage --server=root:secret@s-1.docker --all |grep -- =
+$ mysqldiskusage --all --server=$SERVER %% |grep -- =
+...
 Total database disk usage = 7601892 bytes or 7.25 MB
+...
 Current binary log file = s-1-bin.000009
+...
 Total size of binary logs = 231 bytes
 \end{minted}{bash}
-
 \end{pyframe}
 
 %
 % Exporting and Importing
 %
+\subsection{Export/Import}
+
 \begin{pyframe}{Export - I}
-You can forget mysqldump and use the following
+Forget mysqldump and use the following
 command for complete and consistent backup.
 \begin{minted}{bash}
 $ mysqldbexport > data.sql \
---server=root:root@localhost:13001
---all
+    --server=$SERVER
+    --all
 \end{minted}{bash}
 % --export=master --rpl=master --rpl-user=rpl:rpl
-
-Attention: to backup big databases, use InnoDB engine
-and an InnoDB backup tool!
+\\\\
+{
+\large
+To backup big databases, use InnoDB engine and an InnoDB backup tool!
+}
 \end{pyframe}
 
 
 \begin{pyframe}{Import - I}
 Then import the dump with
 \begin{minted}{bash}
-$mysqldiff \
-    --server1=root:root@master:3306 \
-    --server2=root:root@slave:3306 \
-    sakila:sakila --changes-for=server2
+mysqldbimport \
+    --server=$SERVER \
+    data.sql
 \end{minted}
 To provision a new slave we'll use a similar
 procedure with some variants.
 \end{pyframe}
 
 
-
-
-
-
 %
 % Comparing
 %
+\subsection{Comparison}
 \begin{pyframe}{Comparing databases - I}
-To compare databases, use
+To compare databases between servers, use
 \begin{minted}{bash}
 #mysqldbcompare \
-    --server1=root:root@master:3306 \
-    --server2=root:root@slave:3306 \
+    --server1=$MASTER \
+    --server2=$SLAVE \
     sakila -a --difftype=SQL \
     --show-reverse --quiet
 \end{minted}{bash}
+
 \end{pyframe}
 
 
@@ -219,9 +230,9 @@ To compare databases, use
 We can create the statemets to fix the differences!
 \begin{minted}{bash}
 #mysqldiff \
-    --server1=root:root@master:3306 \
-    --server2=root:root@slave:3306 \
-    sakila:sakila --changes-for=server2
+    --server1=$MASTER --server2=$SLAVE \
+    sakila:sakila \ # db name on master:slave
+    --changes-for=server2
 \end{minted}{bash}
 \end{pyframe}
 
@@ -229,42 +240,63 @@ We can create the statemets to fix the differences!
 %
 % replication
 %
+\subsection{Replication}
+\begin{pyframe}{Configuring replication}
+\begin{columns}
+\column[t]{.5\textwidth}
+Replication is $asynchronous$ and the agreements are configured on the slave only.
+
+    {\large Master}
+    \begin{itemize}
+    \item produces a changelog named binlog;
+    \item grants access to a $replica$ user;
+    \end{itemize}
+\column[t]{.5\textwidth}
+\includegraphics[height=3cm]{mysql-replica-hla.jpg}
+
+    {\large Slave}
+    \begin{itemize}
+    \item connects to the master with the $replica$ user
+    \item retireves the binlog and applies the changes;
+    \item \code{START SLAVE;}
+    \end{itemize}
+\end{columns}
+\end{pyframe}
+
+
 \begin{pyframe}{Replication 2.0}
 MySQL 5.6+ replication is based on Global Transaction ID
 \begin{itemize}
-\item Every server has a unique UUID \\
-\code{3E11FA47-71CA-11E1-9E33-C80AA9429562}
-
-\item This makes every TransactionID a Global one
-\code{3E11FA47-71CA-11E1-9E33-C80AA9429562:32}
+\item each server has a unique UUID \\
+eg: \code{3E11FA47-71CA-11E1-9E33-C80AA9429562}
+\\\\
+\item every TransactionID becomes global\\
+\begin{pycode*}{escapeinside=||}
+eg: 3E11FA47-71CA-11E1-9E33-C80AA9429562:|32|
+\end{pycode*}
 \end{itemize}
-GTIDs avoid loops in replication!
+\includegraphics[height=4cm]{mysql-propagate-gtid.jpg}
+
+{\large
+    If binlog have been purged, you need to import the
+master database first!}
+}
+
 \end{pyframe}
 
-
-\begin{pyframe}{Configuring replication}
-\begin{itemize}
-\item In MySQL replication is configured on the slave only.
-\item The slave connects to the master with a provisioned
- user and gets its changelog (binlog).
-\end{itemize}
-%% IMAGE
-If binlog had been purged, you need to import the
-master database first!
-\end{pyframe}
 
 
 \begin{pyframe}{Configuring replication}
 mysqlreplicate takes care of
 \begin{itemize}
 \item provisioning the replica user on the master;
-\item get a suitable GTID;
-\item configure the slave to point to the master.
+\item configure the slave to point to the master;
+\item start loading the first available transaction in bin-logs;
 \end{itemize}
+
 \begin{minted}
 mysqlreplicate \
- --master=root:pass@master \
- --slave=root:pass@slave \
+ --master=$MASTER --slave=$SLAVE \
  --rpl-user=repl:rpass \
  -b
 
@@ -274,55 +306,237 @@ mysqlreplicate \
 # Setting up replication...
 # ...done.
 \end{minted}
-Obviously
 \end{pyframe}
 
+
 \begin{pyframe}{Configuring replication -II}
-You can provision a new slave creating a suitable dump
-with mysqldbexport. Just:
+mysqldbexport can be used to provision a new master!
 \begin{itemize}
-\item check that replica user is provisioned on the master;
+%\item check that replica user is provisioned on the master;
 \item create a custom dump.sql;
 \item add --export=master;
 \end{itemize}
-\begin{minted}
-cat > data.sql <<EOF
--- ignore previous changelogs
--- and trust the backup only
+
+\begin{columns}
+\column[t]{.4\textwidth}
+\begin{bashcode}
+$cat > data.sql <<EOF
+-- ignore previous changes
+-- and trust the backup
 STOP SLAVE;
 RESET MASTER;
 COMMIT;
 
 EOF
+\end{bashcode}
 
-mysqldbexport >> data.sql \
- --server=root:pass@master \
+\column[t]{.6\textwidth}
+\begin{bashcode}
+$ mysqldbexport >> data.sql \
+ --server=$MASTER \
  --rpl-user=repl:rpass \
  --export=master \
- --rpl=master \
- --all
+ --rpl=master --all
 
-mysqldbimport --server=root:root@slave \
+mysqldbimport --server=$SLAVE \
  data.sql
-\end{minted}
+\end{bashcode}
+\end{columns}
+\end{pyframe}
+
+
+\begin{pyframe}{Discovering replication}
+\begin{bashcode*}{escapeinside=||}
+$ mysqlrplshow --master=$MASTER \
+    --discover-slaves-login=root:root
+# master on s-1.docker: ... connected.
+# |Finding slaves| for master: s-1.docker:3306
+# Replication Topology Graph
+s-1.docker:3306 (MASTER)
+   |
+   +--- s-3.docker:3306 - (SLAVE)
+   |
+   +--- s-4.docker:3306 - (SLAVE)
+\end{bashcode*}
 \end{pyframe}
 
 
 
+%
+% Failover
+%
+
+\section{Failover}
+\begin{pyframe}{Failover Basics}
+A replicated infrastructure can be made Higly Available.
+In case of fault you should:
+ \begin{itemize}
+ \item $promove$ your slave!
+ \item reconfigure the others to point there
+ \item disable the master
+ \item probably switch the ip-address
+ \end{itemize}
+\includegraphics[height=4cm]{mysql-promote-slave.jpg}
+
+\end{pyframe}
+
 \begin{pyframe}{Failover - I}
-mysqlfailover, requires report-host
+mysqlfailover takes care of that, and can even discover your
+replication topology!
+
+\begin{bashcode}
+$ mysqlfailover --master=$MASTER \
+    --discover-slaves-login=root:password \
+    --candidates=$SLAVE1,$SLAVE2 \
+    --exec-before=/pre-fail.sh \
+    --exec-after=/post-fail.sh
+\end{bashcode}
+{\large
+    mysqlfailover supports a lot of parameters!
+    Read them carefully and test thoroughly your
+    solution
+    }
 \end{pyframe}
 
 
 \begin{pyframe}{Failover - II}
-example failover
+Run mysqlfailover on an existing infrastructure!
+\begin{bashcode}
+$ mysqlfailover --master=$MASTER \
+ --discover-slaves-login=root:root
+# Discovering slaves for master at s-1.docker:3306
+# Discovering slave at s-3.docker:3306
+# Found slave: s-3.docker:3306
+# Discovering slave at s-4.docker:3306
+# Found slave: s-4.docker:3306
+# Checking privileges.
+...
+\end{bashcode}
 \end{pyframe}
 
+\begin{pyframe}{Failover - III}
+Run mysqlfailover on an existing infrastructure!
+\iffalse
+Master Information
+------------------
+Binary Log File  Position  Binlog_Do_DB  Binlog_Ignore_DB
+s-1-bin.000009   231
+
+GTID Executed Set
+f01a69cd-df69-11e4-b908-0242ac110009:1-3 [...]
+\fi
+\begin{bashcode}
+MySQL Replication Failover Utility
+Failover Mode = auto     Next Interval = Sun Apr 12 14:32:40 2015
+...
+Replication Health Status
++-------------+-------+---------+--------+------------+---------+
+| host        | port  | role    | state  | gtid_mode  | health  |
++-------------+-------+---------+--------+------------+---------+
+| s-1.docker  | 3306  | MASTER  | UP     | ON         | OK      |
+| s-3.docker  | 3306  | SLAVE   | UP     | ON         | OK      |
+| s-4.docker  | 3306  | SLAVE   | UP     | ON         | OK      |
++-------------+-------+---------+--------+------------+---------+
+\end{bashcode}
+\end{pyframe}
+
+
+
+%
+% Fabric
+%
 \begin{pyframe}{Fabric - I}
-\includegraphics[height=6.6cm,width=12cm]{monochromo_cpu_wait_buff.pdf}
+\includegraphics[height=6.6cm,width=12cm]{mysql-fabric-hla.jpg}
+Fabric is a python framework for managing, replicating, sharding and scaling mysql clusters.
+\begin{itemize}
+\item tie servers in high availability groups
+\item configure single-master replication topologies
+\item monitor failures
+\item proxy for rw/split and sharding
+\end{itemize}
+\end{pyframe}
+%http://mysqlmusings.blogspot.it/2013/10/mysql-fabric-high-availability-groups.html
+
+
+\begin{pyframe}{Fabric HLA - II}
+\includegraphics[height=6.6cm,width=12cm]{mysql-fabric-hla.jpg}
 \end{pyframe}
 
-\begin{pyframe}{Fabric - II}
+
+\begin{pyframe}{Fabric Setup}
+Configure \code{/etc/mysql/fabric.cfg} setting, then setup
+\begin{bashcode}
+# Create fabric database and
+# configure endpoint properties
+mysqlfabric manage setup --param=storage.user=fabric
+
+# Startup and check if ok
+mysqlfabric manage start
+mysqlfabric manage ping
+\end{bashcode}
+\end{pyframe}
+
+
+\begin{pyframe}{Fabric Groups - create, add}
+Create an High Availability group and add one or more servers
+\begin{bashcode}
+# add servers to fabric
+mysqlfabric group create $HA
+mysqlfabric group add $HA $SERVER1
+...
+mysqlfabric group add $HA $SERVERX
+\end{bashcode}
+\end{pyframe}
+
+
+\begin{pyframe}{Fabric Groups - lookup}
+Show groups
+\begin{bashcode}
+[root@fabric /]# mysqlfabric group lookup_groups
+Fabric UUID:  5ca1ab1e-a007-feed-f00d-cab3fe13249e
+Time-To-Live: 1
+
+group_id description failure_detector master_uuid
+-------- ----------- ---------------- -----------
+      ha        None                1 f0ce9615...
+
+\end{bashcode}
+\end{pyframe}
+
+\begin{pyframe}{Fabric Groups - promote, activate}
+Now start the game
+\begin{bashcode}
+# Set one server as master...
+$ mysqlfabric group \
+    promote $HA \
+     --slave_id f0ce9615-df69-11e4-b909-0242ac11000a
+
+# .. and enable monitoring and failover
+$ mysqlfabric group activate $HA
+\end{bashcode}
+\end{pyframe}
+
+
+\begin{pyframe}{Fabric Groups - health}
+Use hea
+\begin{bashcode}
+
+# and check if the group is fine
+$ mysqlfabric group heath $HA
+       uuid is_alive    status ... io_error sql_error
+----------- -------- --------- --- -------- ---------
+da42f6b1...        1 SECONDARY        False     False
+f0ce9615...        1   PRIMARY        False     False
+\end{bashcode}
+\end{pyframe}
+
+
+\begin{pyframe}{Fabric - III}
+Fabric can provision new servers via Openstack API.
+\begin{bashcode}
+$ mysqlfabric servre create 
+\begin{bashcode}
+We implemented a Docker API provider
 \end{pyframe}
 
 
