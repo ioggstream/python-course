@@ -27,6 +27,13 @@ If you have docker and compose you can just run (and wait for download):
     #docker-compose up
 
 
-## Setup on Windows
+## Setup on Windows and Mac OS
 
-Install python via python.org or
+Download python from [Continuum](http://continuum.io/downloads) and
+install following the [provided instructions](http://docs.continuum.io/anaconda/install.html)
+
+Then from the terminal:
+
+    #conda update conda
+    #conda update ipython ipython-notebook ipython-qtconsole \
+        readline psutil matplotlib scipy numpy nose

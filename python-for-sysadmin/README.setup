@@ -46,10 +46,17 @@ Then install ipython and python-pip
     yum install ipython python-pip python-psutil
 
 
-## Windows (easy way)
+## Mac OS and Windows (easy way)
 
-Download python from (Continuum)[http://continuum.io/downloads] and
-install following the (provided instructions)[http://docs.continuum.io/anaconda/install.html]
+Download python from [Continuum](http://continuum.io/downloads) and
+install following the [provided instructions](http://docs.continuum.io/anaconda/install.html)
+
+Then from the terminal:
+
+    #conda update conda
+    #conda update ipython ipython-notebook ipython-qtconsole \
+        readline psutil matplotlib scipy numpy nose
+
 
 
 ## Windows (hard way)
@@ -80,15 +87,5 @@ Test if the libraries are fine
 - running ipython *after* you've installed all of them
 - run the following command
   c:\python27\Scripts\nosetests test_prerequisites.py
+
   
-
-## Mac OS
-Download python from Continuum http://continuum.io/downloads and
-install following the provided instructions
-http://docs.continuum.io/anaconda/install.html#mac-install
-
-Then from the terminal:
-
-    #conda update conda
-    #conda update ipython ipython-notebook ipython-qtconsole \
-        pyreadline psutil matplotlib scipy numpy nose
