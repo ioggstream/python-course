@@ -82,7 +82,7 @@ solutions + Vertical Applications for the financial market.
 
 
 \begin{pyframe}{MySQL Architecture}
-\includegraphics[height=5.5cm]{mysql-architecture.pdf}
+\includegraphics[height=5.5cm]{images/mysql-architecture.pdf}
 {\large
 \begin{center}
 It's a lot of stuff
@@ -252,7 +252,7 @@ Replication is $asynchronous$ and the agreements are configured on the slave onl
     \item grants access to a $replica$ user;
     \end{itemize}
 \column[t]{.5\textwidth}
-\includegraphics[height=3cm]{mysql-replica-hla.jpg}
+\includegraphics[height=3cm]{images/mysql-replica-hla.jpg}
 
     {\large Slave}
     \begin{itemize}
@@ -275,7 +275,7 @@ eg: \code{3E11FA47-71CA-11E1-9E33-C80AA9429562}
 eg: 3E11FA47-71CA-11E1-9E33-C80AA9429562:|32|
 \end{pycode*}
 \end{itemize}
-\includegraphics[height=4cm]{mysql-propagate-gtid.jpg}
+\includegraphics[height=4cm]{images/mysql-propagate-gtid.jpg}
 
 {\large
     If binlog have been purged, you need to import the
@@ -376,7 +376,7 @@ In case of fault you should:
  \item disable the master
  \item probably switch the ip-address
  \end{itemize}
-\includegraphics[height=4cm]{mysql-promote-slave.jpg}
+\includegraphics[height=4cm]{images/mysql-promote-slave.jpg}
 
 \end{pyframe}
 
@@ -446,7 +446,7 @@ Replication Health Status
 % Fabric
 %
 \begin{pyframe}{Fabric - I}
-\includegraphics[height=6.6cm,width=12cm]{mysql-fabric-hla.jpg}
+\includegraphics[height=6.6cm,width=12cm]{images/mysql-fabric-hla.jpg}
 Fabric is a python framework for managing, replicating, sharding and scaling mysql clusters.
 \begin{itemize}
 \item tie servers in high availability groups
@@ -459,7 +459,7 @@ Fabric is a python framework for managing, replicating, sharding and scaling mys
 
 
 \begin{pyframe}{Fabric HLA - II}
-\includegraphics[height=6.6cm,width=12cm]{mysql-fabric-hla.jpg}
+\includegraphics[height=6.6cm,width=12cm]{images/mysql-fabric-hla.jpg}
 \end{pyframe}
 
 
@@ -534,7 +534,7 @@ f0ce9615...        1   PRIMARY        False     False
 \begin{pyframe}{Fabric - III}
 Fabric can provision new servers via Openstack API.
 \begin{bashcode}
-$ mysqlfabric servre create 
+$ mysqlfabric servre create
 \begin{bashcode}
 We implemented a Docker API provider
 \end{pyframe}
