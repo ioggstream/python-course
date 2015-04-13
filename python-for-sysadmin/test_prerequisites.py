@@ -24,7 +24,7 @@ def harn_import(l, p=None):
 
 
 def test_imports():
-    required = "nose psutil scipy matplotlib numpy IPython".split()
+    required = "nose psutil scipy matplotlib numpy IPython shlex".split()
     for m in required:
         yield harn_import, m
 

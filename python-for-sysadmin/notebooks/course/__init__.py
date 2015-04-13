@@ -90,14 +90,12 @@ diskstats_headers = ('major minor device'
 
 def sh(cmd):
     """A quick and dirty check_output wrapper.
-        Don't use in production as it won't honor
-        quoted spaces like "my document.docx"
+        Use shlex to honor quoted spaces
+        like "my document.docx"
     """
     from subprocess import check_output
-    if any(x in cmd for x in r'" \''.split()):
-        raise ValueError(
-            "Command string can't contain spaces or quote-characters")
-    return check_output(cmd.split()).splitlines()
+    from shlex import split
+    return check_output(split(cmd)).splitlines()
 
 
 def grep(expr, fpath):
