@@ -38,9 +38,9 @@
 \frame{ \frametitle{Who? What? Why?}
 \begin{itemize}
 
-\item Manage, replicate, scale MySQL databases with python
+\item Manage, replicate, scale and provision MySQL databases with python fabric
 \\
-
+\\
 \item Roberto Polli - Solutions Architect @ par-tec.it. Loves writing in C,
 Java and Python. Red Hat Certified Engineer and Virtualization
 Administrator.
@@ -55,129 +55,211 @@ solutions + Vertical Applications for the financial market.
 
 \begin{pyframe}{Agenda}
 \begin{itemize}
-\item Prepare setup
-\item MySQL architecture
-\item Getting informations
-\item Comparing databases
-\item Replication 2.0 aka GTID
-\item Fabric: scaling & sharding for the masses
+\item Setup environment
+\item Docker \& Compose
+\item MySQL 5.6+ Replication
+\item Fabric overview
+\item Installing fabric
+\item High Avalability \& Failover
+\item Creating a Docker Provisioning driver
 %\item modules: \pymodule{scipy, matplotlib}
 \end{itemize}
 \end{pyframe}
 
-\begin{pyframe}{Setup}
-\begin{minted}
-git clone https://github.com/ioggstream/mysql-community
-pip install -r requirements.txt
-sudo apt-get install lxc-docker ||
-yum -y install docker
-docker pull ioggstream/mysql-community
-
-\end{minted}
-\end{pyframe}
-
-
-\section{MySQL 101}
-\begin{pyframe}{MySQL Architecture}
-\begin{itemize}
-\item MySQL is not only SQL
-% Query parser vs engine store
-\item Architecture of a database
-% query parser, cache, transaction log, MVCC
-% http://www.oracle.com/technetwork/articles/javase/figure2-large-145676.jpg
-\item MVCC
-\item Replication
-\item Consistency is here to stay
 %
-\end{itemize}
+%
+%
+\begin{pyframe}{Setup}
+Install Docker
+\begin{bashcode}
+sudo apt-get install lxc-docker || \
+yum -y install docker
+\end{bashcode}
+Download the course scripts
+\begin{bashcode}
+git clone https://github.com/ioggstream/mysql-community
+cd mysql-community/fabric
+\end{bashcode}
+Install requirements and setup environment
+\begin{bashcode}
+pip install -r requirements.txt
+docker-compose up
+\end{bashcode}
 \end{pyframe}
 
 
-\begin{pyframe}{MySQL Architecture}
-\includegraphics[height=5.5cm]{mysql-architecture.pdf}
-{\large
-\begin{center}
-It's a lot of stuff
-\end{center}
-}
+%
+% Docker 101
+%
+\section{Docker}
+\begin{pyframe}{Docker}
+A brief docker tutorial based
+on the busybox image.
+Setting images, hostnames and environment variables.
+\begin{bashcode}
+$ docker run [--rm] -ti --name=test busybox /bin/bash
+$ docker exec -ti  test /bin/bash
+...
+\end{bashcode}
+OT: nat, entrypoint, ...
+\end{pyframe}
+
+\section{Docker}
+\begin{pyframe}{Docker Compose}
+A brief docker-compose tutorial:
+describing containers via yml
+\\
+Running the provided services
+using docker-compose.
+\\
+Scaling services with compose.
+\\
+If audience is confident with compose, a patch
+for customizing hostnames of docker-compose scale is presented.
+
+\end{pyframe}
+
+%
+% MySQL
+%
+\section{MySQL}
+\begin{pyframe}{MySQL Replication 101}
+Advantage of replication:
+  - scaling reads
+  - high availability
+  - ease of backup
 \end{pyframe}
 
 
-\begin{pyframe}{MySQL Architecture}
-% Map in the figure every task
-We should manage and monitor
+\begin{pyframe}{MySQL Replication 101}
+An HLA of MySQL Replication:
+master creates a changelog (binlog),
+% by default binlog never expires
+slaves download and apply it.
+Global Transaction ID.
+Asynchronous and Semi-Synchronous replication.
+\includegraphics[height=4cm]{images/mysql-propagate-gtid.jpg}
+\end{pyframe}
+
+
+\begin{pyframe}{MySQL Replication 101}
+Running mysql with the provided my-gtid.cnf.
+Replication arguments: server-id, binlog, relaylog, ...
+Create a master-slave replication agreement.
+\code{SLAVE START; SLAVE STOP; SHOW SLAVE STATUS \G; SHOW MASTER STATUS;}
+\end{pyframe}
+
+
+%
+% Fabric
+%
+\begin{pyframe}{Fabric - HLA}
+Fabric is a python framework for managing, replicating, sharding and scaling mysql clusters.
 \begin{itemize}
-\item Database size: Tables, Indexes, Binary Logs
-\item Replication inconsistencies
-\item Failover
+\item tie servers in high availability groups
+\item configure single-master replication topologies
+\item monitor failures
+\item proxy for rw/split and sharding
 \end{itemize}
-Can all of this be simpler?
+\end{pyframe}
+%http://mysqlmusings.blogspot.it/2013/10/mysql-fabric-high-availability-groups.html
+
+
+\begin{pyframe}{Fabric - HLA}
+\includegraphics[height=6.6cm,width=12cm]{images/mysql-fabric-hla.jpg}
 \end{pyframe}
 
 
-\begin{pyframe}{Make it simple}
-Yes!
+\begin{pyframe}{Fabric \& Python Utilities - get it}
+Python 2.7
+    \begin{minted}{bash}
+    # wget \href{https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-utilities-1.6.1.tar.gz}{http://bit.ly/1CxNuZe}
+    # tar xf mysql-utilities-1.6.1.tar.gz
+    # python setup.py install
+    \end{minted}{bash}
+Fedora / CentOS / RHEL 7
+    \begin{minted}{bash}
+    # Fedora / RHEL / Centos
+    yum -y install \href{https://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm}{http://bit.ly/1yhSViu} # MySQL Community repo
+    yum -y install mysql-utilites
+    \end{minted}{bash}
+\end{pyframe}
+
+
+\subsection{Setup - I}
+Setup Fabric Server.
+We will access all servers from this container
+which includes *all* mysql tools and utilities.
 \begin{minted}{bash}
-# wget https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-utilities-1.6.1.tar.gz
-# tar xf mysql-utilities-1.6.1.tar.gz
-# python setup.py install
+$ docker-compose up -d
+$ docker exec -ti fabric_fabric_1 /bin/bash
+fabric$
 \end{minted}{bash}
-or
+\end{pyframe}
+
+\begin{pyframe}{Setup - II}
+All settings (eg my.cnf) to avoid typing credientals
+and establish pain-free communication between nodes.
+ \\ \\
+Students won't waste time.
+\end{pyframe}
+
+
+\begin{pyframe}{Installation}
+Setup fabric server via fabric.cfg . \\
+Testing fabric installation (database existence, mysqlfabric ping, ..)
+
 \begin{minted}{bash}
-# yum -y install https://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm
-# yum -y install mysql-utilites
+$ mysqlfabric ping ...
 \end{minted}{bash}
 \end{pyframe}
 
 
-\begin{pyframe}{Preparing your setup}
-Avoid typing credentials!
-\begin{minted}{bash}
-# cat /etc/my.cnf
-# This is the client stanza of my.cnf
-[mysql]
-user=fabric
-password=fabric
-\end{minted}{bash}
-and
-\begin{minted}{bash}
+\section{High Availability Group}
+\begin{pyframe}{High Availability Group}
+Create a replication group and adding
+servers. \\
 
+Promoting one server as a master. \\
+
+Monitoring failover. \\
+\begin{minted}{bash}
+# mysqlfabric group ...
 \end{minted}{bash}
 \end{pyframe}
 
 
+\begin{pyframe}{Troubleshooting replication}
+Using python mysql-utilities to provision
+ a new slave when binlogs are not complete. \\
 
 
-\begin{pyframe}{Single Entrypoint: mysqluc}
-Start with \code{mysqluc}
+\begin{minted}{bash}
+# mysqldbexport / mysqldbimport
+\end{minted}{bash}
+\end{pyframe}
 
-\begin{itemize}
-\item An entrypoint for all utilities
-\item Contextual help
-\item TAB completion
-\end{itemize}
+\section{Failover}
+\begin{pyframe}{Enabling and Testing Failover}
+Enabling failover and stopping a master. \\
+
+Re-ingesting a failed master. \\
+
+\begin{minted}{bash}
+#
+\end{minted}{bash}
 \end{pyframe}
 
 
 \iffalse
-\begin{pyframe}{Managing binlog}
-Managing binlog with \code{mysqlbinlogmove} and
-\code{mysqlbinlogpurge}
+\begin{pyframe}{Title}
+\begin{minted}{bash}
+#
+\end{minted}{bash}
 \end{pyframe}
 \fi
 
 
-\begin{pyframe}{Disk usage}
-A single command to show all disk usage infos (excluded system logs)
-
-\begin{minted}{bash}
-$ mysqldiskusage --server=root:secret@s-1.docker --all |grep -- =
-Total database disk usage = 7601892 bytes or 7.25 MB
-Current binary log file = s-1-bin.000009
-Total size of binary logs = 231 bytes
-\end{minted}{bash}
-
-\end{pyframe}
 
 %
 % Exporting and Importing

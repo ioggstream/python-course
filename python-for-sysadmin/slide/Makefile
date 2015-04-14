@@ -9,17 +9,12 @@ check:
 
 all:	
 	pdflatex --shell-escape -interaction=nonstopmode babel.tex
-
-stat:	
-	pdflatex --shell-escape -interaction=nonstopmode stat101.tex
+	mv babel.pdf python-for-sysadmin-draft-2015.pdf
 
 allsilent:
 	nohup pdflatex --shell-escape -interaction=nonstopmode babel.tex > /dev/null
 	tail babel.log
-test:
-	pdflatex --shell-escape -interaction=nonstopmode test.tex
-testdebug:
-	pdflatex --shell-escape test.tex
+
 pytest:
 	rm snippet.tex snippet.pdf; true
 	pygmentize -o snippet.tex -f latex -l python -P mathescape -F tokenmerge -O full=true,escapeinside="||" snippet.py
@@ -29,14 +24,14 @@ debug:
 	pdflatex --shell-escape babel.tex
 
 backup:
-	zip -r ep14-python-sysadmin.zip *.tex Makefile *.png
+	zip -r backup-slide.zip *.tex Makefile *.png
 
 clean:
-	rm -vf *.aux *.dvi *.log *.nav *.out *.snm *.toc *.vrb *.idx *.ind *.upa ep14-python-sysadmin.zip
+	rm -vf *.aux *.dvi *.log *.nav *.out *.snm *.toc *.vrb *.idx *.ind *.upa backup-slide.zip
 
 distclean:
 	make clean
-	rm -vf babel.pdf test.pdf
+	rm -vf babel.pdf
 
 listpdf:
 	egrep -o '[a-z_]+\.pdf' *.tex

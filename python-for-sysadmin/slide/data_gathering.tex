@@ -81,18 +81,36 @@ print(out)
 \end{pycode*}
 \end{pyframe}
 
+\begin{pyframe}{Data Gathering: security}
+\begin{pycode*}{escapeinside=||}
+# Be carefull with the above code
+out = check_output('ls "./may not work.doc"'.|\pyver{split}|())
+
+# You can use
+from shlex import split
+out = check_output(|\pyver{split}|('ls "./will work.xlsx"'))
+
+you = r"can \'even\' tokenize "respecting" quoted\n chars"
+from shlex import shlex
+for token in shlex(you):
+    print(token)
+
+\end{pycode*}
+\end{pyframe}
+
 \begin{pyframe}{Data Gathering: subprocess, sys}
 % TODO pulire?
 \begin{pycode*}{escapeinside=||}
 def sh(cmd, shell=False, timeout=0):
   """Returns an iterable output of a command string, checking ... """
   from sys import version_info as |\emph{python\_version}|
+  from shlex import split
   if python_version < (3, 3): # ..before using...
     if |\emph{timeout}|:
       raise ValueError("Timeout not supported")
-    output = check_output(cmd.split(), shell=shell)
+    output = check_output(split(cmd), shell=shell)
   else:
-    output = check_output(cmd.split(), shell=shell, timeout=timeout)
+    output = check_output(split(cmd), shell=shell, timeout=timeout)
 
   return output.|\pyver{splitlines}|()
   
@@ -100,6 +118,7 @@ def sh(cmd, shell=False, timeout=0):
     
 \end{pycode*}
 \end{pyframe}
+
 
 \begin{pyframe}{Data Gathering: Exercises}
 Write a simple pgrep-like function for your OS which:

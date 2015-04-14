@@ -374,7 +374,7 @@ for k1, k2 in combinations(table, 2):
 \end{pycode}
 \end{pyframe}
 
-
+\iffalse
 \begin{pyframe}{Mark time with colors}
 \begin{pycode*}{escapeinside=||}
 # Use 3 colors to mark time-slots
@@ -391,18 +391,24 @@ list(_) # ... which iterates to...
    [8, 9]]       # ..Blue 
 \end{pycode*}
 \end{pyframe}
+\fi
 
 \begin{pyframe}{Mark time with colors}
 \begin{pycode*}{escapeinside=||}
 # Get combined data directly via $\pyver{items}$
+#  using 3 buckets
+buckets = 3
+
 for (k1, v1), (k2, v2) in combinations(table.|\pyver{items}|(), 2):
     corr, probability = pearsonr(v1, v2)
+    length = len(v1)
+    # Get an array of colors
+    #  eg. [0, 0, ..., 1, 1, .., 2, 2, ...]
+    colors = [(i * buckets / l) for i in xrange(l) ]
 
-    # Two nice generators
-    time_chunked = zip(in_chunks(v1, size=8*3600),
-                      in_chunks(v2, size=8*3600))
-    [plt.scatter(t1, t2, color=|\pyver{next(colors)}|) # iterate colors!
-        for t1, t2 in time_chunked]
+    # iterate colors with a nice colorbar
+    plt.scatter(t1, t2, color=colors)
+    plt.colorbar(ticks=range(buckets))
 
     # save and close the plot
     plt.savefig("timed_{}_{}.png".format(k1, k2)); plt.close()
