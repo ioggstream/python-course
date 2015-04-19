@@ -4,8 +4,12 @@
 %
 % macro
 %
-
 \input{partecstyle.tex}
+
+% Apply DRAFT watermark
+\usepackage{draftwatermark}
+\setbeamercolor{background canvas}{bg=}%transparent canvas
+
 
 \title{Scaling MySQL with Python}
 %\subtitle{EuroPython 2015, $21-27^{th}$ July - Bilbao}
@@ -60,7 +64,7 @@ solutions + Vertical Applications for the financial market.
 \item Getting informations
 \item Comparing databases
 \item Replication 2.0 aka GTID
-\item Fabric: scaling & sharding for the masses
+\item Fabric: scaling \& sharding for the masses
 %\item modules: \pymodule{scipy, matplotlib}
 \end{itemize}
 \end{pyframe}
@@ -85,9 +89,9 @@ solutions + Vertical Applications for the financial market.
 \begin{pyframe}{MySQL Architecture}
 \includegraphics[height=5.5cm]{images/mysql-architecture.pdf}
 {\large
-\begin{center}
-It's a lot of stuff
-\end{center}
+    \begin{center}
+    It's a lot of stuff
+    \end{center}
 }
 \end{pyframe}
 
@@ -100,34 +104,33 @@ We should manage and monitor
 \item Replication inconsistencies
 \item Failover
 \end{itemize}
-Can all of this be simpler?
+Simplify please!
 \end{pyframe}
+
+
+\iffalse
 
 \section{Utilities}
 \begin{pyframe}{Make it simple}
 Yes!
-\iffalse
     % https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-utilities-1.6.1.tar.gz
-    \begin{minted}{bash}
+    \begin{bashcode}
     # wget http://bit.ly/1CxNuZe
     # tar xf mysql-utilities-1.6.1.tar.gz
     # python setup.py install
-    \end{minted}{bash}
+    \end{bashcode}
     or
-\fi
 % # yum -y install https://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm
-\begin{minted}{bash}
+\begin{bashcode}
 # Fedora / RHEL / Centos
 yum -y install http://bit.ly/1yhSViu # MySQL Community repo
 yum -y install mysql-utilites
-\end{minted}{bash}
-\\or\\
-\begin{minted}{bash}
 # Ubuntu
 apt-get -y install mysql-utilites
-\end{minted}{bash}
+\end{bashcode}
 \end{pyframe}
 
+\fi
 
 \begin{pyframe}{Single Entrypoint: mysqluc}
 Start with \code{mysqluc}
@@ -149,12 +152,11 @@ Or call each method separately
 
 \begin{pyframe}{Syntax}
 A SERVER is identified by the following string
-\begin{minted}{bash}
+\begin{bashcode}
 user:password@hostname[:port] # default port 3306
-\end{minted}{bash}
+\end{bashcode}
 You can define credentials in the \code{~/.mylogin.cnf}
-encrypted file.
-\\\\
+encrypted file.\\ \\
 We will use the \href{http://dev.mysql.com/doc/index-other.html}
 {sakila database} as example throughout
 the slide.
@@ -165,7 +167,7 @@ the slide.
 \begin{pyframe}{Disk usage}
 A single command to show all disk usage infos (excluded system logs)
 
-\begin{minted}{bash}
+\begin{bashcode}
 $ mysqldiskusage --all --server=$SERVER %% |grep -- =
 ...
 Total database disk usage = 7601892 bytes or 7.25 MB
@@ -173,7 +175,7 @@ Total database disk usage = 7601892 bytes or 7.25 MB
 Current binary log file = s-1-bin.000009
 ...
 Total size of binary logs = 231 bytes
-\end{minted}{bash}
+\end{bashcode}
 \end{pyframe}
 
 %
@@ -184,13 +186,13 @@ Total size of binary logs = 231 bytes
 \begin{pyframe}{Export - I}
 Forget mysqldump and use the following
 command for complete and consistent backup.
-\begin{minted}{bash}
+\begin{bashcode}
 $ mysqldbexport > data.sql \
     --server=$SERVER
     --all
-\end{minted}{bash}
+\end{bashcode}
 % --export=master --rpl=master --rpl-user=rpl:rpl
-\\\\
+\\ \\
 {
 \large
 To backup big databases, use InnoDB engine and an InnoDB backup tool!
@@ -200,11 +202,10 @@ To backup big databases, use InnoDB engine and an InnoDB backup tool!
 
 \begin{pyframe}{Import - I}
 Then import the dump with
-\begin{minted}{bash}
-mysqldbimport \
-    --server=$SERVER \
+\begin{bashcode}
+$ mysqldbimport --server=$SERVER \
     data.sql
-\end{minted}
+\end{bashcode}
 To provision a new slave we'll use a similar
 procedure with some variants.
 \end{pyframe}
@@ -216,25 +217,25 @@ procedure with some variants.
 \subsection{Comparison}
 \begin{pyframe}{Comparing databases - I}
 To compare databases between servers, use
-\begin{minted}{bash}
+\begin{bashcode}
 #mysqldbcompare \
     --server1=$MASTER \
     --server2=$SLAVE \
     sakila -a --difftype=SQL \
     --show-reverse --quiet
-\end{minted}{bash}
+\end{bashcode}
 
 \end{pyframe}
 
 
 \begin{pyframe}{Comparing databases - II}
 We can create the statemets to fix the differences!
-\begin{minted}{bash}
+\begin{bashcode}
 #mysqldiff \
     --server1=$MASTER --server2=$SLAVE \
     sakila:sakila \ # db name on master:slave
     --changes-for=server2
-\end{minted}{bash}
+\end{bashcode}
 \end{pyframe}
 
 
@@ -270,7 +271,7 @@ MySQL 5.6+ replication is based on Global Transaction ID
 \begin{itemize}
 \item each server has a unique UUID \\
 eg: \code{3E11FA47-71CA-11E1-9E33-C80AA9429562}
-\\\\
+\\ \\
 \item every TransactionID becomes global\\
 \begin{pycode*}{escapeinside=||}
 eg: 3E11FA47-71CA-11E1-9E33-C80AA9429562:|32|
@@ -280,7 +281,7 @@ eg: 3E11FA47-71CA-11E1-9E33-C80AA9429562:|32|
 
 {\large
     If binlog have been purged, you need to import the
-master database first!}
+master database first!
 }
 
 \end{pyframe}
@@ -295,7 +296,7 @@ mysqlreplicate takes care of
 \item start loading the first available transaction in bin-logs;
 \end{itemize}
 
-\begin{minted}
+\begin{bashcode}
 mysqlreplicate \
  --master=$MASTER --slave=$SLAVE \
  --rpl-user=repl:rpass \
@@ -306,48 +307,49 @@ mysqlreplicate \
 # Checking for binary logging on master...
 # Setting up replication...
 # ...done.
-\end{minted}
+\end{bashcode}
 \end{pyframe}
 
 
-\begin{pyframe}{Configuring replication -II}
-mysqldbexport can be used to provision a new master!
+\begin{pyframe}{Configuring replication - II}
+mysqldbexport can be used to provision a new slave!
 \begin{itemize}
 %\item check that replica user is provisioned on the master;
-\item create a custom dump.sql;
+\item issue a \code{RESET MASTER;};
 \item add --export=master;
 \end{itemize}
 
 \begin{columns}
-\column[t]{.4\textwidth}
+\column[t]{.5\textwidth}
+
 \begin{bashcode}
-$cat > data.sql <<EOF
+# pre-import.sql
 -- ignore previous changes
 -- and trust the backup
 STOP SLAVE;
 RESET MASTER;
-COMMIT;
-
-EOF
 \end{bashcode}
 
-\column[t]{.6\textwidth}
-\begin{bashcode}
-$ mysqldbexport >> data.sql \
+\column[t]{.5\textwidth}
+\begin{pycode}
+$ mysqldbexport > data.sql \
  --server=$MASTER \
  --rpl-user=repl:rpass \
- --export=master \
+ --export=both \
  --rpl=master --all
 
-mysqldbimport --server=$SLAVE \
- data.sql
-\end{bashcode}
+\end{pycode}
 \end{columns}
+
 \end{pyframe}
+
+%mysql $SLAVE < pre-import.sql
+%mysqldbimport --server=$SLAVE \
+% data.sql
 
 
 \begin{pyframe}{Discovering replication}
-\begin{bashcode*}{escapeinside=||}
+\begin{bashcode}
 $ mysqlrplshow --master=$MASTER \
     --discover-slaves-login=root:root
 # master on s-1.docker: ... connected.
@@ -358,7 +360,7 @@ s-1.docker:3306 (MASTER)
    +--- s-3.docker:3306 - (SLAVE)
    |
    +--- s-4.docker:3306 - (SLAVE)
-\end{bashcode*}
+\end{bashcode}
 \end{pyframe}
 
 
@@ -478,7 +480,7 @@ mysqlfabric manage ping
 \end{pyframe}
 
 
-\begin{pyframe}{Fabric Groups - create, add}
+\begin{pyframe}{Fabric Groups - create\, add}
 Create an High Availability group and add one or more servers
 \begin{bashcode}
 # add servers to fabric
@@ -534,10 +536,24 @@ f0ce9615...        1   PRIMARY        False     False
 
 \begin{pyframe}{Fabric - III}
 Fabric can provision new servers via Openstack API.
+
 \begin{bashcode}
-$ mysqlfabric servre create
-\begin{bashcode}
+$ mysqlfabric server create
+\end{bashcode}
+
 We implemented a Docker API provider
+\begin{pycode*}
+# mysql.fabric.providers.dockerprovider.py
+...
+class MachineManager(AbstractMachineManager):
+    """Manage a Docker Machine.
+    """
+    def create(self, parameters, wait_spawning):
+        ...
+    def destroy(self, machine):
+        ...
+
+\end{pycode*}
 \end{pyframe}
 
 
@@ -549,6 +565,16 @@ We implemented a Docker API provider
 \item Try Fabric
 \end{itemize}
 \end{pyframe}
+
+\begin{pyframe}{That's all folks!}
+\begin{center}
+Thank you for the attention! \\ \\
+\insertauthor
+\end{center}
+\end{pyframe}
+
+
+
 
 
 \iffalse
@@ -564,14 +590,6 @@ To make a consistent backup you need to know
 Curious? Attend `MySQL for Pythonistas' on FIXME
 \end{pyframe}
 \fi
-
-
-\begin{pyframe}{That's all folks!}
-\begin{center}
-Thank you for the attention! \\\\
-\insertauthor
-\end{center}
-\end{pyframe}
 
 
 \end{document}

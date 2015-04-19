@@ -7,7 +7,11 @@
 
 \input{partecstyle.tex}
 
-\title{Scaling MySQL with Python and Fabric}
+% Apply DRAFT watermark
+\usepackage{draftwatermark}
+\setbeamercolor{background canvas}{bg=}%transparent canvas
+
+\title{Orchestrating MySQL with Python and Docker}
 \subtitle{EuroPython 2015, $22^{th}$ July - Bilbao}
 \author{Roberto Polli - \href{mailto:roberto.polli@par-tec.it}{roberto.polli@par-tec.it}}
 \date{21-27 July 2015}
@@ -125,21 +129,51 @@ for customizing hostnames of docker-compose scale is presented.
 \section{MySQL}
 \begin{pyframe}{MySQL Replication 101}
 Advantage of replication:
-  - scaling reads
-  - high availability
-  - ease of backup
+\begin{itemize}
+  \item  scaling reads
+  \item  high availability
+  \item ease of backup
 \end{pyframe}
 
 
 \begin{pyframe}{MySQL Replication 101}
-An HLA of MySQL Replication:
-master creates a changelog (binlog),
+Overview of MySQL Replication:
+\begin{itemize}
+\item master creates a changelog (binlog),
 % by default binlog never expires
-slaves download and apply it.
-Global Transaction ID.
-Asynchronous and Semi-Synchronous replication.
+\item slaves download and apply it.
+\item Global Transaction ID.
+\item Asynchronous and Semi-Synchronous replication.
+\end{itemize}
 \includegraphics[height=4cm]{images/mysql-propagate-gtid.jpg}
 \end{pyframe}
+
+
+\iffalse
+\begin{pyframe}{Replication 2.0}
+MySQL 5.6+ replication is based on Global Transaction ID
+\begin{itemize}
+\item Every server has a unique UUID \\
+\code{3E11FA47-71CA-11E1-9E33-C80AA9429562}
+
+\item This makes every TransactionID a Global one
+\code{3E11FA47-71CA-11E1-9E33-C80AA9429562:32}
+\end{itemize}
+GTIDs avoid loops in replication!
+\end{pyframe}
+
+
+\begin{pyframe}{Configuring replication}
+\begin{itemize}
+\item In MySQL replication is configured on the slave only.
+\item The slave connects to the master with a provisioned
+ user and gets its changelog (binlog).
+\end{itemize}
+%% IMAGE
+If binlog had been purged, you need to import the
+master database first!
+\end{pyframe}
+\fi
 
 
 \begin{pyframe}{MySQL Replication 101}
@@ -147,6 +181,28 @@ Running mysql with the provided my-gtid.cnf.
 Replication arguments: server-id, binlog, relaylog, ...
 Create a master-slave replication agreement.
 \code{SLAVE START; SLAVE STOP; SHOW SLAVE STATUS \G; SHOW MASTER STATUS;}
+\end{pyframe}
+
+
+\begin{pyframe}{MySQL Replication 101}
+mysqlreplicate takes care of
+\begin{itemize}
+\item provisioning the replica user on the master;
+\item configure the slave to point to the master.
+\end{itemize}
+\begin{minted}
+mysqlreplicate \
+ --master=root:pass@master \
+ --slave=root:pass@slave \
+ --rpl-user=repl:rpass \
+ -b
+
+# master on 192.168.1.1: ... connected.
+# slave on 192.168.1.2: ... connected.
+# Checking for binary logging on master...
+# Setting up replication...
+# ...done.
+\end{minted}
 \end{pyframe}
 
 
@@ -172,17 +228,16 @@ Fabric is a python framework for managing, replicating, sharding and scaling mys
 
 \begin{pyframe}{Fabric \& Python Utilities - get it}
 Python 2.7
-    \begin{minted}{bash}
-    # wget \href{https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-utilities-1.6.1.tar.gz}{http://bit.ly/1CxNuZe}
-    # tar xf mysql-utilities-1.6.1.tar.gz
-    # python setup.py install
-    \end{minted}{bash}
+    \begin{bashcode*}
+    wget |\href{https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-utilities-1.6.1.tar.gz}{http://bit.ly/1CxNuZe}|
+    tar xf mysql-utilities-1.6.1.tar.gz
+    python setup.py install
+    \end{bashcode*}
 Fedora / CentOS / RHEL 7
-    \begin{minted}{bash}
-    # Fedora / RHEL / Centos
+    \begin{bashcode}
     yum -y install \href{https://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm}{http://bit.ly/1yhSViu} # MySQL Community repo
     yum -y install mysql-utilites
-    \end{minted}{bash}
+    \end{bashcode}
 \end{pyframe}
 
 
@@ -190,11 +245,11 @@ Fedora / CentOS / RHEL 7
 Setup Fabric Server.
 We will access all servers from this container
 which includes *all* mysql tools and utilities.
-\begin{minted}{bash}
+\begin{bashcode}
 $ docker-compose up -d
 $ docker exec -ti fabric_fabric_1 /bin/bash
 fabric$
-\end{minted}{bash}
+\end{bashcode}
 \end{pyframe}
 
 \begin{pyframe}{Setup - II}
@@ -209,9 +264,9 @@ Students won't waste time.
 Setup fabric server via fabric.cfg . \\
 Testing fabric installation (database existence, mysqlfabric ping, ..)
 
-\begin{minted}{bash}
+\begin{bashcode}
 $ mysqlfabric ping ...
-\end{minted}{bash}
+\end{bashcode}
 \end{pyframe}
 
 
@@ -223,9 +278,9 @@ servers. \\
 Promoting one server as a master. \\
 
 Monitoring failover. \\
-\begin{minted}{bash}
+\begin{bashcode}
 # mysqlfabric group ...
-\end{minted}{bash}
+\end{bashcode}
 \end{pyframe}
 
 
@@ -233,11 +288,47 @@ Monitoring failover. \\
 Using python mysql-utilities to provision
  a new slave when binlogs are not complete. \\
 
+ Caveats on big databases. \\
 
-\begin{minted}{bash}
+
+\begin{bashcode}
 # mysqldbexport / mysqldbimport
-\end{minted}{bash}
+\end{bashcode}
 \end{pyframe}
+
+
+\iffalse
+    \begin{pyframe}{Provisioning a new master}
+    You can provision a new slave creating a suitable dump
+    with mysqldbexport. Just:
+    \begin{itemize}
+    \item check that replica user is provisioned on the master;
+    \item create a custom dump.sql;
+    \item add --export=master;
+    \end{itemize}
+    \begin{minted}
+    cat > data.sql <<EOF
+    -- ignore previous changelogs
+    -- and trust the backup only
+    STOP SLAVE;
+    RESET MASTER;
+    COMMIT;
+
+    EOF
+
+    mysqldbexport >> data.sql \
+     --server=root:pass@master \
+     --rpl-user=repl:rpass \
+     --export=master \
+     --rpl=master \
+     --all
+
+    mysqldbimport --server=root:root@slave \
+     data.sql
+    \end{minted}
+    \end{pyframe}
+\fi
+
 
 \section{Failover}
 \begin{pyframe}{Enabling and Testing Failover}
@@ -245,206 +336,49 @@ Enabling failover and stopping a master. \\
 
 Re-ingesting a failed master. \\
 
-\begin{minted}{bash}
+\begin{bashcode}
 #
-\end{minted}{bash}
+\end{bashcode}
 \end{pyframe}
+
+
+\section{Provisioning}
+\begin{pyframe}{Provisioning new container via docker}
+Show the provisioning interface (docker, openstack). \\
+
+Provisining and deleting containers. \\
+
+Adding provisioned container to ha groups. \\
+
+\begin{pycode}
+from mysql.fabric.providers import dockerprovider
+
+# the MachineManager class...
+
+\end{pycode}
+\end{pyframe}
+
+
 
 
 \iffalse
 \begin{pyframe}{Title}
-\begin{minted}{bash}
+\begin{bashcode}
 #
-\end{minted}{bash}
+\end{bashcode}
 \end{pyframe}
 \fi
 
 
-
-%
-% Exporting and Importing
-%
-\begin{pyframe}{Export - I}
-You can forget mysqldump and use the following
-command for complete and consistent backup.
-\begin{minted}{bash}
-$ mysqldbexport > data.sql \
---server=root:root@localhost:13001
---all
-\end{minted}{bash}
-% --export=master --rpl=master --rpl-user=rpl:rpl
-
-Attention: to backup big databases, use InnoDB engine
-and an InnoDB backup tool!
-\end{pyframe}
-
-
-\begin{pyframe}{Import - I}
-Then import the dump with
-\begin{minted}{bash}
-$mysqldiff \
-    --server1=root:root@master:3306 \
-    --server2=root:root@slave:3306 \
-    sakila:sakila --changes-for=server2
-\end{minted}
-To provision a new slave we'll use a similar
-procedure with some variants.
-\end{pyframe}
-
-
-
-
-
-
-%
-% Comparing
-%
-\begin{pyframe}{Comparing databases - I}
-To compare databases, use
-\begin{minted}{bash}
-#mysqldbcompare \
-    --server1=root:root@master:3306 \
-    --server2=root:root@slave:3306 \
-    sakila -a --difftype=SQL \
-    --show-reverse --quiet
-\end{minted}{bash}
-\end{pyframe}
-
-
-\begin{pyframe}{Comparing databases - II}
-We can create the statemets to fix the differences!
-\begin{minted}{bash}
-#mysqldiff \
-    --server1=root:root@master:3306 \
-    --server2=root:root@slave:3306 \
-    sakila:sakila --changes-for=server2
-\end{minted}{bash}
-\end{pyframe}
-
-
-%
-% replication
-%
-\begin{pyframe}{Replication 2.0}
-MySQL 5.6+ replication is based on Global Transaction ID
-\begin{itemize}
-\item Every server has a unique UUID \\
-\code{3E11FA47-71CA-11E1-9E33-C80AA9429562}
-
-\item This makes every TransactionID a Global one
-\code{3E11FA47-71CA-11E1-9E33-C80AA9429562:32}
-\end{itemize}
-GTIDs avoid loops in replication!
-\end{pyframe}
-
-
-\begin{pyframe}{Configuring replication}
-\begin{itemize}
-\item In MySQL replication is configured on the slave only.
-\item The slave connects to the master with a provisioned
- user and gets its changelog (binlog).
-\end{itemize}
-%% IMAGE
-If binlog had been purged, you need to import the
-master database first!
-\end{pyframe}
-
-
-\begin{pyframe}{Configuring replication}
-mysqlreplicate takes care of
-\begin{itemize}
-\item provisioning the replica user on the master;
-\item get a suitable GTID;
-\item configure the slave to point to the master.
-\end{itemize}
-\begin{minted}
-mysqlreplicate \
- --master=root:pass@master \
- --slave=root:pass@slave \
- --rpl-user=repl:rpass \
- -b
-
-# master on 192.168.1.1: ... connected.
-# slave on 192.168.1.2: ... connected.
-# Checking for binary logging on master...
-# Setting up replication...
-# ...done.
-\end{minted}
-Obviously
-\end{pyframe}
-
-\begin{pyframe}{Configuring replication -II}
-You can provision a new slave creating a suitable dump
-with mysqldbexport. Just:
-\begin{itemize}
-\item check that replica user is provisioned on the master;
-\item create a custom dump.sql;
-\item add --export=master;
-\end{itemize}
-\begin{minted}
-cat > data.sql <<EOF
--- ignore previous changelogs
--- and trust the backup only
-STOP SLAVE;
-RESET MASTER;
-COMMIT;
-
-EOF
-
-mysqldbexport >> data.sql \
- --server=root:pass@master \
- --rpl-user=repl:rpass \
- --export=master \
- --rpl=master \
- --all
-
-mysqldbimport --server=root:root@slave \
- data.sql
-\end{minted}
-\end{pyframe}
-
-
-
-\begin{pyframe}{Failover - I}
-mysqlfailover, requires report-host
-\end{pyframe}
-
-
-\begin{pyframe}{Failover - II}
-example failover
-\end{pyframe}
-
-\begin{pyframe}{Fabric - I}
-\includegraphics[height=6.6cm,width=12cm]{monochromo_cpu_wait_buff.pdf}
-\end{pyframe}
-
-\begin{pyframe}{Fabric - II}
-\end{pyframe}
 
 
 \begin{pyframe}{Wrap Up}
 \begin{itemize}
-\item Use MySQL Utilities
-\item Enjoy replicatioon
-\item Don't reingest failed master
-\item Try Fabric
+\item Try Fabric with Docker!
+\item Enjoy high availability!
+\item Don't reingest failed master!
 \end{itemize}
 \end{pyframe}
-
-
-\iffalse
-\begin{pyframe}{mysqlbackup \-\-what}
-To make a consistent backup you need to know
- how your data are stored (engine, ...).
- Are you sure your backup is:
-\begin{itemize}
-\item consistent?
-\item usable?
-\item without side effect?
-\end{itemize}
-Curious? Attend `MySQL for Pythonistas' on FIXME
-\end{pyframe}
-\fi
 
 
 \begin{pyframe}{That's all folks!}

@@ -2,25 +2,25 @@
 # Load styles and images from texinputs using
 #  the TEXINPUTS variable
 #
-export TEXINPUTS = ../texinputs/:.:
+export TEXINPUTS = ../texinputs/:.:/tmp/tox:
+CFLAGS=--shell-escape
 
-default:
-	make all
+default: all
 
 check:
-	lacheck babel.tex | egrep -v "Dots should be |Whitespace before punctation|to (begin|end) quotation|possible unwanted space"
+	lacheck main_*.tex | egrep -v "Dots should be |Whitespace before punctation|to (begin|end) quotation|possible unwanted space"
 
-all:	
-	pdflatex --shell-escape -interaction=nonstopmode main_*.tex
+all: talk training
+
+talk:	
+	pdflatex  $(CFLAGS) -interaction=nonstopmode main_scaling_mysql.tex
+
+training:
+	pdflatex $(CFLAGS) -interaction=nonstopmode main_training_mysql.tex
 
 allsilent:
 	nohup pdflatex --shell-escape -interaction=nonstopmode main_*.tex > /dev/null
 	tail main_*.log
-test:
-	pdflatex --shell-escape -interaction=nonstopmode test.tex
-
-testdebug:
-	pdflatex --shell-escape test.tex
 
 pytest:
 	rm snippet.tex snippet.pdf; true
@@ -42,3 +42,4 @@ distclean:
 
 listpdf:
 	egrep -o '[a-z_]+.pdf' *.tex
+
