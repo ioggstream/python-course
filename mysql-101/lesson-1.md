@@ -38,7 +38,7 @@ Goal:
 
   - SQL Parser / Optimizer (Caches, Authorization)
 
-    - Query exec / cache / logging
+  - Query exec / cache / logging
 
   - Storage Engines (Disk, Memory, Network)
 
@@ -49,6 +49,12 @@ Goal:
   - Enable persistency
   - Transactional: InnoDB, NDB
   - Non Transactional: MyISAM, Memory,
+
+# Course setup
+
+Install the following packages via yum or apt-get
+
+    tree dstat vim hostname
 
 
 # Installing MySQL
@@ -172,7 +178,19 @@ Goal:
 # Installing MySQL
 ## Datadir content
 
-    #ls /var/lib/mysql
+Content of 
+
+    /var/lib/mysql/
+    |-- [mysql    mysql      19]  foo/
+    |-- [mysql    mysql    4.0K]  mysql/
+    |-- [mysql    mysql    4.0K]  performance_schema/
+    |-- [mysql    mysql       3]  a02f12e917b1.pid
+    |-- [mysql    mysql      56]  auto.cnf
+    |-- [mysql    mysql     48M]  ib_logfile0
+    |-- [mysql    mysql     48M]  ib_logfile1
+    |-- [mysql    mysql     12M]  ibdata1
+    `-- [mysql    mysql       0]  mysql.sock
+
      
   - application logs
   - DDL definitions .frm and indexes
@@ -186,7 +204,7 @@ Goal:
   - Create alternative datadirs
   - Or recreate an existing one
   
-    #mysql_install_db --user=mysql --datadir=/var/
+        #mysql_install_db --user=mysql --datadir=/var/
     
     
 # Upgrading MySQL
@@ -198,3 +216,5 @@ Goal:
     
         #mysql_upgrade
         #mysqlcheck
+        
+#
