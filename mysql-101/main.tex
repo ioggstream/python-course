@@ -1,0 +1,39 @@
+\documentclass{beamer}[10]
+
+\input{partecstyle.tex}
+
+\title{MySQL 101}
+%\subtitle{EuroPython 2014, $24^{th}$ July - Berlin}
+\author{Roberto Polli -
+\href{mailto:roberto.polli@babel.it}{roberto.polli@babel.it}}
+%\date{24 July 2014}
+\institute{Par-Tec Spa - Rome Operation Unit\\
+    P.zza S. Benedetto da Norcia, 33\\
+    00040, Pomezia (RM) - www.par-tec.it}
+
+%
+%
+\begin{document}
+
+%% cover
+\frame{
+\titlepage%
+\vspace{-0.5cm}
+}
+
+%% agenda
+\frame
+{
+\frametitle{Agenda}
+\tableofcontents%[pausesection]
+}
+
+
+
+\bash[stdoutFile=tmpme.tex.tmp]
+{ shopt -s nullglob; for file in *.md.tex; do echo "\\input{$file}"; done; } 
+\END
+\input{tmpme.tex.tmp}
+
+\end{document}
+
