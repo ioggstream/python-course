@@ -1,18 +1,17 @@
 # Lesson 2 - Agenda
     
 - Configuration
-- Loading Databases
+- Logging
+- Importing and Exporting Databases
 
 
 # Goals
 
-- Configure main parameters
+- Configure basic security and logging parameters
 - Get/Set variables
 - Set SQL Modes 
 - Logging
-    - Server
-    - Binary | Relay
-    - Audit
+
     
     
 # Configuration
@@ -32,14 +31,106 @@ Show running status via
 Don't explicit default values in the configuration!
      
 # Configuration
-Configuration file is made up of stanzas
+Always start from an empty file
 
-        [client]
-        # for mysql, mysqladmin, ...
-        
+        bash#cp /usr/my.cnf /etc/
+
+my.cnf is made up of stanzas
+
+        # /etc/my.cnf
         [server]
         # for mysqld, ..
+        datadir=/disk2/data
         
         [mysqld]
         # only for mysqld
+        user=mysql
+
+For now just avoid typing credentials
+
+        [client]
+        # insecurely store clear text credentials
+        # for mysql, mysqladmin, mysqldump
+        user=root
+        password=root 
+
+    
+# Configuration
+Show the parameters *to be used*
+
+        bash#my_print_defaults mysqld
+        
+Show the actual values
+
+        bash#mysqladmin variables
+        
+Show the actual values from mysql
+      
+        sql#SHOW [GLOBAL|SESSION] VARIABLES [LIKE ...];
+        sql#SHOW VARIABLES LIKE 'innodb_%';
+        
+
+# Configuring consistency
+Privilege consistency and security
+
+        [mysqld]
+        sql-mode=STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+        innodb-flush-log-at-trx-commit=1   
+        myisam-recover-options=FORCE,BACKUP
+        explicit_defaults_for_timestamp
+
+        
+# Configuring security
+Further security tips
+
+        [mysqld]
+        ...
+        local-infile=0
+        skip-symbolic-links
+   
+        
+# Application logging
+mysqld does **not** create logs by default.
+        
+        # configure general and slow query logs
+        general-log=hostname.log
+        slow-query-log=hostname-slow.log
+
+mysqld_safe runs mysqld and redirects stderr to error-log
+
+        # set the log file
+        log-error=hostname.err
+        
+        
+% you can save non-error logs to tables!
+     
+     
+# Application logging
+Don't fill your disks with logs!
+
+  - consider separate partitions;
+  - rotate logs, checking the actual policy;
+  
+        cat /etc/logrotate.d/mysql
+
+    or copy and modify
+
+        cp /usr/share/mysql/mysql-log-rotate  /etc/logrotate.d/mysql
+
+      
+# Import data
+While running in another window
+
+        dstat 5
+        
+        
+Import the [Employees database](http://bit.ly/1HMHCBf) in your database
+
+        
+
+        
+
+        
+     
+     
         

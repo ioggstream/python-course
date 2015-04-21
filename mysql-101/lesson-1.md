@@ -8,6 +8,18 @@ Goal:
   - 
 
 
+# Test Slide
+Sample line
+
+* star
+- dash
+
+        tabquote
+
+
+
+
+
 
 
 # Come funziona un database - 1
@@ -90,11 +102,11 @@ Install the following packages via yum or apt-get
         #find /etc/ -name \*mysql\*
           
         
-  - first access
+  - first access and basic parameters
   
         #cat /root/.mysql_secret
-        #mysql -u$USER -p$PASSWORD [ -h$HOST ]
-        
+        #mysql -u$USER -p$PASSWORD [ -h$HOST -P$PORT ]
+        #mysql -e "$QUERY"
   
 # Installing MySQL - 2
     
@@ -102,11 +114,25 @@ Install the following packages via yum or apt-get
   
         #service mysql [start|stop|status]
 
+# Connecting 
+Client programs:
+
+- mysql, mysqladmin, mysqlbackup
+
+- full help
+
+        #mysql ... [--help [--verbose]] 
+        
+- connect via socket or forcing TCP
+
+        #mysql --socket=/var/lib/mysql/mysql.sock
+        #mysql --protocol tcp
+
 
 # mysql.user table
   - Authentication is based on users
-  - A user is a couple (user, host)
-          
+  - A user is a couple $(user, host)$ 
+       
         mysql> select user,host,password from mysql.user;
         +------+--------------+----------+
         | user | host         | password |
@@ -119,6 +145,12 @@ Install the following packages via yum or apt-get
         |      | a02f12e917b1 |          |
         +------+--------------+----------+
         6 rows in set (0.00 sec)
+
+  - Create a user and show its privileges. By default host is '%'
+  
+        CREATE USER admin identified by 'admin';
+        SHOW GRANTS FOR 'admin';   
+
 
   - We can change the password with
   
@@ -166,7 +198,7 @@ Install the following packages via yum or apt-get
   - resetting root password requires a restart
   - create the following init.sql
     
-        -- burn after running!
+        -- Burn after running!
         SET PASSWORD FOR 'root'@'localhost' = PASSWORD('MyNewPass');
 
   - stop mysql eg. with kill -TERM (NEVER use SIGKILL)
@@ -176,7 +208,7 @@ Install the following packages via yum or apt-get
         
 
 # Installing MySQL
-## Datadir content
+## The datadir
 
 Content of 
 
@@ -198,13 +230,21 @@ Content of
   - InnoDB tablespace
   - Binary & Relay Logs
 
+
 # Installing MySQL
-## Recreating datadir
+## The datadir
 
   - Create alternative datadirs
   - Or recreate an existing one
   
         #mysql_install_db --user=mysql --datadir=/var/
+
+
+# Populating a database
+Let's import the *Employee* test database
+    
+    bash#wget http://bit.ly/1HMHCBf    
+    bash#mysql
     
     
 # Upgrading MySQL
@@ -217,4 +257,3 @@ Content of
         #mysql_upgrade
         #mysqlcheck
         
-#
