@@ -5,7 +5,6 @@ Goal:
   - Implementing an ACID database
   - Installing and Upgrading on Linux, minimal configuration
   - Basic Administration: start/stop, reset password, privileges
-  - 
 
 
 # Test Slide
@@ -80,39 +79,68 @@ Install the following packages via yum or apt-get
     yum -y install MySQL-*
     yum -y install mysql-utilities
 
-## Configuration 
 
-  - Relocate MySQL with 
-
-        --datadir
-    
-  - or specifying the following options
-    
-        --port, --socket
-        --log, --pid-file
-        --tmpdir
 
 
 # Installing MySQL - 1
 
-  - checking installed files
+Check installed files
   
         #dpkg -L mysql-*
         #id mysql
         #find /etc/ -name \*mysql\*
           
-        
-  - first access and basic parameters
-  
+First access
+          
         #cat /root/.mysql_secret
         #mysql -u$USER -p$PASSWORD [ -h$HOST -P$PORT ]
         #mysql -e "$QUERY"
   
 # Installing MySQL - 2
-    
-  - the mysql service
+On Ubuntu/Debian
+        
+        # cd /opt/mysql/server-5.6/
+        # cp support-files/mysql.server /etc/init.d/mysql
+        # cp my.cnf /etc/my.cnf
+        # useradd mysql -s /usr/sbin/nologin -d /var/lib/mysql
+        # chown -R mysql:mysql /var/lib/mysql
+        # cat > /etc/profile.d/mysql.sh <<'EOF'
+        export MYSQL_HOME=/opt/mysql/server-5.6/
+        export PATH+=:$MYSQL_HOME/bin:$MYSQL_HOME/scripts
+        EOF
+
+            
+Manage mysql service
   
         #service mysql [start|stop|status]
+        
+        
+        
+# Installing MySQL - 3
+Prepare a minimal configuration file...
+
+        # /etc/my.cnf
+        [mysqld]
+        ...mysql defaults...
+        user=mysql
+        datadir=/var/lib/mysql
+        
+...and the datadir
+
+        # mysql_install_db
+        
+# Installing MySQL - 4
+Further parameters
+
+        # /etc/my.cnf
+        [mysqld]
+        ...mysql defaults...
+        port=13306
+        socket=/data2/mysql.sock
+        pid-file=/data2/hostname.pid
+        tmpdir=/tmp/data2
+        log=/data2/hostname.log
+     
 
 # Connecting 
 Client programs:
@@ -156,6 +184,7 @@ Client programs:
   
          /usr/bin/mysqladmin -u root password 'new-password'
          /usr/bin/mysqladmin -u root -h a02f12e917b1 password 'new-password'
+
 
 # mysql.user table
 
@@ -204,7 +233,7 @@ Client programs:
   - stop mysql eg. with kill -TERM (NEVER use SIGKILL)
   - start with 
   
-        #qmysqld --init-file=init.sql
+        #mysqld --init-file=init.sql
         
 
 # Installing MySQL
@@ -235,25 +264,67 @@ Content of
 ## The datadir
 
   - Create alternative datadirs
-  - Or recreate an existing one
   
-        #mysql_install_db --user=mysql --datadir=/var/
-
-
-# Populating a database
-Let's import the *Employee* test database
-    
-    bash#wget http://bit.ly/1HMHCBf    
-    bash#mysql
-    
-    
-# Upgrading MySQL
-
-  - Stop
-  - Backup
-  - Upgrade software
-  - Check upgrade
-    
-        #mysql_upgrade
-        #mysqlcheck
+        #mysql_install_db --datadir=/data2
         
+  - Or recreate the default one (from my.cnf)
+  
+        #mysql_install_db 
+
+
+# Managing databases - 1
+Create databases/tables with
+
+        CREATE DATABASE IF NOT EXISTS d1;
+        CREATE TABLE d1.t1(
+            id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+            ip INT NOT NULL 
+        );
+        SHOW CREATE TABLE d1.t1;
+
+
+# Managing databases - 2
+Add entries using the embedded editor
+
+       \e -- opens vi
+
+Type QUERIES
+
+       INSERT INTO d1.t1(ip) VALUES 
+            (inet_aton("10.0.0.1")),
+            (inet_aton("10.0.0.2")),
+            (inet_aton("10.0.0.3"))
+       ;
+       
+Save in a file and execute, exiting from vi
+ and typing ";"
+       
+       <ESC>:w /tmp/sample.sql
+       <ESC>:q
+       ;
+
+Show them
+
+        SELECT id, INET_NTOA(ip) FROM d1.t1;
+
+        
+# Manage databases - 3
+Grant permissions on tables
+
+        GRANT ALL ON *.* TO 'network' IDENTIFIED BY 'secret';
+
+OOOPS: we have NO_AUTOCREATE_USER!
+
+        CREATE USER 'network' IDENTIFIED BY 'secret';
+        GRANT ALL ON *.* TO 'network';
+        
+        
+        
+# Manage databases - 4         
+  - Re-authenticate with *network* 
+  - Remove table and database with:
+
+        DROP TABLE d1.t1;
+        DROP DATABASE d1;
+        
+      

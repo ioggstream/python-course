@@ -41,10 +41,13 @@ my.cnf is made up of stanzas
         [server]
         # for mysqld, ..
         datadir=/disk2/data
-        
+        user=mysql
+
         [mysqld]
         # only for mysqld
         user=mysql
+        datadir=/disk2/data
+
 
 For now just avoid typing credentials
 
@@ -81,12 +84,20 @@ Privilege consistency and security
 
         
 # Configuring security
-Further security tips
+Further security tips for server...
 
         [mysqld]
         ...
         local-infile=0
         skip-symbolic-links
+   
+...and client.
+   
+        [mysql]
+        # inhibit unlimited UPDATE, DELETE, SELECT
+        # override with --safe-updates=0
+        safe-updates
+
    
         
 # Application logging
@@ -113,24 +124,45 @@ Don't fill your disks with logs!
   
         cat /etc/logrotate.d/mysql
 
-    or copy and modify
+  - or copy and modify
 
-        cp /usr/share/mysql/mysql-log-rotate  /etc/logrotate.d/mysql
+        fedora#cp /usr/share/mysql/mysql-log-rotate  /etc/logrotate.d/mysql
+        ubuntu#cp /opt/mysql/server-5.6/support-files/mysql-log-rotate /etc/logrotate.d/mysql
 
       
-# Import data
-While running in another window
+# Populating a database
+While monitoring system status with
+ 
+         dstat -cgmprsy 5
+    
+we'll import the [Employees database](http://bit.ly/1HMHCBf)
 
-        dstat 5
+        bash#wget http://bit.ly/1HMHCBf    
+        bash#tar xf employee*
+        bash#cd employee*
+        bash#mysql < $DBFILE
         
+Repeat enabling/disabling autocommit.
+
+# Populating a database
+Show database structure 
+
+        STATUS
         
-Import the [Employees database](http://bit.ly/1HMHCBf) in your database
 
         
 
         
+# Upgrading MySQL
 
-        
+  - Stop
+  - Backup
+  - Upgrade software
+  - Check upgrade
+    
+        #mysql_upgrade
+        #mysqlcheck
+
      
      
         
