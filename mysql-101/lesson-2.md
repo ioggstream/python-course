@@ -55,8 +55,9 @@ For now just avoid typing credentials
         # insecurely store clear text credentials
         # for mysql, mysqladmin, mysqldump
         user=root
-        password=root 
-
+        password=root
+        compress
+        
     
 # Configuration
 Show the parameters *to be used*
@@ -78,7 +79,8 @@ Privilege consistency and security
 
         [mysqld]
         sql-mode=STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
-        innodb-flush-log-at-trx-commit=1   
+        innodb-flush-log-at-trx-commit=1
+        innodb-fast-shutdown=0
         myisam-recover-options=FORCE,BACKUP
         explicit_defaults_for_timestamp
 
@@ -97,25 +99,47 @@ Further security tips for server...
         # inhibit unlimited UPDATE, DELETE, SELECT
         # override with --safe-updates=0
         safe-updates
+        show-warnings
 
-   
+# Configuring security
+Store credentials [in the encrypted file][http://dev.mysql.com/doc/refman/5.6/en/mysql-config-editor.html] 
+~/.mylogin.cnf using
+
+        #mysql_config_editor set 
+            --login-path=client # default used by mysql 
+            --host=localhost 
+            --user=localuser 
+            --password # (prompted)
+
+We can define further servers
+
+        #mysql_config_editor set
+            --login-path=master
+            --host=m-1.foo.it
+            --port=13306
+            --user=admin
+            --password # (prompted)
         
 # Application logging
 mysqld does **not** create logs by default.
         
         # configure general and slow query logs
-        general-log=hostname.log
-        slow-query-log=hostname-slow.log
+        #  eventually using defaults
+        general-log[=hostname.log]
+        slow-query-log[=hostname-slow.log]
 
-mysqld_safe runs mysqld and redirects stderr to error-log
+If error-log is specified, stdout|err is redirected.
 
-        # set the log file
-        log-error=hostname.err
+        # set the log file will daemonize
+        #  the server
+        log-error[=hostname.err]
         
-        
-% you can save non-error logs to tables!
-     
-     
+You can use mysqld_safe to eventually restart the server
+in case of problems.
+
+Error log should not rely on mysqld: it cannot be saved on tables!
+
+
 # Application logging
 Don't fill your disks with logs!
 
@@ -144,12 +168,22 @@ we'll import the [Employees database](http://bit.ly/1HMHCBf)
         
 Repeat enabling/disabling autocommit.
 
+
 # Populating a database
 Show database structure 
 
-        STATUS
+        STATUS;
+        SELECT DATABASE();
+        USE employee
+        SELECT DATABASE();
+        SHOW TABLE STATUS \G
         
+Table size in $MiB$ $2^{20}$ bytes
 
+        USE information_schema;
+        SELECT TABLE_NAME, DATA_LENGTH>>20, INDEX_LENGTH>>20 
+        FROM TABLES
+        WHERE TABLE_SCHEMA='employees';
         
 
         

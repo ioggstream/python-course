@@ -40,7 +40,7 @@
 
 %% Starting doc
 \section{Intro}
-\frame{ \frametitle{Who? What? Why?}
+\begin{pyframe}{Who? What? Why?}
 \begin{itemize}
 
 \item Manage, replicate, scale MySQL databases with python
@@ -56,7 +56,7 @@ Provides expertise in IT Infrastructure \& Services and \\ Business Intelligence
 solutions + Vertical Applications for the financial market.
 
 \end{itemize}
-}
+\end{pyframe}
 
 \begin{pyframe}{Agenda}
 \begin{itemize}
@@ -99,69 +99,109 @@ solutions + Vertical Applications for the financial market.
 \begin{pyframe}{MySQL Architecture}
 % Map in the figure every task
 We should manage and monitor
-\begin{itemize}
-\item Database size: Tables, Indexes, Binary Logs
-\item Replication inconsistencies
-\item Failover
-\end{itemize}
+    \begin{itemize}
+    \item Database size: Tables, Indexes, Binary Logs
+    \item Replication inconsistencies
+    \item Failover
+    \end{itemize}
 Simplify please!
 \end{pyframe}
 
 
-\iffalse
 
 \section{Utilities}
-\begin{pyframe}{Make it simple}
-Yes!
+\begin{pyframe}{Get the code}
     % https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-utilities-1.6.1.tar.gz
     \begin{bashcode}
     # wget http://bit.ly/1CxNuZe
     # tar xf mysql-utilities-1.6.1.tar.gz
     # python setup.py install
     \end{bashcode}
-    or
-% # yum -y install https://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm
-\begin{bashcode}
-# Fedora / RHEL / Centos
-yum -y install http://bit.ly/1yhSViu # MySQL Community repo
-yum -y install mysql-utilites
-# Ubuntu
-apt-get -y install mysql-utilites
-\end{bashcode}
-\end{pyframe}
+
+\iffalse
+            or
+        % # yum -y install https://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm
+        \begin{bashcode}
+        # Fedora / RHEL / Centos
+        yum -y install http://bit.ly/1yhSViu # MySQL Community repo
+        yum -y install mysql-utilites
+        # Ubuntu
+        apt-get -y install mysql-utilites
+        \end{bashcode}
 
 \fi
 
+\end{pyframe}
+
+
+\begin{pyframe}{Utilities}
+Drivers
+\begin{pycode}
+    # mysql.connector.django.introspection
+    if django.VERSION >= (1, 6):
+        from django.db.backends import FieldInfo
+        if django.VERSION >= (1, 7):
+            ...
+\end{pycode}
+Utilities
+\begin{pycode}
+    # mysql.utilities.common.replication
+    if master_innodb_stats != slave_innodb_stats:
+        if not pedantic:
+            errors.append("WARNING: Innodb settings differ "
+                          "between master and slave.")
+    ...
+\end{pycode}
+Fabric Orchestrator
+\end{pyframe}
+
 \begin{pyframe}{Single Entrypoint: mysqluc}
-Start with \code{mysqluc}
-\begin{itemize}
-\item An entrypoint for all utilities
-\item Contextual help
-\item TAB completion
-\end{itemize}
-Or call each method separately
-\begin{itemize}
-\item mysqldiskusage
-\item mysqldbexport / mysqldbimport
-\item mysqlcompare / mysqldiff
-\item ...
-\item mysqlfailover
-\end{itemize}
+\begin{columns}
+\column[t]{.5\linewidth}
+    Start with \code{mysqluc}
+    \begin{itemize}
+    \item An entrypoint for all utilities
+    \item Contextual help
+    \item TAB completion
+    \end{itemize}
+
+\column[t]{.5\linewidth}
+    Or call each method separately
+    \begin{itemize}
+    \item mysqldiskusage
+    \item mysqldbexport / mysqldbimport
+    \item mysqlcompare / mysqldiff
+    \item ...
+    \item mysqlfailover
+    \end{itemize}
+\end{columns}
 \end{pyframe}
 
 
 \begin{pyframe}{Syntax}
-A SERVER is identified by the following string
+Define one or more server credentials in the encrypted \code{~/.mylogin.cnf}\\ \\
 \begin{bashcode}
-user:password@hostname[:port] # default port 3306
+    mysql_config_editor set
+        --login-path=client # default used by mysql
+        --host=localhost --user=localuser
+        --password # (prompted)
+
+    mysql # by default uses --login-path=client
 \end{bashcode}
-You can define credentials in the \code{~/.mylogin.cnf}
-encrypted file.\\ \\
-We will use the \href{http://dev.mysql.com/doc/index-other.html}
-{sakila database} as example throughout
-the slide.
+
+A SERVER is identified by the string
+\begin{bashcode}
+    user:password@hostname[:port] # default port 3306
+\end{bashcode}
+or
+\begin{bashcode}
+    login-path
+\end{bashcode}
+We will use the example \href{http://dev.mysql.com/doc/index-other.html}
+{sakila database} throughout the slide.
 
 \end{pyframe}
+
 
 \subsection{Administration}
 \begin{pyframe}{Disk usage}
@@ -178,6 +218,7 @@ Total size of binary logs = 231 bytes
 \end{bashcode}
 \end{pyframe}
 
+
 %
 % Exporting and Importing
 %
@@ -185,7 +226,7 @@ Total size of binary logs = 231 bytes
 
 \begin{pyframe}{Export - I}
 Forget mysqldump and use the following
-command for complete and consistent backup.
+command for a consistent $logical$ backup.
 \begin{bashcode}
 $ mysqldbexport > data.sql \
     --server=$SERVER
@@ -229,9 +270,9 @@ To compare databases between servers, use
 
 
 \begin{pyframe}{Comparing databases - II}
-We can create the statemets to fix the differences!
+Create the statemets to fix the differences!
 \begin{bashcode}
-#mysqldiff \
+mysqldiff \
     --server1=$MASTER --server2=$SLAVE \
     sakila:sakila \ # db name on master:slave
     --changes-for=server2
@@ -244,18 +285,18 @@ We can create the statemets to fix the differences!
 %
 \subsection{Replication}
 \begin{pyframe}{Configuring replication}
-\begin{columns}
-\column[t]{.5\textwidth}
 Replication is $asynchronous$ and the agreements are configured on the slave only.
 
+\begin{columns}[t]
+\column[t]{.5\linewidth}
     {\large Master}
     \begin{itemize}
     \item produces a changelog named binlog;
     \item grants access to a $replica$ user;
+    \item may track slave-updates.
     \end{itemize}
-\column[t]{.5\textwidth}
-\includegraphics[height=3cm]{images/mysql-replica-hla.jpg}
-
+    \includegraphics[height=3cm]{images/mysql-replica-hla.jpg}
+\column[t]{.5\linewidth}
     {\large Slave}
     \begin{itemize}
     \item connects to the master with the $replica$ user
@@ -277,7 +318,7 @@ eg: \code{3E11FA47-71CA-11E1-9E33-C80AA9429562}
 eg: 3E11FA47-71CA-11E1-9E33-C80AA9429562:|32|
 \end{pycode*}
 \end{itemize}
-\includegraphics[height=4cm]{images/mysql-propagate-gtid.jpg}
+\includegraphics[height=3cm]{images/mysql-propagate-gtid.jpg}
 
 {\large
     If binlog have been purged, you need to import the
@@ -297,16 +338,15 @@ mysqlreplicate takes care of
 \end{itemize}
 
 \begin{bashcode}
-mysqlreplicate \
- --master=$MASTER --slave=$SLAVE \
- --rpl-user=repl:rpass \
- -b
+    mysqlreplicate  --master=$MASTER --slave=$SLAVE \
+     --rpl-user=repl:rpass \
+     -b
 
-# master on 192.168.1.1: ... connected.
-# slave on 192.168.1.2: ... connected.
-# Checking for binary logging on master...
-# Setting up replication...
-# ...done.
+    # master on 192.168.1.1: ... connected.
+    # slave on 192.168.1.2: ... connected.
+    # Checking for binary logging on master...
+    # Setting up replication...
+    # ...done.
 \end{bashcode}
 \end{pyframe}
 
@@ -316,11 +356,11 @@ mysqldbexport can be used to provision a new slave!
 \begin{itemize}
 %\item check that replica user is provisioned on the master;
 \item issue a \code{RESET MASTER;};
-\item add --export=master;
+\item add \code{--rpl=master} to store replica infos in the sql;
 \end{itemize}
 
 \begin{columns}
-\column[t]{.5\textwidth}
+\column[t]{.5\linewidth}
 
 \begin{bashcode}
 # pre-import.sql
@@ -330,7 +370,7 @@ STOP SLAVE;
 RESET MASTER;
 \end{bashcode}
 
-\column[t]{.5\textwidth}
+\column[t]{.5\linewidth}
 \begin{pycode}
 $ mysqldbexport > data.sql \
  --server=$MASTER \
@@ -372,15 +412,21 @@ s-1.docker:3306 (MASTER)
 \section{Failover}
 \begin{pyframe}{Failover Basics}
 A replicated infrastructure can be made Higly Available.
+\begin{columns}
+
+\column{.4\linewidth}
+\includegraphics[height=4cm]{images/mysql-promote-slave.jpg}
+
+\column{.4\linewidth}%
 In case of fault you should:
  \begin{itemize}
  \item $promove$ your slave!
  \item reconfigure the others to point there
  \item disable the master
- \item probably switch the ip-address
+ \item eventually switch the ip-address
  \end{itemize}
-\includegraphics[height=4cm]{images/mysql-promote-slave.jpg}
 
+\end{columns}
 \end{pyframe}
 
 \begin{pyframe}{Failover - I}

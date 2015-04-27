@@ -12,7 +12,7 @@ check:
 
 all: talk training
 
-talk:	
+talk:
 	pdflatex  $(CFLAGS) -interaction=nonstopmode main_scaling_mysql.tex
 
 training:

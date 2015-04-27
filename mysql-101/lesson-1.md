@@ -1,71 +1,23 @@
-# MySQL 101
+# Goal
 
-Goal:
-
-  - Implementing an ACID database
-  - Installing and Upgrading on Linux, minimal configuration
+  - Installing on Linux & datadir
+  - 
+  - Minimal configuration
   - Basic Administration: start/stop, reset password, privileges
 
-
-# Test Slide
-Sample line
-
-* star
-- dash
-
-        tabquote
-
-
-
-
-
-
-
-# Come funziona un database - 1
-## Aggiungere dati
-
-  - Aggiungere dati
-  - Durability
-  - Caching, Buffering
-  - Performance impact
-
-
-# Come funziona un database - 2
-## Leggere dati
-
-  - Isolation
-  - Consistency
-  - Atomicity
-  - Transazioni
-
-
-# MySQL Overview - 1
-## HLA
-
-  - v. image SG1§49
-  - Connection (TCP, Unix, Threads, Authentication) 
-    
-        --skip-name-resolve || --host-cache-size to grow internal cache
-
-  - SQL Parser / Optimizer (Caches, Authorization)
-
-  - Query exec / cache / logging
-
-  - Storage Engines (Disk, Memory, Network)
-
-
-# MySQL Overview - 2
-## Storage Engines
-
-  - Enable persistency
-  - Transactional: InnoDB, NDB
-  - Non Transactional: MyISAM, Memory,
 
 # Course setup
 
 Install the following packages via yum or apt-get
 
     tree dstat vim hostname
+    
+Download all of the MySQL packages via yum or from MySQL website.
+
+Unpack the Employee and Sakila databases
+
+        bash#wget http://bit.ly/1HMHCBf    
+        bash#tar xf employee*
 
 
 # Installing MySQL
@@ -108,12 +60,6 @@ On Ubuntu/Debian
         export MYSQL_HOME=/opt/mysql/server-5.6/
         export PATH+=:$MYSQL_HOME/bin:$MYSQL_HOME/scripts
         EOF
-
-            
-Manage mysql service
-  
-        #service mysql [start|stop|status]
-        
         
         
 # Installing MySQL - 3
@@ -122,12 +68,47 @@ Prepare a minimal configuration file...
         # /etc/my.cnf
         [mysqld]
         ...mysql defaults...
+        # System user for mysql
+        #  create if not exists
         user=mysql
+        
+        # All data files will go
+        #  there
         datadir=/var/lib/mysql
         
-...and the datadir
 
-        # mysql_install_db
+# The datadir
+Create or recreate the default one (from my.cnf)
+  
+        #mysql_install_db 
+
+Or create alternative ones
+  
+        #mysql_install_db --datadir=/data2
+        
+
+# The datadir
+Content of 
+
+    /var/lib/mysql/
+    |-- [mysql    mysql      19]  foo/
+    |-- [mysql    mysql    4.0K]  mysql/
+    |-- [mysql    mysql    4.0K]  performance_schema/
+    |-- [mysql    mysql       3]  a02f12e917b1.pid
+    |-- [mysql    mysql      56]  auto.cnf
+    |-- [mysql    mysql     48M]  ib_logfile0
+    |-- [mysql    mysql     48M]  ib_logfile1
+    |-- [mysql    mysql     12M]  ibdata1
+    `-- [mysql    mysql       0]  mysql.sock
+
+     
+  - application logs
+  - DDL definitions .frm and indexes
+  - InnoDB log files 
+  - InnoDB tablespace
+  - Binary & Relay Logs (*next lessons)
+
+
         
 # Installing MySQL - 4
 Further parameters
@@ -140,7 +121,41 @@ Further parameters
         pid-file=/data2/hostname.pid
         tmpdir=/tmp/data2
         log=/data2/hostname.log
+  
      
+# The MySQL Service
+Manage as a service
+  
+        service mysql [start|stop|status]
+        
+Run standalone
+
+        mysqld [$PARAMETERS]
+        
+Or wrapped with a restart-daemon
+        
+        mysqld_safe        
+
+# The MySQL Service
+Check the server status at various levels with
+     
+     mysqladmin ping
+     mysqladmin status
+     mysqladmin extended-status
+     mysqladmin processlist
+
+
+# The MySQL Service
+Stop mysql via
+
+        #mysqladmin shutdown
+
+Or with kill -TERM
+
+        #kill -15 $MYSQL_PID
+
+*NEVER kill -9*: this will corrupt your database!
+
 
 # Connecting 
 Client programs:
@@ -155,6 +170,8 @@ Client programs:
 
         #mysql --socket=/var/lib/mysql/mysql.sock
         #mysql --protocol tcp
+        
+        SHOW DATABASES;
 
 
 # mysql.user table
@@ -236,40 +253,7 @@ Client programs:
         #mysqld --init-file=init.sql
         
 
-# Installing MySQL
-## The datadir
 
-Content of 
-
-    /var/lib/mysql/
-    |-- [mysql    mysql      19]  foo/
-    |-- [mysql    mysql    4.0K]  mysql/
-    |-- [mysql    mysql    4.0K]  performance_schema/
-    |-- [mysql    mysql       3]  a02f12e917b1.pid
-    |-- [mysql    mysql      56]  auto.cnf
-    |-- [mysql    mysql     48M]  ib_logfile0
-    |-- [mysql    mysql     48M]  ib_logfile1
-    |-- [mysql    mysql     12M]  ibdata1
-    `-- [mysql    mysql       0]  mysql.sock
-
-     
-  - application logs
-  - DDL definitions .frm and indexes
-  - InnoDB log files 
-  - InnoDB tablespace
-  - Binary & Relay Logs
-
-
-# Installing MySQL
-## The datadir
-
-  - Create alternative datadirs
-  
-        #mysql_install_db --datadir=/data2
-        
-  - Or recreate the default one (from my.cnf)
-  
-        #mysql_install_db 
 
 
 # Managing databases - 1
@@ -278,9 +262,10 @@ Create databases/tables with
         CREATE DATABASE IF NOT EXISTS d1;
         CREATE TABLE d1.t1(
             id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
-            ip INT NOT NULL 
+            ip INT UNSIGNED NOT NULL,
+            name CHAR(32) CHARACTER SET utf8 DEFAULT 'Jon'
         );
-        SHOW CREATE TABLE d1.t1;
+        SHOW CREATE TABLE d1.t1 \G
 
 
 # Managing databases - 2
@@ -307,6 +292,9 @@ Show them
 
         SELECT id, INET_NTOA(ip) FROM d1.t1;
 
+Reload a previous file
+
+        <ESC>!!cat /tmp/sample.sql
         
 # Manage databases - 3
 Grant permissions on tables
@@ -321,7 +309,10 @@ OOOPS: we have NO_AUTOCREATE_USER!
         
         
 # Manage databases - 4         
-  - Re-authenticate with *network* 
+  - Re-authenticate with 
+  
+        mysql -u$network$
+  
   - Remove table and database with:
 
         DROP TABLE d1.t1;

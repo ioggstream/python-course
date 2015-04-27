@@ -12,7 +12,7 @@
 \setbeamercolor{background canvas}{bg=}%transparent canvas
 
 \title{Orchestrating MySQL with Python and Docker}
-\subtitle{EuroPython 2015, $22^{th}$ July - Bilbao}
+\subtitle{C4P EuroPython 2015, $22^{th}$ July - Bilbao}
 \author{Roberto Polli - \href{mailto:roberto.polli@par-tec.it}{roberto.polli@par-tec.it}}
 \date{21-27 July 2015}
 \institute{Par-Tec Spa - Rome Operation Unit\\
@@ -100,11 +100,13 @@ docker-compose up
 A brief docker tutorial based
 on the busybox image.
 Setting images, hostnames and environment variables.
+
 \begin{bashcode}
 $ docker run [--rm] -ti --name=test busybox /bin/bash
 $ docker exec -ti  test /bin/bash
 ...
 \end{bashcode}
+
 OT: nat, entrypoint, ...
 \end{pyframe}
 
@@ -112,14 +114,55 @@ OT: nat, entrypoint, ...
 \begin{pyframe}{Docker Compose}
 A brief docker-compose tutorial:
 describing containers via yml
-\\
+
+\begin{columns}[t]
+\column[t]{.5\linewidth}
 Running the provided services
 using docker-compose.
-\\
+Clean up all containers with
+\begin{bashcode}
+docker-compose kill
+# and
+docker-compose rm -vf
+\end{bashcode}
+\column[t]{.5\linewidth}
+\begin{pycode}
+#  docker-compose start db
+db:
+ image: ioggstream/mysql-community
+ volumes:
+   - ./:/code
+ environment:
+   - MYSQL_ROOT_PASSWORD=root
+ command: [
+   'mysqld',
+   '--defaults-file=/code/my.cnf'
+ ]
+\end{pycode}
+\end{columns}
+
+\end{pyframe}
+
+
+\begin{pyframe}{Docker Compose}
 Scaling services with compose.
+\begin{bashcode}
+$ docker-compose scale slave=1
+Creating fabric_slave_1..
+Starting fabric_slave_1...
+
+$ docker-compose scale slave=8
+Creating fabric_slave_2..
+..
+Creating fabric_slave_8...
+Starting fabric_slave_2...
+..
+Starting fabric_slave_8...
+
+\end{bashcode}
 \\
-If audience is confident with compose, a patch
-for customizing hostnames of docker-compose scale is presented.
+%If audience is confident with compose, a patch
+%for customizing hostnames of docker-compose scale is presented.
 
 \end{pyframe}
 
@@ -130,8 +173,8 @@ for customizing hostnames of docker-compose scale is presented.
 \begin{pyframe}{MySQL Replication 101}
 Advantage of replication:
 \begin{itemize}
-  \item  scaling reads
-  \item  high availability
+  \item scaling reads
+  \item high availability
   \item ease of backup
 \end{pyframe}
 
@@ -178,33 +221,37 @@ master database first!
 
 \begin{pyframe}{MySQL Replication 101}
 Running mysql with the provided my-gtid.cnf.
-Replication arguments: server-id, binlog, relaylog, ...
-Create a master-slave replication agreement.
-\code{SLAVE START; SLAVE STOP; SHOW SLAVE STATUS \G; SHOW MASTER STATUS;}
+\\
+Settings for maximum consistency (one or more slides).
+\\
+Enable replication: server-id, binlog, relaylog, ...
+
+%Create a master-slave replication agreement.
+%\code{SLAVE START; SLAVE STOP; SHOW SLAVE STATUS \G; SHOW MASTER STATUS;}
 \end{pyframe}
 
+\iffalse
+    \begin{pyframe}{MySQL Replication 101}
+    mysqlreplicate takes care of
+    \begin{itemize}
+    \item provisioning the replica user on the master;
+    \item configure the slave to point to the master.
+    \end{itemize}
+    \begin{minted}
+    mysqlreplicate \
+     --master=root:pass@master \
+     --slave=root:pass@slave \
+     --rpl-user=repl:rpass \
+     -b
 
-\begin{pyframe}{MySQL Replication 101}
-mysqlreplicate takes care of
-\begin{itemize}
-\item provisioning the replica user on the master;
-\item configure the slave to point to the master.
-\end{itemize}
-\begin{minted}
-mysqlreplicate \
- --master=root:pass@master \
- --slave=root:pass@slave \
- --rpl-user=repl:rpass \
- -b
-
-# master on 192.168.1.1: ... connected.
-# slave on 192.168.1.2: ... connected.
-# Checking for binary logging on master...
-# Setting up replication...
-# ...done.
-\end{minted}
-\end{pyframe}
-
+    # master on 192.168.1.1: ... connected.
+    # slave on 192.168.1.2: ... connected.
+    # Checking for binary logging on master...
+    # Setting up replication...
+    # ...done.
+    \end{minted}
+    \end{pyframe}
+\fi
 
 %
 % Fabric
@@ -215,7 +262,8 @@ Fabric is a python framework for managing, replicating, sharding and scaling mys
 \item tie servers in high availability groups
 \item configure single-master replication topologies
 \item monitor failures
-\item proxy for rw/split and sharding
+\item director for rw/split and sharding
+\item fabric connectors (caching db topology)
 \end{itemize}
 \end{pyframe}
 %http://mysqlmusings.blogspot.it/2013/10/mysql-fabric-high-availability-groups.html
@@ -227,55 +275,110 @@ Fabric is a python framework for managing, replicating, sharding and scaling mys
 
 
 \begin{pyframe}{Fabric \& Python Utilities - get it}
-Python 2.7
-    \begin{bashcode*}
-    wget |\href{https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-utilities-1.6.1.tar.gz}{http://bit.ly/1CxNuZe}|
+Download and browse the latest sources
+\begin{columns}[t]
+\column[t]{.5\linewidth}
+    %|\href{https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-utilities-1.6.1.tar.gz}{
+    \begin{bashcode}
+    wget http://bit.ly/1CxNuZe
     tar xf mysql-utilities-1.6.1.tar.gz
     python setup.py install
-    \end{bashcode*}
+    \end{bashcode}
+\column[t]{.5\linewidth}
+\begin{bashcode}
+   |-- mysql
+   |-- connector
+   |   |-- django
+   |   `-- fabric
+   |-- fabric
+   |   |-- protocols
+   |   |-- providers
+   |   `-- services
+   `-- utilities
+\end{bashcode}
+\end{columns}
+
+\end{pyframe}
+
+\iffalse
 Fedora / CentOS / RHEL 7
     \begin{bashcode}
     yum -y install \href{https://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm}{http://bit.ly/1yhSViu} # MySQL Community repo
     yum -y install mysql-utilites
     \end{bashcode}
-\end{pyframe}
+\fi
+
 
 
 \subsection{Setup - I}
-Setup Fabric Server.
-We will access all servers from this container
-which includes *all* mysql tools and utilities.
+\begin{pyframe}{Setup the lab}
+Setup and check the course environment.
 \begin{bashcode}
 $ docker-compose up -d
+$ docker-compose ps
+$ docker inspect -f '{{.Name}} {{.NetworkSettings.IPAddress}}'
+\end{bashcode}
+
+Check the 'fabric' container: we will access all servers from this
+ one which includes *all* mysql tools and utilities.
+\begin{bashcode}
 $ docker exec -ti fabric_fabric_1 /bin/bash
 fabric$
 \end{bashcode}
 \end{pyframe}
 
+
 \begin{pyframe}{Setup - II}
-All settings (eg my.cnf) to avoid typing credientals
-and establish pain-free communication between nodes.
- \\ \\
-Students won't waste time.
+Configure credential in $encrypted$ (mysql_config_editor)
+or clear-text (my.cnf) files to avoid wasting time during
+the training.
+ \\
 \end{pyframe}
 
 
-\begin{pyframe}{Installation}
-Setup fabric server via fabric.cfg . \\
-Testing fabric installation (database existence, mysqlfabric ping, ..)
+\begin{pyframe}{Setup - III}
+*empty*
+\end{pyframe}
+
+
+\begin{pyframe}{Test Driven Installation}
+The installation is test-driven via a provided nose script.
+Students will be guided in fixing all the tests.
+Testing fabric installation (node reachability, user existence, ...)
 
 \begin{bashcode}
+fabric$ cd /code
+fabric$ nosetests -v
+fabric-poc.test_access_nodes_with_root_user('m.docker', {'password': 'root', 'user': 'root'}) ... fail
+..
+fabric-poc.test_access_nodes_with_fabric_user('m.docker', {'password': 'fabric', 'user': 'fabric'}) ... fail
+...
+fabric-poc.test_fabric ... ERROR
+fabric-poc.test_fabric_node ... ERROR
+\end{bashcode}
+\end{pyframe}
+
+
+
+\begin{pyframe}{Test Driven Installation}
+Setup fabric server via fabric.cfg . \\
+Students will be guided in fixing all the tests.
+
+\begin{bashcode}
+$ mysqlfabric manage setup / start
 $ mysqlfabric ping ...
 \end{bashcode}
 \end{pyframe}
 
 
 \section{High Availability Group}
-\begin{pyframe}{High Availability Group}
+\begin{pyframe}{Create a Group}
 Create a replication group and adding
 servers. \\
 
 Promoting one server as a master. \\
+
+Adding spare servers. \\
 
 Monitoring failover. \\
 \begin{bashcode}
@@ -284,27 +387,60 @@ Monitoring failover. \\
 \end{pyframe}
 
 
-\begin{pyframe}{Troubleshooting replication}
-Using python mysql-utilities to provision
- a new slave when binlogs are not complete. \\
-
- Caveats on big databases. \\
-
+\begin{pyframe}{}
+Import data and check replication status using python tools.
 
 \begin{bashcode}
-# mysqldbexport / mysqldbimport
+mysqldbimport --server=$MASTER ... sakila.sql
+mysqldbcompare --server1=$MASTER --server2=$SLAVE \
+  --all
+\end{bashcode}
+\end{pyframe}
+
+
+\begin{pyframe}{Connecting to a group}
+Configure a python client for fabric
+\begin{pycode}
+from mysql.connector import connect, fabric
+c = connect(fabric={host: .., port: .., user: ..},
+    autocommit=True,
+    database='sample', **sql_user)
+c.set_property(mode=fabric.MODE_READWRITE, group="my-cluster-1")
+\end{pycode}
+\\
+Test R/W split and balancing with nose.
+\begin{bashcode}
+nosetests -vs test_script.py -m rwsplit
+\end{bashcode}
+\end{pyframe}
+
+
+\begin{pyframe}{Provisioning a new slave}
+Provision a new slave with python utilities
+ when binlogs are not complete. \\
+
+ Caveats on big databases. \\
+\begin{bashcode}
+# Remove all replica configurations
+#  on the slave..
+mysql -h$SLAVE -e 'STOP SLAVE;RESET MASTER;'
+
+# ..and reinitialize it
+mysqldbcopy --source=$MASTER \
+    --destination=$SLAVE
+    --rpl-user=fabric:fabric --rpl=master
+    --all --drop-first
 \end{bashcode}
 \end{pyframe}
 
 
 \iffalse
-    \begin{pyframe}{Provisioning a new master}
-    You can provision a new slave creating a suitable dump
-    with mysqldbexport. Just:
+    \begin{pyframe}{Provisioning a new slave}
+    Provision a new slave in two steps (eg. large database or requiring tweaks)
     \begin{itemize}
     \item check that replica user is provisioned on the master;
     \item create a custom dump.sql;
-    \item add --export=master;
+    \item add --rpl=master;
     \end{itemize}
     \begin{minted}
     cat > data.sql <<EOF
@@ -312,7 +448,6 @@ Using python mysql-utilities to provision
     -- and trust the backup only
     STOP SLAVE;
     RESET MASTER;
-    COMMIT;
 
     EOF
 
@@ -334,10 +469,15 @@ Using python mysql-utilities to provision
 \begin{pyframe}{Enabling and Testing Failover}
 Enabling failover and stopping a master. \\
 
-Re-ingesting a failed master. \\
-
+Checking automatic failover. \\
 \begin{bashcode}
-#
+#nosetests -vs --nologcapture fabric-poc.py -m failover
+\end{bashcode}
+
+Re-ingesting a failed master. \\
+\begin{bashcode}
+mysqlfabric server set_status  f484d0ed-ecea-11e4-9118-0242ac110039  spare
+mysqlfabric server set_status  f484d0ed-ecea-11e4-9118-0242ac110039  secondary
 \end{bashcode}
 \end{pyframe}
 

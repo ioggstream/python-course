@@ -12,6 +12,7 @@
 \usepackage{mathtools}
 \usepackage{amsmath}
 \usepackage{color}
+\usepackage{mdframed}
 %\usepackage[beamer]{hf-tikz}
 \usepackage{xfrac}
 \usepackage{makeidx}
@@ -62,7 +63,7 @@
 
 % environments
 \newminted{py}{mathescape,escapeinside=||}% 
-\newminted{bash}{mathescape}%
+\newminted{bash}{mathescape,fontsize=\small}%
 
 % python highlights: module, method
 \newcommand{\pymodule}[1]{\darkred{\textbf{#1}}}

@@ -55,3 +55,7 @@ nosetests.xml
 *.toc
 *.vrb
 *.idx
+*.md.tex
+*.stderr
+main.pdf
+main.sh
