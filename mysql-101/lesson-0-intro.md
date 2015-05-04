@@ -12,54 +12,59 @@ Goal:
   - Memory & Disk usage
 
 
-# Test Slide
-Sample line `with backticks` and
-
----
-
-Separated
-
-* star
-- dash
-
-        tabquote
 
 
-# Images
-Here an image comes
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+# What is a database
 
-Will it show?
-
-
-
-
-
-# Come funziona un database - 1
-## Aggiungere dati
-
-  - Aggiungere dati
-  - Durability
-  - Caching, Buffering
-  - Performance impact
+  - Adding data: a single-connection in-memory database.
+  
+  - Durability: making data persistent. Checkpoints. Memory vs Storage speed. I/O bound.
+    
+  - Buffering: serving requests during checkpoints. 
+  
+  - Performance impacts of durability.
 
 
-# Come funziona un database - 2
-## Leggere dati
+# What is a database
 
-  - Isolation
+  - Isolation: serving multiple connections. Synchronization. CPU bound.
+  
+  - Reading data: finding data. Indexes. Indexes are not a free ride. 
+    
+  - Caching: Memory vs Storage speed. Index memory. Memory is not $\infty$
+
+  - SQL: adding a language layer. Overhead of SQL. 
+
+
+# What is a database
+
   - Consistency
   - Atomicity
-  - Transazioni
+  - Transactions
+
+
+# What is a database
+
+  - Partitioning: Synchronization reloaded.
 
 
 # CAP Theorem
-TBD 
+You cannot have the same level of:
+ 
+ - Consistency 
+ - Atomicity
+ - Partition
+ 
+Instead you have to favor something respect to the other.
+
+
     
 
 # CAP Theorem Reloaded
 
-Price is the 4th dimension
+But you can pay for having more!
+ 
+Price is the 4th dimension.
 
 
 

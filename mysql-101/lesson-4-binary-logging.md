@@ -40,11 +40,25 @@ You can show their content with
 
         mysql> SHOW BINLOG EVENTS;
 
+or purge them
   
         mysql> PURGE BINARY LOGS BEFORE now();
     
 
-# 
-  
+# Using Binary Logs
+Inspect binary logs with mysqlbinlog
 
+        mysqlbinlog /var/log/mysql/hostname-bin.000001
+        ...
+        SET @@SESSION.GTID_NEXT= '4dc24b1f-ed7d-11e4-94d2-0242ac110035:500'/*!*/;
+        create database test
+        ...
+        SET @@SESSION.GTID_NEXT= '4dc24b1f-ed7d-11e4-94d2-0242ac110035:501'/*!*/;
+        create table test.t(i int)
+
+And replay them on another server for:
+ 
+  - PITR 
+  - replay load
+  - backup.
   
