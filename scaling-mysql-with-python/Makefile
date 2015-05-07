@@ -17,6 +17,7 @@ talk:
 
 training:
 	pdflatex $(CFLAGS) -interaction=nonstopmode main_training_mysql.tex
+	mv main_training_mysql.pdf  orchestrating-mysql-with-python-and-docker.pdf
 
 allsilent:
 	nohup pdflatex --shell-escape -interaction=nonstopmode main_*.tex > /dev/null

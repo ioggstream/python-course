@@ -6,7 +6,9 @@
   - MyISAM
   
 # Memory
-Tuning
+Paging in MySQL: temporary tables.
+
+Memory and Temporary Tables.
 
         max_heap_table_size
         max_tmp_table_size

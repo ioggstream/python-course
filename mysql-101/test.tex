@@ -29,10 +29,7 @@
 }
 
 
-\bash[stdoutFile=tmpme.tex.tmp]
-{ shopt -s nullglob; for file in *.md.tex; do echo "\\input{$file}"; done; } 
-\END
-\input{tmpme.tex.tmp}
+\input{test-page.md.tex}
 
 \end{document}
 

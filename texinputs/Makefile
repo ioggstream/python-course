@@ -8,6 +8,9 @@ TEX=$(SOURCES:.md=.md.tex)
 
 sources: $(TEX)
 
+test: sources
+	pdflatex --shell-escape -interaction=nonstopmode test.tex
+
 main: sources
 	pdflatex --shell-escape -interaction=nonstopmode main.tex
 

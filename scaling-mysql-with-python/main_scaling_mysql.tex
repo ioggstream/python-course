@@ -1,4 +1,4 @@
-\documentclass{beamer}[10]
+ \documentclass{beamer}[10]
 
 
 %
@@ -30,22 +30,22 @@
 \vspace{-0.5cm}
 }
 
+
 %% agenda
-%\iffalse
 \frame{\frametitle{Agenda}
-\tiny
-\tableofcontents%[pausesection]
+\tableofcontents
 }
-%\fi
+s
 
 %% Starting doc
 \section{Intro}
-\begin{pyframe}{Who? What? Why?}
-\begin{itemize}
 
+\begin{pyframe}{Who? What? Why?}
+
+\begin{itemize}
 \item Manage, replicate, scale MySQL databases with python
 \\
-
+\\
 \item Roberto Polli - Solutions Architect @ par-tec.it. Loves writing in C,
 Java and Python. Red Hat Certified Engineer and Virtualization
 Administrator.
@@ -58,6 +58,9 @@ solutions + Vertical Applications for the financial market.
 \end{itemize}
 \end{pyframe}
 
+
+
+\iffalse
 \begin{pyframe}{Agenda}
 \begin{itemize}
 \item MySQL architecture
@@ -68,19 +71,17 @@ solutions + Vertical Applications for the financial market.
 %\item modules: \pymodule{scipy, matplotlib}
 \end{itemize}
 \end{pyframe}
+\fi
 
-
-\section{Architecture}
+\section{MySQL Architecture}
 \begin{pyframe}{MySQL Architecture}
 \begin{itemize}
-\item MySQL is not only SQL
 % Query parser vs engine store
-\item Architecture of a database
+\item Frontend (Connection, Caches, Logging)
+\item Backend (InnoDB Engine)
+\item Replication
 % query parser, cache, transaction log, MVCC
 % http://www.oracle.com/technetwork/articles/javase/figure2-large-145676.jpg
-\item MVCC
-\item Replication
-\item Consistency is here to stay
 %
 \end{itemize}
 \end{pyframe}
@@ -113,9 +114,10 @@ Simplify please!
 \begin{pyframe}{Get the code}
     % https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-utilities-1.6.1.tar.gz
     \begin{bashcode}
-    # wget http://bit.ly/1CxNuZe
-    # tar xf mysql-utilities-1.6.1.tar.gz
-    # python setup.py install
+    $ wget http://bit.ly/1CxNuZe -O mysql-utilities-1.6.1.tar.gz
+    $ tar xf mysql-utilities-1.6.1.tar.gz
+    $ cd mysql-utilities-1.6.1
+    $ python setup.py install
     \end{bashcode}
 
 \iffalse
@@ -135,7 +137,7 @@ Simplify please!
 
 
 \begin{pyframe}{Utilities}
-Drivers
+Connectors (drivers)
 \begin{pycode}
     # mysql.connector.django.introspection
     if django.VERSION >= (1, 6):
@@ -143,7 +145,7 @@ Drivers
         if django.VERSION >= (1, 7):
             ...
 \end{pycode}
-Utilities
+Utilities \& Scripts
 \begin{pycode}
     # mysql.utilities.common.replication
     if master_innodb_stats != slave_innodb_stats:
@@ -154,6 +156,7 @@ Utilities
 \end{pycode}
 Fabric Orchestrator
 \end{pyframe}
+
 
 \begin{pyframe}{Single Entrypoint: mysqluc}
 \begin{columns}
@@ -179,7 +182,7 @@ Fabric Orchestrator
 
 
 \begin{pyframe}{Syntax}
-Define one or more server credentials in the encrypted \code{~/.mylogin.cnf}\\ \\
+Define one or more server credentials in the encrypted \code{\~/.mylogin.cnf}\\ \\
 \begin{bashcode}
     mysql_config_editor set
         --login-path=client # default used by mysql
@@ -208,7 +211,7 @@ We will use the example \href{http://dev.mysql.com/doc/index-other.html}
 A single command to show all disk usage infos (excluded system logs)
 
 \begin{bashcode}
-$ mysqldiskusage --all --server=$SERVER %% |grep -- =
+$ mysqldiskusage --all --server=$SERVER
 ...
 Total database disk usage = 7601892 bytes or 7.25 MB
 ...
@@ -248,7 +251,7 @@ $ mysqldbimport --server=$SERVER \
     data.sql
 \end{bashcode}
 To provision a new slave we'll use a similar
-procedure with some variants.
+procedure.
 \end{pyframe}
 
 
@@ -260,8 +263,7 @@ procedure with some variants.
 To compare databases between servers, use
 \begin{bashcode}
 #mysqldbcompare \
-    --server1=$MASTER \
-    --server2=$SLAVE \
+    --server1=$MASTER --server2=$SLAVE \
     sakila -a --difftype=SQL \
     --show-reverse --quiet
 \end{bashcode}
@@ -339,8 +341,8 @@ mysqlreplicate takes care of
 
 \begin{bashcode}
     mysqlreplicate  --master=$MASTER --slave=$SLAVE \
-     --rpl-user=repl:rpass \
-     -b
+            --rpl-user=repl:rpass \
+            -b
 
     # master on 192.168.1.1: ... connected.
     # slave on 192.168.1.2: ... connected.
@@ -355,8 +357,9 @@ mysqlreplicate takes care of
 mysqldbexport can be used to provision a new slave!
 \begin{itemize}
 %\item check that replica user is provisioned on the master;
-\item issue a \code{RESET MASTER;};
-\item add \code{--rpl=master} to store replica infos in the sql;
+\item issue a \code{RESET MASTER;} to cleannup previous settings;
+\item add \code{--rpl=master} to create replica infos in the sql;
+\item add \code{--export=both} to store both schema and data;
 \end{itemize}
 
 \begin{columns}
@@ -494,6 +497,7 @@ Replication Health Status
 %
 % Fabric
 %
+\section{Fabric: MySQL Orchestration}
 \begin{pyframe}{Fabric - I}
 \includegraphics[height=6.6cm,width=12cm]{images/mysql-fabric-hla.jpg}
 Fabric is a python framework for managing, replicating, sharding and scaling mysql clusters.
@@ -580,16 +584,26 @@ f0ce9615...        1   PRIMARY        False     False
 \end{pyframe}
 
 
-\begin{pyframe}{Fabric - III}
+\begin{pyframe}{Fabric in the Cloud}
 Fabric can provision new servers via Openstack API.
-
 \begin{bashcode}
-$ mysqlfabric server create
+$ mysqlfabric server create ...
 \end{bashcode}
 
+Initialize new servers with
+\begin{bashcode}
+$ mysqlfabric server clone $GROUP $TARGET
+\end{bashcode}
+This will initialize TARGET from the GROUP's master
+without attaching TARGET to the group nor starting
+the replica.
+\end{pyframe}
+
+
+\begin{pyframe}{Fabric in the Cloud}
 We implemented a Docker API provider
-\begin{pycode*}
-# mysql.fabric.providers.dockerprovider.py
+\begin{pycode}
+# mysql.fabric.providers.dockerprovider
 ...
 class MachineManager(AbstractMachineManager):
     """Manage a Docker Machine.
@@ -599,16 +613,16 @@ class MachineManager(AbstractMachineManager):
     def destroy(self, machine):
         ...
 
-\end{pycode*}
+\end{pycode}
 \end{pyframe}
 
 
 \begin{pyframe}{Wrap Up}
 \begin{itemize}
-\item Use MySQL Utilities
-\item Enjoy replicatioon
-\item Don't reingest failed master
-\item Try Fabric
+\item Use MySQL Utilities for custom replication and failover setup
+\item Mash-up the underlying modules
+\item Use Fabric for standard, highly-available, master-slave topologies
+\item Try Fabric for provisioning and cloning servers
 \end{itemize}
 \end{pyframe}
 

@@ -1,3 +1,5 @@
+# Intro
+
 # MySQL 101
 
 Goal:
@@ -8,7 +10,7 @@ Goal:
   - MySQL HLA
     - Connections
     - Processing
-    - Archiving
+    - Storing
   - Memory & Disk usage
 
 
@@ -16,11 +18,11 @@ Goal:
 
 # What is a database
 
-  - Adding data: a single-connection in-memory database.
+  - Adding data: a single-connection in-memory database. Key-Value stores. Memory fragmentation.
   
   - Durability: making data persistent. Checkpoints. Memory vs Storage speed. I/O bound.
     
-  - Buffering: serving requests during checkpoints. 
+  - Buffering: serving requests during checkpoints. Paging mechanism.
   
   - Performance impacts of durability.
 
@@ -31,16 +33,16 @@ Goal:
   
   - Reading data: finding data. Indexes. Indexes are not a free ride. 
     
-  - Caching: Memory vs Storage speed. Index memory. Memory is not $\infty$
+  - Caching: Memory vs Storage speed. Index memory. Memory is not $\infty$. Fragmentation.
 
-  - SQL: adding a language layer. Overhead of SQL. 
+  - SQL: adding a language layer. Overhead of SQL. Optimization. 
 
 
 # What is a database
 
-  - Consistency
-  - Atomicity
-  - Transactions
+  - Consistency. Repeatable reads.
+  - Atomicity: all or nothing.
+  - Transactions. Managing multiple queries. Rolling back. Transaction logs.
 
 
 # What is a database

@@ -1,9 +1,13 @@
+# Lesson 1
+
 # Goal
 
-  - Installing on Linux & datadir
-  - 
-  - Minimal configuration
-  - Basic Administration: start/stop, reset password, privileges
+  - Installing on Linux (debian, fedora)
+  - Knowing the data directory
+  - Basic Administration: start/stop, reset password, privileges, secure installation
+  - Connecting to the database
+  - Basic Usage: create/query/drop databases and tables
+  - Basic configuration
 
 
 # Course setup
@@ -281,8 +285,6 @@ Type QUERIES
             (inet_aton("10.0.0.3"))
        ;
        
-Save in a file and execute, exiting from vi
- and typing ";"
        
        <ESC>:w /tmp/sample.sql
        <ESC>:q
@@ -291,6 +293,8 @@ Save in a file and execute, exiting from vi
 Show them
 
         SELECT id, INET_NTOA(ip) FROM d1.t1;
+Save in a file and execute, exiting from vi
+ and typing ";"
 
 Reload a previous file
 

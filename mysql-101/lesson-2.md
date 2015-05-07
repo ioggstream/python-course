@@ -1,15 +1,10 @@
-# Lesson 2 - Agenda
-    
-- Configuration
-- Logging
-- Importing and Exporting Databases
-
-
-# Goals
+# Lesson 2 - Goals
 
 - Configure basic security and logging parameters
+- Using profiles
 - Get/Set variables
 - Set SQL Modes 
+- Populate databases
 - Logging
 
     
