@@ -1,4 +1,4 @@
-# Lesson 2 - Goals
+## Lesson 2 - Goals
 
 - Configure basic security and logging parameters
 - Using profiles
@@ -9,7 +9,7 @@
 
     
     
-# Configuration
+## Configuration
 Show all mysqld parameters
     
         mysqld --verbose --help
@@ -25,7 +25,7 @@ Show running status via
 
 Don't explicit default values in the configuration!
      
-# Configuration
+## Configuration
 Always start from an empty file
 
         bash#cp /usr/my.cnf /etc/
@@ -54,7 +54,7 @@ For now just avoid typing credentials
         compress
         
     
-# Configuration
+## Configuration
 Show the parameters *to be used*
 
         bash#my_print_defaults mysqld
@@ -69,7 +69,7 @@ Show the actual values from mysql
         sql#SHOW VARIABLES LIKE 'innodb_%';
         
 
-# Configuring consistency
+## Configuring consistency
 Privilege consistency and security
 
         [mysqld]
@@ -80,7 +80,7 @@ Privilege consistency and security
         explicit_defaults_for_timestamp
 
         
-# Configuring security
+## Configuring security
 Further security tips for server...
 
         [mysqld]
@@ -96,7 +96,7 @@ Further security tips for server...
         safe-updates
         show-warnings
 
-# Configuring security
+## Configuring security
 Store credentials [in the encrypted file][http://dev.mysql.com/doc/refman/5.6/en/mysql-config-editor.html] 
 ~/.mylogin.cnf using
 
@@ -115,7 +115,7 @@ We can define further servers
             --user=admin
             --password # (prompted)
         
-# Application logging
+## Application logging
 mysqld does **not** create logs by default.
         
         # configure general and slow query logs
@@ -135,7 +135,7 @@ in case of problems.
 Error log should not rely on mysqld: it cannot be saved on tables!
 
 
-# Application logging
+## Application logging
 Don't fill your disks with logs!
 
   - consider separate partitions;
@@ -149,7 +149,7 @@ Don't fill your disks with logs!
         ubuntu#cp /opt/mysql/server-5.6/support-files/mysql-log-rotate /etc/logrotate.d/mysql
 
       
-# Populating a database
+## Populating a database
 While monitoring system status with
  
          dstat -cgmprsy 5
@@ -164,7 +164,7 @@ we'll import the [Employees database](http://bit.ly/1HMHCBf)
 Repeat enabling/disabling autocommit.
 
 
-# Populating a database
+## Populating a database
 Show database structure 
 
         STATUS;
@@ -182,7 +182,7 @@ Table size in $MiB$ $2^{20}$ bytes
         
 
         
-# Upgrading MySQL
+## Upgrading MySQL
 
   - Stop
   - Backup

@@ -1,6 +1,6 @@
-# Lesson 1
+# Installation and basic usage
 
-# Goal
+## Goal
 
   - Installing on Linux (debian, fedora)
   - Knowing the data directory
@@ -10,7 +10,7 @@
   - Basic configuration
 
 
-# Course setup
+## Course setup
 
 Install the following packages via yum or apt-get
 
@@ -24,12 +24,12 @@ Unpack the Employee and Sakila databases
         bash#tar xf employee*
 
 
-# Installing MySQL
-## Debian & derivates
+## Installing MySQL
+### Debian & derivates
 
     #dpkg -i mysql*deb
 
-## Fedora & derivates
+### Fedora & derivates
 
     yum -y install mysql-repo.rpm
     yum -y install MySQL-*
@@ -38,21 +38,32 @@ Unpack the Employee and Sakila databases
 
 
 
-# Installing MySQL - 1
+## Installing MySQL - 1
 
 Check installed files
   
         #dpkg -L mysql-*
         #id mysql
         #find /etc/ -name \*mysql\*
-          
+
+Programs
+
+        client                  server
+        mysql                   mysqld
+        mysql_config_editor     mysqld_safe
+        mysqladmin              mysql_install_db
+        mysqlimport
+        mysqldump
+        mysqlbinlog
+        
+## Installing MySQL
 First access
           
         #cat /root/.mysql_secret
         #mysql -u$USER -p$PASSWORD [ -h$HOST -P$PORT ]
         #mysql -e "$QUERY"
   
-# Installing MySQL - 2
+## Installing MySQL - 2
 On Ubuntu/Debian
         
         # cd /opt/mysql/server-5.6/
@@ -66,7 +77,7 @@ On Ubuntu/Debian
         EOF
         
         
-# Installing MySQL - 3
+## Installing MySQL - 3
 Prepare a minimal configuration file...
 
         # /etc/my.cnf
@@ -81,7 +92,7 @@ Prepare a minimal configuration file...
         datadir=/var/lib/mysql
         
 
-# The datadir
+## The datadir
 Create or recreate the default one (from my.cnf)
   
         #mysql_install_db 
@@ -91,7 +102,7 @@ Or create alternative ones
         #mysql_install_db --datadir=/data2
         
 
-# The datadir
+## The datadir
 Content of 
 
     /var/lib/mysql/
@@ -114,7 +125,7 @@ Content of
 
 
         
-# Installing MySQL - 4
+## Installing MySQL - 4
 Further parameters
 
         # /etc/my.cnf
@@ -126,8 +137,8 @@ Further parameters
         tmpdir=/tmp/data2
         log=/data2/hostname.log
   
-     
-# The MySQL Service
+# MySQL Service    
+## The MySQL Service
 Manage as a service
   
         service mysql [start|stop|status]
@@ -140,7 +151,8 @@ Or wrapped with a restart-daemon
         
         mysqld_safe        
 
-# The MySQL Service
+
+## The MySQL Service
 Check the server status at various levels with
      
      mysqladmin ping
@@ -149,7 +161,7 @@ Check the server status at various levels with
      mysqladmin processlist
 
 
-# The MySQL Service
+## The MySQL Service
 Stop mysql via
 
         #mysqladmin shutdown
@@ -160,8 +172,7 @@ Or with kill -TERM
 
 *NEVER kill -9*: this will corrupt your database!
 
-
-# Connecting 
+## Connecting 
 Client programs:
 
 - mysql, mysqladmin, mysqlbackup
@@ -177,149 +188,3 @@ Client programs:
         
         SHOW DATABASES;
 
-
-# mysql.user table
-  - Authentication is based on users
-  - A user is a couple $(user, host)$ 
-       
-        mysql> select user,host,password from mysql.user;
-        +------+--------------+----------+
-        | user | host         | password |
-        +------+--------------+----------+
-        | root | localhost    |          |
-        | root | a02f12e917b1 |          |
-        | root | 127.0.0.1    |          |
-        | root | ::1          |          |
-        |      | localhost    |          |
-        |      | a02f12e917b1 |          |
-        +------+--------------+----------+
-        6 rows in set (0.00 sec)
-
-  - Create a user and show its privileges. By default host is '%'
-  
-        CREATE USER admin identified by 'admin';
-        SHOW GRANTS FOR 'admin';   
-
-
-  - We can change the password with
-  
-         /usr/bin/mysqladmin -u root password 'new-password'
-         /usr/bin/mysqladmin -u root -h a02f12e917b1 password 'new-password'
-
-
-# mysql.user table
-
-  - Once you change the password you get
-  
-        mysql> select user,host,password from mysql.user;
-        +------+--------------+---------------+
-        | user | host         | password      |
-        +------+--------------+---------------+
-        | root | localhost    | *81F5E21E3... |
-        | root | a02f12e917b1 | *81F5E21E3... |
-        | root | 127.0.0.1    |               |
-        | root | ::1          |               |
-        |      | localhost    |               |
-        |      | a02f12e917b1 |               |
-        +------+--------------+---------------+
-        6 rows in set (0.00 sec)
-
-  - It's not secured (anonymous user)!
-  
-        mysql -u"" -e "SELECT 1;"
-        
-  - secure the installation!
-  
-        #mysql_secure_installation
-    
-        mysql> select user,host,password from mysql.user;                                                                                                                                                       mysql> select user,host,password from mysql.user;
-        +------+-----------+------------+
-        | user | host      | password   |
-        +------+-----------+------------+
-        | root | localhost | *81F5E21E3 |
-        | root | 127.0.0.1 | *81F5E21E3 |
-        | root | ::1       | *81F5E21E3 |
-        +------+-----------+------------+
-        3 rows in set (0.00 sec)
-
-
-# Reset root password
-
-  - resetting root password requires a restart
-  - create the following init.sql
-    
-        -- Burn after running!
-        SET PASSWORD FOR 'root'@'localhost' = PASSWORD('MyNewPass');
-
-  - stop mysql eg. with kill -TERM (NEVER use SIGKILL)
-  - start with 
-  
-        #mysqld --init-file=init.sql
-        
-
-
-
-
-# Managing databases - 1
-Create databases/tables with
-
-        CREATE DATABASE IF NOT EXISTS d1;
-        CREATE TABLE d1.t1(
-            id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
-            ip INT UNSIGNED NOT NULL,
-            name CHAR(32) CHARACTER SET utf8 DEFAULT 'Jon'
-        );
-        SHOW CREATE TABLE d1.t1 \G
-
-
-# Managing databases - 2
-Add entries using the embedded editor
-
-       \e -- opens vi
-
-Type QUERIES
-
-       INSERT INTO d1.t1(ip) VALUES 
-            (inet_aton("10.0.0.1")),
-            (inet_aton("10.0.0.2")),
-            (inet_aton("10.0.0.3"))
-       ;
-       
-       
-       <ESC>:w /tmp/sample.sql
-       <ESC>:q
-       ;
-
-Show them
-
-        SELECT id, INET_NTOA(ip) FROM d1.t1;
-Save in a file and execute, exiting from vi
- and typing ";"
-
-Reload a previous file
-
-        <ESC>!!cat /tmp/sample.sql
-        
-# Manage databases - 3
-Grant permissions on tables
-
-        GRANT ALL ON *.* TO 'network' IDENTIFIED BY 'secret';
-
-OOOPS: we have NO_AUTOCREATE_USER!
-
-        CREATE USER 'network' IDENTIFIED BY 'secret';
-        GRANT ALL ON *.* TO 'network';
-        
-        
-        
-# Manage databases - 4         
-  - Re-authenticate with 
-  
-        mysql -u$network$
-  
-  - Remove table and database with:
-
-        DROP TABLE d1.t1;
-        DROP DATABASE d1;
-        
-      

@@ -1,6 +1,6 @@
 # Intro
 
-# MySQL 101
+## MySQL 101
 
 Goal:
 
@@ -15,8 +15,9 @@ Goal:
 
 
 
-
 # What is a database
+
+## What is a database
 
   - Adding data: a single-connection in-memory database. Key-Value stores. Memory fragmentation.
   
@@ -27,7 +28,7 @@ Goal:
   - Performance impacts of durability.
 
 
-# What is a database
+## What is a database
 
   - Isolation: serving multiple connections. Synchronization. CPU bound.
   
@@ -38,19 +39,21 @@ Goal:
   - SQL: adding a language layer. Overhead of SQL. Optimization. 
 
 
-# What is a database
+## What is a database
 
   - Consistency. Repeatable reads.
+  
   - Atomicity: all or nothing.
+  
   - Transactions. Managing multiple queries. Rolling back. Transaction logs.
 
 
-# What is a database
+## What is a database
 
   - Partitioning: Synchronization reloaded.
 
-
-# CAP Theorem
+# Scalability and Partitioning
+## CAP Theorem
 You cannot have the same level of:
  
  - Consistency 
@@ -62,7 +65,7 @@ Instead you have to favor something respect to the other.
 
     
 
-# CAP Theorem Reloaded
+## CAP Theorem Reloaded
 
 But you can pay for having more!
  
@@ -71,10 +74,14 @@ Price is the 4th dimension.
 
 
 
-# MySQL Overview - 
-## HLA
+# MySQL Overview
+## High Level Architecture
 
-  - v. image SG1§49
+![MySQL Architecture](./mysql-architecture.png)
+
+
+## MySQL HLA
+
   - Connection (TCP, Unix, Threads, Authentication) 
     
         --skip-name-resolve || --host-cache-size to grow internal cache
@@ -85,13 +92,13 @@ Price is the 4th dimension.
 
   - Storage Engines (Disk, Memory, Network)
 
-# MySQL Overview - 
+ 
 ## Memory usage
   - Connections
   - Internal Buffer/Caches
   - OS Buffer/Caches
 
-# MySQL Overview - 
+
 ## Storage Engines
 
   - Enable persistency

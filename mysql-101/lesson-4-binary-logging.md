@@ -1,4 +1,4 @@
-# Effects of logging
+## Effects of logging
 Setup a database with the provided configuration.
 
         [mysqld]
@@ -6,7 +6,7 @@ Setup a database with the provided configuration.
         innodb_buffer_pool_size=16M
         
 
-# Effects of logging 
+## Effects of logging 
 Logging impacts on performance and stability
 
 - general (text, table)
@@ -14,7 +14,7 @@ Logging impacts on performance and stability
 - error (text)
 
 
-# Binary Logging
+## Binary Logging
 Binary logs trace every change requested to the database.
 
 [Binary Logging][./files/mysql-binary-logging.png]
@@ -28,7 +28,7 @@ Binary logs trace every change requested to the database.
   - accessed with mysqlbinlog
 
 
-# Managing Binary Logs
+## Managing Binary Logs
 Binary logs are written in the following files:
 
         mysql> show binary logs; 
@@ -45,7 +45,7 @@ or purge them
         mysql> PURGE BINARY LOGS BEFORE now();
     
 
-# Using Binary Logs
+## Using Binary Logs
 Inspect binary logs with mysqlbinlog
 
         mysqlbinlog /var/log/mysql/hostname-bin.000001

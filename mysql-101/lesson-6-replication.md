@@ -1,3 +1,3 @@
-# Index 6
+## Index 6
 
-# Lesson 6
+## Lesson 6
