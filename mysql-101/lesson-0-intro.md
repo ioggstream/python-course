@@ -48,12 +48,10 @@ Goal:
   - Transactions. Managing multiple queries. Rolling back. Transaction logs.
 
 
-## What is a database
-
-  - Partitioning: Synchronization reloaded.
-
 # Scalability and Partitioning
 ## CAP Theorem
+ Partitioning: Synchronization reloaded.
+
 You cannot have the same level of:
  
  - Consistency 
@@ -63,15 +61,15 @@ You cannot have the same level of:
 Instead you have to favor something respect to the other.
 
 
-    
-
 ## CAP Theorem Reloaded
 
-But you can pay for having more!
+You can pay for having more!
+
+  - faster network
+  - faster cpu
+  - faster storage
  
 Price is the 4th dimension.
-
-
 
 
 # MySQL Overview

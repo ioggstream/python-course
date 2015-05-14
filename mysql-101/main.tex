@@ -22,12 +22,12 @@
 }
 
 %% agenda
-\frame
-{
-\frametitle{Agenda}
-\tableofcontents%[pausesection]
-}
+\frame{\frametitle{Agenda}
+\begin{multicols}{2}
+\tableofcontents
+\end{multicols}
 
+}
 
 \bash[stdoutFile=tmpme.tex.tmp]
 { shopt -s nullglob; for file in *.md.tex; do echo "\\input{$file}"; done; } 

@@ -20,15 +20,19 @@ Download all of the MySQL packages via yum or from MySQL website.
 
 Unpack the Employee and Sakila databases
 
-        bash#wget http://bit.ly/1HMHCBf    
+        bash#wget  http://bit.ly/1qEutCs -O employees.tar.gz     
         bash#tar xf employee*
 
 
 ## Installing MySQL
 ### Debian & derivates
+Use either
+ 
+    dpkg -i mysql*deb
+or
 
-    #dpkg -i mysql*deb
-
+    gdebi -n mysql*.deb # installs one package at a time
+    
 ### Fedora & derivates
 
     yum -y install mysql-repo.rpm
@@ -38,13 +42,14 @@ Unpack the Employee and Sakila databases
 
 
 
-## Installing MySQL - 1
+## Installing MySQL
 
-Check installed files
+Check installed files and users
   
-        #dpkg -L mysql-*
-        #id mysql
-        #find /etc/ -name \*mysql\*
+        dpkg -l mysql*
+        dpkg -L mysql
+        id mysql
+        find /etc/ -name \*mysql\*
 
 Programs
 
@@ -55,29 +60,36 @@ Programs
         mysqlimport
         mysqldump
         mysqlbinlog
-        
+
+
 ## Installing MySQL
 First access
           
-        #cat /root/.mysql_secret
-        #mysql -u$USER -p$PASSWORD [ -h$HOST -P$PORT ]
-        #mysql -e "$QUERY"
+        cat /root/.mysql_secret
+        mysql -u$USER -p$PASSWORD [ -h$HOST -P$PORT ]
+        mysql -e "$QUERY"
   
-## Installing MySQL - 2
-On Ubuntu/Debian
+## Installing MySQL - On Ubuntu/Debian
+Copy init script and configuration file
         
-        # cd /opt/mysql/server-5.6/
-        # cp support-files/mysql.server /etc/init.d/mysql
-        # cp my.cnf /etc/my.cnf
-        # useradd mysql -s /usr/sbin/nologin -d /var/lib/mysql
-        # chown -R mysql:mysql /var/lib/mysql
-        # cat > /etc/profile.d/mysql.sh <<'EOF'
+        cd /opt/mysql/server-5.6/
+        cp support-files/mysql.server /etc/init.d/mysql
+        cp my.cnf /etc/my.cnf
+
+Create users and directories
+        
+        useradd mysql -s /usr/sbin/nologin -d /var/lib/mysql
+        chown -R mysql:mysql /var/lib/mysql
+        
+Add a profile script
+
+        cat > /etc/profile.d/Z99-mysql.sh <<'EOF'
         export MYSQL_HOME=/opt/mysql/server-5.6/
         export PATH+=:$MYSQL_HOME/bin:$MYSQL_HOME/scripts
         EOF
         
         
-## Installing MySQL - 3
+## Installing MySQL - Basic Configuration
 Prepare a minimal configuration file...
 
         # /etc/my.cnf
@@ -103,7 +115,6 @@ Or create alternative ones
         
 
 ## The datadir
-Content of 
 
     /var/lib/mysql/
     |-- [mysql    mysql      19]  foo/
@@ -117,32 +128,37 @@ Content of
     `-- [mysql    mysql       0]  mysql.sock
 
      
-  - application logs
+  - Application logs
   - DDL definitions .frm and indexes
-  - InnoDB log files 
-  - InnoDB tablespace
+  - InnoDB log files & tablespaces
   - Binary & Relay Logs (*next lessons)
 
 
         
-## Installing MySQL - 4
-Further parameters
+## Installing MySQL
+Use different values to run many instances on the same host.
 
-        # /etc/my.cnf
+        # /etc/my-1.cnf
         [mysqld]
         ...mysql defaults...
         port=13306
         socket=/data2/mysql.sock
         pid-file=/data2/hostname.pid
         tmpdir=/tmp/data2
-        log=/data2/hostname.log
-  
+        general-log=1
+        general-log-file=/data2/hostname.log
+
+Exercise: run the following, check the logs and fix the errors.
+
+        mysqld --defaults-file=/etc/my-1.cnf
+
+
 # MySQL Service    
 ## The MySQL Service
 Manage as a service
   
         service mysql [start|stop|status]
-        
+         
 Run standalone
 
         mysqld [$PARAMETERS]
@@ -160,17 +176,28 @@ Check the server status at various levels with
      mysqladmin extended-status
      mysqladmin processlist
 
+Using commands
+
+    pgrep -fa mysql         # man pgrep
+    ss -tlnp |grep mysql    # ss replaces netstat
+
 
 ## The MySQL Service
 Stop mysql via
 
-        #mysqladmin shutdown
+        mysqladmin shutdown
 
 Or with kill -TERM
 
-        #kill -15 $MYSQL_PID
+        kill -15 $MYSQL_PID
 
 *NEVER kill -9*: this will corrupt your database!
+
+Exercise: what happens if you
+
+  - kill -9 mysql
+  - restart with mysqld?  
+
 
 ## Connecting 
 Client programs:
@@ -179,12 +206,12 @@ Client programs:
 
 - full help
 
-        #mysql ... [--help [--verbose]] 
+        mysql ... [--help [--verbose]] 
         
 - connect via socket or forcing TCP
 
-        #mysql --socket=/var/lib/mysql/mysql.sock
-        #mysql --protocol tcp
+        mysql --socket=/var/lib/mysql/mysql.sock
+        mysql --protocol tcp
         
         SHOW DATABASES;
 

@@ -24,11 +24,12 @@ Show running status via
         #mysqladmin variables
 
 Don't explicit default values in the configuration!
-     
+
+
 ## Configuration
 Always start from an empty file
 
-        bash#cp /usr/my.cnf /etc/
+        cp /usr/my.cnf /etc/
 
 my.cnf is made up of stanzas
 
@@ -57,16 +58,16 @@ For now just avoid typing credentials
 ## Configuration
 Show the parameters *to be used*
 
-        bash#my_print_defaults mysqld
+        my_print_defaults mysqld
         
 Show the actual values
 
-        bash#mysqladmin variables
+        mysqladmin variables
         
 Show the actual values from mysql
       
-        sql#SHOW [GLOBAL|SESSION] VARIABLES [LIKE ...];
-        sql#SHOW VARIABLES LIKE 'innodb_%';
+        SHOW [GLOBAL|SESSION] VARIABLES [LIKE ...];
+        SHOW VARIABLES LIKE 'innodb_%';
         
 
 ## Configuring consistency
@@ -96,8 +97,9 @@ Further security tips for server...
         safe-updates
         show-warnings
 
+
 ## Configuring security
-Store credentials [in the encrypted file][http://dev.mysql.com/doc/refman/5.6/en/mysql-config-editor.html] 
+Store credentials [in the encrypted file](http://dev.mysql.com/doc/refman/5.6/en/mysql-config-editor.html) 
 ~/.mylogin.cnf using
 
         #mysql_config_editor set 
@@ -148,21 +150,25 @@ Don't fill your disks with logs!
         fedora#cp /usr/share/mysql/mysql-log-rotate  /etc/logrotate.d/mysql
         ubuntu#cp /opt/mysql/server-5.6/support-files/mysql-log-rotate /etc/logrotate.d/mysql
 
-      
+  
+# Import/Export
 ## Populating a database
 While monitoring system status with
  
          dstat -cgmprsy 5
     
-we'll import the [Employees database](http://bit.ly/1HMHCBf)
+we'll import the [Employees database](http://bit.ly/1qEutCs) 
 
-        bash#wget http://bit.ly/1HMHCBf    
+        bash#wget http://bit.ly/1qEutCs -O employees.tar.gz     
         bash#tar xf employee*
         bash#cd employee*
-        bash#mysql < $DBFILE
-        
-Repeat enabling/disabling autocommit.
+        bash#mysql < employees.sql
 
+How does `employees.sql` work?
+
+        SELECT * INTO OUTFILE 'path.tsv' FROM departments;
+        CREATE TABLE _departments LIKE departments;
+        LOAD DATA INFILE 'path.tsv' INTO TABLE _departments;
 
 ## Populating a database
 Show database structure 
@@ -176,11 +182,20 @@ Show database structure
 Table size in $MiB$ $2^{20}$ bytes
 
         USE information_schema;
-        SELECT TABLE_NAME, DATA_LENGTH>>20, INDEX_LENGTH>>20 
+            SELECT TABLE_NAME, DATA_LENGTH>>20, INDEX_LENGTH>>20 
         FROM TABLES
         WHERE TABLE_SCHEMA='employees';
         
 
+## Exporting data
+Export  `employee` with the following parameter
+
+     mysqldump -proot employees \
+        --table salaries   \
+        --skip-extended-insert  | 
+            gzip  > salaries.sql   
+        
+Importing data with AUTOCOMMIT 
         
 ## Upgrading MySQL
 
