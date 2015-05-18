@@ -1,3 +1,4 @@
+# Server Configuration
 ## Lesson 2 - Goals
 
 - Configure basic security and logging parameters
@@ -5,11 +6,11 @@
 - Get/Set variables
 - Set SQL Modes 
 - Populate databases
-- Logging
+- Application Logging
 
     
     
-## Configuration
+## Server Configuration
 Show all mysqld parameters
     
         mysqld --verbose --help
@@ -26,7 +27,7 @@ Show running status via
 Don't explicit default values in the configuration!
 
 
-## Configuration
+## Server Configuration
 Always start from an empty file
 
         cp /usr/my.cnf /etc/
@@ -45,6 +46,7 @@ my.cnf is made up of stanzas
         datadir=/disk2/data
 
 
+## Client Configuration
 For now just avoid typing credentials
 
         [client]
@@ -98,33 +100,27 @@ Further security tips for server...
         show-warnings
 
 
-## Configuring security
-Store credentials [in the encrypted file](http://dev.mysql.com/doc/refman/5.6/en/mysql-config-editor.html) 
-~/.mylogin.cnf using
-
-        #mysql_config_editor set 
-            --login-path=client # default used by mysql 
-            --host=localhost 
-            --user=localuser 
-            --password # (prompted)
-
-We can define further servers
-
-        #mysql_config_editor set
-            --login-path=master
-            --host=m-1.foo.it
-            --port=13306
-            --user=admin
-            --password # (prompted)
         
 ## Application logging
 mysqld does **not** create logs by default.
         
         # configure general and slow query logs
         #  eventually using defaults
-        general-log[=hostname.log]
+        general-log-file[=hostname.log]
         slow-query-log[=hostname-slow.log]
 
+Log general and slow query on tables using
+
+        log-output=TABLE -- SET GLOBAL log-output='TABLE';
+
+Get data with
+
+        SHOW TABLES FROM mysql LIKE '%log%';
+        SELECT * FROM [general_log|slow_log];
+        TRUNCATE mysql.general_log;
+        
+
+## Application logging
 If error-log is specified, stdout|err is redirected.
 
         # set the log file will daemonize
@@ -150,8 +146,19 @@ Don't fill your disks with logs!
         fedora#cp /usr/share/mysql/mysql-log-rotate  /etc/logrotate.d/mysql
         ubuntu#cp /opt/mysql/server-5.6/support-files/mysql-log-rotate /etc/logrotate.d/mysql
 
-  
+Inspect /etc/logrotate.d/mysql
+
+
 # Import/Export
+
+## Goal
+
+  - Importing and Exporting data
+  - AUTOCOMMIT
+  - Cloning tables
+  - Effects of logging on imports
+
+
 ## Populating a database
 While monitoring system status with
  
@@ -169,6 +176,7 @@ How does `employees.sql` work?
         SELECT * INTO OUTFILE 'path.tsv' FROM departments;
         CREATE TABLE _departments LIKE departments;
         LOAD DATA INFILE 'path.tsv' INTO TABLE _departments;
+
 
 ## Populating a database
 Show database structure 
@@ -195,9 +203,13 @@ Export  `employee` with the following parameter
         --skip-extended-insert  | 
             gzip  > salaries.sql   
         
-Importing data with AUTOCOMMIT 
+Importing data with AUTOCOMMIT=1 
         
-## Upgrading MySQL
+        SET AUTOCOMMIT=1
+        SELECT @@AUTOCOMMIT;
+        
+        
+## Upgranding MySQL
 
   - Stop
   - Backup

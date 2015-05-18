@@ -107,6 +107,12 @@ To grant administrative privileges use
 
         GRANT ALL ON *.* TO 'admin'@'localhost' WITH GRANT OPTIONS;
 
+Now create a small VIEW to query user privileges without typing all the fields
+
+        CREATE VIEW mysql.user_view AS 
+            SELECT USER,HOST,PASSWORD 
+                FROM MYSQL.USER;
+  
         
 ## Granting permissions         
   - Re-authenticate with 
@@ -124,14 +130,38 @@ To grant administrative privileges use
         CREATE DATABASE d1; -- again
 
 ## Revoking permissions
+Explain privileges.
 
- - Revoking privileges
- 
+ - Revoking privileges. What happened? 
+
         SHOW GRANTS FOR 'network';
-        REVOKE DROP ON d1.* TO 'network';
+        REVOKE DROP ON d1.* FROM 'network';
+  
+GRANT supports 
+
+  - resource quotas. 
+  - punctual privileges (eg. ```GRANT SELECT (id) ON d1.t1 TO ...```)
+    
+        HELP [GRANT|REVOKE]; 
+
  
- - What happened? 
+## Removing users
+
+ - Revoke all privileges without removing the user;
  
- - Explain privileges. GRANT supports resource quotas. `HELP [GRANT|REVOKE]`. 
+        REVOKE ALL ON *.* FROM 'network';
+        SELECT * FROM mysql.user_view; -- the view defined above.
  
+ - Remove the user;
  
+        DROP USER 'network';
+   
+Remember: **users are couples** !
+
+        CREATE USER 'a';
+        CREATE USER 'a'@'localhost';
+        DROP USER 'a';
+        
+Which is the expected output of: 
+        
+        SELECT * FROM mysql.user_view;

@@ -78,6 +78,8 @@
         3 rows in set (0.00 sec)
 
 
+
+
 ## Change root password
 
 
@@ -113,4 +115,5 @@ Once you log-in you need to load privilege table to be able to change it.
         SET PASSWORD FOR 'root'@'localhost' = PASSWORD('new_password');
         
 Now `mysqladmin shutdown` and restart normally.
-        
+   
+   

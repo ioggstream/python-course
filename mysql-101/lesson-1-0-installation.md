@@ -69,6 +69,7 @@ First access
         mysql -u$USER -p$PASSWORD [ -h$HOST -P$PORT ]
         mysql -e "$QUERY"
   
+  
 ## Installing MySQL - On Ubuntu/Debian
 Copy init script and configuration file
         
@@ -107,11 +108,11 @@ Prepare a minimal configuration file...
 ## The datadir
 Create or recreate the default one (from my.cnf)
   
-        #mysql_install_db 
+        mysql_install_db 
 
 Or create alternative ones
   
-        #mysql_install_db --datadir=/data2
+        mysql_install_db --datadir=/data2
         
 
 ## The datadir
@@ -214,4 +215,36 @@ Client programs:
         mysql --protocol tcp
         
         SHOW DATABASES;
+
+## Connecting - Storing credentials
+Store credentials [in the encrypted file](http://dev.mysql.com/doc/refman/5.6/en/mysql-config-editor.html) 
+~/.mylogin.cnf using
+
+        mysql_config_editor set 
+            --login-path=client # default used by mysql 
+            --host=localhost 
+            --user=localuser 
+            --password # (prompted)
+
+We can define further servers
+
+        mysql_config_editor set
+            --login-path=master
+            --host=m-1.foo.it
+            --port=13306
+            --user=admin
+            --password # (prompted)
+
+
+## Connecting
+You can log your session in a file with
+
+        mysql --tee=/tmp/history.out
+        -- or after login
+        TEE /tmp/history.out
+        
+Dump the output in HTML
+
+        mysql --html
+        
 

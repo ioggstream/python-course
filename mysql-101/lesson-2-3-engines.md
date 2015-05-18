@@ -2,8 +2,8 @@
 ## Engines
 
   - Storage Engines in MySQL Architecture
-  - InnoDB
-  - Memory
+  - Memory: effects of limits
+  - InnoDB: 
   - MyISAM
   
 
@@ -49,13 +49,15 @@ Create a small memory table...
 ## Memory
 Remember that
 
-$max_tmp_table_size \leq max_heap_table_size$ 
+
+$max\_tmp\_table\_size \leq max\_heap\_table\_size$ 
+
 
 Otherwise `max_tmp_table_size` will *always* be
 lowered at `max_heap_table_size` value.
 
 Creating temporary tables. 
-Limitations on [BLOB/TEXT and its effects][https://dev.mysql.com/doc/refman/5.6/en/internal-temporary-tables.html].
+Limitations on [BLOB/TEXT and its effects](https://dev.mysql.com/doc/refman/5.6/en/internal-temporary-tables.html).
 
 Inspecting temporary tables on disks.
 
@@ -75,11 +77,21 @@ Caveats:
 
 
 ## MyISAM
+Create MyISAM table
+
+        CREATE TABLE _my_departments
+            ENGINE=MyISAM
+            SELECT * FROM departments;
+        SHOW CREATE TABLE _my_departments;
+
 Table format:
 
+        \! tree /var/lib/mysql/employees
+        
   - .frm: table definitions
   - .myd: table data
   - .myi: table indexes for data
+  
   
 
 ## InnoDB
@@ -89,7 +101,8 @@ InnoDB Log Files. Checkpoint interval.
 
 Buffer Pool. Contention on Buffer Pool. Buffer pool instances.
 
-
+        SHOW VARIABLES LIKE 'innodb%';
+        
 ## Configuring InnoDB
 Configuring `innodb_buffer_pool_size`.
 
@@ -106,9 +119,28 @@ Tablespaces.
 
 Configuring and Resizing Tablespaces. AutoExtend.
 
-Ensure innodb_file_per_table=1.
+Ensure ```innodb_file_per_table=1```.
 
 Check innodb datafiles while changing tables.
 
 
+## Configuring InnoDB
+Setup a database with the provided configuration.
 
+        [mysqld]
+        innodb_log_file_size=1M
+        innodb_buffer_pool_size=16M
+        
+Re-import employees and get stats via dstat and time.
+
+Retry adding
+ 
+        innodb_flush_log_at_trx_commit=1
+
+## Configuring InnoDB
+Test further effects of the following parameters:
+
+        innodb_buffer_pool_size
+        innodb_log_file_size
+        innodb_log_files_in_group
+        

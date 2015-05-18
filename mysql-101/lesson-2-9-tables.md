@@ -1,9 +1,5 @@
 # Manage tables
 
-## Inspecting tables
-
-
-
 ## Loading files 
 
   - Load files from mysql

@@ -41,7 +41,7 @@ More informations
         3 rows in set (0.00 sec)
 
         
-## Using information_schema
+## USE information_schema;
 Listing databases with SQL.
 
         SELECT * FROM information_schema.schemata;
@@ -53,7 +53,8 @@ Tables
             WHERE table_schema = 'd1'
             ORDER BY table_name;
 
-## Using information_schema
+
+## USE information_schema;
 More on tables
 
         SELECT table_name, 
