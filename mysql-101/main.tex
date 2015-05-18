@@ -5,7 +5,7 @@
 \title{MySQL 101}
 %\subtitle{EuroPython 2014, $24^{th}$ July - Berlin}
 \author{Roberto Polli -
-\href{mailto:roberto.polli@babel.it}{roberto.polli@babel.it}}
+\href{mailto:roberto.polli@par-tec.it}{roberto.polli@par-tec.it}}
 %\date{24 July 2014}
 \institute{Par-Tec Spa - Rome Operation Unit\\
     P.zza S. Benedetto da Norcia, 33\\
@@ -30,7 +30,7 @@
 }
 
 \bash[stdoutFile=tmpme.tex.tmp]
-{ shopt -s nullglob; for file in *.md.tex; do echo "\\input{$file}"; done; } 
+{ shopt -s nullglob; for file in lesson*.md.tex; do echo "\\input{$file}"; done; }
 \END
 \input{tmpme.tex.tmp}
 
