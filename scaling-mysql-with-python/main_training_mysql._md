@@ -1,0 +1,594 @@
+\documentclass{beamer}[10]
+
+
+%
+% macro
+%
+
+\input{partecstyle.tex}
+
+% Apply DRAFT watermark
+\usepackage{draftwatermark}
+\setbeamercolor{background canvas}{bg=}%transparent canvas
+
+\title{Orchestrating MySQL with Python and Docker}
+\subtitle{C4P EuroPython 2015, $22^{th}$ July - Bilbao}
+\author{Roberto Polli - \href{mailto:roberto.polli@par-tec.it}{roberto.polli@par-tec.it}}
+\date{21-27 July 2015}
+\institute{Par-Tec Spa - Rome Operation Unit\\
+    P.zza S. Benedetto da Norcia, 33\\
+    00040, Pomezia (RM) - www.par-tec.it}
+
+%
+%
+\begin{document}
+
+%% cover
+\frame{\titlepage
+\vspace{-0.5cm}
+}
+
+
+%% agenda
+\frame{\frametitle{Agenda}
+\begin{multicols}{2}
+\tableofcontents
+\end{multicols}
+}
+
+
+%% Starting doc
+#Intro
+\frame{ \frametitle{Who? What? Why?}
+
+
+  -  Manage, replicate, scale and provision databases with mysql-fabric.
+\\
+\\
+  -  Roberto Polli - Solutions Architect @ par-tec.it. Loves writing in C,
+Java and Python. Red Hat Certified Engineer and Virtualization
+Administrator.
+\\
+\\
+  -  Par-Tec – Proud sponsor of this talk ;) Contributes to various FLOSS. \\
+Provides expertise in IT Infrastructure \& Services and \\ Business Intelligence
+solutions + Vertical Applications for the financial market.
+
+
+}
+
+##EuroPython 2015 C4P
+Training is work in progress. Slides are just teaser and will be completed if the training will be accepted.
+\\
+I am open to suggestions an improvements!
+\\
+Support this training and have your say ;)
+\href{http://github.com/ioggstream/python-course/scaling-mysql-with-python}{github.com/ioggstream/python-course/scaling-mysql-with-python}
+\end{pyframe}
+
+%
+%
+%
+##Setup
+Install Docker
+```
+sudo apt-get install lxc-docker || \
+yum -y install docker
+```
+Download the course scripts
+```
+git clone https://github.com/ioggstream/mysql-community
+cd mysql-community/fabric
+```
+Install requirements and setup environment
+```
+pip install -r requirements.txt
+docker-compose up
+# this will download docker images!
+```
+\end{pyframe}
+
+
+%
+% Docker 101
+%
+#Introducing Docker \& Compose: 30'
+##Docker
+A brief docker tutorial based
+on the busybox image.
+Setting images, hostnames and environment variables.
+
+```
+$ docker run [--rm] -ti --name=test busybox /bin/bash
+$ docker exec -ti  test /bin/bash
+...
+```
+
+OT: nat, entrypoint, ...
+\end{pyframe}
+
+
+##Docker Compose
+A brief docker-compose tutorial:
+describing containers via yml
+
+\begin{columns}[t]
+\column[t]{.5\linewidth}
+Running the provided services
+using docker-compose.
+\\
+Clean up all containers with
+```
+docker-compose kill
+# and
+docker-compose rm -vf
+```
+\column[t]{.5\linewidth}
+\begin{pycode}
+#  docker-compose start db
+db:
+ image: ioggstream/mysql-community
+ volumes:
+   - ./:/code
+ environment:
+   - MYSQL_ROOT_PASSWORD=root
+ command: [
+   'mysqld',
+   '--defaults-file=/code/my.cnf'
+ ]
+\end{pycode}
+\end{columns}
+
+\end{pyframe}
+
+
+##Docker Compose
+Scaling services with compose.
+\begin{columns}[t]
+\column{.4\linewidth}
+```
+$ docker-compose scale db=1
+Creating fabric_slave_1..
+Starting fabric_slave_1...
+
+$ docker-compose scale db=8
+Creating fabric_slave_2..
+..
+Starting fabric_slave_8...
+
+$ docker-compose scale db=4
+...
+```
+\column{.4\linewidth}
+```
+$ docker-compose ps
+     Name          Command     State
+-------------------------------------
+fabric_fabric_1   /run.sh...   Up
+fabric_db_1       /run.sh...   Up
+..
+fabric_db_4       /run.sh...   Exit 0
+
+$ docker inspect -f ...
+/fabric_db_3 172.17.0.4
+/fabric_db_2 172.17.0.3
+/fabric_db_1 172.17.0.2
+/fabric_fabric_1 172.17.0.5
+
+```
+\end{columns}
+
+\end{pyframe}
+
+
+%
+% MySQL
+%
+#MySQL Replication: 20'
+##MySQL Replication 101
+Advantage of replication:
+
+    -  scaling reads
+    -  high availability
+    -  simplify backups
+
+\end{pyframe}
+
+
+##MySQL Replication 101
+Overview of MySQL Replication:
+
+  -  master creates a changelog (binlog),
+% by default binlog never expires
+  -  slaves download and apply it.
+  -  every transaction has a global id (GTID).
+  -  Asynchronous and Semi-Synchronous replication.
+
+\includegraphics[height=4cm]{images/mysql-propagate-gtid.jpg}
+\end{pyframe}
+
+
+\iffalse
+##Replication 2.0
+MySQL 5.6+ replication is based on Global Transaction ID
+
+  -  Every server has a unique UUID \\
+\code{3E11FA47-71CA-11E1-9E33-C80AA9429562}
+
+  -  This makes every TransactionID a Global one
+\code{3E11FA47-71CA-11E1-9E33-C80AA9429562:32}
+
+GTIDs simplify replication and synchronization (one or more slide)
+\end{pyframe}
+
+
+##Configuring replication
+
+  -  Replication agreement is configured on the slave only;
+  -  The slave connects to the master with a provisioned
+ user and gets its changelog (binlog);
+  -  Incomplete binlogs require a slave initialization.
+
+\end{pyframe}
+\fi
+
+
+##MySQL Replication 101
+Running mysql with the provided and commented
+configuration file \href{http://github.com/ioggstream/mysql-community/fabric}{my.cnf}
+\\
+Consistency parameters (more to come).
+\\
+Replication parameters (crash-safe replication).
+\\
+Replication start/stop/status.
+%Create a master-slave replication agreement.
+%\code{SLAVE START; SLAVE STOP; SHOW SLAVE STATUS \G; SHOW MASTER STATUS;}
+\end{pyframe}
+
+
+%
+% Fabric
+%
+#MySQL Fabric: 10'
+##Fabric - HLA
+Fabric is a python framework for managing, replicating, sharding and scaling mysql servers.
+
+  -  aggregate servers in high availability groups
+  -  configure single-master replication topologies
+  -  monitor and heal failures
+  -  director for rw/split and sharding
+  -  fabric connectors (caching db topology)
+
+\end{pyframe}
+%http://mysqlmusings.blogspot.it/2013/10/mysql-fabric-high-availability-groups.html
+
+
+##Fabric - HLA
+\includegraphics[height=6.6cm,width=12cm]{images/mysql-fabric-hla.jpg}
+\end{pyframe}
+
+
+\subsection{Fabric installation \& setup: 20'}
+##Fabric \& Python Utilities - get it
+Download and browse the latest sources
+\begin{columns}[t]
+
+\column[t]{.5\linewidth}
+    %|\href{https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-utilities-1.6.1.tar.gz}{
+    ```
+    # Already provided in the
+    #  docker image!
+    wget http://bit.ly/1CxNuZe
+    tar xf mysql-utilities-1.6.1.tar.gz
+    python setup.py install
+    ```
+
+\column[t]{.5\linewidth}
+```
+   |-- mysql
+   |-- connector
+   |   |-- django
+   |   `-- fabric
+   |-- fabric
+   |   |-- protocols
+   |   |-- providers
+   |   `-- services
+   `-- utilities
+```
+
+\end{columns}
+
+\end{pyframe}
+
+\iffalse
+Fedora / CentOS / RHEL 7
+    ```
+    yum -y install \href{https://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm}{http://bit.ly/1yhSViu} # MySQL Community repo
+    yum -y install mysql-utilites
+    ```
+\fi
+
+
+
+##Setup the lab
+Setup and check the course environment.
+```
+$ docker-compose up -d
+$ docker-compose ps
+$ docker inspect -f '{{.Name}} {{.NetworkSettings.IPAddress}}'
+```
+
+Check the 'fabric' container: we will access all servers from this
+ one which includes *all* mysql tools and utilities.
+```
+$ docker exec -ti fabric_fabric_1 /bin/bash
+fabric$
+```
+\end{pyframe}
+
+
+##Setup - II
+Image with the training infrastructure (fabric, database and docker nodes).
+\\
+Configure credential in $encrypted$ (mysql\_config\_editor)
+ or clear-text (my.cnf) files to avoid wasting time during
+the training.
+ \\
+\end{pyframe}
+
+%##Setup - III
+%*empty*
+%\end{pyframe}
+
+##Introducing mysqlfabric
+The training covers:
+
+  -  \code{manage [setup|start|ping|stop|teardown]}
+  -  group - manage high availability groups
+  -  server - manage, clone, provision and decommission servers
+  -  provider - manage server providers (eg. openstack, ...)
+
+Further functionalities:
+
+  -  statistics, dump, role, user,
+  -  threat, sharding, snapshot, event
+
+\end{pyframe}
+
+
+##Test Driven Installation
+The installation is test-driven via a provided nose script.
+Students will be guided in fixing all the tests.
+Testing fabric installation (node reachability, user existence, ...)
+
+```
+fabric$ cd /code
+fabric$ nosetests -v
+test_root_access_nodes('m.docker', {'password': 'root', 'user': 'root'}) ... fail
+..
+test_fabric_access_nodes('m.docker', {'password': 'fabric', 'user': 'fabric'}) ... fail
+...
+test_fabric ... ERROR
+test_fabric_node ... ERROR
+```
+\end{pyframe}
+
+
+
+##Test Driven Installation
+Setup fabric server via fabric.cfg . \\
+Students will be guided in fixing all the tests.
+
+```
+$ mysqlfabric manage setup / start
+$ mysqlfabric ping ...
+```
+\end{pyframe}
+
+
+#Replication Groups: 30'
+##Create a Group
+Create a replication group and adding
+servers. \\
+
+Promoting one server as a master. \\
+\code{mysqlfabric dump servers}
+\\
+Adding spare servers. \\
+
+Monitoring failover. \\
+```
+# mysqlfabric group [create|promote|activate] $GROUP
+...
+```
+\end{pyframe}
+
+
+##
+Import data and check replication status using python tools.
+
+```
+mysqldbimport --server=$MASTER ... sakila.sql
+mysqldbcompare --server1=$MASTER --server2=$SLAVE \
+  --all
+```
+\end{pyframe}
+
+
+##Connecting to a group
+Configure python clients
+\begin{pycode}
+from mysql.connector import connect, fabric
+c = connect(fabric={host: .., port: .., user: ..},
+    autocommit=True,
+    database='sample', **sql_user)
+c.set_property(mode=fabric.MODE_READWRITE, group="my-cluster-1")
+\end{pycode}
+\\
+Test R/W split and balancing with nose.
+```
+nosetests -vs test_script.py -m rwsplit
+```
+\end{pyframe}
+
+
+#Troubleshooting: 20'
+##Provisioning a new slave
+When binlogs have been purged / expired, you need to
+import from another server.\\
+
+Caveats on big databases. \\
+
+Provision a new slave with
+```
+mysqlfabric server clone $GROUP $TARGET
+```
+
+Provision a new slave with python utilities
+```
+# Remove all replica configurations
+#  on the slave..
+mysql -h$SLAVE -e 'STOP SLAVE;RESET MASTER;'
+
+# ..and reinitialize it
+mysqldbcopy --source=$MASTER --destination=$SLAVE
+    --rpl-user=fabric:fabric --rpl=master
+    --all --drop-first
+```
+\end{pyframe}
+
+
+\iffalse
+    ##Provisioning a new slave
+    Provision a new slave in two steps (eg. large database or requiring tweaks)
+    
+      -  check that replica user is provisioned on the master;
+      -  create a custom dump.sql;
+      -  add --rpl=master;
+    
+    \begin{minted}
+    cat > data.sql <<EOF
+    -- ignore previous changelogs
+    -- and trust the backup only
+    STOP SLAVE;
+    RESET MASTER;
+
+    EOF
+
+    mysqldbexport >> data.sql \
+     --server=root:pass@master \
+     --rpl-user=repl:rpass \
+     --export=master \
+     --rpl=master \
+     --all
+
+    mysqldbimport --server=root:root@slave \
+     data.sql
+    \end{minted}
+    \end{pyframe}
+\fi
+
+
+#Failover: 20'
+##Enabling and Testing Failover
+Enabling failover and stopping a master. \\
+
+Checking automatic failover. \\
+```
+#nosetests -vs --nologcapture fabric-poc.py -m failover &
+#mysqladmin shutdown -h $MASTER
+```
+
+Re-ingesting a failed master. \\
+```
+mysqlfabric server set_status  f484d0ed-ecea-11e4-9118-0242ac110039  spare
+mysqlfabric server set_status  f484d0ed-ecea-11e4-9118-0242ac110039  secondary
+```
+\end{pyframe}
+
+
+#Provisioning: 20'
+##Provisioning new container via docker
+Show the provisioning interface (docker, openstack). \\
+
+\begin{pycode}
+# mysql.fabric.providers.dockerprovider
+class MachineManager(AbstractMachineManager):
+    """Manage Docker Containers."""
+    def create(self, parameters, wait_spawning):
+        ...
+    def search(self, generic_filters, meta_filters):
+        ...
+    def destroy(self, machine_uuid):
+        ...
+\end{pycode}
+\end{pyframe}
+
+
+##Docker Provisioning
+
+Provisining and deleting containers. \\
+
+Adding provisioned container to ha groups. \\
+
+```
+# Register a provider (requires docker in http)
+mysqlfabric provider register mydocker \
+    user password \
+    http://172.17.42.1:2375  \
+    --provider_type=DOCKER
+
+# Create new server
+mysqlfabric server create mydocker \
+    --image=name=mysql-fabric   \
+    --flavor=name=v1            \
+    --meta=command="mysqld --log-bin=foo"
+
+# List servers
+mysqlfabric server list docker
+```
+\end{pyframe}
+
+
+##Docker Provisioning
+Improving the docker provisioning.
+
+Curious? Vote this training!
+
+```
+...
+```
+\end{pyframe}
+
+\iffalse
+##Title
+```
+#
+```
+\end{pyframe}
+\fi
+
+
+
+
+##Wrap Up
+
+  -  Replication is easier with Fabric and MySQL 5.6
+  -  You can clone servers
+  -  Failover is just one command ahead
+  -  You can't re\-ingest failed masters (luckily;)
+  -  Try Fabric with Docker!
+
+\end{pyframe}
+
+
+##That's all folks!
+\begin{center}
+Thank you for the attention! \\\\
+\insertauthor
+\end{center}
+\end{pyframe}
+
+
+\end{document}
