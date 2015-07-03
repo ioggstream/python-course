@@ -1,4 +1,37 @@
-##Configuring replication
+# Replication, Scalability and Partitioning
+## CAP Theorem
+ Partitioning: Synchronization reloaded.
+
+You cannot have the same level of:
+ 
+ - Consistency 
+ - Atomicity
+ - Partition
+ 
+Instead you have to favor something respect to the other.
+
+
+## CAP Theorem Reloaded
+
+You can pay to get faster
+
+  - network
+  - cpu
+  - storage
+ 
+Price is the 4th dimension.
+
+
+## Replication
+
+Advantges of replication. Use cases.
+
+Synchronous, asynchronous and semi-synchronous replication.
+
+Replication in MySQL. Topologies and GTID.
+
+
+## Replication
 
 Replication is $asynchronous$ and the agreements are configured on the slave only.
 
@@ -15,10 +48,36 @@ Master
 Slave
 
   -  connects to the master with the $replica$ user
-  -  retireves the binlog and applies the changes;
+  -  retrieves the binlog and applies the changes;
   -  ```START SLAVE;```
     
 
+## Configuring replication
+Enable replication in two or more configuration files like my-3306.cnf, my-3307.cnf.
+
+        [mysqld]
+        server-id=3306
+        
+        log-bin=3306-bin
+        # Relay logs are downloaded in
+        #  the relay-logs from the Slave I/O
+        #  thread
+        relay-log=3306-relay
+
+        port=3306
+        datadir=/var/lib/3306
+        socket=/var/lib/3306/mysql.sock
+
+
+## Configuring replication
+
+Configure a ```--login-path``` for each instance and validate the connection
+
+        mysql --login-path=3306 -e "show variables like 'port';"
+
+        mysql --login-path=3306 -e "SHOW MASTER STATUS;"
+
+        
 
 ##Replication 2.0
 MySQL 5.6+ replication is based on Global Transaction ID
@@ -40,7 +99,7 @@ master database first!**
 
 
 
-##Configuring replication
+## Configuring replication
 mysqlreplicate takes care of
   
 
@@ -48,47 +107,63 @@ mysqlreplicate takes care of
   -  configure the slave to point to the master;
   -  start loading the first available transaction in bin-logs;
 
-
         mysqlreplicate  --master=$MASTER --slave=$SLAVE \
                 --rpl-user=repl:rpass \
                 -b
-    
-        # master on 192.168.1.1: ... connected.
-        # slave on 192.168.1.2: ... connected.
-        # Checking for binary logging on master...
-        # Setting up replication...
-        # ...done.
+        
+  - or provision your user
+  
+        GRANT REPLICATION CLIENT TO 'repl' INDENTIFIED BY 'repl';
 
 
 
-
-##Configuring replication - II
+## Configuring replication
 mysqldbexport can be used to provision a new slave!
   
-
   -  check that replica user is provisioned on the master;
-  -  issue a ```RESET MASTER;``` to cleannup previous settings;
-  -  add ```--rpl=master``` to create replica infos in the sql;
-  -  add ```--export=both``` to store both schema and data;
+  -  issue a ```RESET MASTER;``` to clean up previous settings;
 
+        mysqldbexport > data.sql \
+         --server=$MASTER        \ # user:pass@host[:port]
+         --export=both           \ # store both schema and data
+         --rpl=master            \ # add replication statement
+         --rpl-user=repl:rpass   \ #  using the given credentials
+         --all
+
+Logical backup and flush table.
+
+
+## Slave initialization
+Clean up old replica configuration before initializing!
 
         # pre-import.sql
         -- ignore previous changes
         -- and trust the backup
         STOP SLAVE;
+        RESET SLAVE ALL;
         RESET MASTER;
 
 
-        mysqldbexport > data.sql \
-         --server=$MASTER \
-         --rpl-user=repl:rpass \
-         --export=both \
-         --rpl=master --all
+## Slave initialization
+Large databases can be initialized from disk backups.
+
+        mysqlbackup backup-and-apply-log
+
+Restore with
+
+        mysqlbackup --defaults-file=/etc/my-3307.cnf \ 
+            --backup-dir $BACKUP_DIR    \
+            --force                     \
+            copy-back
+                
+Get position for old-style replication with 
+
+        grep -r binlog $BACKUP_DIR/meta
 
 
-##Discovering replication
+## Discovering replication
 
-        $ mysqlrplshow --master=$MASTER \
+        mysqlrplshow --master=$MASTER \
             --discover-slaves-login=root:root
         # master on s-1.docker: ... connected.
         # |Finding slaves| for master: s-1.docker:3306
@@ -100,13 +175,9 @@ mysqldbexport can be used to provision a new slave!
            +--- s-4.docker:3306 - (SLAVE)
 
 
-%
-% Failover
-%
-
 # Failover
 ## Failover Basics
-A replicated infrastructure can be made Higly Available.
+A replicated infrastructure can be made Highly Available.
 \includegraphics[height=4cm]{images/mysql-promote-slave.jpg}
 
 

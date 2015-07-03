@@ -1,0 +1,43 @@
+\documentclass{beamer}[10]
+
+\input{partecstyle.tex}
+
+% Apply DRAFT watermark
+%\usepackage{draftwatermark}
+% \setbeamercolor{background canvas}{bg=}%transparent canvas
+
+
+\title{Scaling MySQL with python}
+%\subtitle{EuroPython 2014, $24^{th}$ July - Berlin}
+\author{Roberto Polli -
+\href{mailto:roberto.polli@par-tec.it}{roberto.polli@par-tec.it}}
+%\date{24 July 2014}
+\institute{Par-Tec Spa - Rome Operation Unit\\
+    P.zza S. Benedetto da Norcia, 33\\
+    00040, Pomezia \(RM\) - www.par-tec.it}
+
+%
+%
+\begin{document}
+
+%% cover
+\frame{
+\titlepage%
+\vspace{-0.5cm}
+}
+
+%% agenda
+\frame{\frametitle{Agenda}
+\begin{multicols}{2}
+\tableofcontents
+\end{multicols}
+
+}
+
+\bash[stdoutFile=tmpme.tex.tmp]
+{ shopt -s nullglob; for file in [0-9]*.md.tex; do echo "\\input{$file}"; done; }
+\END
+\input{tmpme.tex.tmp}
+
+\end{document}
+

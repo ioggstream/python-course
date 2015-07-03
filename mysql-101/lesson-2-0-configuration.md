@@ -45,17 +45,6 @@ my.cnf is made up of stanzas
         user=mysql
         datadir=/disk2/data
 
-
-## Client Configuration
-For now just avoid typing credentials
-
-        [client]
-        # insecurely store clear text credentials
-        # for mysql, mysqladmin, mysqldump
-        user=root
-        password=root
-        compress
-        
     
 ## Configuration
 Show the parameters *to be used*

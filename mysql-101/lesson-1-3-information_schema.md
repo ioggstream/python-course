@@ -86,11 +86,6 @@ Indexes can be inspected with:
           Column_name: id
             Collation: A
           Cardinality: 3
-             Sub_part: NULL
-               Packed: NULL
-                 Null: 
-           Index_type: BTREE
-              Comment: 
-        Index_comment: 
+                 ...
         1 row in set (0.00 sec)
 

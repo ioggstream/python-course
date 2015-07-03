@@ -18,6 +18,7 @@
 \usepackage{amsmath}
 %\usepackage[beamer]{hf-tikz}
 \usepackage{xfrac}
+\usepackage{ragged2e} % text alignment
 
 %
 % Packages for markdown conversion
@@ -40,7 +41,7 @@
 %\showboxbreadth=5
 
 % Slides in 16:9
-\usepackage[orientation=landscape,size=custom,width=16,height=9,scale=0.5,debug]{beamerposter} 
+\usepackage[orientation=landscape,size=custom,width=16,height=9,scale=0.5,debug]{beamerposter}
 
 %
 % Macros
@@ -71,13 +72,13 @@
 %
 \newenvironment{pyframe}[1]
 {\begin{frame}[fragile,environment=pyframe]\frametitle{#1}
- 
+
 }
 {\end{frame}}
 
 
 % environments
-\newminted{py}{mathescape,escapeinside=||}% 
+\newminted{py}{mathescape,escapeinside=||}%
 \newminted{bash}{mathescape,fontsize=\small}%
 
 % python highlights: module, method
@@ -88,6 +89,12 @@
 \newcommand{\typeonly}[1]{\colorbox{green}{#1}}
 \newcommand{\pyvers}[1]{\raisebox{0em}{\colorbox{yellow}{#1}}}
 \newcommand{\code}[1] { \texttt{#1} }
+% support for columns in markdown
+\newcommand{\columnsbegin}{\begin{columns}}
+\newcommand{\columnsend}{\end{columns}}
+%support for minted in markdown
+%\newcommand{\pythonbegin}{\begin{pycode*}}
+%\newcommand{\pythonend}{\end{pycode*}}
 
 % special symbils
 \newcommand{\mymapsto}{\operatornamewithlimits{\longmapsto}}
@@ -119,8 +126,8 @@
  \leavevmode%
   \hbox{%
 %,bb=0 0 5cm 2cm
-    \hspace{5pt}\includegraphics[height=0.8cm]{par-tec-logo.png}
- %   \hspace{240pt}\includegraphics[height=1.2cm]{logo.eps}
+    \hspace{5pt}\includegraphics[height=1cm]{par-tec-logo.png}
+    \hspace{210pt}\includegraphics[height=1.2cm]{ep15.png}
     }
 }
 \setbeamertemplate{footline}{

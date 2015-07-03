@@ -3,7 +3,7 @@
 ## Goal
 
   - Installing on Linux (debian, fedora)
-  - Knowing the data directory
+  - Structure of the data directory
   - Basic Administration: start/stop, reset password, privileges, secure installation
   - Connecting to the database
   - Basic Usage: create/query/drop databases and tables
@@ -32,6 +32,7 @@ Use either
 or
 
     gdebi -n mysql*.deb # installs one package at a time
+    
     
 ### Fedora & derivates
 

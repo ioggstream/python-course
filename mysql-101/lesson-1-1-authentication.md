@@ -1,7 +1,7 @@
 # Basic Authentication and Authorization
 
 
-## mysql.user table
+## mysql.user table & co
   - Authentication is based on users
   - A user is a **couple** $(user, host)$ 
        
@@ -19,7 +19,23 @@
         6 rows in set (0.00 sec)
 
 
-## mysql.user table
+  - Skip calling DNS during authentication with ```--skip-name-resolve```
+
+
+## mysql.user table & co
+If you have performance_schema enabled
+
+        SHOW VARIABLES LIKE 'performance_schema';
+        USE performance_schema;
+
+you can:
+
+        SELECT * FROM accounts;
+        SELECT * FROM users;
+        SELECT * FROM hosts;
+
+
+## mysql.user table & co
   - Create a user and show its privileges. By default host is '%'
   
         CREATE USER admin IDENTIFIED BY 'admin';
@@ -101,6 +117,7 @@
 ## Reset root password
 
 MySQL loads authentication tables in memory and enables them after startup.
+
  
 Skipping this step allows unauthenticated connections
  
@@ -115,5 +132,6 @@ Once you log-in you need to load privilege table to be able to change it.
         SET PASSWORD FOR 'root'@'localhost' = PASSWORD('new_password');
         
 Now `mysqladmin shutdown` and restart normally.
+   
    
    

@@ -1,5 +1,5 @@
 #
-# Makefile for creating beamer tex file 
+# Makefile for creating beamer tex file
 #  from markdown via pandoc
 #
 SOURCES=$(wildcard *.md)
@@ -18,10 +18,10 @@ main: sources
 debug: sources
 	pdflatex --shell-escape main.tex
 
-	
+
 %.md.tex: %.md
-	pandoc $< -f markdown --no-tex-ligatures -t beamer -o $@
-	sed -i 's/{frame}\(\[fragile\]\)\?/{pyframe}/g; s/verbatim/bashcode/g; s/Shaded/mdframed/g; ' \
+	pandoc $< -f markdown --highlight-style=kate  --no-tex-ligatures -t beamer -o $@
+	sed -i 's/{frame}\(\[fragile\]\)\?/{pyframe}/g; s/verbatim/bashcode/g; s/Shaded/mdframed/g; s/\\pythonbegin/\\begin{pycode*}/g; s/\\pythonend/\end{pycode*}/g; ' \
 	 $@
 
 

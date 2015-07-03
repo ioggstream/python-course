@@ -1,12 +1,10 @@
 # Intro
 
-## MySQL 101
-
-Goal:
+## Goal
 
   - What is a database
   - ACID and non-ACID database
-  - The CAP Theorem
+  - The CAP Theorem*
   - MySQL HLA
     - Connections
     - Processing
@@ -57,8 +55,6 @@ Goal:
 
   - Connection (TCP, Unix, Threads, Authentication) 
     
-        --skip-name-resolve || --host-cache-size to grow internal cache
-
   - SQL Parser / Optimizer (Caches, Authorization)
 
   - Query exec / cache / logging

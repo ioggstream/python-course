@@ -15,6 +15,7 @@ Check what happens in /var/lib/mysql, then
 
 Which data types are we using? Why?
 
+
 ## Creating tables
 Verify that MySQL created exactly what we asked.
 

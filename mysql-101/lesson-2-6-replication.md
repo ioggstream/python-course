@@ -40,8 +40,11 @@ Create a logical backup:
         mysqldump --master-data=1 --all-databases |
             gzip > /backup/backup-$(date -I).sql.gz
             
-Exercise: create a new instance in the `/backup` datadir 
-and restore there the backup.
+Exercise: 
+  - drop *one* table from your DB;
+  - create a new mysqld instance with  `--datadir=/backup/`;
+  - restore your backup there;
+  - restore the dropped table on the main DB;
 
 
 ## mysqldump solution
@@ -53,16 +56,26 @@ Create a versioned datadir:
         
 Create a new instance without network:
          
-        mysqld --socket=/backup/mysql.sock \
-            --skip-networking \ 
-            --skip-grant-tables \
+        mysqld --socket=/backup/mysql.sock  \
+            --skip-networking               \ 
+            --skip-grant-tables             \
             --datadir=/backup/$(date -I) &
 
 Restore your db
 
-        gunzip /backup/backup-$(date -I).sql.gz | 
+        gunzip -c /backup/backup-$(date -I).sql.gz | 
             mysql --socket=/backup/mysql.sock 
         
+
+## mysqldump solution
+
+Dump the dropped table from your restore and
+pass it to the master instance.
+
+        mysqldump --socket=/backup/mysql.sock   \
+            --master-data=2                     \
+            --tables $DATABASE $TABLE | mysql $DATABASE
+
 
 ## mysqlbackup
 With mysqlbackup you can make physical backups:
@@ -82,7 +95,7 @@ Configure in /etc/my.cnf
 
 ## mysqlbackup
 The `mysqlbackup` user requires at least the 
-[following privileges](http://dev.mysql.com/doc/mysql-enterprise-backup/3.9/en/mysqlbackup.privileges.html)[^mysqlbackup]
+[following privileges](http://dev.mysql.com/doc/mysql-enterprise-backup/3.9/en/mysqlbackup.privileges.html)
 
         GRANT RELOAD ON *.* TO 'mysqlbackup'@'localhost';
         GRANT CREATE, INSERT, DROP, UPDATE 
@@ -116,18 +129,18 @@ Incremental backups require a starting point.
 
   - a history entry
 
-        mysqlbackup --login-path=mysqlbackup \
-            --incremental  
-            --incremental-base=history:last_backup
-            backup-and-apply-blog
+        mysqlbackup --login-path=mysqlbackup        \
+            --incremental                           \
+            --incremental-base=history:last_backup  \
+            backup
             
   - or a directory
   
         FULLDIR=/backup/full/2015-05-18_16-14-18/
-        mysqlbackup --login-path=mysqlbackup \
-            --incremental  
-            --incremental-base=dir:$FULLDIR
-            backup-and-apply-blog            
+        mysqlbackup --login-path=mysqlbackup    \
+            --incremental                       \  
+            --incremental-base=dir:$FULLDIR     \
+            backup            
 
 
 ## mysqlbackup
@@ -159,36 +172,4 @@ Exercises:
  - validate the backup restoring the db in another place.
  
  
-# Replication, Scalability and Partitioning
-## CAP Theorem
- Partitioning: Synchronization reloaded.
-
-You cannot have the same level of:
- 
- - Consistency 
- - Atomicity
- - Partition
- 
-Instead you have to favor something respect to the other.
-
-
-## CAP Theorem Reloaded
-
-You can pay for having more!
-
-  - faster network
-  - faster cpu
-  - faster storage
- 
-Price is the 4th dimension.
-
-
-## Replication
-
-Advantges of replication. Use cases.
-
-Synchronous, asynchronous and semi-synchronous replication.
-
-Replication in MySQL. Topologies and GTID.
-
 ## 

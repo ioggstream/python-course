@@ -14,14 +14,14 @@ While monitoring system status with
  
          dstat -cgmprsy 5
     
-we'll import the [Employees database](http://bit.ly/1qEutCs) 
+import the [Employees database](http://bit.ly/1qEutCs) 
 
         bash#wget http://bit.ly/1qEutCs -O employees.tar.gz     
         bash#tar xf employee*
         bash#cd employee*
         bash#mysql < employees.sql
 
-How does `employees.sql` work?
+Exercise: how does `employees.sql` work?
 
         SELECT * INTO OUTFILE 'path.tsv' FROM departments;
         CREATE TABLE _departments LIKE departments;
@@ -53,21 +53,13 @@ Export  `employee` with the following parameter
         --skip-extended-insert  | 
             gzip  > salaries.sql   
         
-Importing data with AUTOCOMMIT=1 
+Import and monitor with `dstat` using: 
         
         SET AUTOCOMMIT=1
         SELECT @@AUTOCOMMIT;
         
-        
-## Upgranding MySQL
+Exercise: explain the server behavior.
 
-  - Stop
-  - Backup
-  - Upgrade software
-  - Check upgrade
-    
-        #mysql_upgrade
-        #mysqlcheck
 
      
      
