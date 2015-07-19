@@ -10,9 +10,9 @@
 Java and Python. Red Hat Certified Engineer and Virtualization Administrator.
 
 **Par-Tec** – Proud sponsor of this talk ;) Contributes to various FLOSS. 
-    Provides expertise in:
+    Provides:
 
-  - IT Infrastructure \& Services 
+  - IT Infrastructure \& Services expertise;
   - Business Intelligence solutions \+ Vertical Applications for the financial market.
 
 **Manage, replicate, scale** MySQL 5.6+ databases with python (and Docker).

@@ -71,14 +71,18 @@ Groups are managed via
 Crete an High Availability group and add a bunch of
 servers.
 
+\columnsbegin
+\column[t]{0.8\textwidth}
+
     mysqlfabric group create $GROUP
     mysqlfabric group add $GROUP my-host-1:3306    
     mysqlfabric group add $GROUP my-host-2:3306
     mysqlfabric group add $GROUP my-host-3:3306
 
+\column[t]{0.2\textwidth}
+\hfill\includegraphics[width=3cm]{images/mysql-fabric-hagroup.png}
 
-\hfill\includegraphics[width=4cm]{images/mysql-fabric-hagroup.png}
-
+\columnsend
 
 ##Replication Groups
 Promote one server as a master, eventually picking one.
@@ -170,10 +174,11 @@ Fabric can provision new machines via eg. Openstack API.
 We implemented a DockerProvider: deploy containers, not machines.
 
 \columnsbegin
-\column[t]{.3\textwidth}
-\includegraphics[height=3cm,angle=90]{images/mysql-fabric-provisioning-1.png}
+\column[t]{.2\textwidth}
 
-\column[t]{.7\textwidth}
+\includegraphics[width=2cm]{images/mysql-fabric-provisioning-1.png}
+
+\column[t]{.8\textwidth}
 
     # mysql.fabric.providers.dockerprovider
     class MachineManager(AbstractMachineManager):
