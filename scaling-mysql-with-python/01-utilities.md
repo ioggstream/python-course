@@ -3,7 +3,9 @@
 ##MySQL
 
   - Single-process, multi-thread
-  - 2-tier architecture: Connection + SQL, Storage Backend
+  - 2-tier architecture
+    *  Connection + SQL
+    *  Storage Backend
   - Greatly improved in 5.6
   - More to come in 5.7: Dynamic Buffers \& Multi\-source replication 
  
@@ -21,7 +23,7 @@ Replication based on changelog files (binary logs).
 [^default]: default
 
 
-##Administration
+##Manage \& Use a database
 \columnsbegin
 
 \column[t]{.5\textwidth}
@@ -47,8 +49,9 @@ Connect:
 \columnsend
 
 
-\centering **Keep it simple!**
- 
+~~Download scripts from some blog, add random queries from docs.mysql.com, Shake.~~
+
+
 
 #Python Utilities
 
@@ -180,8 +183,8 @@ Optionally
 
 \columnsend
 
-\centering **If binlogs have been purged, you need to import the
-master database first!**
+\centering If binlogs have been purged, you need to import the
+master database first!
 
 
 ##Benefits of replication

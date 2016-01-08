@@ -13,7 +13,8 @@ Java and Python. Red Hat Certified Engineer and Virtualization Administrator.
     Provides:
 
   - IT Infrastructure \& Services expertise;
-  - Business Intelligence solutions \+ Vertical Applications for the financial market.
+  - Business Intelligence solutions;
+  - Vertical Applications for the financial market.
 
-**Manage, replicate, scale** MySQL 5.6+ databases with python (and Docker).
+**Manage, replicate, scale** MySQL is easy with **python** (and Docker).
 

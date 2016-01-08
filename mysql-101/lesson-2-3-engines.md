@@ -144,3 +144,14 @@ Test further effects of the following parameters:
         innodb_log_file_size
         innodb_log_files_in_group
         
+
+## Check InnoDB Status
+To access InnoDB statistics you can use:
+
+        SHOW ENGINE INNODB STATUS \G # which may impact performance
+
+or pick selected infos from
+
+        SELECT ... FROM INFORMATION_SCHEMA.INNODB_*
+
+
