@@ -22,7 +22,7 @@ Verify that MySQL created exactly what we asked.
         DESCRIBE d1.t1;
         SHOW CREATE TABLE d1.t1 \G
 
-Exercise: explain the differences between the `CREATE TABLE` and the `SHOW CREATE`.
+Exercise: explain the differences between the `DESCRIBE` and the `SHOW CREATE`.
 
 
 ## Creating tables
@@ -79,7 +79,9 @@ Show the new entries
 
 
 Reload a previous file and add further entries
-
+    
+        
+        \e  -- open vi
         <ESC>!!cat /tmp/sample.sql
 
 
@@ -106,13 +108,13 @@ OOOPS, we have `NO_AUTO_CREATE_USER`: specify a password please!
 ## Creating administrative users
 To grant administrative privileges use
 
-        GRANT ALL ON *.* TO 'admin'@'localhost' WITH GRANT OPTIONS;
+        GRANT ALL ON *.* TO 'admin'@'localhost' WITH GRANT OPTION;
 
 Now create a small VIEW to query user privileges without typing all the fields
 
         CREATE VIEW mysql.user_view AS 
-            SELECT USER,HOST,PASSWORD 
-                FROM MYSQL.USER;
+            SELECT USER,HOST,AUTHENTICATION_STRING
+                FROM mysql.user;
   
         
 ## Granting permissions         

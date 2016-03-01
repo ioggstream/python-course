@@ -109,11 +109,11 @@ Prepare a minimal configuration file...
 ## The datadir
 Create or recreate the default one (from my.cnf)
   
-        mysql_install_db 
+        mysqld --initialize 
 
 Or create alternative ones
   
-        mysql_install_db --datadir=/data2
+        mysqld --initialize --datadir=/data2
         
 
 ## The datadir
