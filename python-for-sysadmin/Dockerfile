@@ -2,7 +2,7 @@
 # Docker image for ipython notebook and various
 #  python courses
 #
-FROM ipython/scipyserver
+FROM jupyter/notebook
 MAINTAINER roberto.polli@par-tec.it
 
 COPY requirements.txt /requirements.txt

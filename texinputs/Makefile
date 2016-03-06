@@ -21,7 +21,7 @@ debug: sources
 
 %.md.tex: %.md
 	pandoc $< -f markdown --highlight-style=kate  --no-tex-ligatures -t beamer -o $@
-	sed -i 's/{frame}\(\[fragile\]\)\?/{pyframe}/g; s/verbatim/bashcode/g; s/Shaded/mdframed/g; s/\\pythonbegin/\\begin{pycode*}/g; s/\\pythonend/\end{pycode*}/g; ' \
+	sed -i 's/{frame}\(\[fragile\]\)\?/{pyframe}/g; s/verbatim/bashcode/g; s/Shaded/mdframed/g; s/\\pythonbegin/\\begin{pycode*}/g; s/\\pythonend/\end{pycode*}/g; s/\\columnstart/\\begin{columns}/g; s/\\columnend/\\end{columns}/g;' \
 	 $@
 
 
