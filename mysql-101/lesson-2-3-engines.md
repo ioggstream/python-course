@@ -128,7 +128,7 @@ Check innodb datafiles while changing tables.
 Setup a database with the provided configuration.
 
         [mysqld]
-        innodb_log_file_size=1M
+        innodb_log_file_size=4M
         innodb_buffer_pool_size=16M
         
 Re-import employees and get stats via dstat and time.
