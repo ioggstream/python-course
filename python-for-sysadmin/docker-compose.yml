@@ -9,3 +9,8 @@ sysadminpy:
     volumes:
         - ./rendered_notebooks:/notebooks
        
+test:
+    image: jupyter/notebook
+    volumes:
+       - .:/notebooks
+    entrypoint: tail -f /etc/hosts

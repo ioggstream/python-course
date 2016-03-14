@@ -9,7 +9,7 @@ check:
 
 all:	
 	pdflatex --shell-escape -interaction=nonstopmode babel.tex
-	mv babel.pdf python-for-sysadmin-draft-2015.pdf
+	mv babel.pdf python-for-sysadmin-draft-2016.pdf
 
 allsilent:
 	nohup pdflatex --shell-escape -interaction=nonstopmode babel.tex > /dev/null

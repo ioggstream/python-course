@@ -8,3 +8,4 @@ pyzmq
 markupsafe
 tornado
 jsonschema
+jupyter

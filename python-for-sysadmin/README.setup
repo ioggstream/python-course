@@ -33,7 +33,7 @@ Just run:
 ## Linux Ubuntu
 Just run
 
-    apt-get install ipython python-pip python-psutil python-nose python-scipy python-numpy python-matplotlib
+    apt-get install ipython python-pip python-psutil python-nose python-scipy python-numpy python-matplotlib tree dstat
 
 
 ## Linux Red Hat / Centos / Fedora
@@ -43,7 +43,7 @@ Install the EPEL repository
 
 Then install ipython and python-pip
 
-    yum install ipython python-pip python-psutil
+    yum install ipython python-pip python-psutil tree dstat
 
 
 ## Mac OS and Windows (easy way)

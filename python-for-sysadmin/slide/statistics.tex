@@ -79,10 +79,11 @@ how many people ate $x$ chickens ;)
 \begin{columns}
 \column[t]{.6\textwidth}
 \begin{pycode}
-#Create a simple $\delta$ with set and dict 
-d = {x: rtt.count(x) for x in set(rtt)}
+#Create a simple $\delta$ with Counter
+from collection import Counter
+d = Counter(rtt)
 
-# We can even use
+# We can even use a more flexible
 from collections import defaultdict
 d = defaultdict(int)
 for x in rtt:
