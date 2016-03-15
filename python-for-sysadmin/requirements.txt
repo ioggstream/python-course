@@ -9,3 +9,5 @@ markupsafe
 tornado
 jsonschema
 jupyter
+ansible
+dockerpy
