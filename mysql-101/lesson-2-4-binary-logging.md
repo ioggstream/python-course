@@ -78,8 +78,8 @@ mysqlbinlog output generates SQL files that can be replayed on other servers.
 You can specify an interval on mysqlbinlog.
 
         mysqlbinlog hostname-bin.* \
-            --start-date="2015-05-25 15:00:00" \
-            --end-date="2015-05-25 15:01:00"  | wc -l
+            --start-datetime="2015-05-25 15:00:00" \
+            --stop-datetime="2015-05-25 15:01:00"  | wc -l
             
 Exercise: modify ``--[start|end]``` -date and check that the output lines vary.
 Exercise: drop a table and use mysqlbinlog data to restore it.
