@@ -1,5 +1,7 @@
 # Python for System Administrators
 
+Browse this course with the (online notebook viewer!)[http://nbviewer.jupyter.org/github/ioggstream/python-course/tree/corso-interno/python-for-sysadmin/notebooks/]
+
 ## Setup
 See README.setup for detailed instruction on:
 
