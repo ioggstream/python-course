@@ -3,7 +3,7 @@
 The course requires:
 * python 2.7+ (see notes on python3)
 * easy_install or pip as package manager
-* ipython
+* ipython / jupyter
 * see requirements.txt
 
 Use the following instructions to setup your environment

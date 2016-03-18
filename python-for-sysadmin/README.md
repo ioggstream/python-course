@@ -1,6 +1,6 @@
 # Python for System Administrators
 
-Browse this course with the (online notebook viewer!)[http://nbviewer.jupyter.org/github/ioggstream/python-course/tree/corso-interno/python-for-sysadmin/notebooks/]
+Browse this course with the [online notebook viewer!](http://nbviewer.jupyter.org/github/ioggstream/python-course/tree/corso-interno/python-for-sysadmin/notebooks/)
 
 ## Setup
 See README.setup for detailed instruction on:
@@ -20,7 +20,7 @@ An easy way to run the course is on Linux with:
 
     #pip install -r requirements.txt    # install dependencies
     #nosetests -v                       # check if everything is ok
-    #ipython notebook notebooks/        # ;)
+    #jupyter-notebook notebooks/        # ;)
 
 Each notebook is associated to a python file in scripts/.
 
