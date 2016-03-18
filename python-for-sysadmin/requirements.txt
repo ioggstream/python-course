@@ -10,4 +10,4 @@ tornado
 jsonschema
 jupyter
 ansible
-dockerpy
+docker-py
