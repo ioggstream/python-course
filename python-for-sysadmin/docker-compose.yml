@@ -12,5 +12,5 @@ sysadminpy:
 test:
     image: ioggstream/python-course:dev
     volumes:
-       - .:/notebooks
+       - .:/notebooks:z
     entrypoint: tail -f /etc/hosts

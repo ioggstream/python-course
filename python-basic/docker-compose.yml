@@ -3,9 +3,16 @@ sysadminpy:
     hostname: sysadminpy
     environment:
         - USE_HTTP=1
-        - PASSWORD=
+        - PASSWORD=secret
     ports:
-        - "9999:8888"
+        - 8888:8888
     volumes:
-        - ./notebooks:/notebooks
+        - ./rendered_notebooks:/notebooks
        
+test:
+    image: ioggstream/python-course:dev
+    volumes:
+       - .:/notebooks
+    ports:
+       - 18888:8888
+    entrypoint: tail -f /etc/hosts

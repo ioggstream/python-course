@@ -115,12 +115,34 @@ Now create a small VIEW to query user privileges without typing all the fields
         CREATE VIEW mysql.user_view AS 
             SELECT USER,HOST,AUTHENTICATION_STRING
                 FROM mysql.user;
+
+
+## Granting with limits
+
+You can limit user resources using
+
+        GRANT ... WITH    
+              MAX_QUERIES_PER_HOUR count
+              MAX_UPDATES_PER_HOUR count
+              MAX_CONNECTIONS_PER_HOUR count
+              MAX_USER_CONNECTIONS count
+
+Try now
+
+        GRANT ALL on d2.* to 'network' WITH
+              MAX_USER_CONNECTIONS 1;
   
         
 ## Granting permissions         
   - Re-authenticate with 
   
         mysql -unetwork
+
+  - Authenticate again in another session
+
+        mysql -unetwork  # again
+        ERROR 1226 (42000): User 'network' has exceeded the 'max_user_connections' resource (current value: 1)
+
   
   - Remove table and database with:
 
