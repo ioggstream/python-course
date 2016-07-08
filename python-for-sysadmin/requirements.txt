@@ -11,3 +11,4 @@ jsonschema
 jupyter
 ansible
 docker-py
+yaml
