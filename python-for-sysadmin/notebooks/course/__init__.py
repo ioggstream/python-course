@@ -113,6 +113,11 @@ def grep(expr, fpath):
         return [x for x in fp if re_expr.search(x)]
 
 
+def igrep(expr, iterable):
+    import re
+    re_expr = re.compile(expr)
+    return [x for x in iterable if re_expr.search(x)]
+
 #
 # data analysis
 #

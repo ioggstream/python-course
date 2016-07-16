@@ -10,7 +10,7 @@ sysadminpy:
         - ./rendered_notebooks:/notebooks
        
 test:
-    image: ioggstream/python-course:dev
+    image: ioggstream/python-course
     volumes:
        - .:/notebooks:z
     entrypoint: tail -f /etc/hosts

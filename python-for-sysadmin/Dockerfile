@@ -19,3 +19,4 @@ COPY requirements.txt /requirements.txt
 RUN pip2 install -r /requirements.txt
 RUN pip install -r /requirements.txt
 
+ENTRYPOINT /usr/local/bin/jupyter-notebook --ip 0.0.0.0
