@@ -13,4 +13,4 @@ test:
     image: ioggstream/python-course
     volumes:
        - .:/notebooks:z
-    entrypoint: tail -f /etc/hosts
+    # entrypoint: tail -f /etc/hosts
