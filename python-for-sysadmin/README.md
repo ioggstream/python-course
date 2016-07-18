@@ -11,9 +11,12 @@ See README.setup for detailed instruction on:
 
 If you use docker, just run:
 
-    # docker-compose up
+    # docker-compose up course
     # firefox http://localhost:8888
 
+For ansible homework, setup the ssh keys and run:
+
+    # docker-compose scale course=1 ansible=2
 
 ## Playing the course
 An easy way to run the course is on Linux with:
