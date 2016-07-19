@@ -1,6 +1,6 @@
 # Python for System Administrators
 
-Browse this course with the [online notebook viewer!](http://nbviewer.jupyter.org/github/ioggstream/python-course/tree/corso-interno/python-for-sysadmin/notebooks/)
+Browse this course with the [online notebook viewer!](http://nbviewer.jupyter.org/github/ioggstream/python-course/tree/master/python-for-sysadmin/notebooks/)
 
 ## Setup
 See README.setup for detailed instruction on:
@@ -43,7 +43,6 @@ Each notebook is associated to a python file in scripts/.
 
 - Introduction to nosetest
   - 02_nosetests_simple.py
-  - 02_nosetests_full.py
 
 - Parsing 101
   - 03_parsing_test.py
@@ -51,5 +50,8 @@ Each notebook is associated to a python file in scripts/.
 
 - Data processing
   - 04_simple_processing.py
+  - 04_logging_parsing.py
 
+- Ansible
+  - 05_ansible.py
 

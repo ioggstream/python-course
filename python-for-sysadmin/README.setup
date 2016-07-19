@@ -64,11 +64,11 @@ Install Python from python.org http://www.python.org/getit/windows/
 Install pip following the instructions provided here https://pip.pypa.io/en/latest/installing.html
 
 My python directory is python27: replace it with your python installation path.
-From the console, install pyreadline, psutil, ipython and pyparsing
+From the console, install pyreadline, psutil, ipython, ansible and pyparsing
 
     c:\python27\Scripts\easy_install pyreadline \
         ipython nose pyparsing pyzmq \
-        markupsafe tornado jsonschema psutil
+        markupsafe tornado jsonschema psutil ansible
 
 
 To install numpy scipy matplotlib just download and install the binaries for your windows version in the given order from 

@@ -21,23 +21,31 @@ solutions + Vertical Applications for the financial market.
 
 \begin{pyframe}{Requirements}
 \begin{itemize}
-\item python 2.7+, ipython
+\item Docker and docker-compose with python 2.7+ 
 
 \item course code from github \\\\
-\code{ \#git clone https://github.com/ioggstream/python-course}
+\end{itemize}
 
-\item test your environment (eg. psutil, numpy, scipy, matplotlib) \\\\
-\code{ \#nosetests -vs test\_prerequisites.py }
+\begin{pycode*}
 
+  #git clone https://github.com/ioggstream/python-course
+  #git clone https://github.com/ioggstream/python-course
+  #cd python-for-sysadmin
+  #docker-compose up course
+  #firefox http://localhost:8888
+\end{pycode*}
+
+\begin{itemize}
 \item first part: \pymodule{nose, psutil}
 \item second part: \pymodule{scipy, numpy, matplotlib}
+\item third part: \pymodule{ansible}
 \item \pyoptional{optional/advanced content}
 \end{itemize}
 \end{pyframe}
 
 \frame{ \frametitle{How}
 \begin{itemize}
-\item Get ready $before$ starting: code is \href{https://github.com/ioggstream/python-course/tree/master/python-for-sysadmin/README}{here on github}!
+\item Get ready $before$ starting: code is \href{https://github.com/ioggstream/python-course/tree/master/python-for-sysadmin/README.md}{here on github}!
 
 \item \emph{Use notebooks or type everything} but \code{\#comments} and \code{try/except}
 
@@ -46,7 +54,7 @@ solutions + Vertical Applications for the financial market.
 
 \item Be curious: inspect and print returned variables
 
-\item $Never^{*}$ close your iPython session: you'll lose your precious variables
+\item $Never^{*}$ close your notebooks or skip cells: you'll lose your precious variables
 
 \end{itemize}
 
