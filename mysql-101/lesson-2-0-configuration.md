@@ -65,7 +65,7 @@ Show the actual values from mysql
 Privilege consistency and security
 
         [mysqld]
-        sql-mode=STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+        # sql-mode=STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION <-- in MySQL 5.7 this settings is already configured
         innodb-flush-log-at-trx-commit=1
         innodb-fast-shutdown=0
         myisam-recover-options=FORCE,BACKUP
