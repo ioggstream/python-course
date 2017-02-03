@@ -175,6 +175,32 @@ Get position for old-style replication with
            +--- s-4.docker:3306 - (SLAVE)
 
 
+## Troubleshooting GTID replication
+
+The slave can't apply binary logs due to:
+
+  - slave inconsistencies
+  - binlog errors (including file permissions, ...)
+  - much more (see docs)
+  
+To skip some binlog entries, just insert empty transactions instead.
+
+## Troubleshooting GTID replication
+
+The variables governing GTIDs are *note the scope*:
+
+     select @@global.gtid_executed as applied, @@session.gtid_next as next \G
+     applied: e311dd97-e9fe-11e6-b4d7-0242ac110005:1-4
+     next: automatic
+     
+To inject an empty transaction:
+
+    STOP SLAVE;
+    SET SESSION GTID_NEXT=e311dd97-e9fe-11e6-b4d7-0242ac110005:5;
+    BEGIN; COMMIT; -- this is the empty transaction
+    SET SESSION GTID_NEXT=automatic;
+    START SLAVE;
+
 # Failover
 ## Failover Basics
 A replicated infrastructure can be made Highly Available.
