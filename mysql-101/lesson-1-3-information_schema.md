@@ -72,6 +72,19 @@ And Columns
         FROM columns 
         WHERE  table_schema='d1';
 
+## USE information_schema;
+
+Or Views (treated like tables)
+
+        SELECT table_name, definer
+        FROM views
+        WHERE table_schema not in ('mysql', 'sys');
+        
+Or routines
+
+        SELECT routine_name, definer
+        FROM routines
+        WHERE routine_schema not in ('mysql', 'sys');
 
 
 ## Indexes

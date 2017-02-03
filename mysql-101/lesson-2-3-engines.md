@@ -155,3 +155,6 @@ or pick selected infos from
         SELECT ... FROM INFORMATION_SCHEMA.INNODB_*
 
 
+## Transportable tablespaces
+
+TODO

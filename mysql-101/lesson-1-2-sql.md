@@ -122,10 +122,12 @@ Now create a small VIEW to query user privileges without typing all the fields
 You can limit user resources using
 
         GRANT ... WITH    
-              MAX_QUERIES_PER_HOUR count
+              MAX_QUERIES_PER_HOUR count   
               MAX_UPDATES_PER_HOUR count
               MAX_CONNECTIONS_PER_HOUR count
               MAX_USER_CONNECTIONS count
+
+Zero means **unlimited** 
 
 Try now
 
