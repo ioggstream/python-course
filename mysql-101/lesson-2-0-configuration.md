@@ -11,7 +11,7 @@
     
     
 ## Server Configuration
-Show all mysqld parameters
+Show all mysqld **System Variables** (aka parameters)
     
         mysqld --verbose --help
     
@@ -60,6 +60,26 @@ Show the actual values from mysql
         SHOW [GLOBAL|SESSION] VARIABLES [LIKE ...];
         SHOW VARIABLES LIKE 'innodb_%';
         
+
+## Global & Session configuration
+
+Global variables:
+
+  - server wide;
+  - apply to every connection;
+  - static or dynamic;
+  - changed by `SUPER` users
+  
+        SET @@GLOBAL.max_tmp_table_size=4*(1<<20);  -- eg.
+  
+Session variables:
+
+  - apply to the current session (connection) only;
+  - dynamic.
+  
+        SET @@SESSION.sql_mode='TRADITIONAL'; -- eg.
+
+Changes to global dynamic variables (eg. max_tmp_table_size) apply to future sessions.
 
 ## Configuring consistency
 Privilege consistency and security

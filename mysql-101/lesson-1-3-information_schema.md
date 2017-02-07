@@ -1,12 +1,27 @@
 # information_schema
+
+## Internal databases
+
+  | db | action | scope | 
+  |--|--|--|
+  | `mysql` | rw |configuration, logs, replication, user privileges| 
+  | `information_schema`| ro | DDL, Privileges, Server status & conf|
+  | `performance_schema`| rw | general runtime data |
+  | `sys`| rw | wrapper on performance_schema|
+  
 ## Table informations
-MySQL stores schema infos in the mysql databases.
+MySQL stores schema infos in many mysql databases.
 
 The `SHOW` command is used to get those information.
  
         SHOW TABLE STATUS [FROM db_name] [like_or_where]
         SHOW [FULL] TABLES [FROM db_name] [like_or_where]
         SHOW [FULL] COLUMNS FROM tbl_name [FROM db_name] [like_or_where]
+
+`SHOW` provides server status too
+
+        SHOW [FULL] PROCESSLIST
+        SHOW OPEN TABLES
 
 The [information_schema](http://dev.mysql.com/doc/refman/5.6/en/information-schema.html) is a read-only set of VIEWS
  provinding SQL access to metadata.

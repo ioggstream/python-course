@@ -1,4 +1,39 @@
 # Basic Database Usage & datatypes
+
+## Data Types
+
+Data is stored using 4 [macro-types](http://dev.mysql.com/doc/mysql/en/data-types.html):
+
+  - temporal    TIMESTAMP, DATE, DATETIME, YEAR
+  - numeric     BIT, *INT*, FLOAT, DOUBLE, DECIMAL
+  - byte        BLOB, *BINARY
+  - character   *CHAR, TEXT, ENUM, SET
+  
+MySQL 5.7 changes temporal data logic. Check the documentation!
+
+## Data Types
+
+Use the same data-types for `JOIN` columns!
+
+Joining on different data-types causes an IMPLICIT CONVERSION of data.
+
+
+## Data Types
+
+Some data-types have similarities:
+  
+   - `BINARY` and `CHAR`
+   - `TEXT` and `BLOB`
+
+                       max size in bit 
+                   TINY      -   MEDIUM  LONG
+        BLOB,TEXT  8        16     24     32
+
+TEXT|BLOB fields:
+
+  - can't be used for partitioning 
+
+
 ## Creating tables
 Create databases/tables with
 
@@ -31,7 +66,7 @@ Check the content of the table
         SELECT * FROM d1.t1;
         
 We can set the currently used database with 
-
+nstutute
         USE d1;
         SELECT * 
          t1 \G        

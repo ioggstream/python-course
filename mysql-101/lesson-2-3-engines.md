@@ -95,13 +95,29 @@ Table format:
   
 
 ## InnoDB
-Transactions and consistency. Foreign Keys.
+Transactions and consistency. 
+Foreign Keys. 
 
-InnoDB Log Files. Checkpoint interval.
+InnoDB Log Files. 
+   
+  - redo: `ib_logfile{0,2}`
+  - undo: `undo00X` new in 5.7, set at --initialize time
 
-Buffer Pool. Contention on Buffer Pool. Buffer pool instances.
+Checkpoint interval.
+
+Buffer Pool: 
+
+  - contention & instances (5.7 works better)
 
         SHOW VARIABLES LIKE 'innodb%';
+
+
+## InnoDB
+
+  - MVCC 
+  - row-locking 
+  - table-locking only for DDL
+  - deadlock detection with timeout
         
 ## Configuring InnoDB
 Configuring `innodb_buffer_pool_size`.

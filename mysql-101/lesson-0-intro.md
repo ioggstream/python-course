@@ -45,6 +45,16 @@
   
   - Transactions. Managing multiple queries. Rolling back. Transaction logs.
 
+## What is a database
+
+Concurrency issues:
+
+  - dirty read: a non rolled-back entry is used by another transaction
+  - unrepeatable read: reading twice a single entry in a transaction gives different results (entry committed by another transaction)
+  - phantom read: a special case of unrepeatable read, with multiple entries. Old entries are preserved, newly committed entries are shown. 
+
+See wikipedia [Isolation_(database_systems)](https://en.wikipedia.org/wiki/Isolation_(database_systems))
+
 # MySQL Overview
 ## High Level Architecture
 
@@ -63,8 +73,9 @@
 
  
 ## Memory usage
-  - Connections
-  - Internal Buffer/Caches
+
+  - Connections (per-thread buffers)
+  - Internal Buffer/Caches (query cache & lock contention, database cache, ..)
   - OS Buffer/Caches
 
 

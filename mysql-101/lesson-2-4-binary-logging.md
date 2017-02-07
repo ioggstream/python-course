@@ -34,7 +34,6 @@ You can show their content with
 
         SHOW BINLOG EVENTS;
 
-
 ## Managing Binary Logs
 Use a new log file
 
@@ -50,8 +49,18 @@ or purge them
         PURGE BINARY LOGS BEFORE SUBDATE(CURRENT_DATE, 1); -- yesterday
 
         -- full clean
-        RESET MASTER;s
+        RESET MASTER;
+
+## Expire binary logs
     
+Use `expire_logs_days` in `my.cnf` to set a policy.
+
+        select @@GLOBAL.expire_logs_days; -- 3 
+        FLUSH LOGS;     -- deletes all binlogs older than 3 days
+        
+**Before purging binary logs checks if replication slaves are using them, 
+ or you'll break replication**
+
 
 ## mysqlbinlog
 Inspect binary logs with mysqlbinlog

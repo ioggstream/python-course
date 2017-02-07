@@ -87,8 +87,11 @@ Altering includes partitioning too:
 You can partition by:
 
   - HASH, KEY: dynamic, with some limitations
+    - support `LINEAR` hashing
   - RANGE, LIST: static, less limitation
+    - support multiple `COLUMN` 
   
+
 
 ## Partitioning
 
@@ -139,7 +142,7 @@ You can:
                 PARTITION p_max VALUES LESS THAN (MAXVALUE)
             )
 
-  - TRUNCATE PARTITION without ALTERING DDL (on 5.7)
+  - TRUNCATE PARTITION without ALTERING DDL 
    
         ALTER TABLE .. TRUNCATE PARTITION p1, p3;
 
@@ -181,4 +184,32 @@ Exercise:
 
   - repartition by hash with 10 partitions.
   - try to drop an hash-partition.
+
+
+## Partition variants
+
+You can hash-partition using a UDF or just use a table's key.
+
+          CREATE TABLE plhk1 (id int not null auto_increment primary key,
+             PARTITION BY LINEAR KEY (id) PARTITIONS 4);
+
+Or with multiple columns 
+
+        CREATE TABLE prc1 (id int not null, name varchar(4), 
+            PARTITION BY RANGE COLUMNS(id,name)
+        );
+
+
+## Partitioning limitations 
+
+Each partition is actually a separate innodb table:
+
+  - more open files
+  - indexes are per-partition
+    - no foreign keys 
+    - no `FULLTEXT` 
+
+
+[see doc for further limitations](https://dev.mysql.com/doc/refman/5.7/en/partitioning-limitations.html)
+
 

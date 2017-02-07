@@ -54,13 +54,13 @@ Check installed files and users
 
 Programs
 
-        client                  server
-        mysql                   mysqld
-        mysql_config_editor     mysqld_safe
-        mysqladmin              mysql_install_db
+        client                  server              offline
+        mysql                   mysqld              innochecksum
+        mysqlbinlog*            mysqld_safe         mysql_config_editor 
+        mysqladmin              mysql_install_db    mysqlbinlog*
         mysqlimport
         mysqldump
-        mysqlbinlog
+        
 
 
 ## Installing MySQL
