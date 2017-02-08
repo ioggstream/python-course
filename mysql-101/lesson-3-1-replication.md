@@ -133,6 +133,27 @@ mysqldbexport can be used to provision a new slave!
 Logical backup and flush table.
 
 
+## Configuring replication
+
+By default:
+
+  - [Cascade replication](https://dev.mysql.com/doc/refman/5.7/en/replication-options-slave.html) is *OFF* by default.
+
+        # Enable binlog forwarding 
+        #  in my.cnf
+        log_slave_updates=yes
+
+  - relay logs are deleted asap.
+
+  - relay log size is `1G`
+
+        max_relay_log_size=0  # 0 means the default: 1G ;)
+        
+  - relay logs are not recovered at startup
+
+        # For crash-safe replication set
+        relay_log_recovery=1
+
 ## Slave initialization
 Clean up old replica configuration before initializing!
 

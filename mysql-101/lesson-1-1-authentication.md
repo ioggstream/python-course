@@ -50,13 +50,14 @@ you can:
         
   - We can change the password with
   
-         /usr/bin/mysqladmin -u root password 'new-password'
-         /usr/bin/mysqladmin -u root -h a02f12e917b1 password 'new-password'
+         mysqladmin -u root password 'new-password'               # may use port 3306
+         mysqladmin -u root password -h localhost 'new-password'  # uses socket
+         mysqladmin -u root -h a02f12e917b1 password 'new-password'
 
   
-## Securing installation
+## Securing installation 
 
-  - Once you change the password you get
+  - Once you change the password *check* if you get extra rows.
   
         mysql> SELECT user,host,authentication_string FROM mysql.user;
         +------+--------------+-----------------------+
@@ -71,12 +72,13 @@ you can:
         +------+--------------+-----------------------+
         6 rows in set (0.00 sec)
 
-  - It's not secured (anonymous user)!
+  - In that case, it's not secured (anonymous user)!
   
         mysql -u"" -e "SELECT 1;"
   
 
-## Securing installation
+## Securing installation - 5.6 only
+
   - secure the installation!
   
         mysql_secure_installation
@@ -94,31 +96,27 @@ you can:
         3 rows in set (0.00 sec)
 
 
+## Securing installation - 5.7 
 
+MySQL 5.7 is secure by default:
 
-## Change root password
+  - `--initialize` dumps a random password to error-log 
+  - you must change this password at first login
+  - the password policy plugin is enabled
+
+On Ubuntu|Debian:
+
+  - root user uses the `auth_socket` plugin
+  - no access from network, just socket
+  - no password required
 
 
 ## Reset root password
 
-  - resetting root password requires a restart
-  - create the following init.sql
-    
-        -- Burn after running!
-        -- And don't replicate this instruction.
-        ALTER USER 'root'@'localhost' IDENTIFIED BY 'MyNewPass';
+Resettin root password requires a restart.
 
-  - stop mysql eg. with kill -TERM (NEVER use SIGKILL)
-  - start with 
-  
-        mysqld --init-file=init.sql
-        
+MySQL loads authentication tables in memory and enables them after startup:
 
-## Reset root password
-
-MySQL loads authentication tables in memory and enables them after startup.
-
- 
 Skipping this step allows unauthenticated connections
  
         mysqld --skip-grant-tables \    # don't load authentication
@@ -133,5 +131,26 @@ Once you log-in you need to load privilege table to be able to change it.
         
 Now `mysqladmin shutdown` and restart normally.
    
-   
-   
+## Reset root password   
+
+  - You can put those instructions in `resetpassword.sql`
+and append `--init-file=resetpassword.sql` to `mysqld`.
+
+  - To stop mysql **never** use `SIGKILL`. 
+        
+        
+
+## Authentication plugins
+
+Customized authentication methods:
+
+  - auth_socket: trust system username and permission to access `mysql.sock`
+  - auth_pam: delegate to `PAM` (requires cleartext password communication)
+  
+Eg. `auth_socket`
+
+        INSTALL PLUGIN 'auth_socket' SONAME 'auth_socket.so';
+        CREATE USER 'mysql'@'localhost' IDENTIFIED WITH 'auth_socket';  -- passwords are ignored!
+        
+        # sudo -u mysql mysql -umysql  # tada!
+        

@@ -200,6 +200,9 @@ Or with multiple columns
         );
 
 
+Columns and UDF arguments must be `UNIQUE`.
+
+
 ## Partitioning limitations 
 
 Each partition is actually a separate innodb table:

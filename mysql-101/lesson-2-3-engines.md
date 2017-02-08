@@ -126,9 +126,10 @@ Inspecting usage.
 
 Configuring
  
- - `innodb_log_file_size`
+ - `innodb_log_file_size` - [consider  `BLOB|TEXT` size on 5.6](https://bugs.mysql.com/bug.php?id=69477).
  - `innodb_flush_logs_at_trx_commit`
  
+
 
 ## Configuring InnoDB
 Tablespaces. 
