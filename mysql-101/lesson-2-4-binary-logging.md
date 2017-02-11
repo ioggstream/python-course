@@ -56,7 +56,8 @@ or purge them
 Use `expire_logs_days` in `my.cnf` to set a policy.
 
         select @@GLOBAL.expire_logs_days; -- 3 
-        FLUSH LOGS;     -- deletes all binlogs older than 3 days
+        FLUSH LOGS;     -- closes and reopen all files and 
+                        -- now deletes all binlogs older than 3 days
         
 **Before purging binary logs checks if replication slaves are using them, 
  or you'll break replication**

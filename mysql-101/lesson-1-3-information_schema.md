@@ -2,12 +2,16 @@
 
 ## Internal databases
 
+Metadata and Statistics are stored in internal databases
+
+
   | db | action | scope | 
   |--|--|--|
   | `mysql` | rw |configuration, logs, replication, user privileges| 
   | `information_schema`| ro | DDL, Privileges, Server status & conf|
   | `performance_schema`| rw | general runtime data |
   | `sys`| rw | wrapper on performance_schema|
+
   
 ## Table informations
 MySQL stores schema infos in many mysql databases.
@@ -23,11 +27,12 @@ The `SHOW` command is used to get those information.
         SHOW [FULL] PROCESSLIST
         SHOW OPEN TABLES
 
-The [information_schema](http://dev.mysql.com/doc/refman/5.6/en/information-schema.html) is a read-only set of VIEWS
- provinding SQL access to metadata.
+The [information_schema](http://dev.mysql.com/doc/refman/5.6/en/information-schema.html "Link to MySQL Documentation") is a read-only set of VIEWS
+ providing SQL access to metadata.
 
 
 ## Table informations
+
 Listing columns from a table:
 
         DESCRIBE t1;
@@ -101,6 +106,22 @@ Or routines
         FROM routines
         WHERE routine_schema not in ('mysql', 'sys');
 
+## USE information_schema;
+
+Net-fishing metadata from closed tables is expensive.
+
+        SELECT table_name, data_length >> 20 
+        FROM tables;  -- all databases, all tables, all engines!
+
+causes to:
+
+  - open all `.ibd|.frm` files;
+  - seek|read data from disk
+  - eventually pollute `table_cache`
+
+Be selective when [ looking for metadata!](https://dev.mysql.com/doc/refman/5.7/en/information-schema-optimization.html) 
+
+Check the [improvements on MySQL 8.0 too!](https://dev.mysql.com/doc/refman/8.0/en/information-schema-optimization.html) 
 
 ## Indexes
 Indexes can be inspected with:

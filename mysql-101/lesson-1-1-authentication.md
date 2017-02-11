@@ -152,5 +152,14 @@ Eg. `auth_socket`
         INSTALL PLUGIN 'auth_socket' SONAME 'auth_socket.so';
         CREATE USER 'mysql'@'localhost' IDENTIFIED WITH 'auth_socket';  -- passwords are ignored!
         
-        # sudo -u mysql mysql -umysql  # tada!
+Now login with 
+ 
+        sudo -u mysql mysql -umysql  # tada!
+
+This `mysql` user has no special privilege!
+
+        SHOW GRANTS FOR CURRENT_USER();
+        FLUSH LOGS;  -- won't work!
+
+
         

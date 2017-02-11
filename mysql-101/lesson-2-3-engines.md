@@ -15,6 +15,11 @@ Memory and (Temporary Tables)[https://dev.mysql.com/doc/refman/5.6/en/internal-t
         max_heap_table_size
         max_tmp_table_size
 
+Memory tables:
+
+  - don't persist at restatrt
+  - dont' support foreign keys
+  - don't support `BLOB|TEXT`
 
 ## Memory tables
 Get raw values via
@@ -35,7 +40,7 @@ Create a small memory table...
         USE employees;
         CREATE TABLE _departments 
             ENGINE=memory
-            SELECT * FROM departments;
+            SELECT * FROM departments;  -- one statement ;)
         SHOW CREATE TABLE _departments;
 
 ...and a big one (with more than `max_heap_table_size`).

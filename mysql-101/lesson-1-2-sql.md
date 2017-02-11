@@ -31,8 +31,9 @@ Some data-types have similarities:
 
 TEXT|BLOB fields:
 
-  - can't be used for partitioning 
-
+  - can't be used as partitioning fields
+  - can't be used with `ENGINE=MEMORY`
+  - impact on temporary tables performance
 
 ## Creating tables
 Create databases/tables with
