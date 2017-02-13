@@ -94,8 +94,9 @@ MySQL 5.6+ replication is based on Global Transaction ID
 
 \includegraphics[height=3cm]{images/mysql-propagate-gtid.jpg}
 
-**If binlog have been purged, you need to import the
+  - **If binlog have been purged, you need to import the
 master database first!**
+  - **mysql won't apply twice a GTID transaction** (consider when PITR).
 
 
 
@@ -131,6 +132,23 @@ mysqldbexport can be used to provision a new slave!
          --all
 
 Logical backup and flush table.
+
+## Configuring replication
+
+Is done via
+
+    CHANGE MASTER TO
+        MASTER_HOST=$MASTER,
+        MASTER_USER=repl,
+        MASTER_PASSWORD=rpass,
+        MASTER_AUTO_POSITION=1,
+        [MASTER_DELAY=$SECONDS] -- delayed replica for integrity purposes.
+        ;
+    START SLAVE;  -- start both IO_THREAD and SQL_THREAD
+
+Exercise: explain the output of
+
+    SHOW WARNINGS;
 
 
 ## Configuring replication
@@ -221,6 +239,16 @@ To inject an empty transaction:
     BEGIN; COMMIT; -- this is the empty transaction
     SET SESSION GTID_NEXT=automatic;
     START SLAVE;
+
+
+## Caveats
+
+binlogs traces query context:
+
+  - timestamp
+  - sql_mode
+
+Configured `sql_mode` won't apply to replication
 
 # Failover
 ## Failover Basics

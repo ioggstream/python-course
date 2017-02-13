@@ -67,7 +67,7 @@ Check the content of the table
         SELECT * FROM d1.t1;
         
 We can set the currently used database with 
-nstutute
+
         USE d1;
         SELECT * 
          t1 \G        

@@ -121,7 +121,7 @@ Like columns:
 
     ALTER TABLE d1.t1 DROP PARTITION (p1, p4);
 
-   - dropped partitions alter table definition;
+   - dropping partitions alters table definition;
 
     SHOW CREATE TABLE d1.t1;
 

@@ -21,6 +21,16 @@ Binary logs trace every change requested to the database.
   - managed  via mysql and mysqladmin
   - accessed with mysqlbinlog
 
+## Binary Logging
+
+You can tune `binlog_format`:
+
+  - `STATEMENT` format (text)
+  - `ROW` full data dump (eventually shortened)
+  - `MIXED` (text where possible, binary otherwise).
+
+`ROW` won't log SESSION-only temporary tables.
+
 
 ## Managing Binary Logs
 Binary logs are written in the following files:
@@ -81,6 +91,7 @@ And replay them on another server for:
   - backup.
   
 ## mysqlbinlog
+
 mysqlbinlog output generates SQL files that can be replayed on other servers.
 
         mysqlbinlog hostname-bin.* | mysql

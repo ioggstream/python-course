@@ -102,7 +102,7 @@ Table format:
 ## InnoDB
 Transactions and consistency. 
 Foreign Keys. 
-
+System Tablespace.
 InnoDB Log Files. 
    
   - redo: `ib_logfile{0,2}`
@@ -123,7 +123,8 @@ Buffer Pool:
   - row-locking 
   - table-locking only for DDL
   - deadlock detection with timeout
-        
+  - unshrinkable system tablespace (reduce `ibdata*` requires `--initialize` or `mysql_install_db`)
+
 ## Configuring InnoDB
 Configuring `innodb_buffer_pool_size`.
 

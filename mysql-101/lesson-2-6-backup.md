@@ -172,4 +172,18 @@ Exercises:
  - validate the backup restoring the db in another place.
  
  
-## 
+## Point in Time Recovery
+
+Use `binlog` to execute a PITR.
+
+  - restore a backup and get the last restored transaction;
+  - identify the transactions you want to recover in binlogs;
+
+Use mysqlbinlog:
+
+        mysqlbinlog host-bin.000* \                             # get the right files
+                --exclude-gtids="$UUID:1-975;$UUID:1034" \      # identify applied transactions
+                --skip-gtids \                                  # eventually skip old gtids if you aren't doing a full restore
+                | mysql                                         # apply all to mysql
+
+** Always process all binlogs with the same command to avoid consistency issues **
