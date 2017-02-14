@@ -55,15 +55,36 @@ Show the parameters *to be used*
 
         my_print_defaults mysqld
         
-Show the actual values
+Show the *actual* values
 
         mysqladmin variables
         
-Show the actual values from mysql
+Show the *actual* values from `mysql`
       
         SHOW [GLOBAL|SESSION] VARIABLES [LIKE ...];
         SHOW VARIABLES LIKE 'innodb_%';
         
+## Configuration vs Status
+
+`mysqld` provides `STATUS` insights
+
+        SHOW [GLOBAL|SESSION] STATUS [LIKE ...];
+
+`STATUS` != `VARIABLES`
+
+  - `STATUS`: internal status
+  - `VARIABLES`: configuration
+
+  |variable_name|table|note|
+  |--|--|--|
+  |max_used_connections|GLOBAL_STATUS|effectively used|
+  |max_connections|GLOBAL_VARIABLES|server-wide limit| 
+  |max_user_connections|GLOBAL_VARIABLES|per-user limit|
+  |max_user_connections|SESSION_VARIABLES|current user limit|
+
+
+**Don't confuse `max_user_connections` and `max_used_connections`**
+
 
 ## Global & Session configuration
 
@@ -113,7 +134,17 @@ Further security tips for server...
         safe-updates
         show-warnings
 
+## Limit resource usage
 
+Limit max connections
+
+        [mysqld]
+        ...
+        max_connections=100
+        
+Check used connections
+
+        SHOW STATUS LIKE 'max_used_connections'
         
 ## Application logging
 mysqld does **not** create logs by default.

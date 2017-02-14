@@ -75,10 +75,32 @@ See wikipedia [Isolation_(database_systems)](https://en.wikipedia.org/wiki/Isola
 ## Memory usage
 
   - Connections (per-thread buffers)
+ 
+        min(max_tmp_table_size,max_heap_table_size)
+        {read_rnd,join,sort}_buffer_size    # random read|sorting
+        thread_stack
+        binlog_{stmt_}_cache_size           # binlog    
+
+        
   - Internal Buffer/Caches (query cache & lock contention, database cache, ..)
+ 
+        innodb_buffer_pool_size, key_buffer_size
+        query_cache_size
+        table_open_cache
+
   - OS Buffer/Caches
 
+        $ free -h
 
+## Disk usage
+
+Mitigated by cache.
+
+Increased for Consistency and Isolation:
+
+  - each table is opened independently by each concurrent session `table_open_cache`
+  
+        
 ## Storage Engines
 
   - Enable persistency

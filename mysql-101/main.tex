@@ -40,7 +40,7 @@
 }
 
 \bash[stdoutFile=tmpme.tex.tmp]
-{ shopt -s nullglob; for file in lesson*.md.tex; do echo "\\input{$file}"; done; }
+{ shopt -s nullglob; for file in lesson-1*.md.tex; do echo "\\input{$file}"; done; }
 \END
 \input{tmpme.tex.tmp}
 

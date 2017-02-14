@@ -163,7 +163,7 @@ You can limit user resources using
               MAX_CONNECTIONS_PER_HOUR count
               MAX_USER_CONNECTIONS count
 
-Zero means **unlimited** 
+Zero means **unlimited**. Default is `@@GLOBAL.MAX_USER_CONNECTIONS`.
 
 Try now
 

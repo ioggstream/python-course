@@ -70,14 +70,16 @@ Inspecting temporary tables on disks.
 
 
 ## MyISAM
-Features of MyISAM:
+Features of MyISAM are webapp driven:
 
   - full-text support
+  - geospatioal indexes
   
 Caveats:
 
   - non transactional
   - no FK
+  - table-level locking
   - hard to recover
 
 
@@ -124,6 +126,7 @@ Buffer Pool:
   - table-locking only for DDL
   - deadlock detection with timeout
   - unshrinkable system tablespace (reduce `ibdata*` requires `--initialize` or `mysql_install_db`)
+  - eventually persistent table stats
 
 ## Configuring InnoDB
 Configuring `innodb_buffer_pool_size`.

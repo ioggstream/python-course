@@ -31,6 +31,18 @@ The [information_schema](http://dev.mysql.com/doc/refman/5.6/en/information-sche
  providing SQL access to metadata.
 
 
+## Status and configuration information
+
+  - stored both on `performance_schema` and `information_schema`
+  - will be moved to `performance_schema`
+  
+        
+        SELECT T1.TABLE_NAME 
+        FROM INFORMATION_SCHEMA.TABLES T1 JOIN INFORMATION_SCHEMA.TABLES T2 
+        WHERE T1.TABLE_SCHEMA='PERFORMANCE_SCHEMA'  
+            AND T2.TABLE_SCHEMA='INFORMATION_SCHEMA' 
+            AND T1.TABLE_NAME=T2.TABLE_NAME;
+
 ## Table informations
 
 Listing columns from a table:

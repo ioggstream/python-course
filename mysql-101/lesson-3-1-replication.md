@@ -38,7 +38,23 @@ Replication is $asynchronous$ and the agreements are configured on the slave onl
 \includegraphics[height=6cm]{images/mysql-replica-hla.jpg}
 
 
-## Configuring replication
+
+## Features
+
+  - delayed replication
+  
+        CHANGE MASTER ... MASTER_DELAY=3600 ...;
+        
+  - different ([but with the same order](https://dev.mysql.com/doc/refman/5.7/en/replication-features-differing-tables.html)) columns between master and slaves 
+
+  
+        CREATE TABLE (c1 int, c2 int, m3 int); -- on master
+        CREATE TABLE (c1 int, c2 int, /* s3 int, s4 int */); -- on slaves
+        
+  - different data types (with many limitations)
+        
+  
+  ## Configuring replication
 Master
      
   -  produces a changelog named binlog;
@@ -241,15 +257,22 @@ To inject an empty transaction:
     START SLAVE;
 
 
+## Constraints
+
+Replication 
+
+
 ## Caveats
 
-binlogs traces query context:
+binlogs contain the query context, eg:
 
   - timestamp
   - sql_mode
 
-Configured `sql_mode` won't apply to replication
+ `@@GLOBAL.sql_mode` won't apply to replication
 
+ 
+ 
 # Failover
 ## Failover Basics
 A replicated infrastructure can be made Highly Available.

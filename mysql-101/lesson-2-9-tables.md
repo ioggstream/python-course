@@ -23,11 +23,11 @@ And populate them using
 
         
 ## Check tables
-Ensure tables are [fine or upgrade-able](http://dev.mysql.com/doc/mysql/en/table-maintenance-sql.html)
+Ensure tables are [fine or upgrade-able](http://dev.mysql.com/doc/mysql/en/table-maintenance-sql.html) stopping on errors:
 
-        CHECK TABLE d1.t1 [FOR UPGRADE];
+        CHECK TABLE d1.t1 [FOR UPGRADE];  -- implies 
         
-Gather statistics on a table:
+Update statistics on a table **read-locking** it:
         
         ANALYZE [LOCAL] TABLE d1.t1; -- use LOCAL to avoid spanning on replicas
         
@@ -35,10 +35,13 @@ Optimize a table **locking** it:
         
         OPTIMIZE [LOCAL] TABLE d1.t1;
 
-Or via command line (repair is MyISAM only):
+Or via command line (**repair is MyISAM only**):
         
         mysqlcheck [--check|--analyze|--optimize|--repair]
-     
+
+`--repair` may corrupt a table: **always backup before**
+
+
      
 ## Restore innodb tables        
 Follow the [InnoDB documented steps]()
@@ -50,7 +53,7 @@ Follow the [InnoDB documented steps]()
   - start mysqld increasing `--innodb_force_recovery` value from 1 to 6. The lower the better.
   - carefully check the logs
   - if starts successfully dump the broken table
-  
+
         mysqldump brokendb.brokentable > table.sql
         DROP brokendb.brokentable
         
