@@ -185,13 +185,17 @@ Using commands
 
 
 ## The MySQL Service
-Stop mysql via
+Stop mysql either via
 
         mysqladmin shutdown
 
-Or with kill -TERM
+with kill -TERM
 
         kill -15 $MYSQL_PID
+
+or since 5.7
+
+        SHUTDOWN  -- provided you have the SHUTDOWN privilege.
 
 *NEVER kill -9*: this will corrupt your database!
 

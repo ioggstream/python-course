@@ -28,6 +28,15 @@ Advantges of replication. Use cases.
 
 Synchronous, asynchronous and semi-synchronous replication.
 
+        # semi-sync is implemented in a separate .so
+        plugin-load=rpl_semi_sync_master=semisync_master.so;rpl_semi_sync_slave=semisync_slave.so
+        rpl_semi_sync_slave_enabled=1         
+        rpl_semi_sync_master_enabled=1
+        # Latency is the price.
+        # Wait for the slave to commit on the RELAY-LOG for
+        #   at most 
+        rpl_semi_sync_master_timeout=1000
+
 Replication in MySQL. Topologies and GTID.
 
 

@@ -58,7 +58,7 @@ or purge them
         -- You can use SUBDATE to simplify expiration
         PURGE BINARY LOGS BEFORE SUBDATE(CURRENT_DATE, 1); -- yesterday
 
-        -- full clean
+        -- full clean, removes all binlogs.
         RESET MASTER;
 
 ## Expire binary logs
@@ -71,6 +71,23 @@ Use `expire_logs_days` in `my.cnf` to set a policy.
         
 **Before purging binary logs checks if replication slaves are using them, 
  or you'll break replication**
+
+
+## Skipping binlogs
+
+A `SUPER` user can skip logging queries with
+
+        SET @@SESSION.SQL_LOG_BIN=0;  -- don't log now
+        CREATE TABLE d1.ignore(i int);
+        DROP TABLE d1.ignore;
+        
+This only applies to current SESSION!
+
+**Use `SQL_LOG_BIN=0` to avoid replicating database initialization**
+
+        -- Create user only on local server.
+        SET @@SQL_LOG_BIN=0;
+        CREATE USER 'admin'@'%' INDENTIFIED BY 'secret';
 
 
 ## mysqlbinlog
