@@ -1,0 +1,6 @@
+.ipynb_checkpoints
+*.pyc
+Untitled*
+
+*.retry
+core*

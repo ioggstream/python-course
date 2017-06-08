@@ -1,0 +1,18 @@
+#
+# This inventory file contains a list of server to 
+#  play with - divided in groups.
+#
+[course]
+# this is the local machine where you run jupyter
+# the tutorial just works with this one.
+pythonforsysadmin_course_1  ansible_connection=local
+
+
+# Another group of servers
+# where we can pass optional arguments
+# Homework: you can play with this group of host
+#  once you exchange ssh-keys between the pythonforsysadmin_course_1
+#  container and the pythonforsysadmin_ansible_* ones._
+[ansible]
+172.17.0.[5:7]   
+

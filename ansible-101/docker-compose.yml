@@ -1,0 +1,34 @@
+# Image for developing the course
+dev:
+    build: .
+    hostname: sysadminpy
+    environment:
+        - USE_HTTP=1
+        - PASSWORD=secret
+    ports:
+        - 8888:8888
+    volumes:
+        - ./rendered_notebooks:/notebooks
+       
+test:
+    image: ioggstream/python-course
+    volumes:
+       - .:/notebooks:z
+    # entrypoint: tail -f /etc/hosts
+
+
+# Official image from docker hub
+course:
+    image: ioggstream/python-course
+    volumes:
+       - .:/notebooks:z
+    ports:
+       - 8888:8888
+
+# Some ssh-enabled docker containers
+#  for student homework
+ansible:
+    image: itscaro/debian-ssh:latest
+    volumes:
+       - .:/code:z 
+

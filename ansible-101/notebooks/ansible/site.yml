@@ -1,0 +1,18 @@
+# Run this with
+#
+#   #ansible-playbook -i inventory site.yml
+#
+- hosts: course
+  tasks:
+    
+    - name: Create a file from a template
+      template: src=mytemplate.j2 dest=/tmp/template.conf
+
+    - name: Ensure needed packages are present and eventually install them
+      apt: name={{item}} state=present
+      with_items:
+        - python
+        - python-dev
+#      ignore_errors: yes  #  ignore errors during the course (eg. connectivity)
+
+
