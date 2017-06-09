@@ -1,0 +1,20 @@
+mongo_setup:
+  _id: cluster0
+  members : [
+                {
+                        host : 172.17.0.11,
+                        arbiterOnly : false,
+                        hidden : false,
+                },
+                {
+                        host : 172.17.0.12,
+                        arbiterOnly : false,
+                        hidden : false,
+                },
+                {
+                        host : 172.17.0.13,
+                        arbiterOnly : true,
+                        hidden : false,
+                }
+        ]
+

@@ -1,22 +1,29 @@
-# Python for System Administrators
+# Ansible 2 done right!
 
-Browse this course with the [online notebook viewer!](http://nbviewer.jupyter.org/github/ioggstream/python-course/tree/master/python-for-sysadmin/notebooks/)
 
 ## Setup
-See README.setup for detailed instruction on:
 
-    - Linux
-    - Windows
-    - Mac OS
+This course is based on Docker and Docker compose. As long as you have Docker
+you can run it on:
 
-If you use docker, just run:
+  - linux
+  - mac
+  - windows
 
-    # docker-compose up course
+Docker should be exposed via TCP on 172.17.0.1:2375
+
+Consider having enough bandwidth for the first run to download the images.
+
+
+Run the environemnt with:
+
+    # make course
+
+or 
+
+    # docker-compose scale course=1 ansible=1 web=3
     # firefox http://localhost:8888
 
-For ansible homework, setup the ssh keys and run:
-
-    # docker-compose scale course=1 ansible=2
 
 ## Playing the course
 An easy way to run the course is on Linux with:
@@ -24,8 +31,6 @@ An easy way to run the course is on Linux with:
     #pip install -r requirements.txt    # install dependencies
     #nosetests -v                       # check if everything is ok
     #jupyter-notebook notebooks/        # ;)
-
-Each notebook is associated to a python file in scripts/.
 
 
 ## Outline

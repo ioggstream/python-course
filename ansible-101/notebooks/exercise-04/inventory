@@ -1,0 +1,36 @@
+# I can group hosts in inventory
+
+[web:children]
+web_rome
+web_milan
+
+[web_rome:children]
+web_rome_test
+web_rome_prod
+
+[web_rome_prod]
+172.23.0.[3:4]
+
+[web_milan]
+172.24.0.[5:6]
+
+# further host variables
+[web_rome:vars]
+ansible_username=root 
+
+
+# Connect with docker 
+[web_rome_test:vars]
+ansible_connection=docker
+ansible_docker_extra_args="-Htcp://172.17.0.1"
+
+# The actual host reference
+[web_rome_test]
+ansible101_web_1
+
+# 
+# Don't need to be Ssh 
+#  to be my local machine ;)
+#
+[course]
+localhost    ansible_connection=local 

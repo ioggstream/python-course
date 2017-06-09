@@ -1,0 +1,13 @@
+#
+# Those variables will be applied to all inventories/hosts, but
+#  will be eventually overwritten by the ones tied to specific
+#  host groups.
+#
+env_name: default
+
+proxy_env:
+  # You can use proxyes in your playbooks!
+  http_proxy: http://proxy:3128
+  https_proxy: http://proxy:3128
+  no_proxy: 127.0.0.1,localhost,.example.com
+

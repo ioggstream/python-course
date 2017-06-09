@@ -1,0 +1,35 @@
+#
+# Use this playbook to dump ansible facts
+#
+- hosts: localhost
+  name: >
+    Use this section to complete the exercise,
+    and the next section as a reference for
+    the debug module.
+  tasks:
+  - name: Dump the requested facts.
+    debug: msg="A string"
+    
+
+#
+# Read this for reference
+#
+- hosts: localhost
+  name: Those tasks are run on localhost only
+  tasks:
+  - name: This is the debug module.
+    debug: msg="A string"
+    
+  - name: The debug module can print variables too
+    debug: var=ansible_hostname
+
+  - name: We can iterate too
+    debug: msg="{{item}}"
+    with_items: "{{ansible_system_capabilities}}"
+
+  - name: and inspect/format variables
+    debug: msg="The device is {{item.device}}"
+    with_items: >
+      {{ansible_mounts}}
+
+

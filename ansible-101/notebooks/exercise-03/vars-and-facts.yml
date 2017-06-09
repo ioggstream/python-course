@@ -1,0 +1,34 @@
+---
+- hosts: localhost
+  tags: variables
+  vars:
+  - one: 1
+  - pi: 3.1415
+  tasks:
+  - debug: 
+      msg: >
+        {{ansible_hostname }} {{ one }}
+  - debug: 
+      msg: >
+        The output is {{ one + pi }}
+
+
+- hosts: localhost
+  tags: filters
+  vars:
+  - one: 1
+  - pi: 3.1415
+  tasks:
+  - name: Ansible can process expressions using filters
+    debug: 
+      msg: >
+        Floor it  {{ ( one + pi ) | int }}
+
+- hosts: localhost
+  tags: exercise
+  name: Use this cell for the exercise
+  tasks:
+  - name: >
+      Show the free percentage of the local disk using
+      facts and filters
+    debug: msg="Replace me"
