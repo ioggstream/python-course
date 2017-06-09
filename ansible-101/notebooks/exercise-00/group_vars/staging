@@ -1,0 +1,4 @@
+#
+# Pur here the variables for the staging inventory.
+#
+env_name: staging

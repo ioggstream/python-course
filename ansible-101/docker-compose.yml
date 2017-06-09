@@ -1,34 +1,55 @@
 # Image for developing the course
-dev:
-    build: .
-    hostname: sysadminpy
-    environment:
-        - USE_HTTP=1
-        - PASSWORD=secret
-    ports:
-        - 8888:8888
-    volumes:
-        - ./rendered_notebooks:/notebooks
-       
-test:
-    image: ioggstream/python-course
-    volumes:
-       - .:/notebooks:z
-    # entrypoint: tail -f /etc/hosts
+version: "2"
+services:
+  dev:
+      build: .
+      hostname: sysadminpy
+      environment:
+      - USE_HTTP=1
+      - PASSWORD=secret
+      ports:
+      - 8888:8888
+      volumes:
+      - ./notebooks:/notebooks:z
+      network_mode: bridge
+      entrypoint: /bin/sh
+      command: -c "/usr/local/bin/jupyter-notebook --ip 0.0.0.0 --allow-root"
 
+         
+  test:
+      image: ioggstream/python-course
+      volumes:
+      - ./notebooks:/notebooks:z
+      # entrypoint: tail -f /etc/hosts
+  
+  
+  # Official image from docker hub
+  course:
+      image: ioggstream/python-course
+      volumes:
+      - ./notebooks:/notebooks:z
+      network_mode: bridge
+      ports:
+      - 8888:8888
+  
+  # Some ssh-enabled docker containers
+  #  for student homework
+  ansible:
+      build:
+          context: .
+          dockerfile:  Dockerfile.ssh
+      volumes:
+      - .:/code:z 
+      network_mode: bridge
+  
 
-# Official image from docker hub
-course:
-    image: ioggstream/python-course
-    volumes:
-       - .:/notebooks:z
-    ports:
-       - 8888:8888
-
-# Some ssh-enabled docker containers
-#  for student homework
-ansible:
-    image: itscaro/debian-ssh:latest
-    volumes:
-       - .:/code:z 
-
+  # Some ssh-enabled docker containers
+  #  for student homework
+  web:
+      build:
+          context: .
+          dockerfile:  Dockerfile.ssh
+      volumes:
+      - .:/code:z 
+      - ./notebooks/exercise-1/id_ecdsa.pub:/root/.ssh/authorized_keys:z
+      network_mode: bridge

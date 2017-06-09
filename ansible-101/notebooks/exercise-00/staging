@@ -1,0 +1,11 @@
+#
+# This inventory file contains a list of server to 
+#  play with - divided in groups.
+#
+[course]
+# this is the local machine where you run jupyter
+# the tutorial just works with this one.
+pythonforsysadmin_course_1  ansible_connection=local
+
+[staging:children]
+course

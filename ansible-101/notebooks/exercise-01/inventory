@@ -1,0 +1,4 @@
+
+[course]
+172.17.0.[2:4]  # ansible_password={{root_password}}  # load variable from vault
+
