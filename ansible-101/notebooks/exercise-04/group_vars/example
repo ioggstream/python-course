@@ -1,0 +1,32 @@
+---
+# This is an inventory variable example.
+
+# Basic variables can be strings..
+java_version: 1.8.0_131
+http_proxy: "http://172.17.0.1:3128"           # ...strings with quotes
+
+# .. numbers
+timestamp: 20170501
+default_int: 0
+
+# boolean (see http://yaml.org/type/bool.html)
+enable_selinux: "yes"
+enable_feature: "True"
+
+#
+# But you can have
+#
+
+a_list:
+  - curl
+  - wget
+
+a_map:
+  name: /etc/hosts
+  mode: 0644
+
+a_list_of_map:
+  - name: /etc/hosts
+    mode: 0644
+  - name: /etc/shadow
+    mode: 0000
