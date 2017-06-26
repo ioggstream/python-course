@@ -1,0 +1,36 @@
+- hosts: web
+  tasks:
+  - name: Install apache and other packages eventually iterating
+    apt: name="{{item}}"
+    with_items:
+    - apache2
+    - curl
+
+  - name: Remove wget
+    apt: name=wget state=absent
+
+  - name: Create user
+    user: 
+      name: foo
+      groups: adm
+      append: yes
+      shell: /bin/bash
+      skeleton: /root   # duplicate /root/ content for the foo user
+
+  - name: >
+      Copy a file to ~foo expandig tilde.
+      Do not forget quotes!
+    copy:
+      src: package-user.yml
+      dest: "{{ '~foo' | expanduser }}"
+
+  - name: >
+      We can fetch files too (eg. logs):
+      - files are dispatched to different directories.
+      - we can avoid enforcing checksum as we're messing with 
+        containers.
+      
+    fetch:
+      src: /etc/passwd
+      dest: /tmp/fetched
+      validate_checksum: no

@@ -1,0 +1,19 @@
+---
+- hosts: localhost
+  gather_facts: no
+  vars:
+  - ansible_mounts:
+    - {device: '/dev/mapper/docker-253:2-537280731-eb92264366fcbaf248d3d5a93bbaab17eec130b43ff94e44e11abab77f5f2038',
+      fstype: xfs, mount: /, options: 'rw,context="system_u:object_r:svirt_sandbox_file_t:s0:c230,c811",relatime,nouuid,attr2,inode64,logbsize=64k,sunit=128,swidth=128,noquota,bind',
+      size_available: 107076997120, size_total: 107320705024, uuid: N/A}
+    - {device: /dev/mapper/vg0-home, fstype: xfs, mount: /code, options: 'rw,seclabel,relatime,attr2,inode64,noquota,bind',
+      size_available: 18586177536, size_total: 214643507200, uuid: N/A}
+    
+  tasks:
+  - name: Test complex entries processing without gathering facts.
+    debug: 
+      msg: >
+        {{item.device}} {{ (100 * item.size_available/item.size_total) | int }}%
+    with_items: >
+      {{ansible_mounts}}
+

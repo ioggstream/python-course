@@ -1,0 +1,13 @@
+---
+#
+# Create macros using heredocs ">" and template functions
+#
+mongo_nodes_f: >
+          {{mongo_setup.members
+          |selectattr("arbiterOnly", "equalto", false )
+          |selectattr("hidden", "equalto", false )
+          |map(attribute="host")
+          |list
+          }}
+mongo_uri_f: mongodb://{{mongo_nodes_f|join(",")}}/test?replicaSet={{mongo_setup._id}}
+

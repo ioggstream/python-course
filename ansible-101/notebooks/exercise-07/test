@@ -1,0 +1,2 @@
+[test:children]
+all ansible_connection=local
