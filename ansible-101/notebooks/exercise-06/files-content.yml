@@ -1,0 +1,71 @@
+- hosts: localhost
+  name: >
+    A playbook can be made of multiple stanzas. They'll be
+    pipelined. 
+  tasks:
+  - name: Delete previous template
+    file: state=absent dest=/tmp/index.html.template
+
+  - name: |
+      We're now just showing how to create a file containing a block of lines
+    blockinfile:
+      dest: /tmp/index.html.template
+      create: yes
+      owner: root
+      group: root
+      marker: no
+      mode: 0644
+      block: >
+       <html>
+       <body>
+       System installed by {{ansible_hostname}} on {{ '{{' }} ansible_hostname {{ '}}' }}
+       </body>
+       </html>
+
+  - name: Register command output in a variable
+    shell: cat index.html.template
+    args:
+      chdir: /tmp 
+    register: o_cat
+
+  - name: Show output
+    debug: var=o_cat.stdout
+     
+
+- hosts: web
+  tasks:
+  - name: Install apache and other packages eventually iterating
+    apt: name="{{item}}"
+    with_items:
+    - apache2
+    - curl
+  
+  - name: Facts are per-host variables
+    set_fact: documentroot="{{ '~www-data' | expanduser }}/html"
+
+  - name: Ensure www is there
+    file: dest="{{documentroot}}"  state=directory owner=root group=root
+
+  - name: Upload file as a template
+    template: 
+      src: /tmp/index.html.template
+      dest: /var/www/html/index.html
+
+  - name: Start apache2
+    service: name=apache2 state=started
+
+  - name: Check page
+    uri: 
+      url: http://localhost
+      return_content: yes
+    register: webpage
+
+  - name: Fail if AWESOME is not in the page content
+    fail:
+    when: "'sysadminpy' not in webpage.content"
+
+
+
+
+
+
