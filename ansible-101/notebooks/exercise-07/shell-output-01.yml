@@ -1,0 +1,18 @@
+# 
+- hosts: localhost
+  tasks:
+  - name: Run multiple commands via /bin/sh (no bashisms)
+    shell: |
+      ls -latr /etc/host*
+      cat /etc/resolv.conf
+    ignore_errors: yes
+    register: o
+    
+  - name: Show output in a single block...
+    debug: var=o.stdout
+
+  - name: ... or one per line
+    debug: var=item
+    with_items: >
+      {{ o.stdout_lines }}
+
