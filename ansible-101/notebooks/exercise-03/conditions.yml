@@ -1,0 +1,14 @@
+
+- hosts: localhost
+  tasks:    
+  - debug: msg="This always happens"
+    when: true
+  - debug: msg="This never does"
+    when: false
+
+- hosts: localhost  
+  tasks:    
+  - debug: msg="This is Linux!"
+    when: ansible_system == 'Linux'
+
+

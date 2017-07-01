@@ -1,4 +1,10 @@
-
+#
+# This is the inventory file, containing all 
+#  ansible hosts.
+#
+# - comments starts with #
+# - variables are between {{ variable_name }}
+#
 [course]
-172.17.0.[2:4]  # ansible_password={{root_password}}  # load variable from vault
+172.17.0.[2:4] ansible_password={{root_password}}  # load variable from vault
 
