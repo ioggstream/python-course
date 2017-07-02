@@ -31,10 +31,12 @@ services:
       network_mode: bridge
       ports:
       - 8888:8888
+      entrypoint: /bin/sh
+      command: -c "/usr/local/bin/jupyter-notebook --ip 0.0.0.0 --allow-root"
   
   # Some ssh-enabled docker containers
   #  for student homework
-  ansible:
+  bastion:
       build:
           context: .
           dockerfile:  Dockerfile.ssh
@@ -51,5 +53,5 @@ services:
           dockerfile:  Dockerfile.ssh
       volumes:
       - .:/code:z 
-      - ./notebooks/exercise-1/id_ecdsa.pub:/root/.ssh/authorized_keys:z
+      - ./notebooks/exercise-01/id_ansible.pub:/root/.ssh/authorized_keys:z
       network_mode: bridge

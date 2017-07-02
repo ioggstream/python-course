@@ -1,4 +1,5 @@
 - hosts: localhost
+  tags: gather_facts
   name: those tasks are run on localhost only
   tasks:
   - name: This is the debug module.
@@ -7,12 +8,46 @@
   - name: The debug module can print a variable too
     debug: var=ansible_hostname
 
-  - name: We can iterate too
-    debug: msg="{{item}}"
-    with_items: "{{ansible_system_capabilities}}"
-
-  - name: and inspect/format variables
-    debug: msg="The device is {{item.device}}"
+- hosts: web
+  tags: groups
+  name: those tasks are run on every web host
+  tasks:
+  - name: Iterating over a list
+    debug: 
+      msg: >
+        Host: {{item}}
     with_items: >
-      {{ansible_mounts}}
+      {{ groups['web'] }}
+
+- hosts: web[0]
+  tags: hostvars
+  name: Run only on first host
+  tasks:
+  - name: Iterating over a map yields the keys
+    debug: 
+      msg: >
+        Host: {{item}}
+    with_items: >
+      {{ hostvars }}
+  - name: Use subscript to access entries
+    debug: 
+      msg: >
+       address: {{ hostvars[item]['ansible_default_ipv4']['address'] }}
+    with_items: >
+      {{ groups['web'] }}
+    
+
+- hosts: web[0]
+  tags: filters
+  name: Get a list of defined host ips.
+  tasks:
+
+  - name: Using filters
+    debug: 
+      msg: >
+       {{ groups['web'] | 
+          map('extract', hostvars, ['ansible_default_ipv4', 'address']) | 
+          reject('undefined') | 
+          list }}
+
 
