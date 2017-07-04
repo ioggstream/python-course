@@ -1,5 +1,6 @@
 
 - hosts: localhost
+  tags: when
   tasks:    
   - debug: msg="This always happens"
     when: true
@@ -7,8 +8,18 @@
     when: false
 
 - hosts: localhost  
+  tags: assert
   tasks:    
   - debug: msg="This is Linux!"
     when: ansible_system == 'Linux'
 
+  - fail: msg="Stop processing now!"
+    when: ansible_architecture == 'x86_64'
+
+
+- hosts: localhost  
+  tags: exercise
+  tasks:    
+  - debug: msg="Replace me"
+    when: true
 

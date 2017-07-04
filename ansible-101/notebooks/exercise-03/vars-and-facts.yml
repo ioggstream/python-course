@@ -1,5 +1,6 @@
 ---
 - hosts: localhost
+  tags: variables
   vars:
   - one: 1
   - pi: 3.1415
@@ -13,6 +14,7 @@
 
 
 - hosts: localhost
+  tags: filters
   vars:
   - one: 1
   - pi: 3.1415
@@ -23,6 +25,7 @@
         Floor it  {{ ( one + pi ) | int }}
 
 - hosts: localhost
+  tags: exercise
   name: Use this cell for the exercise
   tasks:
   - name: >

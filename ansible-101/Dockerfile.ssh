@@ -1,4 +1,7 @@
 FROM itscaro/debian-ssh:latest
 RUN apt-get -y update && apt-get -y install python
 RUN apt-get -y clean
+RUN apt-get -y autoremove
+
+RUN echo "UseDNS no" >> /etc/ssh/sshd_config
 

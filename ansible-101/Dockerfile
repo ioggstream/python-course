@@ -7,13 +7,13 @@ MAINTAINER roberto.polli@par-tec.it
 
 RUN apt-get -y update && apt-get -y install gcc make python-dev python-pip 
 RUN apt-get -y update && apt-get -y install build-essential libblas-dev liblapack-dev gfortran  libfreetype6-dev libpng-dev
-RUN apt-get -y update && apt-get -y install tree sshpass 
+RUN apt-get -y update && apt-get -y install tree sshpass openssl
 RUN apt-get -y clean
 
 RUN apt-get -y update && apt-get -y install curl apt-transport-https
 RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
 RUN echo "deb [arch=amd64] https://download.docker.com/linux/debian jessie stable" >> /etc/apt/sources.list
-RUN apt-get -y update && apt-get -y docker-ce
+RUN apt-get -y update && apt-get -y install docker-ce
 RUN apt-get -y clean
 
 RUN apt-get -y autoremove
@@ -25,5 +25,10 @@ COPY requirements.txt /requirements.txt
 # install requirements for both py2 and py3
 RUN pip2 install -r /requirements.txt
 RUN pip install -r /requirements.txt
+
+# Use folding extension
+RUN pip install jupyter_contrib_nbextensions
+RUN jupyter contrib nbextension install --user
+RUN jupyter nbextension enable codefolding/main
 
 ENTRYPOINT /usr/local/bin/jupyter-notebook --ip 0.0.0.0

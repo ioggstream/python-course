@@ -1,0 +1,35 @@
+#
+# This is the ssh client configuration file.
+#
+
+
+# We can specify an ssh user/key for each network
+# which is very useful on cloud deployments (eg. openstack)
+Host 172.23.0.*
+  User centos
+  IdentityFile ~/id_ansible
+  # Just for testing purposes, we could 
+  # want to skip host key checking
+  StrictHostKeyChecking no
+
+# And can alias a node and *eventually* set a custom port
+Host bastion
+  User root
+  Hostname 172.17.0.5
+  StrictHostKeyChecking no
+  UserKnownHostsFile /dev/null
+  IdentityFile ../exercise-01/id_ansible  
+
+#
+# Here's the magic ProxyCommand stuff.
+# BEWARE: some ssh-client versions re-process bastion to 172.17.0.5
+#         and this would end in a recursive proxy transit. Always
+#         set an EXCLUSION for your bastion host ip.
+# 
+Match Host 172.17.0.*,!172.17.0.5
+  User root
+  StrictHostKeyChecking no
+  UserKnownHostsFile /dev/null
+  IdentityFile ../exercise-01/id_ansible
+  ProxyCommand ssh -F ssh_config root@bastion -W %h:%p
+

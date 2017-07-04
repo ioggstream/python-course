@@ -7,15 +7,21 @@ This course is based on Docker and Docker compose. As long as you have Docker
 you can run it on:
 
   - linux
-  - max
+  - mac
   - windows
+
+Docker should be exposed via TCP on 172.17.0.1:2375
 
 Consider having enough bandwidth for the first run to download the images.
 
 
 Run the environemnt with:
 
-    # docker-compose scale course=1 ansible=3
+    # make course
+
+or 
+
+    # docker-compose scale course=1 ansible=1 web=3
     # firefox http://localhost:8888
 
 

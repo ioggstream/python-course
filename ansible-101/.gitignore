@@ -1,6 +1,8 @@
 .ipynb_checkpoints
 *.pyc
-Untitled*
+[Uu]ntitled*
+*.nbconvert.ipynb
+*_removed.ipynb
 
 *.retry
 core*

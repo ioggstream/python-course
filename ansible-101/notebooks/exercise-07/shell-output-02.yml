@@ -1,0 +1,40 @@
+- hosts: localhost
+  tasks:
+  - name: Clean fetch directory
+    file: 
+      dest: '/tmp/fetch/' 
+      state: absent
+
+  - name: Create
+    file: 
+      dest: '/tmp/fetch/' 
+      state: directory
+      
+      
+- hosts: web
+  vars:
+  - outfile: "/tmp/outfile_{{ansible_date_time['iso8601']}}.out"
+  tasks:
+  - name: Run multiple commands via /bin/sh (no bashisms)
+    shell: |
+      echo "--- START COMMAND: cat /etc/resolv.conf --" > {{outfile}} 2>&1
+      {{item}} > {{outfile}} 2>&1
+      echo "--- ENDCOMMAND: cat /etc/resolv.conf --" > {{outfile}} 2>&1
+    ignore_errors: yes
+    with_items:
+    - "ls /etc/resolv.conf"
+    - "cat /etc/resolv.conf"
+    
+  - name: get file locally
+    fetch: 
+      src: "{{outfile}}"
+      dest: /tmp/fetch
+
+- hosts: localhost
+  tasks:
+  - name: compress directory
+    archive:
+      src: /tmp/fetch
+      dest: /tmp/sosreport.tar.bz2
+      format: bz2
+
