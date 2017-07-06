@@ -1,2 +1,3 @@
 id_ansible*
-vaultfile.yml
+vault.yml
+pin

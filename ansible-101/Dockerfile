@@ -13,7 +13,7 @@ RUN apt-get -y clean
 RUN apt-get -y update && apt-get -y install curl apt-transport-https
 RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
 RUN echo "deb [arch=amd64] https://download.docker.com/linux/debian jessie stable" >> /etc/apt/sources.list
-RUN apt-get -y update && apt-get -y docker-ce
+RUN apt-get -y update && apt-get -y install docker-ce
 RUN apt-get -y clean
 
 RUN apt-get -y autoremove

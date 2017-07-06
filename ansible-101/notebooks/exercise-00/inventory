@@ -16,3 +16,7 @@ pythonforsysadmin_course_1  ansible_connection=local
 [ansible]
 172.17.0.[5:7]   
 
+#
+# Besides, ansible has two predefined groups: 
+#   - all 
+#   - ungrouped
