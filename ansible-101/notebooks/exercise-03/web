@@ -1,0 +1,4 @@
+# Just web
+
+[web]
+172.17.0.[3:6]  ansible_password=root 
