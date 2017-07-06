@@ -6,7 +6,7 @@ Modified from remove_output by Minrk
 import sys
 import io
 import os
-from IPython.nbformat.current import read, write
+from nbformat.current import read, write
 
 
 def remove_outputs(nb):
