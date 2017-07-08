@@ -7,7 +7,12 @@ import docker
 import logging
 log = logging.getLogger()
 logging.basicConfig(level=logging.DEBUG)
-c=docker.Client(base_url="http://172.17.0.1:2375")
+
+
+
+c = Client(base_url="http://172.17.0.1:2375")
+
+
 container_fmt = lambda x: (
     x['Names'][0][1:],
     x['Labels']['com.docker.compose.service'], 
@@ -22,5 +27,3 @@ for x in c.containers():
     ip_address = x['NetworkSettings']['Networks']['bridge']['IPAddress']
     inventory[group_name].append(ip_address)
 
-inventory['web']['ansible_ssh_common_args'] = ' -o StrictHostKeyChecking=no '
-print(json.dumps(inventory, indent=True))

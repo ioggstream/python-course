@@ -29,10 +29,13 @@ def print_hosts():
     
     for x in c.containers():
         log.debug("Processing entry %r", '\t\t'.join(container_fmt(x)))
+        try:
         group_name = x['Labels']['com.docker.compose.service']
         ip_address = x['NetworkSettings']['Networks']['bridge']['IPAddress']
         inventory[group_name] = defaultdict(list)
         inventory[group_name]['hosts'].append(ip_address)
+        except KeyError:
+           log.warning()
     
     inventory['web']['host_vars'] = {'ansible_ssh_common_args': ' -o StrictHostKeyChecking=no '}
     ret = json.dumps(inventory, indent=True)
