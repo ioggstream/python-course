@@ -9,5 +9,9 @@ test:
 
 dev:
 	docker-compose scale dev=1 web=2 bastion=1
-	docker-compose logs dev
+	docker-compose logs dev | grep token
+
+course:
+	docker-compose scale course=1 web=2 bastion=1
+	docker-compose logs course | grep token
 
