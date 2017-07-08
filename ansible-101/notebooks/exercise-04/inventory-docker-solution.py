@@ -21,7 +21,6 @@ def print_hosts():
     c=Client(base_url="http://172.17.0.1:2375")
     container_fmt = lambda x: (
         x['Names'][0][1:],
-        x['Labels']['com.docker.compose.service'], 
         x['NetworkSettings']['Networks']['bridge']['IPAddress'],
     )
     
@@ -30,12 +29,13 @@ def print_hosts():
     for x in c.containers():
         log.debug("Processing entry %r", '\t\t'.join(container_fmt(x)))
         try:
-        group_name = x['Labels']['com.docker.compose.service']
-        ip_address = x['NetworkSettings']['Networks']['bridge']['IPAddress']
-        inventory[group_name] = defaultdict(list)
-        inventory[group_name]['hosts'].append(ip_address)
+            group_name = x['Labels']['com.docker.compose.service']
+            ip_address = x['NetworkSettings']['Networks']['bridge']['IPAddress']
+            if group_name not in inventory:
+                inventory[group_name] = defaultdict(list)
+            inventory[group_name]['hosts'].append(ip_address)
         except KeyError:
-           log.warning()
+           log.warning("Host not run via docker-compose: skipping")
     
     inventory['web']['host_vars'] = {'ansible_ssh_common_args': ' -o StrictHostKeyChecking=no '}
     ret = json.dumps(inventory, indent=True)

@@ -1,0 +1,11 @@
+# I am a play including a tasklist
+- hosts: web
+  tasks:
+  - include: documentroot.yml
+    vars:
+      x: "{{item}}"
+    with_items:
+    - Rimini
+    - Emilia-Romagna
+    - Italia
+

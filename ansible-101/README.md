@@ -10,7 +10,15 @@ you can run it on:
   - mac
   - windows
 
-Docker should be exposed via TCP on 172.17.0.1:2375
+Docker should be exposed via TCP on 172.17.0.1:2375 setting
+
+```
+# vim /etc/systemd/system/multi-user.target.wants/docker.service
+[Service]
+...
+ExecStart=/usr/bin/dockerd -H fd:// -H tcp://172.17.0.1:2375
+...
+```
 
 Consider having enough bandwidth for the first run to download the images.
 
@@ -25,12 +33,34 @@ or
     # firefox http://localhost:8888
 
 
-## Playing the course
-An easy way to run the course is on Linux with:
+## Playing the course on DigitalOcean
 
-    #pip install -r requirements.txt    # install dependencies
-    #nosetests -v                       # check if everything is ok
-    #jupyter-notebook notebooks/        # ;)
+DigitalOcean is a great and cheap cloud-provider 
+
+  - create an Ubuntu 16.04 docker droplet from the menu and ssh into your host
+  - expose docker on local http port
+
+```
+# vim /etc/systemd/system/multi-user.target.wants/docker.service
+[Service]
+...
+ExecStart=/usr/bin/dockerd -H fd:// -H tcp://172.17.0.1:2375
+...
+```
+
+  - clone and run the project
+
+```
+ # git clone https://github.com/ioggstream/python-course.git
+ # cd python-course/ansible-101
+ # make course
+
+
+```
+
+ - point to the reference url
+
+
 
 
 ## Outline
