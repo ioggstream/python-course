@@ -60,7 +60,9 @@ ExecStart=/usr/bin/dockerd -H fd:// -H tcp://172.17.0.1:2375
 
  - point to the reference url
 
+See asciicast here
 
+[![asciicast](https://asciinema.org/a/9xqX4akNND7Yc0Q1sTb3ZnEhI.png)](https://asciinema.org/a/9xqX4akNND7Yc0Q1sTb3ZnEhI)
 
 
 ## Outline
@@ -68,11 +70,12 @@ ExecStart=/usr/bin/dockerd -H fd:// -H tcp://172.17.0.1:2375
 
   - Ansible architecture
   - Describe delivery layout in ansible.cfg
-  - Static and dynamic inventories (openstack / digitalocean example if internet connection available)
+  - Host and Group variables, Filters
+  - Static and dynamic inventories (docker)
   - Vaults and Secrets
   - Use bastions and other ssh_opts
   - writing basic playbooks, test driven deployment
   - Yaml pitfalls
-  - Group variables and roles
-  - Ansible galaxy as a role repository
+  - Inclusion and Roles
+  - Ansible galaxy as a role repository (bonus track)
  
