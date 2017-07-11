@@ -29,7 +29,7 @@ Run the environemnt with:
 
 or 
 
-    # docker-compose scale course=1 ansible=1 web=3
+    # docker-compose scale course=1 bastion=1 web=3
     # firefox http://localhost:8888
 
 
