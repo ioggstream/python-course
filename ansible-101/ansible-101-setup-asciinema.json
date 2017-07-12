@@ -83,8 +83,8 @@
       "72"
     ],
     [
-      2.061275,
-      " # this is your docker app on digitalocean \r\n"
+      0.061275,
+      "\r\n"
     ],
     [
       0.64877,
@@ -479,11 +479,11 @@
       "\r\n"
     ],
     [
-      0.68979,
-      "\u001b]0;root@docker-4gb-fra1-01: ~\u0007root@docker-4gb-fra1-01:~# # ok, docker reconfigured."
+      2.68979,
+      "\u001b]0;root@docker-4gb-fra1-01: ~\u0007root@docker-4gb-fra1-01:~# "
     ],
     [
-      2.964685,
+      16.964685,
       "s"
     ],
     [
