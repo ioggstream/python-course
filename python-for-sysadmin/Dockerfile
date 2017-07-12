@@ -30,5 +30,7 @@ RUN pip install -r /requirements.txt
 RUN pip install jupyter_contrib_nbextensions
 RUN jupyter contrib nbextension install --user
 RUN jupyter nbextension enable codefolding/main
+RUN jupyter nbextension enable rubberband/main
+RUN jupyter nbextension enable exercise/main
 
 ENTRYPOINT /usr/local/bin/jupyter-notebook --ip 0.0.0.0

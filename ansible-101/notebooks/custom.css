@@ -1,0 +1,6 @@
+/* Uncomment to use a custom font */
+div#notebook, div.CodeMirror, div.output_area pre, div.output_wrapper, div.prompt {
+  font-family: monospace !important;
+  font-size: 14pt;
+}
+
