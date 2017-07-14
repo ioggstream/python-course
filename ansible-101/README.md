@@ -1,7 +1,7 @@
 # Ansible 2 done right!
 
 
-## Setup
+## Local Setup
 
 This course is based on Docker and Docker compose. As long as you have Docker
 you can run it on:
@@ -10,7 +10,9 @@ you can run it on:
   - mac
   - windows
 
-Docker should be exposed via TCP on 172.17.0.1:2375 setting
+Docker should be exposed via TCP on 172.17.0.1:2375
+
+On Linux, set
 
 ```
 # vim /etc/systemd/system/multi-user.target.wants/docker.service
@@ -19,6 +21,9 @@ Docker should be exposed via TCP on 172.17.0.1:2375 setting
 ExecStart=/usr/bin/dockerd -H fd:// -H tcp://172.17.0.1:2375
 ...
 ```
+
+On Mac, check [the FAQ and this issue](https://github.com/docker/for-mac/issues/770#issuecomment-252560286)
+
 
 Consider having enough bandwidth for the first run to download the images.
 
