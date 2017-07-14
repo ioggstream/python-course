@@ -55,5 +55,5 @@ services:
           dockerfile:  Dockerfile.ssh
       volumes:
       - .:/code:z 
-      - ./notebooks/exercise-01/id_ansible.pub:/root/.ssh/authorized_keys:z
+      # - ./notebooks/exercise-01/id_ansible.pub:/root/.ssh/authorized_keys:z
       network_mode: bridge
