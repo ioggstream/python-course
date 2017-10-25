@@ -1,0 +1,25 @@
+#
+# Modify all playbook parts so that:
+#
+# - if the filesystem is already mounted, nothing
+#   will be done and the playbook exits gracefully
+#   without modifying /etc/fstab
+# - the /etc/fstab entry is created
+# - /var is bind-mounted on /mnt/bind
+# - the fstab variable is printed using the
+#   debug module
+#
+- hosts: all
+  tasks:
+  - name: >
+      Mount /var under /mnt/bind with a bind mount.
+      Check the mount module docs to populate all 
+      the options.
+    mount:
+      name: 
+      src: 
+      opts: 
+      fstype: 
+      state: 
+    register: fstab
+
