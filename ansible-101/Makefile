@@ -24,6 +24,8 @@ dev:
 	docker-compose logs dev | grep token | sed -e "s/0.0.0.0/$(MAIN_IP)/g"
 
 course:
+	cp   ../python-basic/notebooks/00_intro.ipynb notebooks/00_python_intro.ipynb
+	cp   ../python-basic/notebooks/01_intro.ipynb notebooks/01_python_intro.ipynb
 	docker-compose scale course=1 web=2 bastion=1
 	docker-compose logs course | grep token | sed -e "s/0.0.0.0/$(MAIN_IP)/g"
 
