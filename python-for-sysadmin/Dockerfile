@@ -33,4 +33,7 @@ RUN jupyter nbextension enable codefolding/main
 RUN jupyter nbextension enable rubberband/main
 RUN jupyter nbextension enable exercise/main
 
+RUN jupyter nbextension install rise --py --sys-prefix
+RUN jupyter nbextension enable rise --py --sys-prefix
+
 ENTRYPOINT /usr/local/bin/jupyter-notebook --ip 0.0.0.0

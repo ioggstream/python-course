@@ -6,11 +6,18 @@
 .PHONY: course
 
 MAIN_IP = $(shell ip -4 -o a s scope global | awk -F'[/ ]+' '{print $$4; exit} ')
+EXTERNAL_COURSES = git-101 python-basic
+
+
+course: .prepare
+	docker-compose scale course=1 web=2 bastion=1
+	docker-compose logs course | grep token | sed -e "s/0.0.0.0/$(MAIN_IP)/g"
 
 clean:
 	rm *.pyc __pycache__ -fr
 	find notebooks -name '*_removed.nbconvert.ipynb' -delete
 	find notebooks -name '*_removed.ipynb' -delete
+	# $(foreach dpath, $(EXTERNAL_COURSES), rm -f notebooks/$(dpath)/*.ipynb; )
 
 clean-other:
 	docker-compose kill bastion web 
@@ -19,16 +26,11 @@ clean-other:
 test:
 	docker exec -ti ansible101_dev_1 bash -c ' (cd /notebooks; ./cleanup.sh ) ' 
 
-dev:
-	rsync -var  ../git-101/notebooks/ 	notebooks/git-101
+dev: .prepare
 	docker-compose scale dev=1 web=2 bastion=1
 	docker-compose logs dev | grep token | sed -e "s/0.0.0.0/$(MAIN_IP)/g"
 
-course:
-	cp   ../python-basic/notebooks/00_intro.ipynb notebooks/00_python_intro.ipynb
-	cp   ../python-basic/notebooks/01_intro.ipynb notebooks/01_python_intro.ipynb
-	cp   ../docker-101/notebooks 	notebooks/docker-101
-	cp   ../git-101/notebooks 	notebooks/git-101
-	docker-compose scale course=1 web=2 bastion=1
-	docker-compose logs course | grep token | sed -e "s/0.0.0.0/$(MAIN_IP)/g"
-
+.prepare:
+	# build all EXTERNAL_COURSES
+	$(foreach dpath, $(EXTERNAL_COURSES), cd ../$(dpath); ! test -f Makefile || make; )
+	$(foreach dpath, $(EXTERNAL_COURSES), mkdir -p notebooks/rendered_notebooks/$(dpath); rsync -var  ../$(dpath)/notebooks/ notebooks/rendered_notebooks/$(dpath); )
