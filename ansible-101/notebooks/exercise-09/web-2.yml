@@ -2,14 +2,14 @@
 # This play includes another play
 #
 
-
-- hosts: web:
+- hosts: web
   tasks:
   - name: install apache
     apt: name=apache2 state=latest
 
-- include: web-1.yml
-  when: 'missing' in groups
+- import_playbook: web-1.yml
+  when: >
+    'missing' in groups
 
 # always do it!
-- include: web-1.yml
+- import_playbook: web-1.yml
