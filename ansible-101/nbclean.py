@@ -24,5 +24,5 @@ if __name__ == '__main__':
     base, ext = os.path.splitext(fname)
     new_ipynb = "%s_removed%s" % (base, ext)
     with io.open(new_ipynb, 'w', encoding='utf8') as f:
-        write(nb, f, 'json')
+        write(nb, f, version=4)
     print "wrote %s" % new_ipynb

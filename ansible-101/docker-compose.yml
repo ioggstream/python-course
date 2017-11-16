@@ -12,6 +12,7 @@ services:
       volumes:
       - ./notebooks:/notebooks:z
       - ./notebooks/custom.css:/root/.jupyter/custom/custom.css
+      - .:/code:z
       network_mode: bridge
       entrypoint: /bin/sh
       command: -c "/usr/local/bin/jupyter-notebook --ip 0.0.0.0 --allow-root"
@@ -30,6 +31,7 @@ services:
       volumes:
       - ./notebooks:/notebooks:z
       - ./notebooks/custom.css:/root/.jupyter/custom/custom.css
+      - .:/code:z
       network_mode: bridge
       ports:
       - 8888:8888

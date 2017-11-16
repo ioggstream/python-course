@@ -17,6 +17,7 @@ clean:
 	rm *.pyc __pycache__ -fr
 	find notebooks -name '*_removed.nbconvert.ipynb' -delete
 	find notebooks -name '*_removed.ipynb' -delete
+	find notebooks -name '*.ipynb' -exec  jupyter nbconvert --clear-output {} \;
 	# $(foreach dpath, $(EXTERNAL_COURSES), rm -f notebooks/$(dpath)/*.ipynb; )
 
 clean-other:
