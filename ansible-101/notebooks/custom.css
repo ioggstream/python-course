@@ -1,6 +1,17 @@
 /* Uncomment to use a custom font */
 div#notebook, div.CodeMirror, div.output_area pre, div.output_wrapper, div.prompt {
   font-family: monospace !important;
-  font-size: 14pt;
+  font-size: 11pt;
 }
+
+/* Colorize in-text code areas in green-on-black */
+.rendered_html pre {
+    padding: 10px;
+}
+.rendered_html pre, .rendered_html pre code  {
+    background-color: #292323;
+    font-size: 14pt;
+    color: #5cb85c;
+}
+
 
