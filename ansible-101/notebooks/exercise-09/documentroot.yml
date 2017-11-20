@@ -5,9 +5,9 @@
   file:
     path: "/var/www/html/{{x}}/"
     state: directory
-  
-- name: 
-  lineinfile: 
+
+- name:
+  lineinfile:
     path: /var/www/html/{{x}}/index.html
     line: "{{ansible_hostname}}"
     create: yes

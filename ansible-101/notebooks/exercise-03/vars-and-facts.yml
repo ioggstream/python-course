@@ -5,10 +5,10 @@
   - one: 1
   - pi: 3.1415
   tasks:
-  - debug: 
+  - debug:
       msg: >
         {{ansible_hostname }} {{ one }}
-  - debug: 
+  - debug:
       msg: >
         The output is {{ one + pi }}
 
@@ -20,7 +20,7 @@
   - pi: 3.1415
   tasks:
   - name: Ansible can process expressions using filters
-    debug: 
+    debug:
       msg: >
         Floor it  {{ ( one + pi ) | int }}
 

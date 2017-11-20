@@ -4,7 +4,7 @@
 #
 - hosts: course
   tasks:
-    
+
     - name: Create a file from a template
       template: src=mytemplate.j2 dest=/tmp/template.conf
 

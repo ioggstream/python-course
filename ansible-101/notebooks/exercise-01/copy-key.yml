@@ -11,12 +11,12 @@
       group: root
       state: directory
   - name: Copy there my key
-    copy: 
-      src: id_ansible.pub 
-      dest: /root/.ssh/authorized_keys 
-      mode: 0600 
-      owner: root 
-      group: root 
+    copy:
+      src: id_ansible.pub
+      dest: /root/.ssh/authorized_keys
+      mode: 0600
+      owner: root
+      group: root
       force: yes
-    
-    
+
+

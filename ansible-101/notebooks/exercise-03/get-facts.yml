@@ -9,7 +9,7 @@
   tasks:
   - name: Dump the requested facts.
     debug: msg="A string"
-    
+
 
 #
 # Read this for reference
@@ -19,7 +19,7 @@
   tasks:
   - name: This is the debug module.
     debug: msg="A string"
-    
+
   - name: The debug module can print variables too
     debug: var=ansible_hostname
 
