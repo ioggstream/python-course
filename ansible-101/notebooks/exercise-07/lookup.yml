@@ -1,0 +1,9 @@
+# Lookups allows retrieving data
+# from various sources.
+- hosts: localhost
+  tasks:
+  - name: Get file content with the 'file' lookup plugin
+    debug:
+      msg: >
+        {{ lookup('file', '/etc/resolv.conf') }}
+

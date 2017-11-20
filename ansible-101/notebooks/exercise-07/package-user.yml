@@ -10,7 +10,7 @@
     apt: name=wget state=absent
 
   - name: Create user
-    user: 
+    user:
       name: foo
       groups: adm
       append: yes
@@ -27,9 +27,9 @@
   - name: >
       We can fetch files too (eg. logs):
       - files are dispatched to different directories.
-      - we can avoid enforcing checksum as we're messing with 
+      - we can avoid enforcing checksum as we're messing with
         containers.
-      
+
     fetch:
       src: /etc/passwd
       dest: /tmp/fetched

@@ -8,10 +8,10 @@
       size_available: 107076997120, size_total: 107320705024, uuid: N/A}
     - {device: /dev/mapper/vg0-home, fstype: xfs, mount: /code, options: 'rw,seclabel,relatime,attr2,inode64,noquota,bind',
       size_available: 18586177536, size_total: 214643507200, uuid: N/A}
-    
+
   tasks:
   - name: Test complex entries processing without gathering facts.
-    debug: 
+    debug:
       msg: >
         {{item.device}} {{ (100 * item.size_available/item.size_total) | int }}%
     with_items: >

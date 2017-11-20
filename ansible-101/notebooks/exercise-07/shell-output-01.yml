@@ -1,4 +1,4 @@
-# 
+#
 - hosts: localhost
   tasks:
   - name: Run multiple commands via /bin/sh (no bashisms)
@@ -7,7 +7,7 @@
       cat /etc/resolv.conf
     ignore_errors: yes
     register: o
-    
+
   - name: Show output in a single block...
     debug: var=o.stdout
 

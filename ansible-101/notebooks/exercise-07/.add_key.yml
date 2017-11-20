@@ -1,0 +1,42 @@
+- hosts: web
+  tasks:
+  - name: Create a new keypair
+    delegate_to: localhost
+    run_once: yes
+    user:
+      name: root
+      generate_ssh_key: yes
+      ssh_key_file: /tmp/id_ecdsa_new
+      ssh_key_type: ecdsa
+
+  - name: Create a new user with associated ssh keys
+    user:
+      name: fizz
+      generate_ssh_key: yes
+      password: fizz
+
+  - name: Install remotely a local PK
+    authorized_key:
+      user: fizz
+      state: present
+      key: "{{ lookup('file', '/tmp/id_ecdsa_new.pub') }}" 
+
+  - name: Add host as ip
+    add_host: 
+      ansible_ssh_host: "{{ansible_default_ipv4.address}}"
+      hostname: "{{ansible_default_ipv4.address}}"
+      groups: test
+
+
+- hosts: test
+  tags: test
+  vars:
+    ansible_connection: ssh
+    ansible_user: fizz
+    host_key_checking: no
+    ansible_private_key_file: /tmp/id_ecdsa_new
+  tasks:
+  - name: Just ping
+    shell: hostname
+    
+  

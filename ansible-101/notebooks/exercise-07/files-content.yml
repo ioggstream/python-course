@@ -1,7 +1,7 @@
 - hosts: localhost
   name: >
     A playbook can be made of multiple stanzas. They'll be
-    pipelined. 
+    pipelined.
   tasks:
   - name: Delete previous template
     file: state=absent dest=/tmp/index.html.template
@@ -25,12 +25,12 @@
   - name: Register command output in a variable
     shell: cat index.html.template
     args:
-      chdir: /tmp 
+      chdir: /tmp
     register: o_cat
 
   - name: Show output
     debug: var=o_cat.stdout
-     
+
 
 - hosts: web
   tasks:
@@ -39,7 +39,7 @@
     with_items:
     - apache2
     - curl
-  
+
   - name: Facts are per-host variables
     set_fact: documentroot="{{ '~www-data' | expanduser }}/html"
 
@@ -47,7 +47,7 @@
     file: dest="{{documentroot}}"  state=directory owner=root group=root
 
   - name: Upload file as a template
-    template: 
+    template:
       src: /tmp/index.html.template
       dest: /var/www/html/index.html
 
@@ -55,7 +55,7 @@
     service: name=apache2 state=started
 
   - name: Check page
-    uri: 
+    uri:
       url: http://localhost
       return_content: yes
     register: webpage
