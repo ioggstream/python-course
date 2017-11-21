@@ -28,6 +28,9 @@ services:
   # Official image from docker hub
   course:
       image: ioggstream/python-course
+      environment:
+      - USE_HTTP=1
+      - DOCKER_HOST=172.17.0.1
       volumes:
       - ./notebooks:/notebooks:z
       - ./notebooks/custom.css:/root/.jupyter/custom/custom.css
