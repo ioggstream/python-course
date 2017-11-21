@@ -37,4 +37,4 @@ dev: .prepare
 	# build all EXTERNAL_COURSES
 	$(foreach dpath, $(EXTERNAL_COURSES), cd ../$(dpath); ! test -f Makefile || make; )
 	$(foreach dpath, $(EXTERNAL_COURSES), mkdir -p notebooks/rendered_notebooks/$(dpath); rsync -var  ../$(dpath)/notebooks/ notebooks/rendered_notebooks/$(dpath); )
-	cp ../python-for-sysadmin/{Dockerfile,requirements.txt} .
+	cp ../python-for-sysadmin/Dockerfile ../python-for-sysadmin/requirements.txt .
