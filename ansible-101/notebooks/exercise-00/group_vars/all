@@ -6,7 +6,7 @@
 env_name: default
 
 proxy_env:
-  # You can use proxyes in your playbooks!
+  # You can use proxies in your playbooks!
   http_proxy: http://proxy:3128
   https_proxy: http://proxy:3128
   no_proxy: 127.0.0.1,localhost,.example.com
