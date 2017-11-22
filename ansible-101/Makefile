@@ -17,9 +17,9 @@ clean:
 	rm *.pyc __pycache__ -fr
 	find notebooks -name '*_removed.nbconvert.ipynb' -delete
 	find notebooks -name '*_removed.ipynb' -delete
-	find notebooks -name '*.ipynb' -exec  jupyter nbconvert --clear-output {} \;
-	find notebooks -name \*.yml -type f -exec sed -i 's/[[:space:]]*$//' {} \;
+	find notebooks -name \*.yml -type f -exec sed -i 's/[[:space:]]*$$//' {} \;
 	find notebooks -name \*.yml -type f -exec ansible-lint {} \;
+	find notebooks -name '*.ipynb' -exec  nbstripout {} \;
 	# $(foreach dpath, $(EXTERNAL_COURSES), rm -f notebooks/$(dpath)/*.ipynb; )
 
 clean-other:

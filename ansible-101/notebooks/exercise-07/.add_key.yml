@@ -19,10 +19,10 @@
     authorized_key:
       user: fizz
       state: present
-      key: "{{ lookup('file', '/tmp/id_ecdsa_new.pub') }}" 
+      key: "{{ lookup('file', '/tmp/id_ecdsa_new.pub') }}"
 
   - name: Add host as ip
-    add_host: 
+    add_host:
       ansible_ssh_host: "{{ansible_default_ipv4.address}}"
       hostname: "{{ansible_default_ipv4.address}}"
       groups: test
@@ -38,5 +38,5 @@
   tasks:
   - name: Just ping
     shell: hostname
-    
-  
+
+

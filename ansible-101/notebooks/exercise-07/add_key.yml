@@ -1,7 +1,7 @@
 - hosts: web
   tasks:
   - name: Create a new keypair on localhost
-    delegate_to: 
+    delegate_to:
     run_once: yes
     user:
       name: root
@@ -18,12 +18,12 @@
       Install remotely a local PK. Use the
       authorized_key docs to complete this task
     authorized_key:
-      user: 
-      state: 
+      user:
+      state:
 
   - name: Add this host to the inventory
-    add_host: 
-      ansible_ssh_host: 
+    add_host:
+      ansible_ssh_host:
       hostname: "{{ansible_default_ipv4.address}}"
       groups: test
 
@@ -45,5 +45,5 @@
   tasks:
   - name: A test command
     shell: hostname
-    
-  
+
+

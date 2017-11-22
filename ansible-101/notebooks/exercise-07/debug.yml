@@ -4,7 +4,7 @@
   tasks:
   - name: This is the debug module.
     debug: msg="A string"
-    
+
   - name: The debug module can print a variable too
     debug: var=ansible_hostname
 
@@ -13,7 +13,7 @@
   name: those tasks are run on every web host
   tasks:
   - name: Iterating over a list
-    debug: 
+    debug:
       msg: >
         Host: {{item}}
     with_items: >
@@ -24,18 +24,18 @@
   name: Run only on first host
   tasks:
   - name: Iterating over a map yields the keys
-    debug: 
+    debug:
       msg: >
         Host: {{item}}
     with_items: >
       {{ hostvars }}
   - name: Use subscript to access entries
-    debug: 
+    debug:
       msg: >
        address: {{ hostvars[item]['ansible_default_ipv4']['address'] }}
     with_items: >
       {{ groups['web'] }}
-    
+
 
 - hosts: web[0]
   tags: filters
@@ -43,11 +43,11 @@
   tasks:
 
   - name: Using filters
-    debug: 
+    debug:
       msg: >
-       {{ groups['web'] | 
-          map('extract', hostvars, ['ansible_default_ipv4', 'address']) | 
-          reject('undefined') | 
+       {{ groups['web'] |
+          map('extract', hostvars, ['ansible_default_ipv4', 'address']) |
+          reject('undefined') |
           list }}
 
 
