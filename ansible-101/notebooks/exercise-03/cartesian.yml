@@ -1,0 +1,14 @@
+#
+# Ansible can generate cartesian products
+#  which are useful for checking
+#  different software versions.
+#
+- hosts: localhost
+  tasks:
+  - name: Here is a cartesian product
+    debug:
+      msg: >
+        {{ 'Installing ' + item[0] + "-" + item[1] }}
+    with_cartesian:
+    - ["python", "python3"]
+    - [ "tox", "nose", "dnspython" ]
