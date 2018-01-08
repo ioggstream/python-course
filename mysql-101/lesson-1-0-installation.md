@@ -15,82 +15,98 @@
 Install the following packages via yum or apt-get
 
     tree dstat vim hostname
-    
+
 Download all of the MySQL packages via yum or from MySQL website.
 
 Unpack the Employee and Sakila databases
 
-        bash#wget  http://bit.ly/1qEutCs -O employees.tar.gz     
+        bash#wget  http://bit.ly/1qEutCs -O employees.tar.gz
         bash#tar xf employee*
 
 
 ## Installing MySQL
 ### Debian & derivates
 Use either
- 
+
     dpkg -i mysql*deb
 or
 
     gdebi -n mysql*.deb # installs one package at a time
-    
-    
+
+
 ### Fedora & derivates
 
-    yum -y install mysql-repo.rpm
-    yum -y install MySQL-*
+For 5.7 community, install the public repo
+
+    yum -y install https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm
+    yum -y install mysql-community-server mysql-community-client
     yum -y install mysql-utilities
 
+
+For 5.7 commercial
+
+    yum -y install  mysql-commercial-server mysql-commercial-client
+    yum -y install  mysql-shell-commercial mysql-router-commercial
+    yum -y install  meb
 
 
 
 ## Installing MySQL
 
 Check installed files and users
-  
-        dpkg -l mysql*
-        dpkg -L mysql
+
+        rhel$ rpm -qa mysql\* | xargs rpm -ql
+        deb $ dpkg -l mysql*
+        deb $ dpkg -L mysql
         id mysql
         find /etc/ -name \*mysql\*
 
 Programs
 
-        client                  server              offline
-        mysql                   mysqld              innochecksum
-        mysqlbinlog*            mysqld_safe         mysql_config_editor 
-        mysqladmin              mysql_install_db    mysqlbinlog*
+        client                  server               offline
+        mysql                   mysqld               innochecksum
+        mysqlbinlog*            mysqld_safe          mysql_config_editor
+        mysqladmin              mysql_install_db^    mysqlbinlog*
         mysqlimport
         mysqldump
-        
+
 
 
 ## Installing MySQL
+
 First access
-          
-        cat /root/.mysql_secret
+
+        grep pass /var/log/mysqld.log
+        2018-01-08T10:42:22.221149Z 1 [Note] A temporary password is generated for root@localhost: Cewoi.zFp99g
         mysql -u$USER -p$PASSWORD [ -h$HOST -P$PORT ]
         mysql -e "$QUERY"
-  
-  
+
+In old releases, password was there:
+
+        cat /root/.mysql_secret
+
+
 ## Installing MySQL - On Ubuntu/Debian
+
 Copy init script and configuration file
-        
-        cd /opt/mysql/server-5.6/
-        cp support-files/mysql.server /etc/init.d/mysql
+
+        cd /opt/mysql/server-5.7/
+        cp support-files/mysql.server /etc/init.d/mysql  # for non systemd versions.
         cp my.cnf /etc/my.cnf
 
 Create users and directories
-        
+
         useradd mysql -s /usr/sbin/nologin -d /var/lib/mysql
         chown -R mysql:mysql /var/lib/mysql
-        
+
 Add a profile script
 
         cat > /etc/profile.d/Z99-mysql.sh <<'EOF'
-        export MYSQL_HOME=/opt/mysql/server-5.6/
+        export MYSQL_HOME=/opt/mysql/server-5.7/
         export PATH+=:$MYSQL_HOME/bin:$MYSQL_HOME/scripts
         EOF
-        
-        
+
+
 ## Installing MySQL - Basic Configuration
 Prepare a minimal configuration file...
 
@@ -98,23 +114,34 @@ Prepare a minimal configuration file...
         [mysqld]
         ...mysql defaults...
         # System user for mysql
-        #  create if not exists
+        #  create if not exists.
         user=mysql
-        
+
         # All data files will go
-        #  there
+        #  there.
         datadir=/var/lib/mysql
-        
+
+        # Create the undo tablespace and
+        #  reduce disk usage.
+        innodb_undo_tablespaces=2
+        innodb_log_file_size=5M
+
 
 ## The datadir
 Create or recreate the default one (from my.cnf)
-  
-        mysqld --initialize 
 
-Or create alternative ones
-  
+        mysqld --initialize
+
+Or create alternative ones (configure selinux/apparmor before!)
+
         mysqld --initialize --datadir=/data2
-        
+
+A new password is generated each time you initialize the datadir
+
+        grep pass /var/log/mysqld.log
+        2018-01-08T10:42:22.221149Z 1 [Note] A temporary password is generated for root@localhost: Cewoi.zFp99g
+
+
 
 ## The datadir
 
@@ -127,16 +154,17 @@ Or create alternative ones
     |-- [mysql    mysql     48M]  ib_logfile0
     |-- [mysql    mysql     48M]  ib_logfile1
     |-- [mysql    mysql     12M]  ibdata1
+    |-- [mysql    mysql     12M]  undo001
     `-- [mysql    mysql       0]  mysql.sock
 
-     
+
   - Application logs
   - DDL definitions .frm and indexes
   - InnoDB log files & tablespaces
   - Binary & Relay Logs (*next lessons)
 
 
-        
+
 ## Installing MySQL
 Use different values to run many instances on the same host.
 
@@ -155,24 +183,34 @@ Exercise: run the following, check the logs and fix the errors.
         mysqld --defaults-file=/etc/my-1.cnf
 
 
-# MySQL Service    
+# MySQL Service
 ## The MySQL Service
 Manage as a service
-  
-        service mysql [start|stop|status]
-         
+
+        systemctl [start|stop|status] mysql
+
 Run standalone
 
         mysqld [$PARAMETERS]
-        
-Or wrapped with a restart-daemon
-        
-        mysqld_safe        
+
+Or wrapped with a [restart-daemon](https://dev.mysql.com/doc/refman/5.7/en/mysqld-safe.html) in [non systemd distros](https://dev.mysql.com/doc/refman/5.7/en/using-systemd.html)
+
+        mysqld_safe
+
+## First login
+
+The first login requires a password change.
+
+Exercise: get the password generated by the mysql initializer.
+
+Exercise: use mysqladmin to change the password
+
+    mysqladmin password -p  # this will prompt for the old and new password.
 
 
 ## The MySQL Service
 Check the server status at various levels with
-     
+
      mysqladmin ping
      mysqladmin status
      mysqladmin extended-status
@@ -202,33 +240,33 @@ or since 5.7
 Exercise: what happens if you
 
   - kill -9 mysql
-  - restart with mysqld?  
+  - restart with mysqld?
 
 
-## Connecting 
+## Connecting
 Client programs:
 
 - mysql, mysqladmin, mysqlbackup
 
 - full help
 
-        mysql ... [--help [--verbose]] 
-        
+        mysql ... [--help [--verbose]]
+
 - connect via socket or forcing TCP
 
         mysql --socket=/var/lib/mysql/mysql.sock
         mysql --protocol tcp
-        
+
         SHOW DATABASES;
 
 ## Connecting - Storing credentials
-Store credentials [in the encrypted file](http://dev.mysql.com/doc/refman/5.6/en/mysql-config-editor.html) 
+Store credentials [in the encrypted file](http://dev.mysql.com/doc/refman/5.6/en/mysql-config-editor.html)
 ~/.mylogin.cnf using
 
-        mysql_config_editor set 
-            --login-path=client # default used by mysql 
-            --host=localhost 
-            --user=localuser 
+        mysql_config_editor set
+            --login-path=client # default used by mysql
+            --host=localhost
+            --user=localuser
             --password # (prompted)
 
 We can define further servers
@@ -247,9 +285,9 @@ You can log your session in a file with
         mysql --tee=/tmp/history.out
         -- or after login
         TEE /tmp/history.out
-        
+
 Dump the output in HTML
 
         mysql --html
-        
+
 
