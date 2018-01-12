@@ -164,6 +164,28 @@ A new password is generated each time you initialize the datadir
   - Binary & Relay Logs (*next lessons)
 
 
+## Relocating datadir and ports
+
+You should tune security systems when relocating datadirs.
+
+SElinux:
+
+        # Allow mysql on another port.
+        semanage port -a -t mysqld_port_t -p tcp 13306 
+
+        # Allow mysql to operate on files in /datadir and beyond.
+        semanage fcontext -a -t mysqld_db_t "/datadir(/.*)?"
+        restorecon -Rv /datadir
+
+AppArmor:
+
+        # in /etc/apparmor.d/local/usr.sbin.mysqld
+        /diskb/data/ r,
+        /diskb/data/** rwk,
+        /diskb/log/ r,
+        /diskb/log/** rwk,
+        /diskc/backup/ r,
+        /diskc/backup/** rwk,
 
 ## Installing MySQL
 Use different values to run many instances on the same host.
