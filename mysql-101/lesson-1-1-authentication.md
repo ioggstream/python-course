@@ -47,6 +47,13 @@ you can:
         SHOW GRANTS; -- explain grants
         SHOW GRANTS FOR 'root'; -- does it work? Why?
         SHOW GRANTS FOR 'root'@'localhost'; 
+
+## mysql.user table & co
+
+  - Use the CURRENT_USER() to work on authenticated user
+
+         SELECT CURRENT_USER();  -- who am I
+         ALTER USER CURRENT_USER() IDENTIFIED BY 'My.2018%Secret';
         
   - We can change the password with
   
