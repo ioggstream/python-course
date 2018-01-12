@@ -4,3 +4,10 @@ centos:
   entrypoint: /usr/bin/tail
   volumes:
   - .:/code:z
+
+systemd:
+  image: centos/systemd
+  privileged: true
+  volumes:
+  - .:/code:z
+

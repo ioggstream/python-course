@@ -91,6 +91,11 @@
       repo: https://github.com/ioggstream/python-course.git
       dest: /root/python-course
 
+  - name: Copy docker profile
+    copy:
+      dest: /etc/profile.d/99-docker-profile.sh
+      src: 99-docker-profile.sh
+
   - name: Make it
     shell: |
       make course
