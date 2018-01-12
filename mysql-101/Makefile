@@ -9,3 +9,18 @@ revealjs:
 	rm slides.md
 	cat lesson*.md > slides.md
 	sed -i 's/^[#+]/\n\n---\n\n\n&/' slides.md
+
+.PHONY: course
+
+MAIN_IP = $(shell ip -4 -o a s scope global | awk -F'[/ ]+' '{print $$4; exit} ')
+EXTERNAL_COURSES = 
+
+
+course: .prepare
+	docker-compose scale centos=3 & 
+	bash 2>/dev/null ~/.bashrc
+	wait
+	
+.prepare:
+	echo "done"
+

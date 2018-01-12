@@ -1,0 +1,6 @@
+centos:
+  image: centos:7
+  command: tail -f /etc/hosts
+  entrypoint: /usr/bin/tail
+  volumes:
+  - .:/code:z
