@@ -104,13 +104,20 @@ Table format:
 ## InnoDB
 Transactions and consistency. 
 Foreign Keys. 
-System Tablespace.
+System and tmp Tablespace.
+
+  - `ibdataXXX` - unshrinkable!
+  - tmp:  `ibtmp1` new in 5.7, created at server startup
+
 InnoDB Log Files. 
    
   - redo: `ib_logfile{0,2}`
   - undo: `undo00X` new in 5.7, set at --initialize time
 
 Checkpoint interval.
+
+
+## InnoDB
 
 Buffer Pool: 
 
@@ -137,6 +144,7 @@ Configuring
  
  - `innodb_log_file_size` - [consider  `BLOB|TEXT` size on 5.6](https://bugs.mysql.com/bug.php?id=69477).
  - `innodb_flush_logs_at_trx_commit`
+ - `innodb_undo_tablespaces` - reduce the system tablespace
  
 
 
@@ -148,6 +156,12 @@ Configuring and Resizing Tablespaces. AutoExtend.
 Ensure ```innodb_file_per_table=1```.
 
 Check innodb datafiles while changing tables.
+
+        /var/lib/mysql/employees/
+        ├── db.opt
+        ├── departments.frm
+        ├── departments.ibd
+        ...
 
 
 ## Configuring InnoDB

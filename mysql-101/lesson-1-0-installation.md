@@ -154,6 +154,7 @@ A new password is generated each time you initialize the datadir
     |-- [mysql    mysql     48M]  ib_logfile0
     |-- [mysql    mysql     48M]  ib_logfile1
     |-- [mysql    mysql     12M]  ibdata1
+    |-- [mysql    mysql     12M]  ibtmp1  <--- this is created *after* server startup
     |-- [mysql    mysql     12M]  undo001
     `-- [mysql    mysql       0]  mysql.sock
 
