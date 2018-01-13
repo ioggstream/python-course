@@ -116,7 +116,7 @@ Privilege consistency and security
         myisam-recover-options=FORCE,BACKUP
         explicit_defaults_for_timestamp
 
-timestamp_defaults on 5.6+ are more flexible but you must use the [DEFAULT CURRENT_TIMESTAMP and ON UPDATE CURRENT_TIMESTAMP clauses in column definitions](http://dev.mysql.com/doc/refman/5.6/en/timestamp-initialization.html)
+timestamp_defaults on 5.6+ are more flexible but you must use the [DEFAULT CURRENT_TIMESTAMP and ON UPDATE CURRENT_TIMESTAMP clauses in column definitions](http://dev.mysql.com/doc/refman/5.7/en/timestamp-initialization.html)
         
 ## Configuring security
 Further security tips for server...
