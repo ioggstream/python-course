@@ -222,6 +222,7 @@ With
         CREATE TABLE d1.d1 (d datetime);
 
 We get
+
         INSERT INTO d1.d1(d) VALUES
             ('00-00-0000'),
             ('13-13-2016');
