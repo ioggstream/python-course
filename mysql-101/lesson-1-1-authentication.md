@@ -153,7 +153,19 @@ Customized authentication methods:
 
   - auth_socket: trust system username and permission to access `mysql.sock`
   - auth_pam: delegate to `PAM` (requires cleartext password communication)
-  
+
+Load plugins via
+
+        INSTALL PLUGIN 'auth_socket' SONAME 'auth_socket.so';
+
+or
+
+        [mysqld]
+        plugin-load-add=auth_socket.so
+
+
+## Authentication plugins - auth_socket
+
 Eg. `auth_socket`
 
         INSTALL PLUGIN 'auth_socket' SONAME 'auth_socket.so';
@@ -168,5 +180,22 @@ This `mysql` user has no special privilege!
         SHOW GRANTS FOR CURRENT_USER();
         FLUSH LOGS;  -- won't work!
 
+## Authentication plugins - auth_pam
 
-        
+Install and check [pam plugin](https://dev.mysql.com/doc/refman/5.7/en/pam-pluggable-authentication.html):
+
+        INSTALL PLUGIN authentication_pam SONAME 'authentication_pam.so';
+        SELECT PLUGIN_NAME, PLUGIN_STATUS FROM INFORMATION_SCHEMA.PLUGINS
+               WHERE PLUGIN_NAME LIKE '%pam%';
+
+Create a mysql user tied to the `jon` entry in `/etc/passwd` authenticating with the `mysql` pam service:
+
+        $  cat /etc/pam.d/mysql
+        $  grep jon /etc/passwd
+        SQL] CREATE USER 'jon'@'localhost' IDENTIFIED WITH authentication_pam AS 'mysql';  
+  
+Login with `jon` using the enable-cleartext-plugin so that mysql can forward you password to PAM.
+
+        $ mysql -ujon -p --enable-cleartext-plugin
+        SQL]
+
