@@ -14,14 +14,14 @@
 
 Install the following packages via yum or apt-get
 
-    tree dstat vim hostname
+    tree dstat vim hostname zip unzip bzip2 iproute wget less
 
 Download all of the MySQL packages via yum or from MySQL website.
 
 Unpack the Employee and Sakila databases
 
         bash#wget  http://bit.ly/1qEutCs -O employees.tar.gz
-        bash#tar xf employee*
+        bash#tar xf employee* -C /opt
 
 
 ## Installing MySQL
@@ -72,18 +72,6 @@ Programs
 
 
 
-## Installing MySQL
-
-First access
-
-        grep pass /var/log/mysqld.log
-        2018-01-08T10:42:22.221149Z 1 [Note] A temporary password is generated for root@localhost: Cewoi.zFp99g
-        mysql -u$USER -p$PASSWORD [ -h$HOST -P$PORT ]
-        mysql -e "$QUERY"
-
-In old releases, password was there:
-
-        cat /root/.mysql_secret
 
 
 ## Installing MySQL - On Ubuntu/Debian
@@ -145,6 +133,18 @@ A new password is generated each time you initialize the datadir
 
 ## The datadir
 
+
+  - Application logs
+  - DDL definitions .frm and indexes
+  - InnoDB log files & tablespaces
+  - Binary & Relay Logs (*next lessons)
+
+    /var/lib/mysql/
+
+
+## The datadir
+
+
     /var/lib/mysql/
     |-- [mysql    mysql      19]  foo/
     |-- [mysql    mysql    4.0K]  mysql/
@@ -159,13 +159,8 @@ A new password is generated each time you initialize the datadir
     `-- [mysql    mysql       0]  mysql.sock
 
 
-  - Application logs
-  - DDL definitions .frm and indexes
-  - InnoDB log files & tablespaces
-  - Binary & Relay Logs (*next lessons)
 
-
-## Relocating datadir and ports
+## Relocating datadir and ports (selinux)
 
 You should tune security systems when relocating datadirs.
 
@@ -177,6 +172,9 @@ SElinux:
         # Allow mysql to operate on files in /datadir and beyond.
         semanage fcontext -a -t mysqld_db_t "/datadir(/.*)?"
         restorecon -Rv /datadir
+
+
+## Relocating datadir and ports (selinux)
 
 AppArmor:
 
@@ -205,6 +203,18 @@ Exercise: run the following, check the logs and fix the errors.
 
         mysqld --defaults-file=/etc/my-1.cnf
 
+## Installing MySQL
+
+First access
+
+        grep pass /var/log/mysqld.log
+        2018-01-08T10:42:22.221149Z 1 [Note] A temporary password is generated for root@localhost: Cewoi.zFp99g
+        mysql -u$USER -p$PASSWORD [ -h$HOST -P$PORT ]
+        mysql -e "$QUERY"
+
+In old releases, password was there:
+
+        cat /root/.mysql_secret
 
 # MySQL Service
 ## The MySQL Service
@@ -283,7 +293,7 @@ Client programs:
         SHOW DATABASES;
 
 ## Connecting - Storing credentials
-Store credentials [in the encrypted file](http://dev.mysql.com/doc/refman/5.6/en/mysql-config-editor.html)
+Store credentials [in the encrypted file](http://dev.mysql.com/doc/refman/5.7/en/mysql-config-editor.html)
 ~/.mylogin.cnf using
 
         mysql_config_editor set
