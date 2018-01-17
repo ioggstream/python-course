@@ -1,0 +1,9 @@
+[innodb]
+mysql101_centos_2 ansible_default_ipv4_address=172.17.0.3
+mysql101_centos_1 ansible_default_ipv4_address=172.17.0.4
+mysql101_centos_3 ansible_default_ipv4_address=172.17.0.5
+
+
+[all:vars]
+ansible_connection=docker
+

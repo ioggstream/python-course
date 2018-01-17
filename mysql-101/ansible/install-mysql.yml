@@ -1,0 +1,14 @@
+- hosts: innodb
+  tasks:
+  - package:
+      name: https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm
+
+  - package:
+      name: "{{item}}"
+    with_items:
+    - mysql-community-server
+    - mysql-community-client
+    - mysql-utilities
+    - mysql-router
+    - mysql-shell
+
