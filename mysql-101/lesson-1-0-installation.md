@@ -220,7 +220,7 @@ In old releases, password was there:
 ## The MySQL Service
 Manage as a service
 
-        systemctl [start|stop|status] mysql
+        systemctl [start|stop|status] mysqld
 
 Run standalone
 
