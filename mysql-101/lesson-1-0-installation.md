@@ -141,6 +141,8 @@ A new password is generated each time you initialize the datadir
 
     /var/lib/mysql/
 
+The undo files are part of the system tablespace, and cannot be deleted! 
+
 
 ## The datadir
 

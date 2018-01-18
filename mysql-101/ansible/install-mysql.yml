@@ -12,3 +12,6 @@
     - mysql-router
     - mysql-shell
 
+  - name: Configure innodb cluster
+    include: initialize-innodbcluster.yml
+

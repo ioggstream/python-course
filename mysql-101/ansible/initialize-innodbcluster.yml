@@ -6,16 +6,45 @@
     grep ^group_replication /etc/my.cnf
   register: has_group_replication
   changed_when: false
+  failed_when: false
 
-- name: Create directory
-  when: has_group_replication.rc == 1
-  shell: |
-    rm /var/lib/mysql/*  -fr
+- when: has_group_replication.rc == 1
+  block:
+  - name: close mysqld
+    shell: |
+      pkill -f mysqld
+    failed_when: false
+  - name: Create directory
+    shell: |
+      rm /var/lib/mysql/*  -fr
+  - name: Add server_id to my.cnf
+    lineinfile:
+      dest: /etc/my.cnf
+      line: |
+        server_id={{ ansible_default_ipv4_address | ipaddr("int") }}
+      insertafter: >-
+        ^[mysqld]
+  - name: Prepare node for group replication
+    blockinfile:
+      dest: /etc/my.cnf
+      insertafter: >-
+        ^[mysqld]
+      block: |
+        gtid_mode=ON
+        enforce_gtid_consistency=ON
+        binlog_format=ROW
+        master_info_repository=TABLE
+        relay_log_info_repository=TABLE
+        report_port=3306
+        report_host={{ansible_default_ipv4_address}}
+        log_slave_updates=1
+        transaction_write_set_extraction=XXHASH64
+        binlog_checksum=NONE
 
-- name: Initialize datadir
-  when: has_group_replication.rc == 1
-  command: |
-    mysqld --initialize --user=mysql
+
+  - name: Initialize datadir
+    command: |
+      mysqld --initialize --user=mysql
 
 - name: Eventually start mysql
   command: pgrep -fa mysqld.*--
@@ -40,7 +69,7 @@
     timeout: 20
 
 - name: Prepare instance for clustering
-  command: mysqlsh --js -f /code/ansible/check_cluster.py   --log-level=DEBUG4
+  command: mysqlsh --js -f /code/ansible/check-cluster.js   --log-level=DEBUG4
   ignore_errors: true
 
 - name: Take a nap
@@ -48,9 +77,9 @@
 
 - name: Create cluster on local node
   run_once: yes
-  delegate_to: db[0]
+  delegate_to: innodb[0]
   shell: |-
-    mysqlsh --uri icroot@{{ansible_default_ipv4.address}}:3306  --password=Secret%2017 --log-level=DEBUG4 <<EOF
+    mysqlsh --uri icroot@{{ansible_default_ipv4_address}}:3306  --password=Secret%2017 --log-level=DEBUG4 <<EOF
 
     try {
         cluster = dba.createCluster('prod');
@@ -62,9 +91,9 @@
     EOF
 
 - name: Add instances to cluster
-  delegate_to: db[0]
+  delegate_to: innodb[0]
   when: >-
-    ansible_hostname in db[1:]
+    ansible_hostname in innodb[1:]
   shell: |
     mysqlsh --uri icroot@localhost:3306  --password=Secret%2017 --log-level=DEBUG4 <<EOF
     try {
@@ -73,7 +102,7 @@
         cluster = dba.getCluster('prod');
     }
     var options = {"password": "Secret%2017"};
-    cluster.addInstance('icroot@{{ansible_default_ipv4.address}}:3306', options);
+    cluster.addInstance('icroot@{{ansible_default_ipv4_address}}:3306', options);
     EOF
 
 - name: Kill mysql

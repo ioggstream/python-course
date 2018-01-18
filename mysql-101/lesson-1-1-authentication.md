@@ -14,7 +14,6 @@
         | root | 127.0.0.1    |                       |
         | root | ::1          |                       |
         |      | localhost    |                       |
-        |      | a02f12e917b1 |                       |
         +------+--------------+-----------------------+
         6 rows in set (0.00 sec)
 
@@ -120,7 +119,7 @@ On Ubuntu|Debian:
 
 ## Reset root password
 
-Resettin root password requires a restart.
+Resetting root password requires a restart.
 
 MySQL loads authentication tables in memory and enables them after startup:
 

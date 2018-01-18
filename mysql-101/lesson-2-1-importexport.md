@@ -16,14 +16,20 @@ While monitoring system status with
     
 import the [Employees database](http://bit.ly/1qEutCs) 
 
-        bash#wget http://bit.ly/1qEutCs -O employees.tar.gz     
-        bash#tar xf employee*
-        bash#cd employee*
-        bash#mysql < employees.sql
+        wget http://bit.ly/1qEutCs -O employees.tar.gz
+        tar xf employees.tar.gz -C /opt
+        cd /opt/employee*
+        mysql < employees.sql
 
 Exercise: how does `employees.sql` work?
 
-        SELECT * INTO OUTFILE 'path.tsv' FROM departments;
+## Populating a database
+
+Dump a table in a file once `secure-file-priv` is enabled.
+
+        SELECT * 
+            INTO OUTFILE '/var/lib/mysql-files/path.tsv'
+            FROM departments;
         CREATE TABLE _departments LIKE departments;
         LOAD DATA INFILE 'path.tsv' INTO TABLE _departments;
 
@@ -51,7 +57,7 @@ Export  `employee` with the following parameter
      mysqldump -proot employees \
         --table salaries   \
         --skip-extended-insert  | 
-            gzip  > salaries.sql   
+            gzip  > salaries.sql.gz
         
 Import and monitor with `dstat` using: 
         

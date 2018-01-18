@@ -39,8 +39,8 @@ The [information_schema](http://dev.mysql.com/doc/refman/5.6/en/information-sche
         
         SELECT T1.TABLE_NAME 
         FROM INFORMATION_SCHEMA.TABLES T1 JOIN INFORMATION_SCHEMA.TABLES T2 
-        WHERE T1.TABLE_SCHEMA='PERFORMANCE_SCHEMA'  
-            AND T2.TABLE_SCHEMA='INFORMATION_SCHEMA' 
+        WHERE T1.TABLE_SCHEMA='performance_schema'  
+            AND T2.TABLE_SCHEMA='information_schema' 
             AND T1.TABLE_NAME=T2.TABLE_NAME;
 
 ## Table informations
@@ -131,7 +131,7 @@ causes to:
   - seek|read data from disk
   - eventually pollute `table_cache`
 
-Be selective when [ looking for metadata!](https://dev.mysql.com/doc/refman/5.7/en/information-schema-optimization.html) 
+Be selective when [looking for metadata!](https://dev.mysql.com/doc/refman/5.7/en/information-schema-optimization.html) 
 
 Check the [improvements on MySQL 8.0 too!](https://dev.mysql.com/doc/refman/8.0/en/information-schema-optimization.html) 
 

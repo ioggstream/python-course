@@ -45,6 +45,8 @@ my.cnf is made up of stanzas
         user=mysql
         datadir=/disk2/data
 
+## Server Configuration
+
 **mysqld exits in case of**:
 
   - syntax errors
@@ -156,9 +158,13 @@ mysqld does **not** create logs by default.
         slow-query-log=1
         log-queries-not-using-indexes=on
 
+
+## Application logging
+
 Log general and slow query on tables using
 
-        log-output=TABLE -- SET GLOBAL log-output='TABLE';
+        log-output=TABLE -- SET GLOBAL log_output='TABLE';
+        general_log=ON   -- SET GLOBAL general_log=ON;
 
 Get (or trash) data with
 

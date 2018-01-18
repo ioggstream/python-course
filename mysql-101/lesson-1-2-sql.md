@@ -105,7 +105,7 @@ Save in a file and execute, exiting from vi
  and typing `;`
  
        <ESC>:w /tmp/sample.sql
-       <ESC>:q
+       <ESC>:q!
        ;
 
 ## Adding entries
