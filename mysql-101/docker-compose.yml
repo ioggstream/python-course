@@ -5,3 +5,10 @@ centos:
   volumes:
   - .:/code:z
 
+revealjs:
+  image: amouat/revealjs
+  ports:
+    - "8000:8000"
+    - "35729:35729"
+  volumes:
+  - .:/revealjs/slides:ro

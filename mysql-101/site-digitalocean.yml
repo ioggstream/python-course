@@ -31,8 +31,9 @@
       image_id: 27419663
       wait_timeout: 500
     register: my_droplet
-    with_items:
-    - 78537873
+    with_items: >-
+      {{ lookup('file','.droplet_ids').splitlines() }}
+
 
   - name: Dynamically add the new servers to the inventory.
     add_host:
@@ -58,6 +59,23 @@
         {{ item.droplet.networks.v4[0].ip_address  }} droplet_id={{item.droplet.id}} 
     with_items: "{{my_droplet.results}}"
 
+
+  - name: Create a new .droplet_ids
+    file:
+      path: .droplet_ids
+      state: absent
+  - name: Create an empty .droplet_ids file
+    file:
+      path: .droplet_ids
+      state: touch
+  - name: Add droplet_ids to file.
+    lineinfile:
+      path: .droplet_ids
+      create: yes
+      line: >-
+        {{item.droplet.id}} 
+    with_items: "{{my_droplet.results}}"
+
 #
 # Configure the newly created machines
 #
@@ -65,15 +83,18 @@
   environment:
   - ANSIBLE_HOST_KEY_CHECKING: False
   tasks:
+  - name: Install make
+    package: name="{{item}}"
+    with_items:
+    - make
+    - ansible
+
   - name: Docker should listen on localhost.
     lineinfile: 
       path: /etc/systemd/system/multi-user.target.wants/docker.service
       regexp: "^ExecStart=.*"
       line: "ExecStart=/usr/bin/dockerd -H fd:// -H tcp://172.17.0.1:2375"
     register: systemd_updated
-
-  - name: Install make
-    apt: name=make
 
   - name: Reload docker with new systemd config
     systemd: 
@@ -85,23 +106,35 @@
   - name: Check socket
     shell: |
       ss -tlnp | grep 2375
-    
-  - name: Download course
-    git:
-      repo: https://github.com/ioggstream/python-course.git
-      dest: /root/python-course
 
   - name: Copy docker profile
     copy:
       dest: /etc/profile.d/99-docker-profile.sh
       src: 99-docker-profile.sh
 
-  - name: Make it
+  - name: Run docker-compose to trigger a download of the image.
     shell: |
-      make course
-    args:
-     chdir: /root/python-course/mysql-101
-    register: output
+      docker-compose ps
+
+  - name: Download course
+    become_user: science
+    git:
+      repo: https://github.com/ioggstream/python-course.git
+      dest: /home/science/python-course
+
+  - name: Load /etc/profile in bashrc
+    become_user: science
+    block:
+    - lineinfile:
+        dest: '{{ "~/.bashrc" | expanduser }}'
+        line: '. /etc/profile'
+        insertafter: EOF
+
+    - shell: |
+        make course
+      args:
+       chdir: /home/science/python-course/mysql-101
+       register: output
  
   - debug:
       var: output
