@@ -54,8 +54,7 @@ Table size in $MiB$ $2^{20}$ bytes
 ## Exporting data
 Export  `employee` with the following parameter
 
-     mysqldump -proot employees \
-        --table salaries   \
+     mysqldump employees --tables salaries   \
         --skip-extended-insert  | 
             gzip  > salaries.sql.gz
         
