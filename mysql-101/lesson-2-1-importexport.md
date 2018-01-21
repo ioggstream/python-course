@@ -80,29 +80,59 @@ This is called **implicit commit**
 
 ## Autocommit
 
-Prepare a new table
+Prepare a new table to experiment with:
 
-	CREATE TABLE d1.t5 (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, name VARCHAR(12) DEFAULT "def");
+  - transactions
+  - autocommit
+
+
+        CREATE TABLE d1.t5 (
+           id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+           name VARCHAR(12) DEFAULT "def"
+        );
         INSERT INTO d1.t5(id) VALUES (1), (2), (3); 
+
+
+## Autocommit
 
 Exercise: 
 
         BEGIN; 
-        INSERT INTO d1.t5(name) VALUES('impl'); 
+        INSERT INTO d1.t5(name) VALUES('implicit'); 
         CREATE TABLE d1.deleteme(b BINARY);   -- the first time try without adding this line.
         ROLLBACK; 
         SELECT * FROM t5;
 
+## Autocommit
 
+Exercise: 
+
+        BEGIN; 
+        INSERT INTO d1.t5(name) VALUES('implicit'); 
+        DROP TABLE d1.deleteme;   
+        INSERT INTO d1.t5(name) VALUES('rollback');  -- check this now!
+        ROLLBACK; 
+        SELECT * FROM t5;
+
+
+## Autocommit
+
+Remember:
+
+  - avoid mixing DDL and DML
+
+  - check [the docs of your actual mysql version](https://dev.mysql.com/doc/refman/5.7/en/implicit-commit.html)
 
 ## Autocommit
 
 Exercise: which is the expected output of this commands? Which will end first? And last?
 
         
-        mysql -e 'BEGIN; UPDATE d1.t1 SET name="i1" WHERE id="1"; SELECT SLEEP(10); COMMIT' &
-        mysql -e 'BEGIN; UPDATE d1.t1 SET name="i2" WHERE id="1"; SELECT SLEEP(2); COMMIT'  &
-        mysql -e 'BEGIN; UPDATE d1.t1 SET name="i3" WHERE id="3"; SELECT SLEEP(2); COMMIT'  &
+        mysql -e 'BEGIN; UPDATE d1.t1 SET name="i1" WHERE id="1"; SELECT SLEEP(10) as 'one'; COMMIT' &
+        sleep .1
+        mysql -e 'BEGIN; UPDATE d1.t1 SET name="i2" WHERE id="1"; SELECT SLEEP(2) as 'two'; COMMIT'  &
+        sleep .1
+        mysql -e 'BEGIN; UPDATE d1.t1 SET name="i3" WHERE id="3"; SELECT SLEEP(2) as 'three'; COMMIT'  &
 
 Rememeber: 
 

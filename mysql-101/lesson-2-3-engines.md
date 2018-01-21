@@ -8,9 +8,9 @@
   
 
 ## Memory tables
-Paging in MySQL and temporary tables.
+"Paging" in MySQL and temporary tables.
 
-Memory and (Temporary Tables)[https://dev.mysql.com/doc/refman/5.6/en/internal-temporary-tables.html].
+Memory and [Temporary Tables](https://dev.mysql.com/doc/refman/5.7/en/internal-temporary-tables.html).
 
         max_heap_table_size
         max_tmp_table_size
@@ -30,8 +30,8 @@ Or format them via
 
         SELECT VARIABLE_NAME, 
             VARIABLE_VALUE>>20 
-        FROM GLOBAL_VARIABLES 
-        WHERE VARIABLE_NAME LIKE '%table_size';
+          FROM performance_schema.global_variables
+          WHERE VARIABLE_NAME LIKE '%table_size';
 
 
 ## Creating Memory Tables
