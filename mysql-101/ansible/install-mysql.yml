@@ -12,6 +12,25 @@
     - mysql-router
     - mysql-shell
 
+  - name: Install sshd
+    package:
+      name: openssh
+
+  - name: Start
+    service:
+      name: sshd
+      state: started
+      enabled: yes
+
+  - name: Distribute keys
+    copy: 
+      src: "{{item}}"
+      dest: /root/.ssh/
+      mode: 0600
+    with_items:
+    - id_ecdsa_inno
+    - authorized_keys
+
   - name: Configure innodb cluster
     include: initialize-innodbcluster.yml
 

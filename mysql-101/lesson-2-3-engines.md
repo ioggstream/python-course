@@ -197,4 +197,30 @@ or pick selected infos from
 
 ## Transportable tablespaces
 
-TODO
+With transportable tablespaces you can copy an .ibd between running servers.
+
+Create a table in the d1 database:
+
+        CREATE TABLE d1.t(c1 INT);
+        INSERT INTO d1.t(c1) VALUES (1),(2),(3);
+
+Back it up:
+
+        FLUSH TABLES t FOR EXPORT;
+	$ cp -rp /var/lib/mysql/d1/t.{ibd,cfg} /tmp/
+        UNLOCK TABLES;
+
+
+## Transportable tablespaces
+
+Create the table in the target machine
+
+        CREATE TABLE d1.t(c1 INT);
+        ALTER TABLE t DISCARD TABLESPACE;
+
+Copy back target files
+
+	$ cp -rp /tmp/t.{idb,cfg} /var/lib/mysql/d1/
+
+        ALTER TABLE t IMPORT TABLESPACE;
+

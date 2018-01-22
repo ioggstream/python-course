@@ -115,12 +115,13 @@
   - name: Run docker-compose to trigger a download of the image.
     shell: |
       docker-compose ps
+    ignore_errors: yes
 
   - name: Load /etc/profile in bashrc
     become_user: science
     block:
     - lineinfile:
-        dest: '{{ "~/.bashrc" | expanduser }}'
+        dest: '{{ "~science/.bashrc" | expanduser }}'
         line: '. /etc/profile'
         insertafter: EOF
 
@@ -133,7 +134,7 @@
         make course
       args:
        chdir: /home/science/python-course/mysql-101
-       register: output
+      register: output
  
   - debug:
       var: output

@@ -2,7 +2,7 @@
 # Initialize innodb cluster
 #
 - name: Get my.cnf options
-  command:
+  command: |
     grep ^group_replication /etc/my.cnf
   register: has_group_replication
   changed_when: false
@@ -30,6 +30,7 @@
       insertafter: >-
         ^[mysqld]
       block: |
+        log_bin=1
         gtid_mode=ON
         enforce_gtid_consistency=ON
         binlog_format=ROW
@@ -75,35 +76,31 @@
 - name: Take a nap
   pause: seconds=5
 
+# - debug: msg="Contacting {{innodb[0]}} for creating cluster."
+- name: Deploy template files
+  tags: template
+  template:
+    src: "{{item}}"
+    dest: /root/
+  with_items:
+  - create-cluster.js
+  - add-node.js
+  
 - name: Create cluster on local node
   run_once: yes
-  delegate_to: innodb[0]
-  shell: |-
-    mysqlsh --uri icroot@{{ansible_default_ipv4_address}}:3306  --password=Secret%2017 --log-level=DEBUG4 <<EOF
-
-    try {
-        cluster = dba.createCluster('prod');
-    } catch (err) {
-        cluster = dba.getCluster('prod');
-    }
-    var options = {"password": "Secret%2017"};
-
-    EOF
+  delegate_to: "{{groups['innodb'][0]}}"
+  shell: >
+    mysqlsh --uri icroot@{{ansible_default_ipv4_address}}:3306  
+       --password=Secret%2017 --log-level=DEBUG4 
+       --js -f /root/create-cluster.js
 
 - name: Add instances to cluster
-  delegate_to: innodb[0]
+  delegate_to: "{{groups['innodb'][0]}}"
   when: >-
-    ansible_hostname in innodb[1:]
-  shell: |
-    mysqlsh --uri icroot@localhost:3306  --password=Secret%2017 --log-level=DEBUG4 <<EOF
-    try {
-        cluster = dba.createCluster('prod');
-    } catch(err) {
-        cluster = dba.getCluster('prod');
-    }
-    var options = {"password": "Secret%2017"};
-    cluster.addInstance('icroot@{{ansible_default_ipv4_address}}:3306', options);
-    EOF
+    ansible_hostname in groups['innodb'][1:]
+  shell: >
+    mysqlsh --uri icroot@localhost:3306  --password=Secret%2017 --log-level=DEBUG4 
+    --js -f /root/add-node.js
 
 - name: Kill mysql
   command: pkill -f mysqld
