@@ -116,12 +116,6 @@
     shell: |
       docker-compose ps
 
-  - name: Download course
-    become_user: science
-    git:
-      repo: https://github.com/ioggstream/python-course.git
-      dest: /home/science/python-course
-
   - name: Load /etc/profile in bashrc
     become_user: science
     block:
@@ -129,6 +123,11 @@
         dest: '{{ "~/.bashrc" | expanduser }}'
         line: '. /etc/profile'
         insertafter: EOF
+
+    - name: Download course
+      git:
+        repo: https://github.com/ioggstream/python-course.git
+        dest: /home/science/python-course
 
     - shell: |
         make course

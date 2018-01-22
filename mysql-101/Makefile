@@ -17,7 +17,7 @@ EXTERNAL_COURSES =
 
 
 course: .prepare
-	docker-compose scale centos=3 & 
+	docker-compose scale centos=3 mysql=3 & 
 	bash 2>/dev/null ~/.bashrc
 	wait
 	

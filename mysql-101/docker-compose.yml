@@ -5,6 +5,12 @@ centos:
   volumes:
   - .:/code:z
 
+mysql:
+  image: ioggstream/mysql-community:5.7-systemd
+  privileged: true
+  volumes:
+  - .:/code:z
+
 revealjs:
   image: amouat/revealjs
   ports:
