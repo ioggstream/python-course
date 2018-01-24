@@ -5,11 +5,12 @@
 You cannot have the same level of:
  
  - Consistency 
- - Atomicity
+ - Availability
  - Partition
  
 Instead you have to favor something respect to the other.
 
+See [the wikipedia article](https://en.wikipedia.org/wiki/CAP_theorem)
 
 ## CAP Theorem Reloaded
 
@@ -63,7 +64,7 @@ Replication is $asynchronous$ and the agreements are configured on the slave onl
   - different data types (with many limitations)
         
   
-  ## Configuring replication
+## Configuring replication
 Master
      
   -  produces a changelog named binlog;

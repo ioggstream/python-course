@@ -205,6 +205,16 @@ Or with multiple columns
 
 Columns and UDF arguments must be `UNIQUE`.
 
+## Maintaining partitions
+
+Partitioning simplifies table maintenance.
+
+Just recreate/rework a single partition
+
+        ALTER TABLE t1 OPTIMIZE PARTITION p0, p1;
+
+        ALTER TABLE t1 ANALYZE PARTITION p3;
+
 
 ## Partitioning limitations 
 

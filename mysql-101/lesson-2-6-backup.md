@@ -7,11 +7,13 @@
   
 ## Backup 
 Importance of backups. Differences between:
+
   - Backup 
   - High Availability 
   - Disaster Recovery
 
 Measure and Test backup: 
+
   - Mean Time Between Failures;
   - Meat Time To Recovery;
   - Recovery Point Objective;
@@ -40,7 +42,9 @@ Create a logical backup:
         mysqldump --master-data=1 --all-databases |
             gzip > /backup/backup-$(date -I).sql.gz
             
+## mysqldump
 Exercise: 
+
   - drop *one* table from your DB;
   - create a new mysqld instance with  `--datadir=/backup/`;
   - restore your backup there;
@@ -110,6 +114,14 @@ Create a user with the given privileges copying data from mysql documentation[^m
 
 [^mysqlbackup]: http://dev.mysql.com/doc/mysql-enterprise-backup/3.9/en/mysqlbackup.privileges.html 
 
+## mysqlbackup
+
+Linux tip ;) 
+
+  - install Mysql Enterprise Backup via rpm
+  - list files in the `meb` package with:
+
+        rpm --query --list meb
 
 ## mysqlbackup
 To create a consistent backup:
