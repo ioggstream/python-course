@@ -140,8 +140,8 @@ mysqlreplicate takes care of
         
   - or provision your user
   
-        GRANT REPLICATION CLIENT TO 'repl' INDENTIFIED BY 'repl';
-
+        CREATE USER 'repl' IDENTIFIED BY 'rpass';
+        GRANT REPLICATION SLAVE ON *.* TO 'repl';
 
 
 ## Configuring replication

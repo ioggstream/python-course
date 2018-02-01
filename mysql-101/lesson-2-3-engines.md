@@ -107,18 +107,30 @@ Foreign Keys.
 System and tmp Tablespace.
 
   - `ibdataXXX` - unshrinkable!
-  - tmp:  `ibtmp1` new in 5.7, created at server startup
+  - undo: `undo00X` new in 5.7, set at --initialize time, automatically managed since 8.0
+  - tmp:  `ibtmp1` new in 5.7, created at server startup, for non-compressed tmp tables
 
 InnoDB Log Files. 
    
   - redo: `ib_logfile{0,2}`
-  - undo: `undo00X` new in 5.7, set at --initialize time
 
 Checkpoint interval.
 
+## InnoDB
+Innodb TMP tablespace:
+
+  - created at server startup
+  - only for non-compressed tables
+
+Avoids:
+
+  - open()+unlink() on disk for every tmp tables
+  - storing and uptading tmp tables metadata in ibdata*
+
+        SELECT * FROM INFORMATION_SCHEMA.FILES
+          WHERE TABLESPACE_NAME='innodb_temporary' \G
 
 ## InnoDB
-
 Buffer Pool: 
 
   - contention & instances (5.7 works better)
@@ -144,7 +156,7 @@ Configuring
  
  - `innodb_log_file_size` - [consider  `BLOB|TEXT` size on 5.6](https://bugs.mysql.com/bug.php?id=69477).
  - `innodb_flush_logs_at_trx_commit`
- - `innodb_undo_tablespaces` - reduce the system tablespace
+ - `innodb_undo_tablespaces` - reduce the system tablespace, deprecated and hardcoded to 2 since MySQL 8.0
  
 
 
