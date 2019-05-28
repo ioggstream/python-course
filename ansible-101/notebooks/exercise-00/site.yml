@@ -13,6 +13,6 @@
       with_items:
         - python
         - python-dev
-#      ignore_errors: yes  #  ignore errors during the course (eg. connectivity)
+      ignore_errors: yes  #  ignore errors during the course (eg. connectivity)
 
 
