@@ -17,22 +17,24 @@
       command: ssh
       name: rpolli
     register: do_key
+    check_mode: no
 
   - name: Create enough machine for the course.
     digital_ocean:
-      id: "{{item}}"
       state: present
       command: droplet
-      name: mydroplet
+      name: "{{item}}"
+      unique_name: yes
       ssh_key_ids: >-
         {{do_key.ssh_key.id}}
       size_id: 2gb
       region_id: fra1
-      image_id: 27493072 
+      image_id: docker-18-04
       wait_timeout: 500
     register: my_droplet
     with_items:
-    - 67839544
+    - deleteme-1
+    - deleteme-2
 
   - name: Dynamically add the new servers to the inventory.
     add_host:
@@ -40,8 +42,9 @@
         {{ item.droplet.networks.v4[0].ip_address }}
       groups: do
       ansible_user: root
+      host_key_checking: no
     with_items: "{{my_droplet.results}}"
-  
+
 
   - name: Create a sample inventory file with the server ips.
     file:
@@ -53,50 +56,62 @@
       line: "[do]"
   - lineinfile:
       path: /tmp/inventory.do
-      line: > 
-        {{ item.droplet.networks.v4[0].ip_address  }} droplet_id={{item.droplet.id}} 
+      line: >
+        {{ item.droplet.networks.v4[0].ip_address  }} droplet_id={{item.droplet.id}}
     with_items: "{{my_droplet.results}}"
 
 #
 # Configure the newly created machines
 #
 - hosts: do
+  vars:
+  - ansible_python_interpreter: /usr/bin/python3
+  - ansible_user: root
+  environment:
+  - ANSIBLE_HOST_KEY_CHECKING: False
   tasks:
-  - name: Docker should listen on localhost.
-    lineinfile: 
-      path: /etc/systemd/system/multi-user.target.wants/docker.service
-      regexp: "^ExecStart=.*"
-      line: "ExecStart=/usr/bin/dockerd -H fd:// -H tcp://172.17.0.1:2375"
-    register: systemd_updated
+  - ping:
+  - block:
+    - name: Docker should listen on localhost.
+      lineinfile:
+        path: /etc/systemd/system/multi-user.target.wants/docker.service
+        regexp: "^ExecStart=.*"
+        line: "ExecStart=/usr/bin/dockerd -H fd:// -H tcp://172.17.0.1:2375"
+      register: systemd_updated
 
-  - name: Reload docker with new systemd config
-    systemd: 
-      state: restarted
-      name: docker
-      daemon_reload: yes
-    when: systemd_updated.changed
+    - name: Install make
+      apt: name=make
 
-  - name: Check socket
-    shell: |
-      ss -tlnp | grep 2375
-    
-  - name: Download course
-    git:
-      repo: https://github.com/ioggstream/python-course.git
-      dest: /root/python-course
+    - name: Reload docker with new systemd config
+      systemd:
+        state: restarted
+        name: docker
+        daemon_reload: yes
+      when: systemd_updated.changed
 
-  - name: Make it
-    shell: |
-      make course
-    args:
-     chdir: /root/python-course/ansible-101
-    register: output
- 
-  - debug:
-      var: output
+    - name: Check socket
+      shell: |
+        ss -tlnp | grep 2375
 
-    
+    - name: Download course
+      git:
+        repo: https://github.com/ioggstream/python-course.git
+        dest: /root/python-course
+      ignore_errors: true
+
+    - name: Make it
+      shell: |
+        make course
+      args:
+       chdir: /root/python-course/ansible-101
+      register: output
+
+    - debug:
+        var: output
+    when: true  # droplet_id|default(0) != 0
 
 
 
- 
+
+
+
