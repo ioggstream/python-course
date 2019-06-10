@@ -1,0 +1,53 @@
+# Image for developing the course
+version: "2"
+services:
+  dev:
+      build: .
+      hostname: sysadminpy
+      environment:
+      - USE_HTTP=1
+      - PASSWORD=secret
+      ports:
+      - 8888:8888
+      volumes:
+      - ./notebooks:/notebooks:z
+      - ./notebooks/custom.css:/root/.jupyter/custom/custom.css
+      - .:/code:z
+      network_mode: bridge
+      entrypoint: /bin/sh
+      command: -c "/usr/local/bin/jupyter-notebook --ip 0.0.0.0 --allow-root"
+
+  editor:
+      image: swaggerapi/swagger-editor
+      hostname: oas
+      volumes:
+      - .:/code:z
+      network_mode: bridge
+      ports:
+      - 8080:8080
+
+
+
+  test:
+      image: ioggstream/python-course
+      volumes:
+      - ./notebooks:/notebooks:z
+      # entrypoint: tail -f /etc/hosts
+
+
+  # Official image from docker hub
+  course:
+      image: ioggstream/python-course:3.6
+      environment:
+      - USE_HTTP=1
+      - DOCKER_HOST=172.17.0.1
+      volumes:
+      - ./notebooks:/notebooks:z
+      - ./notebooks/custom.css:/root/.jupyter/custom/custom.css
+      - .:/code:z
+      network_mode: bridge
+      ports:
+      - 8888:8888
+      entrypoint: /bin/sh
+      command: -c "/usr/local/bin/jupyter-notebook --ip 0.0.0.0 --allow-root"
+
