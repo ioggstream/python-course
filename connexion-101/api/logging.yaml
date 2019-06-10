@@ -1,0 +1,25 @@
+#
+# Flask log configuration.
+#
+version: 1
+formatters:
+  # Avoid Flask sending the timestamp twice in the message.
+  fmt_syslog:
+    format: '%(levelname)s in %(module)s: %(message)s'
+handlers:
+  syslog:
+    class: logging.handlers.SysLogHandler
+    level: DEBUG
+  # This handler converts log in UTC before sending them to syslog.
+  rfc5424:
+    class: rfc5424logging.Rfc5424SysLogHandler
+    level: DEBUG
+    utc_timestamp: True
+    formatter: fmt_syslog
+# Use the rfc5424 handler by default.
+root:
+  level: DEBUG
+  handlers:
+  - rfc5424
+
+
