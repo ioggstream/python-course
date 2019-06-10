@@ -17,6 +17,16 @@ services:
       entrypoint: /bin/sh
       command: -c "/usr/local/bin/jupyter-notebook --ip 0.0.0.0 --allow-root"
 
+  editor:
+      image: swaggerapi/swagger-editor
+      hostname: oas
+      volumes:
+      - .:/code:z
+      network_mode: bridge
+      ports:
+      - 8080:8080
+
+
 
   test:
       image: ioggstream/python-course
@@ -27,7 +37,7 @@ services:
 
   # Official image from docker hub
   course:
-      image: ioggstream/python-course
+      image: ioggstream/python-course:3.6
       environment:
       - USE_HTTP=1
       - DOCKER_HOST=172.17.0.1

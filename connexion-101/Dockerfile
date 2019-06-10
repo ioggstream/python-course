@@ -2,7 +2,7 @@
 # Docker image for ipython notebook and various
 #  python courses
 #
-FROM python:2.7
+FROM python:3.6
 MAINTAINER roberto.polli@par-tec.it
 
 RUN apt-get -y update && apt-get -y install gcc make python-dev python-pip 
@@ -12,13 +12,13 @@ RUN apt-get -y clean
 
 RUN apt-get -y update && apt-get -y install curl apt-transport-https
 RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
-RUN echo "deb [arch=amd64] https://download.docker.com/linux/debian jessie stable" >> /etc/apt/sources.list
+RUN echo "deb [arch=amd64] https://download.docker.com/linux/debian stretch stable" >> /etc/apt/sources.list
 RUN apt-get -y update && apt-get -y install docker-ce
 RUN apt-get -y clean
 
 RUN apt-get -y autoremove
 
-RUN pip2 install -U pip
+RUN pip3 install -U pip
 
 COPY requirements.txt /requirements.txt
 
