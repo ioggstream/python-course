@@ -89,14 +89,14 @@
     shell: |
       make course
     args:
-     chdir: /root/python-course/ansible-101
+     chdir: /root/python-course/connexion-101
     register: output
- 
+
   - debug:
       var: output
 
-    
 
 
 
- 
+
+
