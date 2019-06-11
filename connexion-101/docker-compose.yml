@@ -11,6 +11,7 @@ services:
       - FOO=bar
       ports:
       - 8888:8888
+      - 5000:5000
       volumes:
       - ./notebooks:/notebooks:z
       - ./notebooks/custom.css:/root/.jupyter/custom/custom.css
