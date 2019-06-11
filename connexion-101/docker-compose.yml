@@ -1,5 +1,5 @@
 # Image for developing the course
-version: "2"
+version: "3"
 services:
   dev:
       build: .
@@ -14,7 +14,7 @@ services:
       - 5000:5000
       volumes:
       - ./notebooks:/notebooks:z
-      - ./notebooks/custom.css:/root/.jupyter/custom/custom.css
+      - ./notebooks/custom.css:/root/.jupyter/custom/custom.css:z
       - ./notebooks/startup:/root/.ipython/profile_default/startup:z
       - .:/code:z
       network_mode: bridge
