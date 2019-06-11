@@ -7,11 +7,14 @@ services:
       environment:
       - USE_HTTP=1
       - PASSWORD=secret
+      - "MAIN_IP=${MAIN_IP}"
+      - FOO=bar
       ports:
       - 8888:8888
       volumes:
       - ./notebooks:/notebooks:z
       - ./notebooks/custom.css:/root/.jupyter/custom/custom.css
+      - ./notebooks/startup:/root/.ipython/profile_default/startup:z
       - .:/code:z
       network_mode: bridge
       entrypoint: /bin/sh
@@ -20,6 +23,8 @@ services:
   editor:
       image: swaggerapi/swagger-editor
       hostname: oas
+      environment:
+      - "MAIN_IP=${MAIN_IP}"
       volumes:
       - .:/code:z
       network_mode: bridge
