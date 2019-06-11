@@ -44,8 +44,6 @@ paths:
             ritorna sempre un problem+json.
           content:
             application/problem+json:
-              schema:
-                $ref: '#/components/schemas/Problem'
               example:
                 title: foo
                 status: 200
