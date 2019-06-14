@@ -28,7 +28,7 @@
         {{do_key.ssh_key.id}}
       size_id: 2gb
       region_id: fra1
-      image_id: 27493072 
+      image_id: 27493072
       wait_timeout: 500
     register: my_droplet
     with_items:
@@ -41,7 +41,7 @@
       groups: do
       ansible_user: root
     with_items: "{{my_droplet.results}}"
-  
+
 
   - name: Create a sample inventory file with the server ips.
     file:
@@ -53,8 +53,8 @@
       line: "[do]"
   - lineinfile:
       path: /tmp/inventory.do
-      line: > 
-        {{ item.droplet.networks.v4[0].ip_address  }} droplet_id={{item.droplet.id}} 
+      line: >
+        {{ item.droplet.networks.v4[0].ip_address  }} droplet_id={{item.droplet.id}}
     with_items: "{{my_droplet.results}}"
 
 #
@@ -63,14 +63,14 @@
 - hosts: do
   tasks:
   - name: Docker should listen on localhost.
-    lineinfile: 
+    lineinfile:
       path: /etc/systemd/system/multi-user.target.wants/docker.service
       regexp: "^ExecStart=.*"
       line: "ExecStart=/usr/bin/dockerd -H fd:// -H tcp://172.17.0.1:2375"
     register: systemd_updated
 
   - name: Reload docker with new systemd config
-    systemd: 
+    systemd:
       state: restarted
       name: docker
       daemon_reload: yes
@@ -79,7 +79,7 @@
   - name: Check socket
     shell: |
       ss -tlnp | grep 2375
-    
+
   - name: Download course
     git:
       repo: https://github.com/ioggstream/python-course.git
