@@ -18,7 +18,7 @@ clean:
 	find notebooks -name '*_removed.nbconvert.ipynb' -delete
 	find notebooks -name '*_removed.ipynb' -delete
 	find notebooks -name \*.yml -type f -exec sed -i 's/[[:space:]]*$$//' {} \;
-	find notebooks -name \*.yml -type f -exec ansible-lint {} \;
+	# find notebooks -name \*.yml -type f -exec ansible-lint {} \;
 	find notebooks -name '*.ipynb' -exec  nbstripout {} \;
 	# $(foreach dpath, $(EXTERNAL_COURSES), rm -f notebooks/$(dpath)/*.ipynb; )
 
@@ -31,7 +31,7 @@ test:
 
 dev: .prepare
 	docker-compose scale dev=1 web=2 bastion=1
-	docker-compose logs dev | grep token | sed -e "s/0.0.0.0/$(MAIN_IP)/g"
+	docker-compose logs dev | grep token | sed -e "s/0.0.0.0/$(MAIN_IP)/g" | sed -e "s/(sysadminpy or 127.0.0.1)/$(MAIN_IP)/g"
 
 .prepare:
 	# build all EXTERNAL_COURSES

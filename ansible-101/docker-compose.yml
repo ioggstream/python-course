@@ -17,14 +17,14 @@ services:
       entrypoint: /bin/sh
       command: -c "/usr/local/bin/jupyter-notebook --ip 0.0.0.0 --allow-root"
 
-         
+
   test:
       image: ioggstream/python-course
       volumes:
       - ./notebooks:/notebooks:z
       # entrypoint: tail -f /etc/hosts
-  
-  
+
+
   # Official image from docker hub
   course:
       image: ioggstream/python-course
@@ -40,7 +40,8 @@ services:
       - 8888:8888
       entrypoint: /bin/sh
       command: -c "/usr/local/bin/jupyter-notebook --ip 0.0.0.0 --allow-root"
-  
+
+
   # Some ssh-enabled docker containers
   #  for student homework
   bastion:
@@ -48,9 +49,9 @@ services:
           context: .
           dockerfile:  Dockerfile.ssh
       volumes:
-      - .:/code:z 
+      - .:/code:z
       network_mode: bridge
-  
+
 
   # Some ssh-enabled docker containers
   #  for student homework
@@ -59,6 +60,6 @@ services:
           context: .
           dockerfile:  Dockerfile.ssh
       volumes:
-      - .:/code:z 
+      - .:/code:z
       # - ./notebooks/exercise-01/id_ansible.pub:/root/.ssh/authorized_keys:z
       network_mode: bridge
