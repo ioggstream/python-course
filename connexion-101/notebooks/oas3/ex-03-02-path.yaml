@@ -5,7 +5,7 @@
 # so that the file become a valid OAS3 spec.
 openapi: 3.0.0
 info:
-  title: foo
+  title: writeme
   version: "0.1"
 
 # One or more server
@@ -31,24 +31,24 @@ servers:
 paths:
   /status:
     get:
-      summary: Ritorna lo stato dell'applicazione.
+      summary: Return the application status.
       description: |
-        Ritorna lo stato dell'applicazione. A scopo
-        di test, su base randomica puo' ritornare
-        un errore.
-      operationId: get_status
+        Return the application status. You may want
+        to implement this so that it randomically
+        returns an error (eg. 429 or 503).
+      operationId: api.get_status
       responses:
         '200':
           description: |
-            Il server ha ritornato lo status. In caso di problemi
-            ritorna sempre un problem+json.
+            The status is OK.
           content:
             application/problem+json:
               schema:
-                $ref: '#/components/schemas/Problem'
+                $ref: '#/components/schemas/Problem'  # REMOVE ME FOR EXERCISE
+         'default':  # WRITEME
 
 
-components:
+components:  # REMOVEME FOR EXERCISE
   schemas:
     Problem:
       $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/schemas/Problem'

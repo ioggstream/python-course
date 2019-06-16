@@ -36,7 +36,7 @@ paths:
         Ritorna lo stato dell'applicazione. A scopo
         di test, su base randomica puo' ritornare
         un errore.
-      operationId: get_status
+      operationId: api.get_status
       responses:
         '200':
           description: |
@@ -44,10 +44,12 @@ paths:
             ritorna sempre un problem+json.
           content:
             application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Problem"
               example:
-                title: foo
+                title: OK
                 status: 200
-                detail: bar
+                detail: The app is running smoothly.
 
 
 components:
