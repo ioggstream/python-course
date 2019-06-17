@@ -25,6 +25,11 @@ servers:
       interval: 300
       timeout: 15
 
+x-commons:
+  common-responses: &common-responses
+    503:
+      $ref: "#/components/responses/503ServiceUnavailable"
+
 #
 # Complete the /status path
 #
@@ -38,6 +43,7 @@ paths:
         un errore.
       operationId: api.get_status
       responses:
+        <<: *common-responses
         '200':
           description: |
             Il server ha ritornato lo status. In caso di problemi
@@ -50,15 +56,56 @@ paths:
                 title: OK
                 status: 200
                 detail: The app is running smoothly.
-        '503':
-          $ref: '#/components/responses/503ServiceUnavailable'
-
-
+  /echo:  # TODO implement this
+    get:
+      parameters:
+      - $ref: '#/components/parameters/tz'
+      summary: Return the current timestamp in RFC3339
+      description: |
+        Return the current timestamp, in the specified
+        timezone. If the timezone does not
+        exist returns 400 Bad Request, specifying that
+        the given timezone is not in our database.
+      operationId: api.get_echo
+      responses:
+        <<: *common-responses
+        '200':
+          description: |
+            The current timestamp.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Datetime"
+              example:
+                datetime: 20010507T00:00:10Z
+        '400':
+           $ref: '#/components/responses/400BadRequest'
 components:
+  parameters:
+    tz:
+      name: tz
+      in: query
+      schema:
+        $ref: '#/components/schemas/Timezone'
   responses:
+    400BadRequest:
+      $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/responses/400BadRequest"
     503ServiceUnavailable:
       $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/responses/503ServiceUnavailable"
   schemas:
+    Timezone:
+      description: |
+        A timezone in the form of continent/city
+        or "UTC".
+      type: string
+      example: Europe/Rome
+    Datetime:
+      required:
+      - timestamp
+      properties:
+        timestamp:
+          type: string
+          format: datetime
+          example: 2019-01-01T00:00:00Z
     Problem:
       $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/schemas/Problem'
-

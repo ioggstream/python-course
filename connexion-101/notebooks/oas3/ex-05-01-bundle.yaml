@@ -13,6 +13,31 @@ servers:
     url: https://api.example.com/datetime/v1/status
   x-sandbox: true
 paths:
+  /echo:
+    get:
+      description: |
+        Return the current timestamp, in the specified
+        timezone. If the timezone does not
+        exist returns 400 Bad Request, specifying that
+        the given timezone is not in our database.
+      operationId: api.get_echo
+      parameters:
+      - $ref: '#/components/parameters/tz'
+      responses:
+        503:
+          $ref: '#/components/responses/503ServiceUnavailable'
+        '200':
+          content:
+            application/problem+json:
+              example:
+                datetime: 20010507T00:00:10Z
+              schema:
+                $ref: '#/components/schemas/Datetime'
+          description: |
+            The current timestamp.
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+      summary: Return the current timestamp in RFC3339
   /status:
     get:
       description: |
@@ -21,6 +46,8 @@ paths:
         un errore.
       operationId: api.get_status
       responses:
+        503:
+          $ref: '#/components/responses/503ServiceUnavailable'
         '200':
           content:
             application/problem+json:
@@ -33,8 +60,6 @@ paths:
           description: |
             Il server ha ritornato lo status. In caso di problemi
             ritorna sempre un problem+json.
-        '503':
-          $ref: '#/components/responses/503ServiceUnavailable'
       summary: Ritorna lo stato dell'applicazione.
 components:
   headers:
@@ -45,7 +70,19 @@ components:
       schema:
         format: int32
         type: integer
+  parameters:
+    tz:
+      in: query
+      name: tz
+      schema:
+        $ref: '#/components/schemas/Timezone'
   responses:
+    400BadRequest:
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+      description: Bad Request
     503ServiceUnavailable:
       content:
         application/problem+json:
@@ -56,6 +93,14 @@ components:
         Retry-After:
           $ref: '#/components/headers/Retry-After'
   schemas:
+    Datetime:
+      properties:
+        timestamp:
+          example: 2019-01-01 00:00:00
+          format: datetime
+          type: string
+      required:
+      - timestamp
     Problem:
       properties:
         detail:
@@ -97,3 +142,9 @@ components:
           format: uri
           type: string
       type: object
+    Timezone:
+      description: |
+        A timezone in the form of continent/city
+        or "UTC".
+      example: Europe/Rome
+      type: string

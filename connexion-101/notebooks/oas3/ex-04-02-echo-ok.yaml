@@ -25,6 +25,11 @@ servers:
       interval: 300
       timeout: 15
 
+x-commons:
+  common-responses: &common-responses
+    503:
+      $ref: "#/components/responses/503ServiceUnavailable"
+
 #
 # Complete the /status path
 #
@@ -38,6 +43,7 @@ paths:
         un errore.
       operationId: api.get_status
       responses:
+        <<: *common-responses
         '200':
           description: |
             Il server ha ritornato lo status. In caso di problemi
@@ -50,8 +56,6 @@ paths:
                 title: OK
                 status: 200
                 detail: The app is running smoothly.
-        '503':
-           $ref: '#/components/responses/503'
   /echo:  # TODO implement this
     get:
       parameters:
@@ -64,6 +68,7 @@ paths:
         the given timezone is not in our database.
       operationId: api.get_echo
       responses:
+        <<: *common-responses
         '200':
           description: |
             The current timestamp.
@@ -74,12 +79,7 @@ paths:
               example:
                 datetime: 20010507T00:00:10Z
         '400':
-           $ref: '#/components/responses/400'
-        '503':
-           $ref: '#/components/responses/503'
-
-
-
+           $ref: '#/components/responses/400BadRequest'
 components:
   parameters:
     tz:
@@ -88,29 +88,14 @@ components:
       schema:
         $ref: '#/components/schemas/Timezone'
   responses:
-    '400':
-      $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/responses/400BadRequest'
-    '503':
-      description: |
-        The service is temporarily unavailable.
-        In this case no implementation informations
-        should be disclosed.
-      headers:
-        Retry-After:
-          $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/headers/Retry-After'
-      content:
-        application/problem+json:
-          schema:
-            $ref: "#/components/schemas/Problem"
-          example:
-            title: Service Unavailable
-            status: 503
-            detail: The app is temporarily down.
-
+    400BadRequest:
+      $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/responses/400BadRequest"
+    503ServiceUnavailable:
+      $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/responses/503ServiceUnavailable"
   schemas:
     Timezone:
       description: |
-        A timezone in the form of continent/city 
+        A timezone in the form of continent/city
         or "UTC".
       type: string
       example: Europe/Rome

@@ -36,4 +36,9 @@ RUN jupyter nbextension enable exercise/main
 RUN jupyter nbextension install rise --py --sys-prefix
 RUN jupyter nbextension enable rise --py --sys-prefix
 
+# Add API dependencies
+
+COPY requirements-api.txt /requirements-api.txt
+RUN pip3 install -r /requirements-api.txt
+
 ENTRYPOINT /usr/local/bin/jupyter-notebook --ip 0.0.0.0

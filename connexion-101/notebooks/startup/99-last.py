@@ -10,7 +10,7 @@ from urllib.parse import urlparse
 import yaml
 from IPython.display import Latex, Markdown, display
 from requests import get
-
+from openapi_resolver import OpenapiResolver
 
 def render_markdown(s):
     return display(Markdown(s))
@@ -34,5 +34,5 @@ def show_component(url):
     ret = yaml.safe_load(get(url).content)
     for k in fragment:
         ret = ret[k]
-    return yaml.dump(ret)
+    return OpenapiResolver.yaml_dump_pretty(ret)
 
