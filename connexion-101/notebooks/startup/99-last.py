@@ -6,6 +6,7 @@ import sys
 from IPython.display import display, Markdown, Latex
 import yaml
 import json
+from pathlib import Path
 
 def render_markdown(s):
     return display(Markdown(s))
