@@ -10,7 +10,7 @@ MAIN_IP = $(shell ip -4 -o a s scope global | awk -F'[/ ]+' '{print $$4; exit} '
 EXTERNAL_COURSES =
 
 
-course: .prepare
+course: .prepare .EXPORT_ALL_VARIABLES
 	docker-compose scale course=1 editor=1 
 	docker-compose logs course | grep token | sed -e "s/0.0.0.0/$(MAIN_IP)/g"
 
@@ -18,9 +18,9 @@ clean:
 	rm *.pyc __pycache__ -fr
 	find notebooks -name '*_removed.nbconvert.ipynb' -delete
 	find notebooks -name '*_removed.ipynb' -delete
-	find notebooks -name \*.yml -type f -exec sed -i 's/[[:space:]]*$$//' {} \;
+	find notebooks -name '.*' -prune -o -name \*.yml -type f -exec sed -i 's/[[:space:]]*$$//' {} \;
 	# find notebooks -name \*.yml -type f -exec ansible-lint {} \;
-	find notebooks -name '*.ipynb' -exec  nbstripout {} \;
+	find notebooks -name '.*' -prune -o  -name '*.ipynb' -exec  nbstripout {} \;
 	# $(foreach dpath, $(EXTERNAL_COURSES), rm -f notebooks/$(dpath)/*.ipynb; )
 
 clean-other:
