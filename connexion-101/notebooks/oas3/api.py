@@ -1,5 +1,7 @@
 from connexion import problem
 from random import randint
+import pytz
+from datetime import datetime
 
 def get_status():
     """Implement the get_status operation
@@ -21,3 +23,14 @@ def get_status():
     )    
     raise NotImplementedError
 
+
+def get_echo(tz='Zulu'):
+    if tz not in pytz.all_timezones:
+        return problem(
+            status=400,
+            title="Bad Timezone",
+            detail="The specified timezone is not valid",
+            ext={"valid_timezones": pytz.all_timezones}
+        )
+    d = datetime.now(tz=pytz.timezone(tz))
+    return {"timestamp": d.isoformat().replace('+00:00', 'Z')}
