@@ -90,6 +90,12 @@
     git:
       repo: https://github.com/ioggstream/python-course.git
       dest: /root/python-course
+      version: openapi-101
+
+  - name: install deps
+    package:
+      name:
+      - make
 
   - name: Make it
     shell: |
