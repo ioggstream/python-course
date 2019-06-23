@@ -20,19 +20,19 @@
 
   - name: Create enough machine for the course.
     digital_ocean:
-      id: "{{item}}"
       state: present
+      unique_name: yes
       command: droplet
-      name: mydroplet
+      name: "{{item}}"
       ssh_key_ids: >-
         {{do_key.ssh_key.id}}
       size_id: 2gb
       region_id: fra1
-      image_id: 27493072
+      image_id: docker-18-04
       wait_timeout: 500
     register: my_droplet
     with_items:
-    - 67839544
+    - deleteme-1
 
   - name: Dynamically add the new servers to the inventory.
     add_host:
@@ -40,6 +40,7 @@
         {{ item.droplet.networks.v4[0].ip_address }}
       groups: do
       ansible_user: root
+      host_key_checking: no
     with_items: "{{my_droplet.results}}"
 
 
@@ -61,6 +62,11 @@
 # Configure the newly created machines
 #
 - hosts: do
+  vars:
+  - ansible_python_interpreter: /usr/bin/python3
+  - ansible_user: root
+  environment:
+  - ANSIBLE_HOST_KEY_CHECKING: False
   tasks:
   - name: Docker should listen on localhost.
     lineinfile:
