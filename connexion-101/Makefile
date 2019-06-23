@@ -10,7 +10,7 @@ MAIN_IP = $(shell ip -4 -o a s scope global | awk -F'[/ ]+' '{print $$4; exit} '
 EXTERNAL_COURSES =
 
 
-course: .prepare
+course: .prepare .EXPORT_ALL_VARIABLES
 	docker-compose scale course=1 editor=1 
 	docker-compose logs course | grep token | sed -e "s/0.0.0.0/$(MAIN_IP)/g"
 

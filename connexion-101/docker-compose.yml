@@ -50,6 +50,7 @@ services:
       volumes:
       - ./notebooks:/notebooks:z
       - ./notebooks/custom.css:/root/.jupyter/custom/custom.css
+      - ./notebooks/startup:/root/.ipython/profile_default/startup:z
       - .:/code:z
       network_mode: bridge
       ports:
