@@ -9,6 +9,8 @@ def my_auth(username, password,required_scopes=None):
        :params: scopes, the scope
        :returns: `{"sub": username, "scope": ""}` on success, 
                  None on failure
-    """   
-    raise NotImplementedError
+    """
+    if username == password:
+        return {"sub": username, "scope": ""}
+    return None
 
