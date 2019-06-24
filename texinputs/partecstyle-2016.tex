@@ -1,0 +1,182 @@
+\usepackage{pgf}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc} % use unicode chars
+\usepackage{lmodern}% http://ctan.org/pkg/lm
+\usepackage{bashful} % execute scripts inside latex and create dynamic .tex files
+\usepackage{beamerthemesplit}
+\usepackage{color}
+\usepackage{graphics,epsfig,subfigure}
+\usepackage{hyperref}
+\usepackage{import}
+\usepackage[mathescape,escapeinside=||]{minted}
+\usepackage{mathtools}
+\usepackage{makeidx}
+\usepackage{multicol}
+\usepackage{mdframed}
+\usepackage{url}
+\usepackage{srcltx}
+\usepackage{amsmath}
+%\usepackage[beamer]{hf-tikz}
+\usepackage{xfrac}
+\usepackage{ragged2e} % text alignment
+
+%
+% Packages for markdown conversion
+%
+\usepackage{amssymb}
+%\usepackage{ifxetex}
+%\usepackage{ifluatex}
+\usepackage{listings}
+\usepackage{fancyvrb}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{ulem}
+%\usepackage{fontspec}
+%\usepackage{xltxtra}
+\usepackage{xunicode}
+
+
+%\showboxdepth=5
+%\showboxbreadth=5
+
+% Slides in 16:9
+\usepackage[orientation=landscape,size=custom,width=16,height=9,scale=0.5,debug]{beamerposter}
+
+%
+% Macros
+%
+\definecolor{darkred}{rgb}{0.55, 0.0, 0.0}
+\definecolor{light-gray}{gray}{.80}
+\definecolor{light-yellow}{rgb}{255,255,153}
+\definecolor{alizarin}{rgb}{0.82, 0.1, 0.26}
+% colorized font
+\newcommand{\red}[1] {{\color{red} #1}}
+\newcommand{\darkred}[1] {{\color{darkred} #1}}
+\newcommand{\blue}[1] {{\color{blue} #1}}
+\newcommand{\green}[1] {{\color{green} #1}}
+\newcommand{\gray}[1] {{\color{gray} #1}}
+\newcommand{\grey}[1] {{\color{gray} #1}}
+
+\newcommand{\hearts} {\red{$\heartsuit$}}
+\newcommand{\diamonds} {\red{$\diamondsuit$}}
+\newcommand{\spades} {$\spadesuit$}
+\newcommand{\clubs} {$\clubsuit$}
+\newcommand{\pyoptional}[1]{\diamonds #1 \diamonds}
+
+\newcommand{\deltasum}[1]{\sum (#1 - \bar{#1})}
+\newcommand{\deltasumsq}[1]{\sum (#1 - \bar{#1})^{2}}
+
+%
+% Take care of the newline after \frametitle
+%
+\newenvironment{pyframe}[1]
+{\begin{frame}[fragile,environment=pyframe]\frametitle{#1}
+
+}
+{\end{frame}}
+
+
+% environments
+\newminted{py}{mathescape,escapeinside=||}%
+\newminted{bash}{mathescape,fontsize=\small}%
+
+% python highlights: module, method
+\newcommand{\pymodule}[1]{\darkred{\textbf{#1}}}
+\newcommand{\pyfunction}[1]{\textit{#1}}
+\newcommand{\keyword}[1]{\texttt{#1}}
+\newcommand{\pyver}[1]{\colorbox{yellow}{#1}}
+\newcommand{\typeonly}[1]{\colorbox{green}{#1}}
+\newcommand{\pyvers}[1]{\raisebox{0em}{\colorbox{yellow}{#1}}}
+\newcommand{\code}[1] { \texttt{#1} }
+% support for columns in markdown
+\newcommand{\columnsbegin}{\begin{columns}}
+\newcommand{\columnsend}{\end{columns}}
+%support for minted in markdown
+%\newcommand{\pythonbegin}{\begin{pycode*}}
+%\newcommand{\pythonend}{\end{pycode*}}
+
+% special symbils
+\newcommand{\mymapsto}{\operatornamewithlimits{\longmapsto}}
+
+\makeatletter
+\newcommand{\xMapsto}[2][]{\ext@arrow 0599{\Mapstofill@}{#1}{#2}}
+\def\Mapstofill@{\arrowfill@{\Mapstochar\Relbar}\Relbar\Rightarrow}
+\makeatother
+
+
+
+
+%
+% style
+%
+
+\setbeamercovered{transparent}
+\mode<presentation>
+
+%\geometry{top=5pt, margin=5pt}
+%The outertheme defines the head and the footline of each slide
+% \setbeamercolor{block title}{bg=orange}
+% \useinnertheme{circles}
+% \useoutertheme{split}
+%\beamertemplatenavigationsymbolsempty
+
+%\usetheme[numbers,totalnumber,compress,sidebarshades]{Babel}
+\setbeamertemplate{headline}{
+ \leavevmode%
+  \hbox{%
+%,bb=0 0 5cm 2cm
+    \mainlogo
+    \eventlogo
+    }
+}
+\setbeamertemplate{footline}{
+\noindent\textbf{\hspace{5pt}\insertsection \insertsubsection\hfill}\textbf{\hfill{\color{gray}\insertshortauthor}\hfill}\textbf{\hfill }
+   % \textline[t]{ \insertsection  \insertsubsection}{\gray{\insertshortauthor}}{right}
+}
+%\useinnertheme[shadow=false]{rounded}
+% frametitle
+\setbeamertemplate{frametitle}[default][center]
+\setbeamercolor*{frametitle}{bg=white,fg=gray,parent=palette primary}
+\setbeamerfont{frametitle}{series=\bfseries,size={\fontsize{16}{8}}}
+% table of contents
+\setbeamercolor{section in toc}{fg=black} % series=\bfseries,size={\fontsize{16}{8}}}
+%\setbeamercolor{section/subsection in toc}{fg=black}
+%\setbeamercolor{subsection in toc}{fg=black}
+%\setbeamerfont{section in toc}{fg=black} % series=\bfseries,size={\fontsize{16}{8}}}
+%\setbeamerfont{section/subsection in toc}{fg=black}
+%\setbeamerfont{subsection in toc}{fg=black}
+
+%title
+\setbeamercolor{title}{fg=black,bg=white}
+\setbeamerfont{title}{series=\bfseries,size={\fontsize{24.88}{32}}}
+%subtitle
+\setbeamercolor{subtitle}{fg=gray}
+\setbeamerfont{subtitle}{series=\bfseries,size={\fontsize{14}{}}}
+%titlepage
+\setbeamertemplate{title page}[default][center]
+% bullets
+\setbeamercolor{itemize item}{fg=gray}
+\setbeamertemplate{itemize items}[circle]
+\setbeamercolor{itemize item}{fg=light-gray}
+\setbeamercolor{itemize items}{fg=light-gray}
+% enumerations
+\setbeamercolor{enumerate item}{fg=black}
+\setbeamercolor{local structure}{fg=black}
+
+%
+% increase itemize spacing
+%
+%\newlength{\wideitemsep}
+%\setlength{\wideitemsep}{\itemsep}
+%\addtolength{\wideitemsep}{14pt}
+%\let\olditem\item
+%\renewcommand{\item}{\setlength{\itemsep}{\wideitemsep}\olditem}
+
+  % \usecolortheme[named=orange]{structure}
+  % \useinnertheme{circles}
+  % \usefonttheme[onlymath]{serif}
+\setbeamercovered{transparent}
+  % \setbeamertemplate{blocks}[rounded][shadow=true]
+
+\makeindex
