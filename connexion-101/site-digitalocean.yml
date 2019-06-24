@@ -1,0 +1,114 @@
+#
+# Provision current infrastructure on digitalocean
+#   $ export DO_API_TOKEN=xxxx
+#   $ ansible-playbook -v site-digitalocean.yml
+#
+# This will output a series of jupyter urls with their associate ips.
+#
+# BEWARE: unless you populate accordingly the digital_ocean droplet ids
+#         the digital_ocean module will create those droplets over and
+#         over again.
+#
+- hosts: localhost
+  tasks:
+  - name: Retrieve ssh key id.
+    digital_ocean:
+      state: present
+      command: ssh
+      name: rpolli
+    register: do_key
+
+  - name: Create enough machine for the course.
+    digital_ocean:
+      state: present
+      unique_name: yes
+      command: droplet
+      name: "{{item}}"
+      ssh_key_ids: >-
+        {{do_key.ssh_key.id}}
+      size_id: 2gb
+      region_id: fra1
+      image_id: docker-18-04
+      wait_timeout: 500
+    register: my_droplet
+    with_items:
+    - deleteme-1
+
+  - name: Dynamically add the new servers to the inventory.
+    add_host:
+      hostname: >
+        {{ item.droplet.networks.v4[0].ip_address }}
+      groups: do
+      ansible_user: root
+      host_key_checking: no
+    with_items: "{{my_droplet.results}}"
+
+
+  - name: Create a sample inventory file with the server ips.
+    file:
+      path: /tmp/inventory.do
+      state: absent
+  - lineinfile:
+      path: /tmp/inventory.do
+      create: yes
+      line: "[do]"
+  - lineinfile:
+      path: /tmp/inventory.do
+      line: >
+        {{ item.droplet.networks.v4[0].ip_address  }} droplet_id={{item.droplet.id}}
+    with_items: "{{my_droplet.results}}"
+
+#
+# Configure the newly created machines
+#
+- hosts: do
+  vars:
+  - ansible_python_interpreter: /usr/bin/python3
+  - ansible_user: root
+  environment:
+  - ANSIBLE_HOST_KEY_CHECKING: False
+  tasks:
+  - name: Docker should listen on localhost.
+    lineinfile:
+      path: /etc/systemd/system/multi-user.target.wants/docker.service
+      regexp: "^ExecStart=.*"
+      line: "ExecStart=/usr/bin/dockerd -H fd:// -H tcp://172.17.0.1:2375"
+    register: systemd_updated
+
+  - name: Reload docker with new systemd config
+    systemd:
+      state: restarted
+      name: docker
+      daemon_reload: yes
+    when: systemd_updated.changed
+
+  - name: Check socket
+    shell: |
+      ss -tlnp | grep 2375
+
+  - name: Download course
+    git:
+      repo: https://github.com/ioggstream/python-course.git
+      dest: /root/python-course
+      version: openapi-101
+
+  - name: install deps
+    package:
+      name:
+      - make
+
+  - name: Make it
+    shell: |
+      make course
+    args:
+     chdir: /root/python-course/connexion-101
+    register: output
+
+  - debug:
+      var: output
+
+
+
+
+
+

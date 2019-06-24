@@ -1,0 +1,60 @@
+# Image for developing the course
+version: "3"
+services:
+  dev:
+      build: .
+      hostname: sysadminpy
+      environment:
+      - USE_HTTP=1
+      - PASSWORD=secret
+      - "MAIN_IP=${MAIN_IP}"
+      - FOO=bar
+      ports:
+      - 8888:8888
+      - 5000:5000
+      volumes:
+      - ./notebooks:/notebooks:z
+      - ./notebooks/custom.css:/root/.jupyter/custom/custom.css:z
+      - ./notebooks/startup:/root/.ipython/profile_default/startup:z
+      - .:/code:z
+      network_mode: bridge
+      entrypoint: /bin/sh
+      command: -c "/usr/local/bin/jupyter-notebook --ip 0.0.0.0 --allow-root"
+
+  editor:
+      image: swaggerapi/swagger-editor
+      hostname: oas
+      environment:
+      - "MAIN_IP=${MAIN_IP}"
+      volumes:
+      - .:/code:z
+      network_mode: bridge
+      ports:
+      - 8080:8080
+
+
+
+  test:
+      image: ioggstream/python-course
+      volumes:
+      - ./notebooks:/notebooks:z
+      # entrypoint: tail -f /etc/hosts
+
+
+  # Official image from docker hub
+  course:
+      image: ioggstream/python-course:3.6
+      environment:
+      - USE_HTTP=1
+      - DOCKER_HOST=172.17.0.1
+      volumes:
+      - ./notebooks:/notebooks:z
+      - ./notebooks/custom.css:/root/.jupyter/custom/custom.css
+      - ./notebooks/startup:/root/.ipython/profile_default/startup:z
+      - .:/code:z
+      network_mode: bridge
+      ports:
+      - 8888:8888
+      entrypoint: /bin/sh
+      command: -c "/usr/local/bin/jupyter-notebook --ip 0.0.0.0 --allow-root"
+

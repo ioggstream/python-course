@@ -1,0 +1,59 @@
+# Complete this file with the required informations
+#  using your swagger-editor. You should
+# - fix all the eventual error
+# - add the missing parameters
+# so that the file become a valid OAS3 spec.
+openapi: 3.0.0
+info:
+  title: foo
+  version: "0.1"
+
+# One or more server
+#   You can add production, staging and test environments.
+#   We are using the custom `x-sandbox` to identify
+#   sandbox instances
+servers:
+  - description: Development server
+    url: https://localhost:8443/datetime/v1
+  - description: Test server
+    url: https://api.example.com/datetime/v1
+    x-sandbox: true
+    # The following custom parameter can be used
+    # to declare how to check the API.
+    x-healthCheck:
+      url: https://api.example.com/datetime/v1/status
+      interval: 300
+      timeout: 15
+
+#
+# Complete the /status path
+#
+paths:
+  /status:
+    get:
+      summary: Ritorna lo stato dell'applicazione.
+      description: |
+        Ritorna lo stato dell'applicazione. A scopo
+        di test, su base randomica puo' ritornare
+        un errore.
+      operationId: api.get_status
+      responses:
+        '200':
+          description: |
+            Il server ha ritornato lo status. In caso di problemi
+            ritorna sempre un problem+json.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+              example:
+                title: OK
+                status: 200
+                detail: The app is running smoothly.
+
+
+components:
+  schemas:
+    Problem:
+      $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/schemas/Problem'
+

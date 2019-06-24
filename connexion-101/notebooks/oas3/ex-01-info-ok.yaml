@@ -1,0 +1,80 @@
+openapi: 3.0.0
+info:
+  version: "1.0.0"
+  # Il `title` e' il nome del tuo prodotto/servizio!
+  # E' la prima cosa ad apparire in pagine web e cataloghi.
+  # Dev'essere chiaro e conciso.
+  title: |-
+    Ora esatta.
+  x-summary: >-
+    Questo servizio ritorna la data e l'ora attuali in UTC.
+  description: |
+    #### Documentazione
+    Il servizio Ora esatta ritorna l'ora del server in formato RFC5424 (syslog).
+
+    `2018-12-30T12:23:32Z`
+
+    Qui va' inserita la documentazione principale del servizio.
+    Il testo dev'essere diviso in piu' parti, tutte scritte in Markdown.
+
+    Questa sezione e' informativa. Ricordati di inserire:
+
+      * cosa fanno queste API?
+      * chi puo' beneficiarne?
+      * perche' sono utili?
+
+    ##### Sottosezioni
+    E' possibile utilizzare - con criterio - delle sottosezioni.
+
+    #### Note
+
+    Il servizio non richiede autenticazione, ma va' usato rispettando gli
+    header di throttling esposti in conformita' alle Linee Guida del Modello di interoperabilita'.
+
+    Usa questa sezione per annotazioni specifiche, riferimenti normativi e/o
+    per manleve ed esclusioni di responsabilita' eventualmente non incluse in `termsOfService`.
+
+    #### Informazioni tecniche ed esempi
+
+    Esempio:
+
+    ```
+    http http://localhost:8443/datetime/v1/echo
+    {
+      'datetime': '2018-12-30T12:23:32Z'
+    }
+    ```
+
+    Qui e' possibile introdurre brevi informazioni tecniche ed esempi.
+    Attenzione: la `description` non sostituisce la documentazione di progetto,
+    deve pero' facilitare l'esecuzione delle prime richieste.
+
+
+  # I termini del servizio contengono un riferimento
+  #   a tutte le indicazioni e le note legali per l'utilizzo
+  #   del servizio, inclusi gli eventuali riferimenti utili al GDPR.
+  termsOfService: 'http://swagger.io/terms/'
+  # Chi posso contattare per informazioni sul servizio e sul suo stato?
+  contact:
+    email: robipolli@gmail.com
+    name: Roberto Polli
+    url: https://twitter.com/ioggstream
+  # L'audience delle API. Attualmente e' definito solamente
+  #   la tipologia `public`.
+  x-audience:
+    - public
+  # Ogni API deve avere un UUID, invariante nel tempo e
+  #   rispetto al `title`.
+  x-api-id: 00000000-0000-0000-0000-000000000000
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+
+  # Per dare indicazioni sul ciclo di vita dell'API
+  # si puo' usare un parametro come:
+  x-lifecycle:
+    published: 1970-01-01
+    deprecated: 2050-01-01
+    retired: 2050-06-01
+    maturity: published
+paths: {}
