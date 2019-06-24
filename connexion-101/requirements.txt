@@ -12,7 +12,6 @@ jupyter
 ansible
 docker-py
 pyyaml
-openapi_resolver
 
 # jupyter tools
 nbstripout

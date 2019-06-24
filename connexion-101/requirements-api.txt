@@ -5,4 +5,6 @@ connexion[swagger-ui]
 connexion
 openapi-resolver
 pyyaml
-flast_testing
+flask_testing
+flask
+pytz
