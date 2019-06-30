@@ -5,7 +5,7 @@
 # so that the file become a valid OAS3 spec.
 openapi: 3.0.0
 info:
-  title: foo
+  title: Status API
   version: "0.1"
 
 # One or more server
@@ -31,17 +31,18 @@ servers:
 paths:
   /status:
     get:
-      summary: Ritorna lo stato dell'applicazione.
+      summary: Return the application status.
       description: |
-        Ritorna lo stato dell'applicazione. A scopo
-        di test, su base randomica puo' ritornare
-        un errore.
+        Return the application status.
+        The returned object is always a problem+json.
+        Implement this so that it randomically
+        returns an error (eg. 429 or 503)
+        for testing purposes.
       operationId: api.get_status
       responses:
         '200':
           description: |
-            Il server ha ritornato lo status. In caso di problemi
-            ritorna sempre un problem+json.
+            The application is working properly.
           content:
             application/problem+json:
               schema:
@@ -51,9 +52,21 @@ paths:
                 status: 200
                 detail: The app is running smoothly.
 
+        'default':  # EXERCIS SOLUTION, REMOVE
+          description: |
+            If none of the above statuses is returned, then this applies:
+            the application is not working properly.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'  
+              example:
+                title: Internal Server Errror
+                status: 500
+                detail: API is not responding correctly
 
 components:
   schemas:
-    Problem:
+    Problem:  # EXERCIS SOLUTION, REMOVE
       $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/schemas/Problem'
 
