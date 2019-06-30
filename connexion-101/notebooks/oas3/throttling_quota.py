@@ -22,7 +22,7 @@ class ThrottlingQuota:
                         remaining=0,
                         reset=int(q["reset"] - time()),
                         user=user,
-                        comment=datetime.fromtimestamp(q["reset"]).isoformat()
+                        comment=datetime.fromtimestamp(q["reset"]).isoformat(),
                     )
         else:
             q = self._dict[user] = {
@@ -34,7 +34,7 @@ class ThrottlingQuota:
             remaining=q["remaining"],
             reset=int(q["reset"] - time()),
             user=user,
-            comment=datetime.fromtimestamp(q["reset"]).isoformat()
+            comment=datetime.fromtimestamp(q["reset"]).isoformat(),
         )
 
 

@@ -3,7 +3,9 @@ from random import randint
 import pytz
 from datetime import datetime
 from throttling_quota import ThrottlingQuota
-tq = ThrottlingQuota(20,10)
+
+tq = ThrottlingQuota(20, 10)
+
 
 def get_status():
     """Implement the get_status operation
@@ -16,26 +18,35 @@ def get_status():
             status=503,
             title="Service Temporarily Unavailable",
             detail="Retry after the number of seconds specified in the the Retry-After header.",
-            headers={'Retry-After': p}
+            headers={"Retry-After": p},
         )
-    return problem(
-        status=200,
-        title="OK",
-        detail="So far so good."
-    )    
+    return problem(status=200, title="OK", detail="So far so good.")
     raise NotImplementedError
 
 
-def get_echo(tz='Zulu', user=None):
+def get_echo(tz="Zulu", user=None):
+    if not user:
+        raise RuntimeError("This should not happen on secured endpoints")
+
     if tz not in pytz.all_timezones:
         return problem(
             status=400,
             title="Bad Timezone",
             detail="The specified timezone is not valid",
-            ext={"valid_timezones": pytz.all_timezones}
+            ext={"valid_timezones": pytz.all_timezones},
         )
     d = datetime.now(tz=pytz.timezone(tz))
-    r = {"timestamp": d.isoformat().replace('+00:00', 'Z')}
+    r = {"timestamp": d.isoformat().replace("+00:00", "Z")}
     if user:
-        r['user'] = user
-    return r
+        r["user"] = user
+        quota = tq.consume(user)
+
+    return (
+        r,
+        200,
+        {
+            "x-ratelimit-limit": quota["limit"],
+            "x-ratelimit-remaining": quota["remaining"],
+            "x-ratelimit-reset": quota["reset"],
+        },
+    )

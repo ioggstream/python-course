@@ -2,7 +2,8 @@
 A file implementing securitySchemes
 """
 
-def my_auth(username, password,required_scopes=None):
+
+def my_auth(username, password, required_scopes=None):
     """An dummy authentication function.
        :params: username, the username
        :params: password, the password
@@ -13,4 +14,3 @@ def my_auth(username, password,required_scopes=None):
     if username == password:
         return {"sub": username, "scope": ""}
     return None
-
