@@ -32,6 +32,7 @@ RUN jupyter contrib nbextension install --user
 RUN jupyter nbextension enable codefolding/main
 RUN jupyter nbextension enable rubberband/main
 RUN jupyter nbextension enable exercise/main
+RUN jupyter nbextension enable hide_input/main
 
 RUN jupyter nbextension install rise --py --sys-prefix
 RUN jupyter nbextension enable rise --py --sys-prefix
