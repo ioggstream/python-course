@@ -2,9 +2,8 @@ from connexion import problem
 from random import randint
 import pytz
 from datetime import datetime
-from throttling_quota import ThrottlingQuota
-
-tq = ThrottlingQuota(20, 10)
+from throttling_quota import ThrottlingQuota, throttle_user
+from flask import after_this_request
 
 
 def get_status():
@@ -21,12 +20,23 @@ def get_status():
             headers={"Retry-After": p},
         )
     return problem(status=200, title="OK", detail="So far so good.")
-    raise NotImplementedError
 
 
-def get_echo(tz="Zulu", user=None):
+def get_echo(tz="Zulu", user=None, token_info=None):
     if not user:
         raise RuntimeError("This should not happen on secured endpoints")
+
+    quota_headers = throttle_user(user)
+    if quota_headers["X-RateLimit-Remaining"] == 0:
+        return problem(
+            status=429,
+            title="Too many requests",
+            detail=f"User {user} over quota of {quota_headers['X-RateLimit-Limit']}. Retry in {quota_headers['X-RateLimit-Reset']} seconds",
+            headers={
+                "Retry-After": quota_headers["X-RateLimit-Reset"],
+                "X-RateLimit-Limit": quota_headers["X-RateLimit-Limit"],
+            },
+        )
 
     if tz not in pytz.all_timezones:
         return problem(
@@ -37,16 +47,8 @@ def get_echo(tz="Zulu", user=None):
         )
     d = datetime.now(tz=pytz.timezone(tz))
     r = {"timestamp": d.isoformat().replace("+00:00", "Z")}
-    if user:
-        r["user"] = user
-        quota = tq.consume(user)
 
-    return (
-        r,
-        200,
-        {
-            "x-ratelimit-limit": quota["limit"],
-            "x-ratelimit-remaining": quota["remaining"],
-            "x-ratelimit-reset": quota["reset"],
-        },
-    )
+    r["user"] = user
+    r["ti"] = token_info
+
+    return (r, 200, quota_headers)

@@ -4,7 +4,7 @@ from datetime import datetime
 
 class ThrottlingQuota:
     def __init__(self, ttl, limit):
-        self._dict = {}
+        self._dict = dict()
         self.ttl = ttl
         self.limit = limit
 
@@ -38,10 +38,23 @@ class ThrottlingQuota:
         )
 
 
-tq = ThrottlingQuota(20, 100)
-for i in range(90):
-    tq.consume(1)
-print(tq.consume(1))
-for i in range(90):
-    tq.consume(1)
-print(tq.consume(1))
+quota_store = ThrottlingQuota(20, 10)
+
+
+def throttle_user(user):
+    quota = quota_store.consume(user)
+    return {
+        "X-RateLimit-Limit": quota["limit"],
+        "X-RateLimit-Remaining": quota["remaining"],
+        "X-RateLimit-Reset": quota["reset"],
+    }
+
+
+def test_throttlingquota():
+    tq = ThrottlingQuota(20, 100)
+    for i in range(90):
+        tq.consume(1)
+    assert tq.consume(1)["X-RateLimit-Remaining"]
+    for i in range(90):
+        tq.consume(1)
+    assert tq.consume(1)["X-RateLimit-Remaining"] == 0
