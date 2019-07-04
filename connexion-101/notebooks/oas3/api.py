@@ -17,9 +17,9 @@ def get_status():
             status=503,
             title="Service Temporarily Unavailable",
             detail="Retry after the number of seconds specified in the the Retry-After header.",
-            headers={"Retry-After": p},
+            headers={"Retry-After": p, "Cache-Control": "no-store"},
         )
-    return problem(status=200, title="OK", detail="So far so good.")
+    return problem(status=200, title="OK", detail="So far so good.", headers={"Cache-Control": "no-store"})
 
 
 def get_echo(tz="Zulu", user=None, token_info=None):
