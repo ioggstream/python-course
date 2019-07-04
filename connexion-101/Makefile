@@ -24,8 +24,8 @@ clean:
 	# $(foreach dpath, $(EXTERNAL_COURSES), rm -f notebooks/$(dpath)/*.ipynb; )
 
 clean-other:
-	docker-compose kill editor web 
-	docker-compose rm -vf editor web 
+	docker-compose kill editor dev
+	docker-compose rm -vf editor dev
 
 test:
 	docker exec -ti connexion101_dev_1 bash -c ' (cd /notebooks; ./cleanup.sh ) ' 
