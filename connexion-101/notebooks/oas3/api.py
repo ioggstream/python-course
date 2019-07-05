@@ -3,7 +3,7 @@ from random import randint
 import pytz
 from datetime import datetime
 from throttling_quota import ThrottlingQuota, throttle_user
-from flask import after_this_request
+from flask import after_this_request, request
 
 
 def get_status():
@@ -30,6 +30,7 @@ def get_echo(tz="Zulu", user=None, token_info=None):
     #
     # Eventually apply quota headers.
     #
+    user = user or request.remote_addr
     if user:
         quota_headers = throttle_user(user)
         if quota_headers["X-RateLimit-Remaining"] == 0:

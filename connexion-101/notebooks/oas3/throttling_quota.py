@@ -26,7 +26,7 @@ class ThrottlingQuota:
                     )
         else:
             q = self._dict[user] = {
-                "remaining": self.limit,
+                "remaining": self.limit - 1,
                 "reset": (1 + time() // self.ttl) * self.ttl,
             }
         return dict(

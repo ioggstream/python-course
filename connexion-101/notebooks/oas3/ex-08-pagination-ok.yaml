@@ -1,0 +1,197 @@
+# Complete this file with the required informations
+#  using your swagger-editor. You should
+# - fix all the eventual error
+# - add the missing parameters
+# so that the file become a valid OAS3 spec.
+openapi: 3.0.0
+info:
+  title: foo
+  version: "0.1"
+
+# One or more server
+#   You can add production, staging and test environments.
+#   We are using the custom `x-sandbox` to identify
+#   sandbox instances
+servers:
+  - description: Development server
+    url: https://localhost:8443/datetime/v1
+  - description: Test server
+    url: https://api.example.com/datetime/v1
+    x-sandbox: true
+    # The following custom parameter can be used
+    # to declare how to check the API.
+    x-healthCheck:
+      url: https://api.example.com/datetime/v1/status
+      interval: 300
+      timeout: 15
+
+x-commons:
+  common-responses: &common-responses
+    429:
+      $ref: "#/components/responses/429TooManyRequests"
+    503:
+      $ref: "#/components/responses/503ServiceUnavailable"
+
+#
+# Complete the /status path
+#
+paths:
+  /status:
+    get:
+      summary: Ritorna lo stato dell'applicazione.
+      description: |
+        Ritorna lo stato dell'applicazione. A scopo
+        di test, su base randomica puo' ritornare
+        un errore.
+      operationId: api.get_status
+      responses:
+        <<: *common-responses
+        '200':
+          description: |
+            Il server ha ritornato lo status. In caso di problemi
+            ritorna sempre un problem+json.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+              example:
+                title: OK
+                status: 200
+                detail: The app is running smoothly.
+  /echo:  # TODO implement this
+    get:
+      security:
+      - myBasicAuth: []
+      parameters:
+      - $ref: '#/components/parameters/tz'
+      summary: Return the current timestamp in RFC3339
+      description: |
+        Return the current timestamp, in the specified
+        timezone. If the timezone does not
+        exist returns 400 Bad Request, specifying that
+        the given timezone is not in our database.
+      operationId: api.get_echo
+      responses:
+        <<: *common-responses
+        '200':
+          description: |
+            The current timestamp.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Datetime"
+              example:
+                datetime: 20010507T00:00:10Z
+        '400':
+           $ref: '#/components/responses/400BadRequest'
+  /timezones:  # TODO implement this
+    get:
+      parameters:
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/offset'
+      summary: Return the supported timezones
+      description: |
+        Return a paginated list of supported
+        timezones. 404 if limit and offset are
+        out of bound.
+      operationId: api.get_timezone
+      responses:
+        <<: *common-responses
+        '200':
+          description: |
+            A list of timezones between offset and limit.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Timezones"
+              example:
+                entries: [ "Europe/Rome", "Asia/Calcutta", "UTC" ]
+                limit: 3
+                offset: 10
+                count: 3
+        '404':
+           $ref: '#/components/responses/404NotFound'
+
+components:
+  securitySchemes:
+    myBasicAuth:
+     type: http
+     scheme: basic
+     x-basicInfoFunc: security.my_auth
+
+  parameters:
+    tz:
+      name: tz
+      in: query
+      schema:
+        $ref: '#/components/schemas/Timezone'
+    limit:
+      $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/parameters/limit"
+    offset:
+      $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/parameters/offset"
+
+  responses:
+    400BadRequest:
+      $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/responses/400BadRequest"
+    404NotFound:
+      $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/responses/404NotFound"
+    429TooManyRequests:
+      $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/responses/429TooManyRequests"
+    503ServiceUnavailable:
+      $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/responses/503ServiceUnavailable"
+  schemas:
+    Timezones:
+      required:
+      - limit
+      - count
+      - offset
+      - entries
+      properties:
+        limit:
+          type: number
+          format: int32
+        count:
+          type: number
+          format: int32
+        offset:
+          type: number
+          format: int32
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schema/Timezone'
+    Timezone:
+      description: |
+        A timezone in the form of continent/city
+        or "UTC".
+      type: string
+      example: Europe/Rome
+    Datetime:
+      required:
+      - timestamp
+      properties:
+        timestamp:
+          type: string
+          format: datetime
+          example: 2019-01-01T00:00:00Z
+    Problem:
+      $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/schemas/Problem'
+    503ServiceUnavailable:
+      $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/responses/503ServiceUnavailable"
+  schemas:
+    Timezone:
+      description: |
+        A timezone in the form of continent/city
+        or "UTC".
+      type: string
+      example: Europe/Rome
+    Datetime:
+      required:
+      - timestamp
+      properties:
+        timestamp:
+          type: string
+          format: datetime
+          example: 2019-01-01T00:00:00Z
+    Problem:
+      $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/schemas/Problem'
