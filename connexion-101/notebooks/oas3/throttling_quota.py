@@ -111,7 +111,7 @@ def test_throttlingquota():
     tq = ThrottlingQuota(20, 100)
     for i in range(90):
         tq.consume(1)
-    assert tq.consume(1)["X-RateLimit-Remaining"]
+    assert tq.consume(1)["remaining"]
     for i in range(90):
         tq.consume(1)
-    assert tq.consume(1)["X-RateLimit-Remaining"] == 0
+    assert tq.consume(1)["remaining"] == 0

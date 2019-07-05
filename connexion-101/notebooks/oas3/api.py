@@ -56,9 +56,15 @@ ALL_TIMEZONES = sorted(pytz.all_timezones)
 
 
 @throttle
-def get_timezones(limit=5, offset=0):
+def get_timezones(limit=5, offset=0, continent=None):
     try:
-        entries = ALL_TIMEZONES[offset : offset + limit]
+        entries = ALL_TIMEZONES
+
+        if continent is not None:
+            continent = str(continent).capitalize() + "/"
+            entries = [x for x in entries if x.startswith(continent)]
+
+        entries = entries[offset : offset + limit]
     except IndexError:
         return problem(
             status=404,
@@ -71,3 +77,8 @@ def get_timezones(limit=5, offset=0):
         "entries": entries,
         "count": len(entries),
     }
+
+
+@throttle
+def get_timezone(limit=5, offset=0, continent=None):
+    return get_timezones(limit, offset, continent)
