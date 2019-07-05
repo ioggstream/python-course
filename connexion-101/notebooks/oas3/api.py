@@ -23,20 +23,25 @@ def get_status():
 
 
 def get_echo(tz="Zulu", user=None, token_info=None):
-    if not user:
-        raise RuntimeError("This should not happen on secured endpoints")
-
-    quota_headers = throttle_user(user)
-    if quota_headers["X-RateLimit-Remaining"] == 0:
-        return problem(
-            status=429,
-            title="Too many requests",
-            detail=f"User {user} over quota of {quota_headers['X-RateLimit-Limit']}. Retry in {quota_headers['X-RateLimit-Reset']} seconds",
-            headers={
-                "Retry-After": quota_headers["X-RateLimit-Reset"],
-                "X-RateLimit-Limit": quota_headers["X-RateLimit-Limit"],
-            },
-        )
+    # if not user:
+    #     raise RuntimeError("This should not happen on secured endpoints")
+    quota_headers = {}
+    
+    #
+    # Eventually apply quota headers.
+    #
+    if user:
+        quota_headers = throttle_user(user)
+        if quota_headers["X-RateLimit-Remaining"] == 0:
+            return problem(
+                status=429,
+                title="Too many requests",
+                detail=f"User {user} over quota of {quota_headers['X-RateLimit-Limit']}. Retry in {quota_headers['X-RateLimit-Reset']} seconds",
+                headers={
+                    "Retry-After": quota_headers["X-RateLimit-Reset"],
+                    "X-RateLimit-Limit": quota_headers["X-RateLimit-Limit"],
+                },
+            )
 
     if tz not in pytz.all_timezones:
         return problem(
@@ -48,7 +53,11 @@ def get_echo(tz="Zulu", user=None, token_info=None):
     d = datetime.now(tz=pytz.timezone(tz))
     r = {"timestamp": d.isoformat().replace("+00:00", "Z")}
 
-    r["user"] = user
-    r["ti"] = token_info
+    #
+    # Eventually append user info.
+    #
+    if user:
+        r["user"] = user
+        r["ti"] = token_info
 
     return (r, 200, quota_headers)
