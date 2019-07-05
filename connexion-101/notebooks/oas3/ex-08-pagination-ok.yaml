@@ -1,8 +1,3 @@
-# Complete this file with the required informations
-#  using your swagger-editor. You should
-# - fix all the eventual error
-# - add the missing parameters
-# so that the file become a valid OAS3 spec.
 openapi: 3.0.0
 info:
   title: foo
@@ -27,9 +22,9 @@ servers:
 
 x-commons:
   common-responses: &common-responses
-    429:
+    '429':
       $ref: "#/components/responses/429TooManyRequests"
-    503:
+    '503':
       $ref: "#/components/responses/503ServiceUnavailable"
 
 #
@@ -139,6 +134,7 @@ components:
       $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/responses/429TooManyRequests"
     503ServiceUnavailable:
       $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/responses/503ServiceUnavailable"
+
   schemas:
     Timezones:
       required:
@@ -159,7 +155,7 @@ components:
         entries:
           type: array
           items:
-            $ref: '#/components/schema/Timezone'
+            $ref: '#/components/schemas/Timezone'
     Timezone:
       description: |
         A timezone in the form of continent/city
@@ -176,22 +172,4 @@ components:
           example: 2019-01-01T00:00:00Z
     Problem:
       $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/schemas/Problem'
-    503ServiceUnavailable:
-      $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/responses/503ServiceUnavailable"
-  schemas:
-    Timezone:
-      description: |
-        A timezone in the form of continent/city
-        or "UTC".
-      type: string
-      example: Europe/Rome
-    Datetime:
-      required:
-      - timestamp
-      properties:
-        timestamp:
-          type: string
-          format: datetime
-          example: 2019-01-01T00:00:00Z
-    Problem:
-      $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/schemas/Problem'
+
