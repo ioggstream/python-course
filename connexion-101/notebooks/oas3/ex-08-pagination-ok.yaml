@@ -89,7 +89,7 @@ paths:
         Return a paginated list of supported
         timezones. 404 if limit and offset are
         out of bound.
-      operationId: api.get_timezone
+      operationId: api.get_timezones
       responses:
         <<: *common-responses
         '200':
@@ -106,6 +106,35 @@ paths:
                 count: 3
         '404':
            $ref: '#/components/responses/404NotFound'
+  /timezones/{continent}:  # TODO implement this
+    get:
+      parameters:
+      - $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/parameters/limit"
+      - $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/parameters/offset"
+      - $ref: "#/components/parameters/continent_path"
+      summary: Return the supported timezones
+      description: |
+        Return a paginated list of supported
+        timezones. 404 if limit and offset are
+        out of bound.
+      operationId: api.get_timezone
+      responses:
+        <<: *common-responses
+        '200':
+          description: |
+            A list of timezones between offset and limit.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Timezones"
+              example:
+                entries: [ "Europe/Amsterdam", "Europe/Andorra", "Europe/Astrakhan" ]
+                limit: 3
+                offset: 0
+                count: 3
+        '404':
+           $ref: '#/components/responses/404NotFound'
+
 
 components:
   securitySchemes:
@@ -115,6 +144,12 @@ components:
      x-basicInfoFunc: security.my_auth
 
   parameters:
+    continent_path:
+      name: continent
+      in: path
+      required: true
+      schema:
+        type: string
     tz:
       name: tz
       in: query

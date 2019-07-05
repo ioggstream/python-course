@@ -1,11 +1,14 @@
-from connexion import problem
-from random import randint
-import pytz
 from datetime import datetime
-from throttling_quota import ThrottlingQuota, throttle_user
+from random import randint
+
+import pytz
+from connexion import problem
 from flask import after_this_request, request
 
+from throttling_quota import throttle
 
+
+@throttle
 def get_status():
     """Implement the get_status operation
     :return: a problem+json with status 200, title "OK" and a successful
@@ -19,31 +22,16 @@ def get_status():
             detail="Retry after the number of seconds specified in the the Retry-After header.",
             headers={"Retry-After": p, "Cache-Control": "no-store"},
         )
-    return problem(status=200, title="OK", detail="So far so good.", headers={"Cache-Control": "no-store"})
+    return problem(
+        status=200,
+        title="OK",
+        detail="So far so good.",
+        headers={"Cache-Control": "no-store"},
+    )
 
 
+@throttle
 def get_echo(tz="Zulu", user=None, token_info=None):
-    # if not user:
-    #     raise RuntimeError("This should not happen on secured endpoints")
-    quota_headers = {}
-    
-    #
-    # Eventually apply quota headers.
-    #
-    user = user or request.remote_addr
-    if user:
-        quota_headers = throttle_user(user)
-        if quota_headers["X-RateLimit-Remaining"] == 0:
-            return problem(
-                status=429,
-                title="Too many requests",
-                detail=f"User {user} over quota of {quota_headers['X-RateLimit-Limit']}. Retry in {quota_headers['X-RateLimit-Reset']} seconds",
-                headers={
-                    "Retry-After": quota_headers["X-RateLimit-Reset"],
-                    "X-RateLimit-Limit": quota_headers["X-RateLimit-Limit"],
-                },
-            )
-
     if tz not in pytz.all_timezones:
         return problem(
             status=400,
@@ -61,4 +49,25 @@ def get_echo(tz="Zulu", user=None, token_info=None):
         r["user"] = user
         r["ti"] = token_info
 
-    return (r, 200, quota_headers)
+    return (r, 200, {})
+
+
+ALL_TIMEZONES = sorted(pytz.all_timezones)
+
+
+@throttle
+def get_timezones(limit=5, offset=0):
+    try:
+        entries = ALL_TIMEZONES[offset : offset + limit]
+    except IndexError:
+        return problem(
+            status=404,
+            detail=f"No entries between {offset} and {offset + limit}",
+            title="Not Found",
+        )
+    return {
+        "limit": limit,
+        "offset": offset,
+        "entries": entries,
+        "count": len(entries),
+    }

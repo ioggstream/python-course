@@ -1,8 +1,20 @@
-from time import time
 from datetime import datetime
+from functools import wraps
+from time import time
+
+from connexion import problem
+from connexion.lifecycle import ConnexionResponse
+from flask import request
 
 
 class ThrottlingQuota:
+    """ A simple class to implement quota.
+    
+        BEWARE: It's a tutorial function, don't use in production!
+                this is not thread-safe nor process-aware and
+                stores everything in a dict().
+    """
+
     def __init__(self, ttl, limit):
         self._dict = dict()
         self.ttl = ttl
@@ -48,6 +60,51 @@ def throttle_user(user):
         "X-RateLimit-Remaining": quota["remaining"],
         "X-RateLimit-Reset": quota["reset"],
     }
+
+
+def throttle(wrapped):
+    """A decorator to apply throttling policies.
+    
+        BEWARE: It's a tutorial function, don't use in production.
+    """
+
+    @wraps(wrapped)
+    def tmp(*args, **kwargs):
+        # Unauthenticated endpoints can throttle by IP.
+        throttle_key = kwargs.get("user") or request.remote_addr
+        quota_headers = throttle_user(throttle_key)
+        print(quota_headers)
+        if quota_headers["X-RateLimit-Remaining"] == 0:
+            return problem(
+                status=429,
+                title="Too many requests",
+                detail=f"User {throttle_key} over quota of {quota_headers['X-RateLimit-Limit']}. Retry in {quota_headers['X-RateLimit-Reset']} seconds. Count: {quota_headers['X-RateLimit-Remaining']}",
+                headers={
+                    "Retry-After": quota_headers["X-RateLimit-Reset"],
+                    "X-RateLimit-Limit": quota_headers["X-RateLimit-Limit"],
+                },
+            )
+        response = wrapped(*args, **kwargs)
+
+        print(response)
+
+        if isinstance(response, ConnexionResponse):
+            response.headers.update(quota_headers)
+            return response
+
+        if not isinstance(response, tuple):
+            return response, 200, quota_headers
+
+        if len(response) == 3:
+            response[2].update(quota_headers)
+            return response
+
+        if len(response) == 2:
+            return response + (quota_headers,)
+
+        raise NotImplementedError(response)
+
+    return tmp
 
 
 def test_throttlingquota():
