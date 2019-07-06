@@ -59,20 +59,13 @@ ALL_TIMEZONES = sorted(pytz.all_timezones)
 
 @throttle
 def get_timezones(limit=5, offset=0, continent=None):
-    try:
-        entries = ALL_TIMEZONES
+    entries = ALL_TIMEZONES
 
-        if continent is not None:
-            continent = str(continent).capitalize() + "/"
-            entries = [x for x in entries if x.startswith(continent)]
+    if continent is not None:
+        continent = str(continent).capitalize() + "/"
+        entries = [x for x in entries if x.startswith(continent)]
 
-        entries = entries[offset : offset + limit]
-    except IndexError:
-        return problem(
-            status=404,
-            detail=f"No entries between {offset} and {offset + limit}",
-            title="Not Found",
-        )
+    entries = entries[offset : offset + limit]
     return {
         "limit": limit,
         "offset": offset,

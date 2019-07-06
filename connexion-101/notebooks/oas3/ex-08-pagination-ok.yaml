@@ -87,8 +87,8 @@ paths:
       summary: Return the supported timezones
       description: |
         Return a paginated list of supported
-        timezones. 404 if limit and offset are
-        out of bound.
+        timezones. If offset is too high, an empty 
+        list of entries is returned.
       operationId: api.get_timezones
       responses:
         <<: *common-responses
@@ -104,8 +104,6 @@ paths:
                 limit: 3
                 offset: 10
                 count: 3
-        '404':
-           $ref: '#/components/responses/404NotFound'
   /timezones/{continent}:  # TODO implement this
     get:
       parameters:
