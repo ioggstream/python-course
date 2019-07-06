@@ -26,6 +26,15 @@ servers:
       timeout: 15
 
 x-commons:
+  throttling-headers: &throttling-headers
+    X-RateLimit-Limit:
+      $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/headers/X-RateLimit-Limit'
+    X-RateLimit-Remaining:
+      $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/headers/X-RateLimit-Remaining'
+    X-RateLimit-Reset:
+      $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/headers/X-RateLimit-Reset'
+
+    
   common-responses: &common-responses
     429:
       $ref: "#/components/responses/429TooManyRequests"

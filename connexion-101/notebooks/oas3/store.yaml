@@ -1,0 +1,215 @@
+#
+# Questo e' un progetto d'esempio in formato OpenAPI 3.0 API Starter Kit.
+#
+# Stai per sviluppare un API? Segui attentamente questo template e
+#   potrai integrarla facilmente in Developers Italia.
+#
+x-commons:
+  common-responses: &common-responses
+    '400':
+      $ref: '#/components/responses/400BadRequest'
+    '429':
+      $ref: '#/components/responses/429TooManyRequests'
+    '503':
+      $ref: '#/components/responses/503ServiceUnavailable'
+    default:
+      $ref: '#/components/responses/default'
+  throttling-headers: &throttling-headers
+    X-RateLimit-Limit:
+      $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/headers/X-RateLimit-Limit'
+    X-RateLimit-Remaining:
+      $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/headers/X-RateLimit-Remaining'
+    X-RateLimit-Reset:
+      $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/headers/X-RateLimit-Reset'
+
+openapi: 3.0.1
+info:
+  title: Flask store API.
+  version: 0.0.1
+  x-summary: 'A simple store app for flask.'
+  contact:
+    email: robipolli@gmail.com
+    name: Roberto Polli
+    url: 'https://twitter.com/ioggstream'
+  description: |-
+    #### Documentation
+
+    This API allows to store  files with
+    attached metadata.
+
+    One or more files are packed together within a mime
+    payload, where the first component is a json file
+    containing the metadata attached to the packed files.
+
+    Once stored, files are archived on a remote store
+    and their metadata indexed.
+
+    Metadata is validated via json-schema.
+
+    Max message size is predefined.
+
+    Authentication via basic-auth.
+
+    When storage is over a predefined quota,
+    the application returns 503 and avoid saturation.
+
+
+    ##### Subsection
+
+    Write here subsections.
+
+    #### Notes
+
+
+    This service might be autenticated upfront.
+
+
+    #### Technical information and examples
+
+
+    Example:
+
+
+    ```
+    http https://localhost:8443/store/v0
+    ```
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  termsOfService: 'http://swagger.io/terms/'
+  x-api-id: 00000000-0000-0000-0000-000000000000
+  x-audience:
+    - public
+servers:
+  - description: Development server
+    url: 'https://localhost:8443/store/v0'
+  - description: Test server
+    url: 'https://api.example.com/store/v0'
+tags:
+  - description: Retrieve informations
+    externalDocs:
+      url: 'http://docs.my-api.com/pet-operations.htm'
+    name: private
+paths:
+  /status:
+    get:
+      operationId: openapi.get_status
+      responses:
+        <<: *common-responses
+        200:
+          description: |
+            The API is working properly.
+          headers:
+            Cache-Control:
+              description: |
+                The Cache-Control header defined in RFC 7234. For this operation
+                it could be set to no-store if we don't want to leverage cache.
+              schema:
+                type: string
+                example: "no-store"
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /stores:
+    get:
+      operationId: openapi.list_files
+      parameters:
+        - in: query
+          name: filename
+          schema:
+            type: string
+        - $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/parameters/fields'
+        - $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/parameters/limit'
+      responses:
+        <<: *common-responses
+        '200':
+          description: Retrieve a list of stored files.
+          headers:
+            <<: *throttling-headers
+          content:
+            application/json:
+              schema:
+                properties:
+                  limit:
+                    type: number
+                  count:
+                    type: number
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Item'
+  '/store/{filename}':
+    put:
+      operationId: openapi.put_file
+      parameters:
+        - in: path
+          name: filename
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: |
+          A multipart/related containing at least
+          two attachments: an application/json with the metadata
+          and one or more attachment files that will be stored as-is
+        required: true
+        content:
+          multipart/related:
+            schema: {}
+              # $ref: '#/components/schemas/UploadFiles'
+
+      responses:
+        <<: *common-responses
+        '201':
+          description: |-
+            The files are properly indexed and stored.
+          headers:
+            <<: *throttling-headers
+          content:
+            multipart/related: {}
+components:
+  schemas:
+    UploadFiles:
+      type: object
+      properties:
+        metadata:
+          type: object
+          properties:
+            files:
+              type: array
+              items:
+                type: string
+        attachments:
+          type: array
+          items:
+            type: string
+            format: binary
+
+    Problem:
+      $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/schemas/Problem'
+    Metadata:
+      properties:
+        filename: {type: string}
+    Item:
+      properties:
+        name:
+          type: string
+        size:
+          type: number
+        id:
+          type: string
+
+  responses:
+    # Predefined error codes for this API
+    400BadRequest:
+      $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/responses/400BadRequest"
+    404NotFound:
+      $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/responses/404NotFound"
+    429TooManyRequests:
+      $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/responses/429TooManyRequests"
+    503ServiceUnavailable:
+      $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/responses/503ServiceUnavailable"
+    default:
+      $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/responses/default"

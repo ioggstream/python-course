@@ -21,6 +21,14 @@ servers:
       timeout: 15
 
 x-commons:
+  throttling-headers: &throttling-headers
+    X-RateLimit-Limit:
+      $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/headers/X-RateLimit-Limit'
+    X-RateLimit-Remaining:
+      $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/headers/X-RateLimit-Remaining'
+    X-RateLimit-Reset:
+      $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/headers/X-RateLimit-Reset'
+
   common-responses: &common-responses
     '429':
       $ref: "#/components/responses/429TooManyRequests"
@@ -71,6 +79,8 @@ paths:
         '200':
           description: |
             The current timestamp.
+          headers:
+            <<: *throttling-headers
           content:
             application/problem+json:
               schema:
@@ -95,6 +105,8 @@ paths:
         '200':
           description: |
             A list of timezones between offset and limit.
+          headers:
+            <<: *throttling-headers
           content:
             application/json:
               schema:
@@ -115,12 +127,14 @@ paths:
         Return a paginated list of supported
         timezones. 404 if limit and offset are
         out of bound.
-      operationId: api.get_timezone
+      operationId: api.get_timezones_by_continent
       responses:
         <<: *common-responses
         '200':
           description: |
             A list of timezones between offset and limit.
+          headers:
+            <<: *throttling-headers
           content:
             application/json:
               schema:

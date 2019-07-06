@@ -14,8 +14,8 @@ def get_status():
     :return: a problem+json with status 200, title "OK" and a successful
              message in detail
     """
-    headers={"Cache-Control": "no-store"}
-    
+    headers = {"Cache-Control": "no-store"}
+
     p = randint(1, 5)
     if p == 5:
         return problem(
@@ -25,10 +25,7 @@ def get_status():
             headers={"Retry-After": p, **headers},
         )
     return problem(
-        status=200,
-        title="OK",
-        detail="So far so good.",
-        headers=headers,
+        status=200, title="OK", detail="So far so good.", headers=headers
     )
 
 
@@ -57,7 +54,7 @@ def get_echo(tz="Zulu", user=None, token_info=None):
 ALL_TIMEZONES = sorted(pytz.all_timezones)
 
 
-@throttle
+# @throttle
 def get_timezones(limit=5, offset=0, continent=None):
     entries = ALL_TIMEZONES
 
@@ -75,5 +72,5 @@ def get_timezones(limit=5, offset=0, continent=None):
 
 
 @throttle
-def get_timezone(limit=5, offset=0, continent=None):
+def get_timezones_by_continent(limit=5, offset=0, continent=None):
     return get_timezones(limit, offset, continent)
