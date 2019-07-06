@@ -14,19 +14,21 @@ def get_status():
     :return: a problem+json with status 200, title "OK" and a successful
              message in detail
     """
+    headers={"Cache-Control": "no-store"}
+    
     p = randint(1, 5)
     if p == 5:
         return problem(
             status=503,
             title="Service Temporarily Unavailable",
             detail="Retry after the number of seconds specified in the the Retry-After header.",
-            headers={"Retry-After": p, "Cache-Control": "no-store"},
+            headers={"Retry-After": p, **headers},
         )
     return problem(
         status=200,
         title="OK",
         detail="So far so good.",
-        headers={"Cache-Control": "no-store"},
+        headers=headers,
     )
 
 
