@@ -6,7 +6,8 @@
 This course is based on Docker and Docker compose. As long as you have Docker
 you can run it on any operating system.
 
-Docker should be exposed via TCP on 172.17.0.1:2375
+Docker should be exposed via TCP on 172.17.0.1:2375. If you have concerns
+in exposing docker, just use a temporary VM for the course (see below).
 
 On Linux, set
 
@@ -28,9 +29,8 @@ Run the environemnt with:
 
     # make course
 
-or 
+And point the browser on the printed URL, eg.
 
-    # docker-compose scale course=1 bastion=1 web=3
     # firefox http://localhost:8888
 
 
