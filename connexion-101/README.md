@@ -1,14 +1,10 @@
-# Ansible 2 done right!
+# Interoperable REST API
 
 
 ## Local Setup
 
 This course is based on Docker and Docker compose. As long as you have Docker
-you can run it on:
-
-  - linux
-  - mac
-  - windows
+you can run it on any operating system.
 
 Docker should be exposed via TCP on 172.17.0.1:2375
 
@@ -38,11 +34,28 @@ or
     # firefox http://localhost:8888
 
 
-## Playing the course on DigitalOcean
+## Playing the course on DigitalOcean and Ansible
 
-DigitalOcean is a great and cheap cloud-provider 
+Once you have a digitalocean account, just
+set your ssh key info in `site-digitalocean.yml`
+then run the playbook:
 
-  - create an Ubuntu 16.04 docker droplet from the menu and ssh into your host
+```
+$ export DO_API_TOKEN=xxxx
+$ ansible-playbook -v site-digitalocean.yml
+```
+
+This will create one (or more) vms with
+the course installed.
+
+Get the jupyter notebook url at the end of the deployment.
+
+## Playing the course on DigitalOcean 
+
+If you don't use ansible, you can always setup everything 
+by hand.
+
+  - create an Ubuntu 18.04 docker droplet from the menu and ssh into your host
   - expose docker on local http port
 
 ```
@@ -70,17 +83,3 @@ See asciicast here
 [![asciicast](https://asciinema.org/a/9xqX4akNND7Yc0Q1sTb3ZnEhI.png)](https://asciinema.org/a/9xqX4akNND7Yc0Q1sTb3ZnEhI)
 
 
-## Outline
-
-
-  - Ansible architecture
-  - Describe delivery layout in ansible.cfg
-  - Host and Group variables, Filters
-  - Static and dynamic inventories (docker)
-  - Vaults and Secrets
-  - Use bastions and other ssh_opts
-  - writing basic playbooks, test driven deployment
-  - Yaml pitfalls
-  - Inclusion and Roles
-  - Ansible galaxy as a role repository (bonus track)
- 
