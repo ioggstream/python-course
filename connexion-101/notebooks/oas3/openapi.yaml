@@ -1,0 +1,10 @@
+# Complete this file with the required informations
+#  using your swagger-editor. You should 
+# - fix all the eventual error
+# - add the missing parameters
+# so that the file become a valid OAS3 spec.
+openapi: 3
+info:
+  version: 0.1
+paths: {}
+components: {}
