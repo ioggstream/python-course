@@ -1,0 +1,29 @@
+# Image for developing the course
+version: "3"
+services:
+
+  test:
+      image: ioggstream/centos8:jupyter
+      volumes:
+      - ./notebooks:/notebooks:z
+      # entrypoint: tail -f /etc/hosts
+
+
+  # Official image from docker hub
+  course:
+      image: ioggstream/centos8:jupyter
+      hostname: course
+      environment:
+      - USE_HTTP=1
+      - DOCKER_HOST=172.17.0.1
+      volumes:
+      - ./notebooks:/notebooks:z
+      - ./notebooks/custom.css:/root/.jupyter/custom/custom.css
+      - ./notebooks/startup:/root/.ipython/profile_default/startup:z
+      - .:/code:z
+      network_mode: bridge
+      ports:
+      - 8888:8888
+      entrypoint: /usr/bin/bash
+      command: -c "/usr/local/bin/jupyter-notebook --ip 0.0.0.0 --allow-root"
+
