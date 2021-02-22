@@ -2,7 +2,7 @@
 # Docker image for ipython notebook and various
 #  python courses
 #
-FROM python:3.8
+FROM python:3.6
 MAINTAINER roberto.polli@par-tec.it
 
 RUN apt-get -y update && apt-get -y install gcc make python-dev python-pip 
