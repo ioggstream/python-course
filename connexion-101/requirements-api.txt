@@ -1,0 +1,10 @@
+#
+# Further dependencies for API training
+#
+connexion[swagger-ui]
+connexion
+openapi-resolver
+pyyaml
+flask_testing
+flask
+pytz

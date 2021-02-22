@@ -1,0 +1,9 @@
+.ipynb_checkpoints
+*.pyc
+[Uu]ntitled*
+*.nbconvert.ipynb
+*_removed.ipynb
+
+*.retry
+core*
+*_python_intro.ipynb

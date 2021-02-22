@@ -1,0 +1,38 @@
+#
+# Provision current infrastructure on digitalocean
+#   $ export DO_API_TOKEN=xxxx
+#   $ ansible-playbook -v site-digitalocean.yml
+#
+# This will output a series of jupyter urls with their associate ips.
+#
+# BEWARE: unless you populate accordingly the digital_ocean droplet ids
+#         the digital_ocean module will create those droplets over and
+#         over again.
+#
+- hosts: localhost
+  tasks:
+  - name: Retrieve ssh key id.
+    digital_ocean:
+      state: present
+      command: ssh
+      name: rpolli
+    register: do_key
+    check_mode: no
+
+  - name: Create enough machine for the course.
+    digital_ocean:
+      state: absent
+      command: droplet
+      name: "{{item}}"
+      unique_name: yes
+      ssh_key_ids: >-
+        {{do_key.ssh_key.id}}
+      size_id: 2gb
+      region_id: fra1
+      image_id: docker-18-04
+      wait_timeout: 500
+    register: my_droplet
+    with_items:
+    - deleteme-1
+    - deleteme-2
+

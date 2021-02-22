@@ -1,4 +1,5 @@
 .ipynb_checkpoints
 *.pyc
 Untitled*
-
+*.eps
+tmp/
