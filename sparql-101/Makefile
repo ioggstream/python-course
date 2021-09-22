@@ -7,8 +7,8 @@ all: $(BOOKS)
 	@echo $(BOOKS) $(SLIDES)
 
 notebooks/%.ipynb: %.md
-	
-	notedown --to notebook $^ > $@ 
+
+	notedown --to notebook $^ > $@
 
 %.html: %.ipynb
 

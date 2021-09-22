@@ -34,7 +34,7 @@ Is this a given name or a full name?
 
 ----
 
-La mancanza di standardizzazione nel formato e significato dei dati ostacola l’interoperabilità tra le basi di dati di enti diversi e quindi la creazione di servizi digitali.    
+La mancanza di standardizzazione nel formato e significato dei dati ostacola l’interoperabilità tra le basi di dati di enti diversi e quindi la creazione di servizi digitali.
 
 Un primo esempio è la mancanza di interoperabilità sintattica: una entità ben definita (eg. il codice fiscale) viene rappresentata con campi o formati diversi:
 
@@ -54,7 +54,7 @@ Un altro esempio è l'interoperabilità semantica: il concetto di famiglia ha di
   {"nome": "Carla Rossi", "relazione": "sorella" , "convivente": false}   }
 
 {"familiari": [
-  {"nome": "Mario Rossi", "relazione": "padre"}  
+  {"nome": "Mario Rossi", "relazione": "padre"}
 }
 ```
 
@@ -68,11 +68,11 @@ Ontologia: una ontologia è un insieme di assiomi logici che concettualizzano un
 
 ----
 
-Vocabolario controllato: un vocabolario dove i termini sono validati da un'autorità designata. Può essere di diversi tipi - eg. una lista (codelist), una struttura gerarchica (tassonomia), un glossario ed un tesauro (che aggiunge ad una tassonomia ulteriori vincoli). Esempi di vocabolari controllati europei si trovano qui https://op.europa.eu/en/web/eu-vocabularies/controlled-vocabularies 
+Vocabolario controllato: un vocabolario dove i termini sono validati da un'autorità designata. Può essere di diversi tipi - eg. una lista (codelist), una struttura gerarchica (tassonomia), un glossario ed un tesauro (che aggiunge ad una tassonomia ulteriori vincoli). Esempi di vocabolari controllati europei si trovano qui https://op.europa.eu/en/web/eu-vocabularies/controlled-vocabularies
 
 ## Syntax standardization
 
-Schema di dati: Uno schema è una rappresentazione/descrizione formale e machine-readable del contenuto effettivo o potenziale dei dati contenuti in un oggetto separato. In altre parole, è l'insieme di istruzioni semantiche e sequenziali che possono essere usate per controllare l'input memorizzato in un dato file, o per collegare un file che rispetta tali istruzioni a un sistema o un'applicazione di scambio di informazioni. Esistono diversi formati per descrivere degli schemi, tra cui xml-schema e json-schema. Definizione formale della sintassi di una entità. Vedi https://json-schema.org/understanding-json-schema/about.html 
+Schema di dati: Uno schema è una rappresentazione/descrizione formale e machine-readable del contenuto effettivo o potenziale dei dati contenuti in un oggetto separato. In altre parole, è l'insieme di istruzioni semantiche e sequenziali che possono essere usate per controllare l'input memorizzato in un dato file, o per collegare un file che rispetta tali istruzioni a un sistema o un'applicazione di scambio di informazioni. Esistono diversi formati per descrivere degli schemi, tra cui xml-schema e json-schema. Definizione formale della sintassi di una entità. Vedi https://json-schema.org/understanding-json-schema/about.html
 
 Un Vocabolario controllato supporta anche la standardizzazione sintattica.
 
@@ -91,8 +91,8 @@ Inoltre la creazione di servizi sempre più integrati porta ad un aumento del nu
 
 ## Defining semantic contents
 
-I contenuti semantici vengono definiti 
-tramite proposizioni 
+I contenuti semantici vengono definiti
+tramite proposizioni
 `soggetto predicato complemento`
 e loro insiemi (detti grafi)
 
@@ -145,7 +145,7 @@ qualcuno.
 
 <email:robipolli@gmail.com> cpv:givenName "Roberto" .
 <email:robipolli@gmail.com> cpv:familyName "Polli" .
-                            
+
 ```
 
 ----
@@ -167,16 +167,16 @@ https://w3id.org/italia/onto/CPV dct:title     "Person Ontology"@en, "Ontologi
 ### Json-LD
 
 JSON-LD è un formato che permette di serializzare in JSON delle informazioni basate sul RDF data model.
- https://www.w3.org/TR/json-ld11/#data-model. 
+ https://www.w3.org/TR/json-ld11/#data-model.
 
-Un documento JSON-LD è quindi sia un documento  RDF che JSON, e rappresenta un'istanza di un RDF data model. 
+Un documento JSON-LD è quindi sia un documento  RDF che JSON, e rappresenta un'istanza di un RDF data model.
 
-JSON-LD inoltre *estende* RDF per permettere la serializzazione di dataset RDF generalizzati. 
+JSON-LD inoltre *estende* RDF per permettere la serializzazione di dataset RDF generalizzati.
 Di seguito l'estratto di sopra serializzato in JSON-LD/yaml.
 
 ```
 "@context":
-  cpv: "https://w3id.org/italia/onto/CPV" 
+  cpv: "https://w3id.org/italia/onto/CPV"
   given_name: "cpv:givenName"
   family_name: "cpv:familyName"
   id: "@id"
@@ -189,8 +189,8 @@ family_name: Polli
 
 Oltre all'ontologia italiana, un altro vocabolario
 molto usato sul web è www.schema.org. Le parole chiave
-che definisce sono disponibili in formato json-ld 
-https://schema.org/docs/jsonldcontext.jsonld 
+che definisce sono disponibili in formato json-ld
+https://schema.org/docs/jsonldcontext.jsonld
 
 ---
 
@@ -199,7 +199,7 @@ eventualmente usando diversi namespace.
 
 
 ```
-"@context": 
+"@context":
   "sdo": "http://schema.org/"
   "nome":"sdo:name"
   "nome_proprio": "sdo:givenName"
@@ -241,18 +241,18 @@ occupation:
 oppure
 
 ```
---- tramite elementi multipli, utile anche per la serializzazione di API semplici 
+--- tramite elementi multipli, utile anche per la serializzazione di API semplici
 @context:
   occupation: {@language: en}
-  occupation_fr: {@language: fr} 
-occupation: Student 
+  occupation_fr: {@language: fr}
+occupation: Student
 occupation_fr: Etudiant
 ```
 
---- 
+---
 ### Json Schema e Json-LD
 
-Per validare un oggetto json-ld, serve risolvere 
+Per validare un oggetto json-ld, serve risolvere
 ricorsivamente tutte le referenze:
 è complesso farlo in maniera sincrona.
 
@@ -289,13 +289,13 @@ HTTP/1.1 200 OK
 Content-Type: application/json
 Link: <https://api.example/simple-person.jsonld>;
      rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
- 
+
 { "given_name": "Roberto", "family_name": "Polli" }
 ```
 
 ---
 
-O tramite content-negotiation 
+O tramite content-negotiation
 ritornando più formati (json e json-ld)
 
 
@@ -309,5 +309,3 @@ la semantica non è sempre chiara:
 - non è machine readable.
 
 ---
-
-
