@@ -32,7 +32,12 @@
       wait_timeout: 500
     register: my_droplet
     with_items:
+    - deleteme-1
+    - deleteme-2
     - deleteme-3
+    - deleteme-4
+    - deleteme-5
+    - deleteme-6
 
   - name: Dynamically add the new servers to the inventory.
     add_host:

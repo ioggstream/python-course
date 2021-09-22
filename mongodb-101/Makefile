@@ -12,7 +12,7 @@ EXTERNAL_COURSES =
 
 course: .prepare .EXPORT_ALL_VARIABLES
 	docker-compose scale course=1 
-	docker-compose logs course | grep token | sed -e "s/0.0.0.0/$(MAIN_IP)/g"  | sed -e "s/(.* or 127.0.0.1)/$(MAIN_IP)/g"
+	docker-compose logs course | grep token | sed -e "s/0.0.0.0|course/$(MAIN_IP)/g"  | sed -e "s/(.* or 127.0.0.1)/$(MAIN_IP)/g"
 
 clean:
 	rm *.pyc __pycache__ -fr
