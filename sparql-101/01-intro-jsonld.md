@@ -169,7 +169,7 @@ https://w3id.org/italia/onto/CPV dct:title     "Person Ontology"@en, "Ontologi
 JSON-LD è un formato che permette di serializzare in JSON delle informazioni basate sul RDF data model.
  https://www.w3.org/TR/json-ld11/#data-model.
 
-Un documento JSON-LD è quindi sia un documento  RDF che JSON, e rappresenta un'istanza di un RDF data model.
+Un documento JSON-LD è quindi sia un documento RDF che JSON, e rappresenta un'istanza di un RDF data model.
 
 JSON-LD inoltre *estende* RDF per permettere la serializzazione di dataset RDF generalizzati.
 Di seguito l'estratto di sopra serializzato in JSON-LD/yaml.
@@ -257,29 +257,49 @@ ricorsivamente tutte le referenze:
 è complesso farlo in maniera sincrona.
 
 Quando si crea un API, la semantica va
-essere definita in fase di specifica
-in modo da non rendere necessaria la risoluzione
+definita in fase di specifica
+in modo da non dover risolvere a runtime
+referenze ricorsive
 ed evitare problemi come il "@context mangling".
 
 ----
 
 Un modo è associare un @context ad uno schema
-tramite un link.
+integrandolo nella definizione attraverso
+un valore `const`.
+tramite un link
+In questo caso, `pet` viene [disassociato dal vocabolario](https://w3c.github.io/json-ld-syntax/#example-25-using-the-null-keyword-to-ignore-data)
 
 ```
 # Associate a json-ld context to a schema
-Person:
-  x-context:
-    "@vocab":   "https://w3id.org/italia/onto/CPV/"
-    given_name:  givenName
-    family_name: familyName
+Customer:
   type: object
-  required: [given_name, family_name]
+  required: [email]
   properties:
-    given_name: {type: string}
-    family_name: {type: string}
-    pippo: {type: string}
+    "@context":
+      const:
+        "@vocab": "http://schema.org"
+        pet: null
+    email: {type: string}
+    pet: {type: string}
 ```
+
+----
+
+E' anche possibile indicare un link 
+```
+# Associate a json-ld context to a schema
+Customer:
+  type: object
+  required: [email]
+  properties:
+    "@context":
+      const: "https://api.example/customer-context.jsonld"
+    email: {type: string}
+    pet: {type: string}
+```
+
+
 
 ----
 O tramite `Link` header
@@ -297,6 +317,34 @@ Link: <https://api.example/simple-person.jsonld>;
 
 O tramite content-negotiation
 ritornando più formati (json e json-ld)
+
+```
+openapi: 3.0.1
+...
+paths:
+  /users:
+    get:
+      ...
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Person"
+            application/ld+json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    "@context":
+                      const:
+                        "@vocab":   "https://w3id.org/italia/onto/CPV/"
+                        given_name:  givenName
+                        family_name: familyName 
+                - $ref: "#/components/schemas/Person"
+
+
+```
 
 
 ## API e Semantica
