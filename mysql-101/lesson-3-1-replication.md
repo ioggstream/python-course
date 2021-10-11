@@ -3,11 +3,11 @@
  Partitioning: Synchronization reloaded.
 
 You cannot have the same level of:
- 
- - Consistency 
+
+ - Consistency
  - Availability
  - Partition
- 
+
 Instead you have to favor something respect to the other.
 
 See [the wikipedia article](https://en.wikipedia.org/wiki/CAP_theorem)
@@ -19,7 +19,7 @@ You can pay to get faster
   - network
   - cpu
   - storage
- 
+
 Price is the 4th dimension.
 
 
@@ -31,11 +31,11 @@ Synchronous, asynchronous and semi-synchronous replication.
 
         # semi-sync is implemented in a separate .so
         plugin-load=rpl_semi_sync_master=semisync_master.so;rpl_semi_sync_slave=semisync_slave.so
-        rpl_semi_sync_slave_enabled=1         
+        rpl_semi_sync_slave_enabled=1
         rpl_semi_sync_master_enabled=1
         # Latency is the price.
         # Wait for the slave to commit on the RELAY-LOG for
-        #   at most 
+        #   at most
         rpl_semi_sync_master_timeout=1000
 
 Replication in MySQL. Topologies and GTID.
@@ -52,21 +52,21 @@ Replication is $asynchronous$ and the agreements are configured on the slave onl
 ## Features
 
   - delayed replication
-  
-        CHANGE MASTER ... MASTER_DELAY=3600 ...;
-        
-  - different ([but with the same order](https://dev.mysql.com/doc/refman/5.7/en/replication-features-differing-tables.html)) columns between master and slaves 
 
-  
+        CHANGE MASTER ... MASTER_DELAY=3600 ...;
+
+  - different ([but with the same order](https://dev.mysql.com/doc/refman/5.7/en/replication-features-differing-tables.html)) columns between master and slaves
+
+
         CREATE TABLE (c1 int, c2 int, m3 int); -- on master
         CREATE TABLE (c1 int, c2 int, /* s3 int, s4 int */); -- on slaves
-        
+
   - different data types (with many limitations)
-        
-  
+
+
 ## Configuring replication
 Master
-     
+
   -  produces a changelog named binlog;
   -  grants access to a $replica$ user;
   -  may track slave-updates.
@@ -76,14 +76,14 @@ Slave
   -  connects to the master with the $replica$ user
   -  retrieves the binlog and applies the changes;
   -  ```START SLAVE;```
-    
+
 
 ## Configuring replication
 Enable replication in two or more configuration files like my-3306.cnf, my-3307.cnf.
 
         [mysqld]
         server-id=3306
-        
+
         log-bin=3306-bin
         # Relay logs are downloaded in
         #  the relay-logs from the Slave I/O
@@ -103,14 +103,14 @@ Configure a ```--login-path``` for each instance and validate the connection
 
         mysql --login-path=3306 -e "SHOW MASTER STATUS;"
 
-        
+
 
 ##Replication 2.0
 MySQL 5.6+ replication is based on Global Transaction ID
-  
 
-  -  each server has a unique UUID 
-   
+
+  -  each server has a unique UUID
+
         eg: 3E11FA47-71CA-11E1-9E33-C80AA9429562
 
   -  every TransactionID becomes global
@@ -128,7 +128,7 @@ master database first!**
 
 ## Configuring replication
 mysqlreplicate takes care of
-  
+
 
   -  provisioning the replica user on the master;
   -  configure the slave to point to the master;
@@ -137,16 +137,16 @@ mysqlreplicate takes care of
         mysqlreplicate  --master=$MASTER --slave=$SLAVE \
                 --rpl-user=repl:rpass \
                 -b
-        
+
   - or provision your user
-  
+
         CREATE USER 'repl' IDENTIFIED BY 'rpass';
         GRANT REPLICATION SLAVE ON *.* TO 'repl';
 
 
 ## Configuring replication
 mysqldbexport can be used to provision a new slave!
-  
+
   -  check that replica user is provisioned on the master;
   -  issue a ```RESET MASTER;``` to clean up previous settings;
 
@@ -183,7 +183,7 @@ By default:
 
   - [Cascade replication](https://dev.mysql.com/doc/refman/5.7/en/replication-options-slave.html) is *OFF* by default.
 
-        # Enable binlog forwarding 
+        # Enable binlog forwarding
         #  in my.cnf
         log_slave_updates=yes
 
@@ -192,7 +192,7 @@ By default:
   - relay log size is `1G`
 
         max_relay_log_size=0  # 0 means the default: 1G ;)
-        
+
   - relay logs are not recovered at startup
 
         # For crash-safe replication set
@@ -216,12 +216,12 @@ Large databases can be initialized from disk backups.
 
 Restore with
 
-        mysqlbackup --defaults-file=/etc/my-3307.cnf \ 
+        mysqlbackup --defaults-file=/etc/my-3307.cnf \
             --backup-dir $BACKUP_DIR    \
             --force                     \
             copy-back
-                
-Get position for old-style replication with 
+
+Get position for old-style replication with
 
         grep -r binlog $BACKUP_DIR/meta
 
@@ -247,7 +247,7 @@ The slave can't apply binary logs due to:
   - slave inconsistencies
   - binlog errors (including file permissions, ...)
   - much more (see docs)
-  
+
 To skip some binlog entries, just insert empty transactions instead.
 
 ## Troubleshooting GTID replication
@@ -257,7 +257,7 @@ The variables governing GTIDs are *note the scope*:
      select @@global.gtid_executed as applied, @@session.gtid_next as next \G
      applied: e311dd97-e9fe-11e6-b4d7-0242ac110005:1-4
      next: automatic
-     
+
 To inject an empty transaction:
 
     STOP SLAVE;
@@ -269,7 +269,7 @@ To inject an empty transaction:
 
 ## Constraints
 
-Replication 
+Replication
 
 
 ## Caveats
@@ -281,8 +281,8 @@ binlogs contain the query context, eg:
 
  `@@GLOBAL.sql_mode` won't apply to replication
 
- 
- 
+
+
 # Failover
 ## Failover Basics
 A replicated infrastructure can be made Highly Available.
@@ -290,12 +290,12 @@ A replicated infrastructure can be made Highly Available.
 
 
 In case of fault you should:
-   
+
    -  $promove$ your slave!
    -  reconfigure the others to point there
    -  disable the master
    -  eventually switch the ip-address
- 
+
 
 ## Failover - I
 mysqlfailover takes care of that, and can even discover your
@@ -314,7 +314,7 @@ replication topology!
 
 ##Failover - II
 Run mysqlfailover on an existing infrastructure!
-        
+
         $ mysqlfailover --master=$MASTER \
          --discover-slaves-login=root:root
         # Discovering slaves for master at s-1.docker:3306
@@ -334,10 +334,10 @@ Run mysqlfailover on an existing infrastructure!
         ------------------
         Binary Log File  Position  Binlog_Do_DB  Binlog_Ignore_DB
         s-1-bin.000009   231
-        
+
         GTID Executed Set
         f01a69cd-df69-11e4-b908-0242ac110009:1-3 [...]
-        
+
 ---
 
         MySQL Replication Failover Utility
@@ -351,6 +351,3 @@ Run mysqlfailover on an existing infrastructure!
         | s-3.docker  | 3306  | SLAVE   | UP     | ON         | OK      |
         | s-4.docker  | 3306  | SLAVE   | UP     | ON         | OK      |
         +-------------+-------+---------+--------+------------+---------+
-
-
-

@@ -63,9 +63,3 @@
   - name: Fail if AWESOME is not in the page content
     fail:
     when: "'sysadminpy' not in webpage.content"
-
-
-
-
-
-

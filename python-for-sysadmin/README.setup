@@ -7,15 +7,15 @@ The course requires:
 * see requirements.txt
 
 Use the following instructions to setup your environment
-and try the python crash course reading and typing on 
-you shiny ipython console the exercises contained in 
+and try the python crash course reading and typing on
+you shiny ipython console the exercises contained in
 
     #python-basic
 
 NB Python3.0 is not the default python version on many distributions so it's still not time
    to switch to it for system administration tasks. Moreover you may not find
-   precompiled packages. Anyway once you have a compiler and the needed headers, pip should build 
-   everything you need (at least to me it worked). 
+   precompiled packages. Anyway once you have a compiler and the needed headers, pip should build
+   everything you need (at least to me it worked).
 
 
 ## Generic Python
@@ -71,7 +71,7 @@ From the console, install pyreadline, psutil, ipython, ansible and pyparsing
         markupsafe tornado jsonschema psutil ansible
 
 
-To install numpy scipy matplotlib just download and install the binaries for your windows version in the given order from 
+To install numpy scipy matplotlib just download and install the binaries for your windows version in the given order from
 
     http://www.lfd.uci.edu/~gohlke/pythonlibs/#numpy
     http://www.lfd.uci.edu/~gohlke/pythonlibs/#scipy
@@ -82,9 +82,8 @@ To install numpy scipy matplotlib just download and install the binaries for you
 Test your ipython installation running it
     c:\python27\Scripts\ipython
 
-Test if the libraries are fine 
+Test if the libraries are fine
 - download the test_course_environment.py from github
 - running ipython *after* you've installed all of them
 - run the following command
   c:\python27\Scripts\nosetests test_prerequisites.py
-

@@ -3,7 +3,6 @@
     "nbserver_extensions": {
       "jupyter_nbextensions_configurator": true
     },
-    "terminado_settings": {"shell_command": ["/usr/bin/bash"]} 
+    "terminado_settings": {"shell_command": ["/usr/bin/bash"]}
   }
 }
-

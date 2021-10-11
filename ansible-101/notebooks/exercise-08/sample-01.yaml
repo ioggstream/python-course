@@ -1,6 +1,6 @@
 #
 # Yaml comments starts with "#"
-# 
+#
 # A --- signals the beginning of a document
 ---
 yaml={ 'is a superset': 'of json'}

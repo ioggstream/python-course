@@ -11,7 +11,7 @@
 \subtitle{EuroPython 2014, $22^{th}$ July - Berlin}
 \author{Roberto Polli - \href{mailto:roberto.polli@babel.it}{roberto.polli@babel.it}}
 \date{22 July 2014}
-\institute{Babel Srl P.zza S. Benedetto da Norcia, 33\\ 
+\institute{Babel Srl P.zza S. Benedetto da Norcia, 33\\
     00040, Pomezia (RM) - www.babel.it}
 
 %
@@ -19,7 +19,7 @@
 \begin{document}
 
 %% cover
-\frame{\titlepage 
+\frame{\titlepage
 \vspace{-0.5cm}
 }
 
@@ -52,7 +52,7 @@ Administrator.
 \begin{pyframe}{Agenda}
 \begin{itemize}
 \item A latency issue: what happened?
-\item Correlation in 30" 
+\item Correlation in 30"
 \item Combining data
 \item Plotting time
 \item modules: \pymodule{scipy, matplotlib}
@@ -64,7 +64,7 @@ Administrator.
 \begin{itemize}
 \item Episodic network latency issues
 \item Logs traces: message size, \#peers, retransimissions
-\item Do we need to scale? Was a peak problem? 
+\item Do we need to scale? Was a peak problem?
 \end{itemize}
 Find a rapid answer with python!
 \end{pyframe}
@@ -109,8 +109,8 @@ from scipy.stats import std	# $\sigma_{X}$
 T = { 'ts': (1, 2, 3, .., ),
       'late': (0.12, 6.31, 0.43, .. ),
       'peers': (2313, 2313, 2312, ..),...}
-      
-print([k, max(X), min(X), mean(X), std(X) ]   
+
+print([k, max(X), min(X), mean(X), std(X) ]
         for k, X in T.items() ])
 \end{pycode}
 \end{pyframe}
@@ -120,9 +120,9 @@ print([k, max(X), min(X), mean(X), std(X) ]
 \begin{pyframe}{Distributions}
 Data distribution - aka $\delta_{X}$ - shows event frequency.
 \begin{columns}
-\column[t]{.6\textwidth} 
+\column[t]{.6\textwidth}
 \begin{pycode}
-# The fastest way to get a 
+# The fastest way to get a
 #  distribution is
 from matplotlib import pyplot as plt
 freq, bins, _ = plt.hist(T['late'])
@@ -130,7 +130,7 @@ freq, bins, _ = plt.hist(T['late'])
 # plt.hist returns a
 distribution = zip(bins, freq)
 \end{pycode}
-\column[t]{.4\textwidth} 
+\column[t]{.4\textwidth}
 A ping rtt distribution
 \includegraphics[width=6cm]{ping_distribution.pdf}
 \end{columns}
@@ -151,7 +151,7 @@ zip(values, frequency)
 
 \begin{pyframe}{Correlation I}
 Are two data series $X, Y$ related? \\
-Given 
+Given
 \begin{formula}
 \Delta x_{i} = x_{i} - \bar{x}
 \end{formula}
@@ -227,12 +227,12 @@ Combinating 4 suites, 2 at a time.\\
 for (k1,v1), (k2,v2) in combinations(T.items(), 2):
   # Look for correlations between every dataset!
   corr, prob = pearsonr(v1, v2)
-  
+
   if corr > .6:
     print("Series", k1, k2, "can be correlated", corr)
   elif prob < 0.05:
     print("Series", k1, k2, "probability lower than 5%%", prob)
-   
+
 \end{pycode}
 \end{pyframe}
 
@@ -250,7 +250,7 @@ for (k1,v1), (k2,v2) in combinations(T.items(), 2):
     plt.xlabel(k1); plt.ylabel(k2)
 
     # save and close the plot
-    plt.savefig("{}_{}.png".format(k1, k2)); plt.close()   
+    plt.savefig("{}_{}.png".format(k1, k2)); plt.close()
 \end{pycode}
 \end{pyframe}
 
@@ -265,14 +265,14 @@ from itertools import cycle
 colors = cycle("rgb")   # use more than 3 colors!
 labels = cycle("morning afternoon night".split())
 size = datalen / 3      # 3 colors, right?
-for (k1,v1), (k2,v2) in combinations(T.items(), 2):  
-  [    plt.scatter(|\pyver{t1[i:i+size]}|, t2[i:i+size], 
-        color=next(colors), 
+for (k1,v1), (k2,v2) in combinations(T.items(), 2):
+  [    plt.scatter(|\pyver{t1[i:i+size]}|, t2[i:i+size],
+        color=next(colors),
         label=next(labels)
         ) for i in range(0, datalen, size) ]
   # set title, save plot & co
 
-   
+
 \end{pycode*}
 \end{pyframe}
 
@@ -291,7 +291,7 @@ for (k1,v1), (k2,v2) in combinations(T.items(), 2):
 \begin{itemize}
 \item Latency wasn't related to packet size or system throughput
 \item Errors were not related to packet size
-\item Discovered system throughput 
+\item Discovered system throughput
 \end{itemize}
 \end{pyframe}
 

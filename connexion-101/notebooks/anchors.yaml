@@ -20,4 +20,3 @@ foo: &foo
 bar: &bar
   <<: *base
   age: 20
-

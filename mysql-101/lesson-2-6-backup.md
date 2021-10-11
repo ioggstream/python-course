@@ -4,30 +4,30 @@
   - Backup 101
   - What to backup
   - Use mysqldump and mysqlbackup
-  
-## Backup 
+
+## Backup
 Importance of backups. Differences between:
 
-  - Backup 
-  - High Availability 
+  - Backup
+  - High Availability
   - Disaster Recovery
 
-Measure and Test backup: 
+Measure and Test backup:
 
   - Mean Time Between Failures;
   - Meat Time To Recovery;
   - Recovery Point Objective;
-  
-  
+
+
 ## Backup
 Database backups:
- 
- - hot vs cold 
+
+ - hot vs cold
  - logical vs physical
  - full vs incremental
  - transactions
  - importance of binary logs
- 
+
 Impacts of backup.
 
 
@@ -41,9 +41,9 @@ Create a logical backup:
 
         mysqldump --master-data=1 --all-databases |
             gzip > /backup/backup-$(date -I).sql.gz
-            
+
 ## mysqldump
-Exercise: 
+Exercise:
 
   - drop *one* table from your DB;
   - create a new mysqld instance with  `--datadir=/backup/`;
@@ -53,23 +53,23 @@ Exercise:
 
 ## mysqldump solution
 Create a versioned datadir:
-        
+
         BACKUPDIR=/backup/$(date -I)
         mkdir -p $BACKUPDIR
         chown -R mysql:mysql /backup
-        
+
 Create a new instance without network:
-         
+
         mysqld --socket=/backup/mysql.sock  \
-            --skip-networking               \ 
+            --skip-networking               \
             --skip-grant-tables             \
             --datadir=/backup/$(date -I) &
 
 Restore your db
 
-        gunzip -c /backup/backup-$(date -I).sql.gz | 
-            mysql --socket=/backup/mysql.sock 
-        
+        gunzip -c /backup/backup-$(date -I).sql.gz |
+            mysql --socket=/backup/mysql.sock
+
 
 ## mysqldump solution
 
@@ -87,7 +87,7 @@ With mysqlbackup you can make physical backups:
   - copy datafiles
   - apply innodb logs
   - save binary logs
-  
+
 Configure in /etc/my.cnf
 
         [mysqlbackup]
@@ -98,25 +98,25 @@ Configure in /etc/my.cnf
         socket=/var/lib/mysql/mysql.sock
 
 ## mysqlbackup
-The `mysqlbackup` user requires at least the 
+The `mysqlbackup` user requires at least the
 [following privileges](http://dev.mysql.com/doc/mysql-enterprise-backup/3.9/en/mysqlbackup.privileges.html)
 
         GRANT RELOAD ON *.* TO 'mysqlbackup'@'localhost';
-        GRANT CREATE, INSERT, DROP, UPDATE 
+        GRANT CREATE, INSERT, DROP, UPDATE
             ON mysql.backup_progress TO 'mysqlbackup'@'localhost';
-        GRANT CREATE, INSERT, SELECT, DROP, UPDATE 
+        GRANT CREATE, INSERT, SELECT, DROP, UPDATE
             ON mysql.backup_history TO 'mysqlbackup'@'localhost';
         GRANT REPLICATION CLIENT ON *.* TO 'mysqlbackup'@'localhost';
         GRANT SUPER ON *.* TO 'mysqlbackup'@'localhost';
-        FLUSH PRIVILEGES; 
+        FLUSH PRIVILEGES;
 
 Create a user with the given privileges copying data from mysql documentation[^mysqlbackup]
 
-[^mysqlbackup]: http://dev.mysql.com/doc/mysql-enterprise-backup/3.9/en/mysqlbackup.privileges.html 
+[^mysqlbackup]: http://dev.mysql.com/doc/mysql-enterprise-backup/3.9/en/mysqlbackup.privileges.html
 
 ## mysqlbackup
 
-Linux tip ;) 
+Linux tip ;)
 
   - install Mysql Enterprise Backup via rpm
   - list files in the `meb` package with:
@@ -125,14 +125,14 @@ Linux tip ;)
 
 ## mysqlbackup
 To create a consistent backup:
- 
-  - create a ```--login-path=mysqlbackup``` 
+
+  - create a ```--login-path=mysqlbackup```
   - run the following command
-  
+
         mysqlbackup --login-path=mysqlbackup backup
-        
-  - you can apply ib_logs too with     
-    
+
+  - you can apply ib_logs too with
+
         mysqlbackup --login-path=mysqlbackup backup-and-apply-log
 
 
@@ -145,14 +145,14 @@ Incremental backups require a starting point.
             --incremental                           \
             --incremental-base=history:last_backup  \
             backup
-            
+
   - or a directory
-  
+
         FULLDIR=/backup/full/2015-05-18_16-14-18/
         mysqlbackup --login-path=mysqlbackup    \
-            --incremental                       \  
+            --incremental                       \
             --incremental-base=dir:$FULLDIR     \
-            backup            
+            backup
 
 
 ## mysqlbackup
@@ -178,12 +178,12 @@ The command to restore a database is
             --backup-dir=$FULLDIR \
             copy-back
 
-Exercises: 
+Exercises:
 
  - which are the steps to validate a database backup?
  - validate the backup restoring the db in another place.
- 
- 
+
+
 ## Point in Time Recovery
 
 Use `binlog` to execute a PITR.

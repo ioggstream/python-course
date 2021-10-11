@@ -10,4 +10,3 @@ mongo_nodes_f: >
           |list
           }}
 mongo_uri_f: mongodb://{{mongo_nodes_f|join(",")}}/test?replicaSet={{mongo_setup._id}}
-

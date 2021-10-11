@@ -5,4 +5,3 @@
     debug: var=mongo_nodes_f
   - name: "Dump processed configs"
     debug: var=mongo_uri_f
-

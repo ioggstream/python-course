@@ -1,7 +1,8 @@
-from connexion import FlaskApp, problem
-from os.path import isfile, dirname
-from yaml import safe_load as yaml_load
 from logging import basicConfig
+from os.path import dirname, isfile
+
+from connexion import FlaskApp, problem
+from yaml import safe_load as yaml_load
 
 
 def basic_auth(username, password, required_scopes=None):
@@ -52,7 +53,10 @@ def configure_logger(log_config="logging.yaml"):
 if __name__ == "__main__":
     configure_logger()
     app = FlaskApp(
-        "hello", port=8443, specification_dir=dirname(__file__), options={"swagger_ui": True}
+        "hello",
+        port=8443,
+        specification_dir=dirname(__file__),
+        options={"swagger_ui": True},
     )
     app.add_api("simple.yaml", validate_responses=True, strict_validation=True)
     app.run(ssl_context="adhoc", debug=True)

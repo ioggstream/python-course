@@ -74,7 +74,7 @@ def ping_rtt():
 
 
 \begin{pyframe}{Distributions: set, defaultdict}
-A distribution or $\delta$ shows the frequency of events, like 
+A distribution or $\delta$ shows the frequency of events, like
 how many people ate $x$ chickens ;)
 \begin{columns}
 \column[t]{.6\textwidth}
@@ -88,14 +88,14 @@ from collections import defaultdict
 d = defaultdict(int)
 for x in rtt:
     distro[x] += 1
-    
+
 
 
 \end{pycode}
 \column[t]{.4\textwidth}
 \footnotesize
 Distributions and Mean are both important!
-%\includegraphics[height=6cm, width=7cm]{ping_distribution.pdf}  
+%\includegraphics[height=6cm, width=7cm]{ping_distribution.pdf}
 \includegraphics[height=5.5cm, width=7cm]{histo_gauss.pdf}
 \end{columns}
 \end{pyframe}
@@ -109,9 +109,9 @@ Distributions and Mean are both important!
 \item Standard deviation or $\sigma$ formula is {\large  $\sigma^{2}(X) := \frac{ \sum(x-\bar{x})^{2} }{n} $ }
 \item $\sigma$ tells if $\delta$ is fair or not, and how much the mean ($\bar{x}$) is representative
 \item \pymodule{matplotlib.mlab}.normpdf is a smooth function approximating the histogram
-% Gauss function smoothly approximates the histogram {\Large 
-%	$ \frac{n}{\sigma \sqrt{2\pi}}e^{-\frac{1}{2}  \big( \frac{x-\bar{x}} {\sigma} \big)^{2} } $ 
-%} 
+% Gauss function smoothly approximates the histogram {\Large
+%	$ \frac{n}{\sigma \sqrt{2\pi}}e^{-\frac{1}{2}  \big( \frac{x-\bar{x}} {\sigma} \big)^{2} } $
+%}
 \end{itemize}
 
 \column[t]{.6\textwidth}
@@ -131,8 +131,8 @@ std(unfair) # 1
 
 
 \begin{pyframe}{Simple processing: scipy}
-Check your computed values vs the $\sigma$ returned by ping 
-(didn't you notice ping returned it?) 
+Check your computed values vs the $\sigma$ returned by ping
+(didn't you notice ping returned it?)
 \begin{pycode*}{escapeinside=||}
 """goal: remember to convert to numeric / float
    goal: use scipy
@@ -152,7 +152,7 @@ print(max(rtt), min(rtt), mean(rtt), std(rtt))
 \begin{pyframe}{Time Distributions: Exercise}
 \begin{itemize}
 \item Parse the \href{https://github.com/ioggstream/python-course/blob/master/python-for-sysadmin/data/maillog}{provided maillog} in ipython using its ! magic and get an hourly email $\delta$
-\item Expected output: 
+\item Expected output:
 \begin{pycode}
 time_d = {  # mail delivered (removed) between
     0: xxx  #  00:00 - 00:59
@@ -162,16 +162,16 @@ time_d = {  # mail delivered (removed) between
 \end{pycode}
 \end{itemize}
 \end{pyframe}
- 
+
 \iftrue
 \begin{pyframe}{Time Distributions: Exercise Solution}
 %def get_slot(ts):
 %    n = int(ts[:2])
 %    return n - (n%4)
 \begin{pycode}
-# deliveder emails are like the following 
+# deliveder emails are like the following
 #May 14 16:00:04 rpolli postfix/qmgr[122]: 4DC3DA: removed"
-    
+
 ret = !grep removed maillog # get the interesting lines
 
 ts = ret.fields(2) # find the timestamp (3rd column)
@@ -181,7 +181,7 @@ time_d = {x: count(x) for x in set(hours)}
 \end{pycode}
 \end{pyframe}
 
-\fi 
+\fi
 
 \begin{pyframe}{Plotting distributions}
 \begin{columns}
@@ -192,11 +192,11 @@ from matplotlib import pyplot as plt
 # and set the interactive mode
 plt.ion()
 
-# Plotting an histogram... 
+# Plotting an histogram...
 frequency, bins, _ = hist(hours)
 
-# .. returns a 
-distribution = dict(zip(slots, 
+# .. returns a
+distribution = dict(zip(slots,
     frequency))
 \end{pycode}
 \column[t]{.4\textwidth}
@@ -245,10 +245,10 @@ mail_per_minute = time_d[hour] / |\pyver{60}| # minutes in hour
 \begin{pycode}
 # Let's plot the following datasets
 #  taken from a 4-hour distribution
-mail_sent = [1, 5, 500, 250, 100, 7] 
+mail_sent = [1, 5, 500, 250, 100, 7]
 kB_s = [70, 300, 29000, 12500, 450, 500]
 
-# A scatter plot can suggest relations 
+# A scatter plot can suggest relations
 #  between data
 plt.scatter(mail_sent, kB_s)
 
@@ -266,11 +266,11 @@ Correlating Mail and Thruput
 
 
 \begin{pyframe}{Linear Correlation}
-The Pearson Coefficient $\rho$ is a relation indicator. 
+The Pearson Coefficient $\rho$ is a relation indicator.
 \begin{description}
 \item[0]  no relation
 \item[1]  direct relation (both dataset increase together)
-\item[-1]  inverse relation (one increase as the other decrease) 
+\item[-1]  inverse relation (one increase as the other decrease)
 \end{description}
 \begin{equation}
 \rho(X,Y) = \frac{
@@ -389,7 +389,7 @@ in_chunks(my_list, size=4)) # returns a <generator object ...>
 list(_) # ... which iterates to...
 > [[0, 1, 2, 3], # Plotted in Red
    [4, 5, 6, 7], # ..Green
-   [8, 9]]       # ..Blue 
+   [8, 9]]       # ..Blue
 \end{pycode*}
 \end{pyframe}
 \fi
@@ -415,6 +415,3 @@ for (k1, v1), (k2, v2) in combinations(table.|\pyver{items}|(), 2):
     plt.savefig("timed_{}_{}.png".format(k1, k2)); plt.close()
 \end{pycode*}
 \end{pyframe}
-
-
-

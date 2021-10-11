@@ -31,9 +31,4 @@ An introductory course for people knowing other languages.
 ## TODO
 
 * intermediate python
-* python for performance testing 
-
-
-
-
-
+* python for performance testing

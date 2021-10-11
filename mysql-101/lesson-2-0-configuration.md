@@ -4,22 +4,22 @@
 - Configure basic security and logging parameters
 - Using profiles
 - Get/Set variables
-- Set SQL Modes 
+- Set SQL Modes
 - Populate databases
 - Application Logging
 
-    
-    
+
+
 ## Server Configuration
 Show all mysqld **System Variables** (aka parameters)
-    
+
         mysqld --verbose --help
-    
-    
+
+
 Read from /etc/my.cnf or via
 
         mysqld --defaults-file=/etc/my-file.cnf
-    
+
 Show running status via
 
         #mysqladmin variables
@@ -51,21 +51,21 @@ my.cnf is made up of stanzas
 
   - syntax errors
   - unexistent system variables
-    
+
 ## Configuration
 Show the parameters *to be used*
 
         my_print_defaults mysqld
-        
+
 Show the *actual* values
 
         mysqladmin variables
-        
+
 Show the *actual* values from `mysql`
-      
+
         SHOW [GLOBAL|SESSION] VARIABLES [LIKE ...];
         SHOW VARIABLES LIKE 'innodb_%';
-        
+
 ## Configuration vs Status
 
 `mysqld` provides `STATUS` insights
@@ -80,7 +80,7 @@ Show the *actual* values from `mysql`
   |variable_name|table|note|
   |--|--|--|
   |max_used_connections|GLOBAL_STATUS|effectively used|
-  |max_connections|GLOBAL_VARIABLES|server-wide limit| 
+  |max_connections|GLOBAL_VARIABLES|server-wide limit|
   |max_user_connections|GLOBAL_VARIABLES|per-user limit|
   |max_user_connections|SESSION_VARIABLES|current user limit|
 
@@ -96,14 +96,14 @@ Global variables:
   - apply to every connection;
   - static or dynamic;
   - changed by `SUPER` users
-  
+
         SET @@GLOBAL.max_tmp_table_size=4*(1<<20);  -- eg.
-  
+
 Session variables:
 
   - apply to the current session (connection) only;
   - dynamic.
-  
+
         SET @@SESSION.sql_mode='TRADITIONAL'; -- eg.
 
 Changes to global dynamic variables (eg. max_tmp_table_size) apply to future sessions.
@@ -119,7 +119,7 @@ Privilege consistency and security
         explicit_defaults_for_timestamp
 
 timestamp_defaults on 5.6+ are more flexible but you must use the [DEFAULT CURRENT_TIMESTAMP and ON UPDATE CURRENT_TIMESTAMP clauses in column definitions](http://dev.mysql.com/doc/refman/5.7/en/timestamp-initialization.html)
-        
+
 ## Configuring security
 Further security tips for server...
 
@@ -127,9 +127,9 @@ Further security tips for server...
         ...
         local-infile=0
         skip-symbolic-links
-   
+
 ...and client.
-   
+
         [mysql]
         # inhibit unlimited UPDATE, DELETE, SELECT
         # override with --safe-updates=0
@@ -143,14 +143,14 @@ Limit max connections
         [mysqld]
         ...
         max_connections=100
-        
+
 Check used connections
 
         SHOW STATUS LIKE 'max_used_connections'
-        
+
 ## Application logging
 mysqld does **not** create logs by default.
-        
+
         # configure general and slow query logs
         #  eventually using defaults
         general-log-file[=hostname.log]
@@ -171,7 +171,7 @@ Get (or trash) data with
         SHOW TABLES FROM mysql LIKE '%log%';
         SELECT * FROM [general_log|slow_log];
         TRUNCATE mysql.general_log;
-        
+
 
 ## Application logging
 If error-log is specified, stdout|err is redirected.
@@ -179,7 +179,7 @@ If error-log is specified, stdout|err is redirected.
         # set the log file will daemonize
         #  the server
         log-error[=hostname.err]
-        
+
 You can use mysqld_safe to eventually restart the server
 in case of problems.
 
@@ -191,7 +191,7 @@ Don't fill your disks with logs!
 
   - consider separate partitions;
   - rotate logs, checking the actual policy;
-  
+
         cat /etc/logrotate.d/mysql
 
   - or copy and modify

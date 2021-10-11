@@ -5,4 +5,3 @@ RUN apt-get -y autoremove
 
 RUN echo "UseDNS no" >> /etc/ssh/sshd_config
 RUN echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
-

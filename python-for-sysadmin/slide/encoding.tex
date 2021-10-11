@@ -6,7 +6,7 @@
 \item A string more than a sequence of bytes
 \item \emph{A string is a couple (bytes, encoding)}
 \item Use unicode\_literals in python2
-\item Manage differently encoded filenames 
+\item Manage differently encoded filenames
 \item A string is not a sequence of bytes
 \end{itemize}
 modules: \pymodule{os, os.path, glob}
@@ -18,19 +18,19 @@ modules: \pymodule{os, os.path, glob}
 
 \column[c]{.15\textwidth}
 \tiny
-\textit{Als das Kind Kind war, ging es mit hängenden Armen, 
-wollte der Bach sei ein Flu\ss, der Flu\ss sei ein Strom, 
+\textit{Als das Kind Kind war, ging es mit hängenden Armen,
+wollte der Bach sei ein Flu\ss, der Flu\ss sei ein Strom,
 und diese Pf\"utze das Meer.
 \newline
-Als das Kind Kind war,  wu\sste es nicht, da\ss es Kind war, 
+Als das Kind Kind war,  wu\sste es nicht, da\ss es Kind war,
 alles war ihm beseelt, und alle Seelen waren eins.
 \newline
-Als das Kind Kind war, 
-hatte es von nichts eine Meinung, 
-hatte keine Gewohnheit, 
-sa\ss oft im Schneidersitz, 
-lief aus dem Stand, 
-hatte einen Wirbel im Haar 
+Als das Kind Kind war,
+hatte es von nichts eine Meinung,
+hatte keine Gewohnheit,
+sa\ss oft im Schneidersitz,
+lief aus dem Stand,
+hatte einen Wirbel im Haar
 und machte kein Gesicht beim fotografieren.
 }
 \column[c]{.7\textwidth}
@@ -46,21 +46,21 @@ strings list of bytes'''
 \end{verse}
 
 \column[c]{.15\textwidth}
-\tiny \textit{Als das Kind Kind war, 
-fielen ihm die Beeren wie nur Beeren in die Hand 
-und jetzt immer noch, 
-machten ihm die frischen Waln\"usse eine rauhe Zunge 
-und jetzt immer noch, 
-hatte es auf jedem Berg 
-die Sehnsucht nach dem immer h\"oheren Berg, 
-und in jeder Stadt 
-die Sehnsucht nach der noch gr\"o\sseren Stadt, 
-und das ist immer noch so, 
-griff im Wipfel eines Baums nach dem Kirschen in einemHochgef\"uhl 
-wie auch heute noch, 
-eine Scheu vor jedem Fremden 
-und hat sie immer noch, 
-wartete es auf den ersten Schnee, 
+\tiny \textit{Als das Kind Kind war,
+fielen ihm die Beeren wie nur Beeren in die Hand
+und jetzt immer noch,
+machten ihm die frischen Waln\"usse eine rauhe Zunge
+und jetzt immer noch,
+hatte es auf jedem Berg
+die Sehnsucht nach dem immer h\"oheren Berg,
+und in jeder Stadt
+die Sehnsucht nach der noch gr\"o\sseren Stadt,
+und das ist immer noch so,
+griff im Wipfel eines Baums nach dem Kirschen in einemHochgef\"uhl
+wie auch heute noch,
+eine Scheu vor jedem Fremden
+und hat sie immer noch,
+wartete es auf den ersten Schnee,
 und wartet so immer noch.
 }
 \end{columns}
@@ -70,7 +70,7 @@ und wartet so immer noch.
 \begin{pyframe}{Encoding is a map}
 \begin{itemize}
 \item The \emph{type()} of a byte-sequence is bytes
-\item Encoding is a one-to-one map between a typographical character and a byte-sequence 
+\item Encoding is a one-to-one map between a typographical character and a byte-sequence
 \item Decoding is its reverse map
 \end{itemize}
 
@@ -78,7 +78,7 @@ und wartet so immer noch.
 \column[c]{.6\textwidth}
 \begin{pycode*}{escapeinside=||}
 # heading $\pyver{u}$ only py2 and py3.3+
-b1 = |\pyver{u}|"S\u00fcd".encode('utf-8') 
+b1 = |\pyver{u}|"S\u00fcd".encode('utf-8')
 b2 = |\pyver{u}|"S\u00fcd".encode('cp1252')
 
 # it's always true that
@@ -94,10 +94,10 @@ str == bytes
 
 \column[c]{.4\textwidth}
 \small
-\begin{tabular}{|c||c|c|c|}\hline 
+\begin{tabular}{|c||c|c|c|}\hline
             & \multicolumn{3}{|c|}{bytes}  \\ \hline
 char        & ascii     & utf-8         & cp1252     \\ \hline
-a           & [97]      & [97]          & [97]      \\ \hline     
+a           & [97]      & [97]          & [97]      \\ \hline
 $\ddot{u}$  & -         & [195, 188]    & [\pyver{252}]              \\ \hline
 \`{e}     &  - & [196, 168] & [232]\\ \hline
 \end{tabular}
@@ -112,7 +112,7 @@ $\ddot{u}$  & -         & [195, 188]    & [\pyver{252}]              \\ \hline
 
 
 \begin{pycode*}{escapeinside=||}
-# Py3 doesn't need the $\pyver{u}$ 
+# Py3 doesn't need the $\pyver{u}$
 the_string = |\pyver{u}|"S\u00fcd" # $S\ddot{u}d$
 
 # can be encoded in different
@@ -133,16 +133,16 @@ in_utf8.decode('cp1252') # $S\tilde{A}\sfrac{1}{4}d$
 
 \column[c]{.4\textwidth}
 \begin{itemize}
-\item Encoding is a one-to-one map between a typographical character and a byte-sequence 
+\item Encoding is a one-to-one map between a typographical character and a byte-sequence
 \item Decoding is its reverse map
 %\item The \emph{type()} of a byte-sequence is bytes
 \end{itemize}
 
 \small
-\begin{tabular}{|c||c|c|c|}\hline 
+\begin{tabular}{|c||c|c|c|}\hline
 %            & \multicolumn{3}{|c|}{bytes}  \\ \hline
 char        & ascii     & utf-8         & cp1252     \\ \hline
-a           & [97]      & [97]          & [97]      \\ \hline     
+a           & [97]      & [97]          & [97]      \\ \hline
 $\ddot{u}$  & -         & [195, 188]    & [252]              \\ \hline
 %\`{e}     &  - & [196, 168] & [232]\\ \hline
 \end{tabular}
@@ -157,13 +157,13 @@ $\ddot{u}$  & -         & [195, 188]    & [252]              \\ \hline
 \iffalse
 \begin{pyframe}{De}
 \begin{itemize}
-\item A string is a couple: (bytes, encoding) 
+\item A string is a couple: (bytes, encoding)
 \item The same string can be encoded using different maps.
 \end{itemize}
 
 \begin{table}
-\begin{tabular}{|c|l|} \hline 
-encoding & the string  S\pyver{\"u}d results in bytes \\ \hline 
+\begin{tabular}{|c|l|} \hline
+encoding & the string  S\pyver{\"u}d results in bytes \\ \hline
 utf-8 &([83, \pyver{195, 188}, 100]  \\
 cp1252 &([83, \pyver{252}, 100]\\
 \hline
@@ -178,9 +178,9 @@ cp1252 &([83, \pyver{252}, 100]\\
 
 \begin{center}
 \Large
-\"{u} $\xmapsto[encode]{utf-8}$ 
-    [\red{198}, \blue{188}] 
-    $\xmapsto[decode]{cp1252}$ 
+\"{u} $\xmapsto[encode]{utf-8}$
+    [\red{198}, \blue{188}]
+    $\xmapsto[decode]{cp1252}$
     \red{\~{A}} \blue{$\sfrac{1}{4}$}
 \end{center}
 
@@ -194,7 +194,7 @@ cp1252 &([83, \pyver{252}, 100]\\
 # To make python2 encoding-aware we should
 from __future__ import unicode_literals
 
-# Create 3 windows-encoded filenames in 
+# Create 3 windows-encoded filenames in
 basedir = "/tmp/py"
 
 # using the provided function
@@ -218,7 +218,7 @@ create_full_path = pjoin(basedir, list_files_with[0])
 
 # $\emphred{UnicodeDecodeError:}$ 'ascii' codec can't decode $\pyver{byte 0xFC}$
 #    in position 2: ordinal not in range(128)
-|\pyver{0xFC}| == 252 # remember the $\ddot{u}$ in cp1252 map? 
+|\pyver{0xFC}| == 252 # remember the $\ddot{u}$ in cp1252 map?
 \end{pycode*}
 \end{pyframe}
 
@@ -234,18 +234,18 @@ for f in files: # listdir is already safe ;)
     # we use $\pyver{"{!r}"}$.format to avoid further encoding
     #     issues when printing or logging
     print("file: {!r}".format(utf_path))
-    
+
 \end{pycode*}
 \end{pyframe}
 \fi
 
 \begin{pyframe}{Encoded filenames: glob}
 \begin{pycode*}{escapeinside=||}
-from glob import glob as ls # expands wildcards like a shell. 
+from glob import glob as ls # expands wildcards like a shell.
 
 files = ls("/tmp/py/*.txt") # To avoid encoding issues ...
 # $\red{UnicodeDecodeError:}$ 'ascii' codec can't decode $\pyver{byte 0xFC}$
-|\pyver{0xFC}| == 252 # remember the $\ddot{u}$ in cp1252 map? 
+|\pyver{0xFC}| == 252 # remember the $\ddot{u}$ in cp1252 map?
 
 files = ls(|\pyver{b}|"/tmp/py/*.txt") #..we explicitly use bytes
 
@@ -268,7 +268,7 @@ def list_files(basedir):
 bytebasedir = bytes(basedir)
 list_files(basedir)     # which one ...
 list_files(bytebasedir) # ...will work?
-    
+
 \end{pycode}
 \end{pyframe}
 \fi

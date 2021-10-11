@@ -3,9 +3,9 @@
 
   - Storage Engines in MySQL Architecture
   - Memory: effects of limits
-  - InnoDB: 
+  - InnoDB:
   - MyISAM
-  
+
 
 ## Memory tables
 "Paging" in MySQL and temporary tables.
@@ -28,8 +28,8 @@ Get raw values via
 
 Or format them via
 
-        SELECT VARIABLE_NAME, 
-            VARIABLE_VALUE>>20 
+        SELECT VARIABLE_NAME,
+            VARIABLE_VALUE>>20
           FROM performance_schema.global_variables
           WHERE VARIABLE_NAME LIKE '%table_size';
 
@@ -38,14 +38,14 @@ Or format them via
 Create a small memory table...
 
         USE employees;
-        CREATE TABLE _departments 
+        CREATE TABLE _departments
             ENGINE=memory
             SELECT * FROM departments;  -- one statement ;)
         SHOW CREATE TABLE _departments;
 
 ...and a big one (with more than `max_heap_table_size`).
 
-        CREATE TABLE _titles 
+        CREATE TABLE _titles
             ENGINE=memory
             SELECT * FROM titles;
         SHOW CREATE TABLE _titles;
@@ -55,13 +55,13 @@ Create a small memory table...
 Remember that
 
 
-$max\_tmp\_table\_size \leq max\_heap\_table\_size$ 
+$max\_tmp\_table\_size \leq max\_heap\_table\_size$
 
 
 Otherwise `max_tmp_table_size` will *always* be
 lowered at `max_heap_table_size` value.
 
-Creating temporary tables. 
+Creating temporary tables.
 Limitations on [BLOB/TEXT and its effects](https://dev.mysql.com/doc/refman/5.6/en/internal-temporary-tables.html).
 
 Inspecting temporary tables on disks.
@@ -74,7 +74,7 @@ Features of MyISAM are webapp driven:
 
   - full-text support
   - geospatioal indexes
-  
+
 Caveats:
 
   - non transactional
@@ -94,24 +94,24 @@ Create MyISAM table
 Table format:
 
         \! tree /var/lib/mysql/employees
-        
+
   - .frm: table definitions
   - .myd: table data
   - .myi: table indexes for data
-  
-  
+
+
 
 ## InnoDB
-Transactions and consistency. 
-Foreign Keys. 
+Transactions and consistency.
+Foreign Keys.
 System and tmp Tablespace.
 
   - `ibdataXXX` - unshrinkable!
   - undo: `undo00X` new in 5.7, set at --initialize time, automatically managed since 8.0
   - tmp:  `ibtmp1` new in 5.7, created at server startup, for non-compressed tmp tables
 
-InnoDB Log Files. 
-   
+InnoDB Log Files.
+
   - redo: `ib_logfile{0,2}`
 
 Checkpoint interval.
@@ -131,7 +131,7 @@ Avoids:
           WHERE TABLESPACE_NAME='innodb_temporary' \G
 
 ## InnoDB
-Buffer Pool: 
+Buffer Pool:
 
   - contention & instances (5.7 works better)
 
@@ -140,8 +140,8 @@ Buffer Pool:
 
 ## InnoDB
 
-  - MVCC 
-  - row-locking 
+  - MVCC
+  - row-locking
   - table-locking only for DDL
   - deadlock detection with timeout
   - unshrinkable system tablespace (reduce `ibdata*` requires `--initialize` or `mysql_install_db`)
@@ -153,15 +153,15 @@ Configuring `innodb_buffer_pool_size`.
 Inspecting usage.
 
 Configuring
- 
+
  - `innodb_log_file_size` - [consider  `BLOB|TEXT` size on 5.6](https://bugs.mysql.com/bug.php?id=69477).
  - `innodb_flush_logs_at_trx_commit`
  - `innodb_undo_tablespaces` - reduce the system tablespace, deprecated and hardcoded to 2 since MySQL 8.0
- 
+
 
 
 ## Configuring InnoDB
-Tablespaces. 
+Tablespaces.
 
 Configuring and Resizing Tablespaces. AutoExtend.
 
@@ -182,11 +182,11 @@ Setup a database with the provided configuration.
         [mysqld]
         innodb_log_file_size=4M
         innodb_buffer_pool_size=16M
-        
+
 Re-import employees and get stats via dstat and time.
 
 Retry adding
- 
+
         innodb_flush_log_at_trx_commit=1
 
 ## Configuring InnoDB
@@ -195,7 +195,7 @@ Test further effects of the following parameters:
         innodb_buffer_pool_size
         innodb_log_file_size
         innodb_log_files_in_group
-        
+
 
 ## Check InnoDB Status
 To access InnoDB statistics you can use:
@@ -235,4 +235,3 @@ Copy back target files
 	$ cp -rp /tmp/t.{idb,cfg} /var/lib/mysql/d1/
 
         ALTER TABLE t IMPORT TABLESPACE;
-

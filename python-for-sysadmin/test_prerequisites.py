@@ -31,21 +31,22 @@ def test_imports():
 
 def test_further():
     required = [
-        '__future__:print_function  unicode_literals division',
-        'collections:defaultdict',
-        'glob:glob',
-        'itertools:combinations',
-        'os:listdir  makedirs',
-        'os.path:expanduser isdir join',
-        're:findall match',
-        'scipy:std  mean',
-        'scipy.stats.stats:pearsonr',
-        'shutil:copytree  rmtree',
-        'subprocess:check_output',
-        'sys:version_info',
-        'telnetlib:Telnet',
-        'matplotlib:pyplot mlab',
-        'time:sleep']
+        "__future__:print_function  unicode_literals division",
+        "collections:defaultdict",
+        "glob:glob",
+        "itertools:combinations",
+        "os:listdir  makedirs",
+        "os.path:expanduser isdir join",
+        "re:findall match",
+        "scipy:std  mean",
+        "scipy.stats.stats:pearsonr",
+        "shutil:copytree  rmtree",
+        "subprocess:check_output",
+        "sys:version_info",
+        "telnetlib:Telnet",
+        "matplotlib:pyplot mlab",
+        "time:sleep",
+    ]
     for m in required:
         m, ps = m.split(":", 1)
         for p in ps.split():

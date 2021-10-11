@@ -6,4 +6,3 @@ def ping_rtt():
     rtt = ret.grep("time=").fields(-2)
     rtt = [float(x[5:]) for x in rtt]
     return rtt
-

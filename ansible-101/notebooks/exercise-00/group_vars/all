@@ -10,4 +10,3 @@ proxy_env:
   http_proxy: http://proxy:3128
   https_proxy: http://proxy:3128
   no_proxy: 127.0.0.1,localhost,.example.com
-

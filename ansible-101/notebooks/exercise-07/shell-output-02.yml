@@ -37,4 +37,3 @@
       src: /tmp/fetch
       dest: /tmp/sosreport.tar.bz2
       format: bz2
-

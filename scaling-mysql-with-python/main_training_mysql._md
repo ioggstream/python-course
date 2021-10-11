@@ -462,11 +462,11 @@ mysqldbcopy --source=$MASTER --destination=$SLAVE
 \iffalse
     ##Provisioning a new slave
     Provision a new slave in two steps (eg. large database or requiring tweaks)
-    
+
       -  check that replica user is provisioned on the master;
       -  create a custom dump.sql;
       -  add --rpl=master;
-    
+
     \begin{minted}
     cat > data.sql <<EOF
     -- ignore previous changelogs

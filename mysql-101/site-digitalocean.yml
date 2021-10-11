@@ -43,7 +43,7 @@
       ansible_user: root
       host_key_checking: no
     with_items: "{{my_droplet.results}}"
-  
+
 
   - name: Create a sample inventory file with the server ips.
     file:
@@ -55,8 +55,8 @@
       line: "[do]"
   - lineinfile:
       path: /tmp/inventory.do
-      line: > 
-        {{ item.droplet.networks.v4[0].ip_address  }} droplet_id={{item.droplet.id}} 
+      line: >
+        {{ item.droplet.networks.v4[0].ip_address  }} droplet_id={{item.droplet.id}}
     with_items: "{{my_droplet.results}}"
 
 
@@ -73,7 +73,7 @@
       path: .droplet_ids
       create: yes
       line: >-
-        {{item.droplet.id}} 
+        {{item.droplet.id}}
     with_items: "{{my_droplet.results}}"
 
 #
@@ -90,14 +90,14 @@
     - ansible
 
   - name: Docker should listen on localhost.
-    lineinfile: 
+    lineinfile:
       path: /etc/systemd/system/multi-user.target.wants/docker.service
       regexp: "^ExecStart=.*"
       line: "ExecStart=/usr/bin/dockerd -H fd:// -H tcp://172.17.0.1:2375"
     register: systemd_updated
 
   - name: Reload docker with new systemd config
-    systemd: 
+    systemd:
       state: restarted
       name: docker
       daemon_reload: yes
@@ -135,12 +135,6 @@
       args:
        chdir: /home/science/python-course/mysql-101
       register: output
- 
+
   - debug:
       var: output
-
-    
-
-
-
- 

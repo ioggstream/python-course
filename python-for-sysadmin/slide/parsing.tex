@@ -36,10 +36,10 @@ modules: \pymodule{re, nose, \%timeit}
 \begin{pyframe}{Parsing postfix logs}
 \begin{pycode}
 # Before writing the parser, collect samples of
-#  the interesting lines. For now just 
+#  the interesting lines. For now just
 from course import mail_sent, mail_delivered
 
-# and \%edit a simple 
+# and \%edit a simple
 def test_sent():
     hour, host, to = parse_line(mail_sent)
     assert hour == '08:00:00'
@@ -54,7 +54,7 @@ def test_sent():
 \begin{pycode*}{escapeinside=||}
 mail_sent.split()   # Start using basic strings in ipython
 
-# Then tie them with zip/zip() 
+# Then tie them with zip/zip()
 fields, counting  = _, zip(range(20), _)
 fields = fields[:7] # We just care for the first 7 values
 
@@ -108,7 +108,7 @@ from re import split # is a very nice function
 
 # Let's gather some ping stats
 if sys.platform.startswith('win'):
-    cmd = "ping -n10 www.google.it"    
+    cmd = "ping -n10 www.google.it"
 else:
     cmd = "ping -c10 -w10 www.google.it"
 
@@ -121,7 +121,7 @@ ping_output = [ split("[ =]", x) for x in sh(cmd)]
 %if sys.platform.startswith('linux'):
 %    cmd = "ping -c10 -w10 www.google.it"
 %elif sys.platform.startswith('win'):
-%    cmd = "ping -n10 www.google.it"    
+%    cmd = "ping -n10 www.google.it"
 %else: # 'darwin' in sys.platform?
 %    raise ValueError("Are you really using OSX?")
 %
@@ -129,16 +129,16 @@ ping_output = [ split("[ =]", x) for x in sh(cmd)]
 \begin{pycode}
 from re import findall # can be misused too ;)
 
-# eg. for adding the ":" to a 
+# eg. for adding the ":" to a
 mac = "00""24""e8""b4""33""20"
 
-# ...using this 
+# ...using this
 re_hex = '[0-9A-Fa-f]{2}'
 mac_address = ':'.join(findall(re_hex, mac))
 print("The mac address is ", mac_address)
 
 \end{pycode}
-\emph{Actually this does a bit of validation, 
+\emph{Actually this does a bit of validation,
  requiring all chars to be in the 0-F range}
 \end{pyframe}
 
@@ -170,7 +170,7 @@ for re_s in test_regexps:
 
 
 \begin{pyframe}{Benchmarking in iPython II}
-Or find other methods: 
+Or find other methods:
 \begin{itemize}
 \item complex...
 \begin{pycode}

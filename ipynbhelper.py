@@ -4,12 +4,13 @@ This a mix from @minrk's various gists.
 
 """
 
-import sys
-import os
 import io
-from Queue import Empty
+import os
+import sys
 
 from IPython.nbformat import current
+from Queue import Empty
+
 try:
     from IPython.kernel import KernelManager
     assert KernelManager  # to silence pyflakes

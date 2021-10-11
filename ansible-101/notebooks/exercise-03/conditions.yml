@@ -22,4 +22,3 @@
   tasks:
   - debug: msg="Replace me"
     when: true
-

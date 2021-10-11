@@ -1,11 +1,3 @@
-from datetime import datetime
-from random import randint
-
-import pytz
-from connexion import problem
-from flask import request
-
-
 def get_status():
     """Implement the get_status operation
     :return: a problem+json with status 200, title "OK" and a successful
@@ -20,12 +12,7 @@ def get_echo(tz="Zulu", user=None, token_info=None):
 
 def get_timezones(limit=5, offset=0, continent=None):
     raise NotImplementedError
-    return {
-        "limit": limit,
-        "offset": offset,
-        "entries": entries,
-        "count": len(entries),
-    }
+    return {"limit": limit, "offset": offset, "entries": entries, "count": len(entries)}
 
 
 @throttle

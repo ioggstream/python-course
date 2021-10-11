@@ -24,5 +24,3 @@ ret_config = dba.configureLocalInstance(uri, {
 if (ret_config["status"] != "ok") {
     exit(1);
 }
-
-

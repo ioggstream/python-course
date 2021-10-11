@@ -50,9 +50,9 @@ the course installed.
 
 Get the jupyter notebook url at the end of the deployment.
 
-## Playing the course on DigitalOcean 
+## Playing the course on DigitalOcean
 
-If you don't use ansible, you can always setup everything 
+If you don't use ansible, you can always setup everything
 by hand.
 
   - create an Ubuntu 18.04 docker droplet from the menu and ssh into your host
@@ -81,5 +81,3 @@ ExecStart=/usr/bin/dockerd -H fd:// -H tcp://172.17.0.1:2375
 See asciicast here
 
 [![asciicast](https://asciinema.org/a/9xqX4akNND7Yc0Q1sTb3ZnEhI.png)](https://asciinema.org/a/9xqX4akNND7Yc0Q1sTb3ZnEhI)
-
-

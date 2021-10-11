@@ -32,7 +32,7 @@ Run the environemnt with:
 
     # make course
 
-or 
+or
 
     # docker-compose scale course=1 bastion=1 web=3
     # firefox http://localhost:8888
@@ -40,7 +40,7 @@ or
 
 ## Playing the course on DigitalOcean
 
-DigitalOcean is a great and cheap cloud-provider 
+DigitalOcean is a great and cheap cloud-provider
 
   - create an Ubuntu 16.04 docker droplet from the menu and ssh into your host
   - expose docker on local http port
@@ -83,4 +83,3 @@ See asciicast here
   - Yaml pitfalls
   - Inclusion and Roles
   - Ansible galaxy as a role repository (bonus track)
- 

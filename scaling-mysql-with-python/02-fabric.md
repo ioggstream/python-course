@@ -1,7 +1,7 @@
-# Fabric 
+# Fabric
 
 ##Fabric Orchestrator
-You can try the content of those slides downloading 
+You can try the content of those slides downloading
 code and baked docker images from here:
 
         git clone https://github.com/ioggstream/mysql-community
@@ -54,14 +54,14 @@ Configure in `/etc/fabric.cfg`
   - admin user (eg. $fabric$ to manage servers)
   - applicative user credentials
   - db to store fabric data
-    
-Setup and start the service 
+
+Setup and start the service
 
     mysqlfabric manage setup
     mysqlfabric manage start --daemon
 
 
-## Replication Groups    
+## Replication Groups
 
 Groups are managed via
 
@@ -75,7 +75,7 @@ servers.
 \column[t]{0.8\textwidth}
 
     mysqlfabric group create $GROUP
-    mysqlfabric group add $GROUP my-host-1:3306    
+    mysqlfabric group add $GROUP my-host-1:3306
     mysqlfabric group add $GROUP my-host-2:3306
     mysqlfabric group add $GROUP my-host-3:3306
 
@@ -86,7 +86,7 @@ servers.
 
 ##Replication Groups
 Promote one server as a master, eventually picking one.
-    
+
     mysqlfabric group promote $GROUP [--slave_id=UUID]
 
 Show the server group
@@ -103,16 +103,16 @@ Show the server group
 
 ##Replication Groups
 Fabric support spare servers.
- 
+
     mysqlfabric server set_status $UUID spare
 
-Monitoring failover and deactivating the master. 
-    
+Monitoring failover and deactivating the master.
+
     mysqlfabric group activate $GROUP
     mysqladmin -h $MASTER shutdown
-    
+
 Checking group health we'll see that...
-    
+
     mysqlfabric group health ha
 
            uuid is_alive    status ..error status..io_error sql_error
@@ -123,13 +123,13 @@ Checking group health we'll see that...
 
 
 ## Connecting programmatically
-    
+
     from mysql.connector import connect, fabric
     # Ask for a connection to the fabric server.
     c = connect(fabric={host: .., port: .., user: ..},
         autocommit=True,
         database='sample', **sql_user)
-        
+
     # Fabric will point you to a suitable host
     #  - in this case the master - of the given
     #  group
@@ -140,7 +140,7 @@ Checking group health we'll see that...
 ## Provisioning a new slave
 Fabric uses `mysqldump` + `mysql` internally to clone a new slave.
 
-        # Always reset TARGET configuration 
+        # Always reset TARGET configuration
         # before reinitializing
         mysql -e '
         SET @SESSION.SQL_LOG_BIN=0;
@@ -156,10 +156,10 @@ Cloning doesn't attach the server to a group, nor starts the replica.
 ## Reingesting a failed master
 
 Reingesting a failed master is not trivial.
- 
+
   - non-replicated transactions;
   - corrupt data;
-   
+
 Always reset it!
 
         mysqlfabric server set_status  f484...110039  spare
@@ -196,15 +196,15 @@ We implemented a DockerProvider: deploy containers, not machines.
 ## Docker Provisioning
 
     # Register a provider (requires docker in http)
-    mysqlfabric provider register mydocker 
-        user password 
-        http://172.17.42.1:2375  
+    mysqlfabric provider register mydocker
+        user password
+        http://172.17.42.1:2375
         --provider_type=DOCKER
 
     # Create or remove Containers
-    mysqlfabric server create mydocker 
+    mysqlfabric server create mydocker
         --image=name=ioggstream/mysql-community
-        --flavor=name=v1            
+        --flavor=name=v1
         --meta=command="mysqld --log-bin=foo"
 
     # List servers
@@ -214,10 +214,10 @@ We implemented a DockerProvider: deploy containers, not machines.
 ## Next steps
 Openstack interface supports machine snapshots via NovaClient.
 
-Docker volumes doesn't support snapshots, but something is moving 
+Docker volumes doesn't support snapshots, but something is moving
 (in the experimental tree).
 
-VM Snapshot alternatives require root access to docker host 
+VM Snapshot alternatives require root access to docker host
 and a FLUSH TABLES on the source container:
 
   - rsync on volumes
@@ -232,11 +232,11 @@ and a FLUSH TABLES on the source container:
   -  Don't re-ingest failed masters (luckily;)
   -  Try Fabric with Docker!
   -  Play with docker volumes
-  
+
 
 ## That's all folks!
 
-Thank you for the attention! 
+Thank you for the attention!
 
 
 \insertauthor

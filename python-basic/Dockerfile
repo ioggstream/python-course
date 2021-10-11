@@ -10,4 +10,3 @@ COPY requirements.txt /requirements.txt
 # install requirements for both py2 and py3
 RUN pip2 install -r /requirements.txt
 RUN pip install -r /requirements.txt
-

@@ -53,7 +53,7 @@
           <y:Geometry height="118.25082115839663" width="96.63840103149414" x="-49.58064136833622" y="1214.5239334208009"/>
           <y:Fill color="#CCCCFF" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="24" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="59.875" modelName="sandwich" modelPosition="s" textColor="#000000" visible="true" width="102.859375" x="-3.1104869842529297" y="122.25082115839655">FAULTY 
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="24" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="59.875" modelName="sandwich" modelPosition="s" textColor="#000000" visible="true" width="102.859375" x="-3.1104869842529297" y="122.25082115839655">FAULTY
 MASTER</y:NodeLabel>
           <y:SVGNodeProperties usingVisualBounds="true"/>
           <y:SVGModel svgBoundsPolicy="0">
@@ -116,7 +116,7 @@ Parser<y:LabelModel>
           <y:Geometry height="78.16895999999997" width="143.70495999999997" x="258.14752" y="110.91552000000001"/>
           <y:Fill color="#FF0000" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="18" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="45.90625" modelName="custom" textColor="#FFFFFF" visible="true" width="71.39453125" x="36.155214375000014" y="16.131354999999985">Play in 
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="18" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="45.90625" modelName="custom" textColor="#FFFFFF" visible="true" width="71.39453125" x="36.155214375000014" y="16.131354999999985">Play in
 iPython<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
@@ -253,7 +253,7 @@ Queries, Caches <y:LabelModel>
           <y:Geometry height="192.66943999999992" width="85.70495999999997" x="872.6352610071941" y="240.25504000000006"/>
           <y:Fill color="#008080" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="18" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="66.859375" modelName="internal" modelPosition="bl" textColor="#FFFFFF" visible="true" width="67.5625" x="4.0" y="121.81006499999995">Binary 
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="18" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="66.859375" modelName="internal" modelPosition="bl" textColor="#FFFFFF" visible="true" width="67.5625" x="4.0" y="121.81006499999995">Binary
 Logs +
 Dump</y:NodeLabel>
           <y:Shape type="roundrectangle"/>

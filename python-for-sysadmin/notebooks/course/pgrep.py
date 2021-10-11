@@ -1,5 +1,6 @@
-__author__ = 'rpolli'
+__author__ = "rpolli"
 from __future__ import absolute_import
+
 from course import sh
 
 
@@ -11,6 +12,7 @@ def system_info_from_command_output_solution():
     """Exercise: write a multiplatform
         pgrep-like function
     """
+
     def pgrep(expr):
         # linux or mac
         return igrep(expr, sh("ps -fe"))

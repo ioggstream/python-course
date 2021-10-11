@@ -12,6 +12,7 @@ def importing_new_features():
     # ..is easy. Features are collected
     # in packages or modules. Just
     import telnetlib  # to use a
+
     telnetlib.Telnet  # client
 
     # We can even import single classes
@@ -33,7 +34,7 @@ def string_formatting():
 
     # prefixing a string with 'r' disables the
     # interpretation of the string content
-    print('Hello' * 2 + r'World\x21')
+    print("Hello" * 2 + r"World\x21")
 
     # the chr() function returns the corresponding
     # character of an integer. While \n and \t are
@@ -44,10 +45,13 @@ def string_formatting():
     # %s works like in the C printf() function
     # but operates on strings
     # ord() is just the inverse of chr()
-    print("""The answer is
+    print(
+        """The answer is
 
     %s
-    """ % ord('*'))
+    """
+        % ord("*")
+    )
 
 
 def basic_arithmetic():
@@ -67,13 +71,12 @@ def variable_assignment():
     a, b, c = 1, 2, 3
     d, stringa_a, stringa_b = a + b, "pippo", "pluto"
     (a, b) = (b, a)  # ...swap them...
-    e, f = c, e + \
-        d  # but if right-side values are not defined, I get an exception
+    e, f = c, e + d  # but if right-side values are not defined, I get an exception
 
     # We should respect reserved words and functions, like print, ord...
     print(("ord:\x20", ord))
     ord = 4
-    ord('*')  # ...ooops!
+    ord("*")  # ...ooops!
     del ord  # fix it up!
 
 
@@ -84,7 +87,7 @@ def formatting_numbers():
 
     # while the format() function can be more flexible
     #  10 = 8ciphers + 2chars for the '0b' header
-    binary_with_leading_zeroes = format(1, '#010b')
+    binary_with_leading_zeroes = format(1, "#010b")
 
     # and reversible with
     b1 == int(binary_with_leading_zeroes, base=2)

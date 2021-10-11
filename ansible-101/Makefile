@@ -23,11 +23,11 @@ clean:
 	# $(foreach dpath, $(EXTERNAL_COURSES), rm -f notebooks/$(dpath)/*.ipynb; )
 
 clean-other:
-	docker-compose kill bastion web 
-	docker-compose rm -vf bastion web 
+	docker-compose kill bastion web
+	docker-compose rm -vf bastion web
 
 test:
-	docker exec -ti ansible101_dev_1 bash -c ' (cd /notebooks; ./cleanup.sh ) ' 
+	docker exec -ti ansible101_dev_1 bash -c ' (cd /notebooks; ./cleanup.sh ) '
 
 dev: .prepare
 	docker-compose scale dev=1 web=2 bastion=1

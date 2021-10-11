@@ -3,8 +3,6 @@ from random import randint
 
 import pytz
 from connexion import problem
-from flask import after_this_request, request
-
 from throttling_quota import throttle
 
 
@@ -24,9 +22,7 @@ def get_status():
             detail="Retry after the number of seconds specified in the the Retry-After header.",
             headers={"Retry-After": p, **headers},
         )
-    return problem(
-        status=200, title="OK", detail="So far so good.", headers=headers
-    )
+    return problem(status=200, title="OK", detail="So far so good.", headers=headers)
 
 
 @throttle
@@ -63,12 +59,7 @@ def get_timezones(limit=5, offset=0, continent=None):
         entries = [x for x in entries if x.startswith(continent)]
 
     entries = entries[offset : offset + limit]
-    return {
-        "limit": limit,
-        "offset": offset,
-        "entries": entries,
-        "count": len(entries),
-    }
+    return {"limit": limit, "offset": offset, "entries": entries, "count": len(entries)}
 
 
 @throttle

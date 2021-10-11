@@ -45,5 +45,3 @@
   tasks:
   - name: A test command
     shell: hostname
-
-

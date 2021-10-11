@@ -70,7 +70,7 @@ Distributed approach.
 
 ## Tracing requires identification
 
-Declare who's modifying files. This will be inserted in 
+Declare who's modifying files. This will be inserted in
 the commit.
 
 ```
@@ -93,7 +93,7 @@ Track modifications with `git`
 
 ### Exercise
 
-  - get the previous `git config ... user.email`  
+  - get the previous `git config ... user.email`
   - remove the `--global` flag  from the previous command
   - run it
 
@@ -108,7 +108,7 @@ Enter in the repo directory and check  the status: there
 are a lot of files we are not interested in...
 
 ```
-!git status 
+!git status
 ```
 
 `.gitignore` lists the files we're not interested in
@@ -116,7 +116,7 @@ are a lot of files we are not interested in...
 ```
 # Ignore all files not starting with h
 !echo "[^h]*" >> .gitignore
-!git status 
+!git status
 ```
 
 Now we have all `host*` files to be tracked.
@@ -152,15 +152,15 @@ Save files to the local index
 Adding a line to the file we discover that
 
 ```
-!echo "127.0.0.2  localhost2.localdomain" >> hosts 
+!echo "127.0.0.2  localhost2.localdomain" >> hosts
 !git diff hosts
 ```
 
-If we like the changes, we can stage them 
+If we like the changes, we can stage them
 
 ```
 !git add hosts
-!git status 
+!git status
 ```
 
 and finally save them in the repo.
@@ -181,7 +181,7 @@ HEAD is the last commit.
 
 
 ```
-!git log 
+!git log
 ```
 
 ![Basic branch](https://git-scm.com/figures/18333fig0310-tn.png)
@@ -253,7 +253,7 @@ Now some git commands, but first create a dir.
 
 ---
 
-## Tags & Branches 
+## Tags & Branches
 
 Writing codes and configuration we may want to follow
 different strategies and save our different attempts.
@@ -265,7 +265,7 @@ different strategies and save our different attempts.
 !git tag -l    # list tags
 ```
 
-  - *branch* create a modifiable copy of the code, allowing 
+  - *branch* create a modifiable copy of the code, allowing
      to save and work on different features
 
 ![Branches](https://git-scm.com/figures/18333fig0313-tn.png)
@@ -410,7 +410,7 @@ Exercise:
 You can stage partial changes with:
 
 ```
-!git add -p 
+!git add -p
 ```
 
 
@@ -440,7 +440,7 @@ cd /repo-tmp/python-course
 Show repository configuration. Remote origin.
 
 ```
-! git config -l 
+! git config -l
 
 ```
 
@@ -511,4 +511,3 @@ To upload changes to the remote master (default) branch, you need to
 ```
 
 To make it work, you need to be authenticated/authorized with the remote repo ;)
-

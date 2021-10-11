@@ -1,4 +1,4 @@
-#MySQL 
+#MySQL
 
 ##MySQL
 
@@ -7,9 +7,9 @@
     *  Connection + SQL
     *  Storage Backend
   - Greatly improved in 5.6
-  - More to come in 5.7: Dynamic Buffers \& Multi\-source replication 
- 
- 
+  - More to come in 5.7: Dynamic Buffers \& Multi\-source replication
+
+
 ##MySQL
 Many Backends aka Storage Engines:
 
@@ -29,23 +29,23 @@ Replication based on changelog files (binary logs).
 \column[t]{.5\textwidth}
 Monitor:
 
-  - Database size: Tables, Indexes, 
+  - Database size: Tables, Indexes,
         Binary Logs
-        
+
   - Replication inconsistencies
-  
+
   - Failover
 
 \column[t]{.5\textwidth}
 Connect:
 
-  - Native Drivers 
-  
+  - Native Drivers
+
     * for Python 2.6, 2.7 and 3.3
     * SSL \& compression
-  
+
   - Orchestrate
-  
+
 \columnsend
 
 
@@ -61,7 +61,7 @@ A python package with **utilities, drivers, fabric orchestrator**
 \columnsbegin
 \column{.5\textwidth}
 
-        $ wget http://bit.ly/1CxNuZe 
+        $ wget http://bit.ly/1CxNuZe
         $ tar xf mysql-utilities-1.6.1.tar.gz
         $ cd mysql-utilities-1.6.1
         $ python setup.py install
@@ -89,26 +89,26 @@ Start with ```mysqluc``` for a single entrypoint
   - entrypoint for all utilities
   - contextual help
   - TAB completion
-  
+
 Or access each utility separately.
 
 Specify server URIs as `user:pass@host[:port]`.
 
-  
+
 ##MySQL Utilities
 
 
-        mysqluc> help utilities 
-        
-          Utility            Description                                             
+        mysqluc> help utilities
+
+          Utility            Description
         -----------------  --------------------------------------------------------
-        mysqlauditadmin    audit log maintenance utility                           
-        mysqlauditgrep     audit log search utility                                
+        mysqlauditadmin    audit log maintenance utility
+        mysqlauditgrep     audit log search utility
         ...
-        mysqldbcompare     compare databases for consistency                       
+        mysqldbcompare     compare databases for consistency
         ...
-        mysqldiskusage     show disk usage for databases                           
-        mysqlfailover      automatic replication health monitoring and failover    
+        mysqldiskusage     show disk usage for databases
+        mysqlfailover      automatic replication health monitoring and failover
 
 
 ##Disk Usage
@@ -133,14 +133,14 @@ A single command to show all disk usage infos (excluded system logs)
 ## Connectors
 
         from django.db.backends import BaseDatabaseValidation
-        
+
         if django.VERSION < (1, 7):
             from django.db import models
         else:
             from django.core import checks
             from django.db import connection
-        
-        
+
+
         class DatabaseValidation(BaseDatabaseValidation):
             if django.VERSION < (1, 7):
 
@@ -151,7 +151,7 @@ A single command to show all disk usage infos (excluded system logs)
 Replication is $asynchronous$ or $semi-synchronous$.
 
 A Master with a Unique Server ID
-     
+
   -  produces a changelog named **binary log**;
   -  assign each transaction a Global Transaction ID;
   -  grants access to a $replica$ user;
@@ -172,7 +172,7 @@ Slave
   -  retrieves the binlog;
   -  applies the changes;
   -  $\forall$ slave $\exists !$ master;
-    
+
 Optionally
 
   - forbids local changes from non-root users;
@@ -190,15 +190,15 @@ master database first!
 ##Benefits of replication
 \columnsbegin
 \column[t]{.5\textwidth}
-  
+
   * Availability.
 
   * Scaling reads with R/W split.
-  
+
   * Scaling reads differencing indexes.
 
   * Backup and data warehouse strategies.
-  
+
 \column[t]{.5\textwidth}
 
         # mysqlrplshow output
@@ -224,7 +224,7 @@ Configuring replication with one command:
         # master uuid = 2cda700...
         #  slave uuid = 7520cf0...
         # Checking for binary logging on master...
-        # Granting replication access to 
+        # Granting replication access to
         #   replication user...
         # Connecting slave to master...
         # CHANGE MASTER TO MASTER_HOST = '172.17.0.5',...
@@ -245,19 +245,19 @@ Beware!
   1. Avoid replicating user provisioning and other host-related setup!
 
         @SESSION.SQL_LOG_BIN=0;
-        
+
   2. Binlogs are usually retained for a fixed period - eg 15days.
 
-To provision new slave after that period you must: 
- 
+To provision new slave after that period you must:
+
  - start from a backup or a snapshot;
  - apply the binlogs.
-  
+
         mysqldbexport >> data.sql --server=root:pass@master --rpl-user=repl:rpass \
             --export=both --rpl=master --all
         mysqldbimport --server=root:pass@slave data.sql
-        
-        
+
+
 #Failover
 
 ##Failover Basics
@@ -266,18 +266,18 @@ From replication to high availability, automagically discovering slaves.
 \columnsbegin
 
 \column[t]{.5\textwidth}
-   
+
   -  $promote$ the most updated slave
   -  reconfigure the others
   -  disable the master
   -  eventually fix ip-address
 
 \includegraphics[width=3.5cm]{images/mysql-failover-1.png}
- 
+
 \column[t]{.5\textwidth}
-    
+
     # Read carefully the docs of
-    #  mysqlfailover and of all 
+    #  mysqlfailover and of all
     #  the supported parameters!
     mysqlfailover --master=$MASTER \
     --discover-slaves-login=root:password \

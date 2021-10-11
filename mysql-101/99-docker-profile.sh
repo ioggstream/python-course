@@ -32,4 +32,3 @@ _dshell()
   fi
 }
 complete -F _dshell dshell
-

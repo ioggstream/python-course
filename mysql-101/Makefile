@@ -13,14 +13,13 @@ revealjs:
 .PHONY: course
 
 MAIN_IP = $(shell ip -4 -o a s scope global | awk -F'[/ ]+' '{print $$4; exit} ')
-EXTERNAL_COURSES = 
+EXTERNAL_COURSES =
 
 
 course: .prepare
-	docker-compose scale centos=3 mysql=3 & 
+	docker-compose scale centos=3 mysql=3 &
 	bash 2>/dev/null ~/.bashrc
 	wait
-	
+
 .prepare:
 	echo "done"
-

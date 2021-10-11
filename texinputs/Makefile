@@ -30,5 +30,3 @@ clean:
 	    *.snm *.toc *.vrb *.idx *.ind *.upa \
 	    *.md.tex *.tmp *.stderr \
 	    main.pdf main.sh
-
-

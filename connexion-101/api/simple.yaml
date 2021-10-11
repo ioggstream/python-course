@@ -61,4 +61,3 @@ components:
       type: http
       scheme: basic
       x-basicInfoFunc: api.basic_auth
-

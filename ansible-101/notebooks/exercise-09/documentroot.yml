@@ -11,5 +11,3 @@
     path: /var/www/html/{{x}}/index.html
     line: "{{ansible_hostname}}"
     create: yes
-
-

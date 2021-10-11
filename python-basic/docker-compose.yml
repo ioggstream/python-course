@@ -8,7 +8,7 @@ sysadminpy:
         - 8888:8888
     volumes:
         - ./rendered_notebooks:/notebooks
-       
+
 test:
     image: ioggstream/python-course:dev
     volumes:

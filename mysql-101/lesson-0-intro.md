@@ -123,5 +123,3 @@ Increased for Consistency and Isolation:
   - Enable persistency
   - Transactional: InnoDB, NDB
   - Non Transactional: MyISAM, Memory,
-
-

@@ -7,7 +7,7 @@ default:
 check:
 	lacheck babel.tex | egrep -v "Dots should be |Whitespace before punctation|to (begin|end) quotation|possible unwanted space"
 
-all:	
+all:
 	pdflatex --shell-escape -interaction=nonstopmode babel.tex
 	mv babel.pdf python-for-sysadmin-draft-2016.pdf
 

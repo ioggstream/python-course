@@ -29,8 +29,9 @@ def linux_threads(pid):
          goal: startswith accepts tuple arguments
     """
     import glob
+
     path = "/proc/{}/task/*/status".format(pid)
-    t_info = ('Pid', 'Tgid', 'voluntary')  # this is a tuple!
+    t_info = ("Pid", "Tgid", "voluntary")  # this is a tuple!
     for t in glob.glob(path):
         t_info = [x for x in open(t) if x.startswith(t_info)]
         print(t_info)
@@ -51,8 +52,9 @@ def sh(cmd, shell=False, timeout=0):
        goal: use sys to check python features
        goal: use subprocess.check_output
     """
-    from sys import version_info as python_version
     from subprocess import check_output
+    from sys import version_info as python_version
+
     if python_version < (3, 3):
         if timeout:
             raise ValueError("Timeout not supported until Python 3.3")
@@ -68,6 +70,7 @@ def system_info_from_command_output():
 
        Solution is at the EOF
     """
+
     def pgrep(expr):
         raise NotImplementedError
 
@@ -77,6 +80,7 @@ def zip_iterables():
         like a zip fastener
     """
     from sys import version_info as python_version
+
     a_list = [0, 1, 2, 3]
     b_list = ["a", "b", "c", "d"]
     zipper = zip(a_list, b_list)
@@ -95,9 +99,12 @@ def linux_diskstats(disk):
        goal: use *magic with print+sep, splitting and slicing
     """
     from time import sleep
-    info = ('reads reads_merged reads_sectors reads_ms'
-            ' writes writes_merged writes_sectors writes_ms'
-            ' io_in_progress io_ms_weight').split()
+
+    info = (
+        "reads reads_merged reads_sectors reads_ms"
+        " writes writes_merged writes_sectors writes_ms"
+        " io_in_progress io_ms_weight"
+    ).split()
     print(*info[:8], sep="\t")
     old = [0] * 11
 
@@ -114,7 +121,7 @@ def linux_diskstats(disk):
         old = cur
         sleep(1)
 
+
 #
 # A more complex exercise using a lot of stuff
 #
-

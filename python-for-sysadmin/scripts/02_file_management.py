@@ -4,7 +4,8 @@
 
     modules: os, sys, shutil, glob
 """
-from __future__ import unicode_literals, print_function
+from __future__ import print_function, unicode_literals
+
 basedir = "/tmp/course"
 
 
@@ -23,9 +24,10 @@ def simple_path_management():
     #  and prepend the right path
     import os
     import sys
+
     hosts, basedir = "etc/hosts", "/"
-    if sys.platform.startswith('win'):
-        basedir = 'c:/windows/system32/drivers'
+    if sys.platform.startswith("win"):
+        basedir = "c:/windows/system32/drivers"
     hosts = os.path.join(basedir, hosts)
     hosts = os.path.normpath(hosts)
     print("Normalized path is", hosts)
@@ -48,6 +50,7 @@ def create_and_move_tree():
     from os import makedirs
     from os.path import isdir
     from shutil import copytree, rmtree
+
     makedirs("/tmp/course/foo/bar")
     assert isdir("/tmp/course/foo/bar")
 
@@ -60,6 +63,7 @@ def create_and_move_tree():
         # Just use the errno module to
         #  check the error value
         import errno
+
         assert e.errno == errno.EEXIST
 
     copytree("/tmp/course/foo", "/tmp/course/foo2")

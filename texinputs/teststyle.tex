@@ -25,7 +25,7 @@ symbols: $\clubsuit \diamondsuit \heartsuit \spadesuit$
     # $a \rightarrow b^{c}$
     |\index{return}return| False
 \end{pycode*}
-\item Bullet Item 3 
+\item Bullet Item 3
 \end{itemize}
 \end{pyframe}
 
@@ -35,12 +35,12 @@ symbols: $\clubsuit \diamondsuit \heartsuit \spadesuit$
     \begin{enumerate}
     \item EnumerateA  \pyver{w\"urstel re}sults
     \item \texttt{Inline minted ipython}
-    \item Una linea 
+    \item Una linea
     \item w\"urstelstra\ss e
     \end{enumerate}
 
-\item Enumerate2 \`{e} 
- [\red{196}, \blue{168}] 
+\item Enumerate2 \`{e}
+ [\red{196}, \blue{168}]
 \begin{pycode*}{escapeinside=||}
 @|\pyver{decorator}|
 def foo(tmp):
@@ -57,13 +57,13 @@ def foo(tmp):
 A Tabular follows \\
 \begin{tabular}{|c|c|}\hline
 Cell 1 & Cell 2 \\
-\hline 
+\hline
 \end{tabular}
 \\
 \begin{table}
 \begin{tabular}{|c|c|}\hline
 \includegraphics[height=4cm]{ping_distribution.pdf}   & \includegraphics[height=4cm]{ping_distribution.pdf}  \\
-\hline 
+\hline
 \end{tabular}
 \end{table}
 \end{pyframe}
@@ -74,20 +74,20 @@ Cell 1 & Cell 2 \\
 \begin{pycode}
 """using set and dict
 """
-distro = {x: rtt.count(x) 
+distro = {x: rtt.count(x)
   for x in set(rtt)}
 # or using a
 from collections import defaultdict
 distro = defaultdict(int)
 for x in rtt:
     distro[x] += 1
-    
+
 
 \end{pycode}
 \column[t]{5cm}
 -skip-\\
 -skip-\\
-\includegraphics[height=4cm, width=4dm]{ping_distribution.pdf}  
+\includegraphics[height=4cm, width=4dm]{ping_distribution.pdf}
 \end{columns}
 \end{pyframe}
 
@@ -107,7 +107,7 @@ Two columns
 \end{verbatim}
 
 \column[t]{5cm}
-\includegraphics[height=4cm,width=5cm]{ping_distribution.pdf}  
+\includegraphics[height=4cm,width=5cm]{ping_distribution.pdf}
 \end{columns}
 
 \end{pyframe}
@@ -119,7 +119,7 @@ Two columns
 \column[t]{6cm}
 \begin{pycode}
 """using set and dict """
-distro = {x: rtt.count(x) 
+distro = {x: rtt.count(x)
   for x in set(rtt)}
 # or using a
 from collections import defaultdict
@@ -128,7 +128,7 @@ for x in rtt:
     distro[x] += 1
 \end{pycode}
 \column[t]{4cm}
-\includegraphics[width=4cm,height=4cm]{ping_distribution.pdf}  
+\includegraphics[width=4cm,height=4cm]{ping_distribution.pdf}
 \end{columns}
 \end{pyframe}
 

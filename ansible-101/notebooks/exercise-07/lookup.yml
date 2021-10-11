@@ -6,4 +6,3 @@
     debug:
       msg: >
         {{ lookup('file', '/etc/resolv.conf') }}
-
