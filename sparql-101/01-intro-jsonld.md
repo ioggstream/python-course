@@ -286,7 +286,7 @@ Customer:
 
 ----
 
-E' anche possibile indicare un link 
+E' anche possibile indicare un link
 ```
 # Associate a json-ld context to a schema
 Customer:
@@ -340,7 +340,7 @@ paths:
                       const:
                         "@vocab":   "https://w3id.org/italia/onto/CPV/"
                         given_name:  givenName
-                        family_name: familyName 
+                        family_name: familyName
                 - $ref: "#/components/schemas/Person"
 
 
