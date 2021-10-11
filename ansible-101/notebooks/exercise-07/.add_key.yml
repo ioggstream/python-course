@@ -38,5 +38,3 @@
   tasks:
   - name: Just ping
     shell: hostname
-
-

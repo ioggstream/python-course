@@ -97,7 +97,7 @@ paths:
       summary: Return the supported timezones
       description: |
         Return a paginated list of supported
-        timezones. If offset is too high, an empty 
+        timezones. If offset is too high, an empty
         list of entries is returned.
       operationId: api.get_timezones
       responses:
@@ -215,4 +215,3 @@ components:
           example: 2019-01-01T00:00:00Z
     Problem:
       $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/schemas/Problem'
-

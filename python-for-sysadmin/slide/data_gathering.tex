@@ -8,7 +8,7 @@
     Gathering System Data with multiplatform
      and platform-dependent tools.
 \begin{itemize}
-\item Get infos from files, /proc and /sys 
+\item Get infos from files, /proc and /sys
 \item Capture command output
 \item Use psutil to get IO, CPU and memory data
 \item Parse files with a strategy
@@ -27,7 +27,7 @@ def grep(needle, fpath):
        goal: comprehension can filter iterables
     """
     return [x for x in open(fpath) if needle in x]
-    
+
 # Do we have "localhost" in our "/etc/hosts"?
 grep("localhost", "/etc/hosts")
 \end{pycode}
@@ -113,9 +113,9 @@ def sh(cmd, shell=False, timeout=0):
     output = check_output(split(cmd), shell=shell, timeout=timeout)
 
   return output.|\pyver{splitlines}|()
-  
-    
-    
+
+
+
 \end{pycode*}
 \end{pyframe}
 
@@ -146,12 +146,12 @@ def linux_threads(pid):
   """The Linux /proc filesystem is a cool place to get infos."""
   from glob import glob  # replaces * and ?
   path = "/proc/{}/task/*/status".format(pid)
-  
+
   # Pick a set of fields to gather...
   t_info = ('Pid', 'Tgid', 'voluntary') # a tuple
   for t_path in glob(path):
     # ...and use comprehension to get interesting data.
-    print([x for x in open(t_path) 
+    print([x for x in open(t_path)
         if x.|\pyver{startswith}|(t_info)] #  accepts tuples!
     )
 \end{pycode*}
@@ -166,7 +166,7 @@ disk_l = grep("sda", "/proc/diskstats")
 
 # To gather that data we put the headers in a multi-line string
 from course import diskstats_headers as headers
-        
+
 disk_info = disk_l[0].split() # Take the 1st entry, split the datas ...
 zip(headers, disk_info)          # ...and tie them with the headers
 list(_) # On py3 you need to iterate the generator!
@@ -186,7 +186,7 @@ dstat = DiskStats(*disk_info)
 dstat.device, dstat.writes_ms
 
 # Homework: check further features with
-help(collections) 
+help(collections)
 \end{pycode*}
 \end{pyframe}
 

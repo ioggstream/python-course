@@ -4,7 +4,7 @@
      from a vfat filesystem
 """
 
-from __future__ import unicode_literals, print_function
+from __future__ import print_function, unicode_literals
 
 
 def encoding_basic():
@@ -22,18 +22,19 @@ def encoding_basic():
     """
 
 
-def touch_encoded_filenames(dirname, prefix, ext='txt', encoding='utf-8'):
+def touch_encoded_filenames(dirname, prefix, ext="txt", encoding="utf-8"):
     """ Create filenames with a given encoding
          Python2 default encoding is ascii.
     """
     from os.path import join as pjoin
+
     for i in range(3):
         #  Before encoding I can join unicode strings
         #   and os.path.join
-        fpath = '.'.join((prefix, str(i), ext))
+        fpath = ".".join((prefix, str(i), ext))
         fpath = pjoin(dirname, fpath)
         bytepath = fpath.encode(encoding)
-        with open(bytepath, 'wb') as fh:
+        with open(bytepath, "wb") as fh:
             # in python3 you always convert to bytes
             fh.write(b"My name is: ")
             fh.write(bytepath)
@@ -53,9 +54,10 @@ def windows_filenames():
          moreover we use "{!r}".format to avoid further encoding
          issues in the printing part
     """
-    from os.path import join as pjoin
     from os import listdir as ls
-    win = 'cp1252'
+    from os.path import join as pjoin
+
+    win = "cp1252"
     prefix = "w\u00fcrstelstra\u00dfe"
     touch_encoded_filenames("/tmp/course", prefix, encoding=win)
 
@@ -63,15 +65,15 @@ def windows_filenames():
         try:
             utf_path = pjoin(basedir, f)
             print("file: {!r}".format(utf_path))
-        except UnicodeDecodeError as e:
+        except UnicodeDecodeError:
             print("Error decoding {!r}".format(f))
 
     bytebasedir = bytes(basedir)
     for b in ls(bytebasedir):
         try:
-            byte_path = pjoin(bytebasedir, b)
+            pjoin(bytebasedir, b)
             print("file: {!r}".format(utf_path))
-        except UnicodeDecodeError as e:
+        except UnicodeDecodeError:
             print("Error decoding {!r}".format(b))
 
 
@@ -89,8 +91,8 @@ def windows_filenames_short():
          issues in the printing part
     """
     from glob import glob
-    from os.path import join as pjoin
-    win = 'cp1252'
+
+    win = "cp1252"
     prefix = "w\u00fcrstelstra\u00dfe"
 
     touch_encoded_filenames("/tmp/course", prefix, encoding=win)
@@ -98,8 +100,8 @@ def windows_filenames_short():
     # glob fails while mangling those filenames
     #  as encoded strings
     try:
-        files = glob("/tmp/course/*.txt")
-    except UnicodeDecodeError as e:
+        glob("/tmp/course/*.txt")
+    except UnicodeDecodeError:
         print("Error decoding files in {!r}".format("/tmp/course"))
 
     # while everything works fine mangling them as
@@ -107,5 +109,5 @@ def windows_filenames_short():
     for f in glob(b"/tmp/course/*.txt"):
         try:
             print("file: {!r}".format(f))
-        except UnicodeDecodeError as e:
+        except UnicodeDecodeError:
             print("Error decoding {!r}".format(f))

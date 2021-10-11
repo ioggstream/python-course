@@ -15,4 +15,3 @@
     debug: var=item
     with_items: >
       {{ o.stdout_lines }}
-

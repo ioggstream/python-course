@@ -7,4 +7,3 @@ mysql101_innodb_3 ansible_default_ipv4_address=172.17.0.8
 
 [all:vars]
 ansible_connection=docker
-

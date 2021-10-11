@@ -1,7 +1,7 @@
 ## Intro
 
 ### Test slide 1 {#ref1}
-Line 1: This is a test slide with a long text on the first line. This is a test slide with a long text. This is a test slide with a long text. This is a test slide with a long text. 
+Line 1: This is a test slide with a long text on the first line. This is a test slide with a long text. This is a test slide with a long text. This is a test slide with a long text.
 Line 2: No carriage and another long text. Line 2: No carriage and another long text. Line 2: No carriage and another long text.Line 2: No carriage and another long text.
 
 Line 4: a carriage and a short text.
@@ -58,5 +58,3 @@ Here an image comes
 ![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
 
 Will it show?
-
-

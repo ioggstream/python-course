@@ -3,14 +3,14 @@
    - setup_class() and setup() increase flexibility
 """
 
-import os
 import errno
+import os
 
 # Import assert_* tools
 from nose.tools import *
 
-class TestB(object):
 
+class TestB(object):
     @classmethod
     def setup_class(self):
         # Run once at startup, eg. create database structure
@@ -41,25 +41,24 @@ class TestB(object):
     # Bonus examples:
     #
     #   - testing exceptions
-    #   - parametrized tests 
+    #   - parametrized tests
     #
     @raises(IOError)
     def test_except(self):
-        assert open('/tmp/MISSING')
+        assert open("/tmp/MISSING")
 
     def test_except_complex(self):
         with assert_raises(IOError) as ex:
-            fh = open('/tmp/MISSING')
+            open("/tmp/MISSING")
         # Verify exception *and* errno!
         assert_equals(ex.exception.errno, errno.ENOENT)
 
     def test_parametrized(self):
         # Runs 3 tests using the nosetest generator syntax.
         for i in range(3):
-            # You have to yield a method to make it work into 
+            # You have to yield a method to make it work into
             #  a class
-            yield self.harn_greater, i, 0 
+            yield self.harn_greater, i, 0
 
     def harn_greater(self, a, b):
         assert_greater(a, b)
-

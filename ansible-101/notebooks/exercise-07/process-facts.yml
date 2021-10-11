@@ -16,4 +16,3 @@
         {{item.device}} {{ (100 * item.size_available/item.size_total) | int }}%
     with_items: >
       {{ansible_mounts}}
-

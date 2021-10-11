@@ -1,5 +1,5 @@
 #
-# This inventory file contains a list of server to 
+# This inventory file contains a list of server to
 #  play with - divided in groups.
 #
 [course]
@@ -14,9 +14,9 @@ pythonforsysadmin_course_1  ansible_connection=local
 #  once you exchange ssh-keys between the pythonforsysadmin_course_1
 #  container and the pythonforsysadmin_ansible_* ones._
 [ansible]
-172.17.0.[5:7]   
+172.17.0.[5:7]
 
 #
-# Besides, ansible has two predefined groups: 
-#   - all 
+# Besides, ansible has two predefined groups:
+#   - all
 #   - ungrouped

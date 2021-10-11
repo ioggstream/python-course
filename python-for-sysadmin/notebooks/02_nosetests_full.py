@@ -7,7 +7,6 @@ import os
 
 
 class TestB:
-
     @classmethod
     def setup_class(self):
         # Run once at startup, eg. create database structure
@@ -38,7 +37,6 @@ class TestB:
         def assert_exists(f):
             # Write assertions inside or outside tests.
             assert os.path.isfile(f)
-            
-        for f in ['a.txt', 'b.txt', 'c.txt']:
-            yield assert_exists, f, "Missing file: %r" % f
 
+        for f in ["a.txt", "b.txt", "c.txt"]:
+            yield assert_exists, f, "Missing file: %r" % f

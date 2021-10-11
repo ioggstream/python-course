@@ -141,7 +141,7 @@ A new password is generated each time you initialize the datadir
 
     /var/lib/mysql/
 
-The undo files are part of the system tablespace, and cannot be deleted! 
+The undo files are part of the system tablespace, and cannot be deleted!
 
 
 ## The datadir
@@ -169,7 +169,7 @@ You should tune security systems when relocating datadirs.
 SElinux:
 
         # Allow mysql on another port.
-        semanage port -a -t mysqld_port_t -p tcp 13306 
+        semanage port -a -t mysqld_port_t -p tcp 13306
 
         # Allow mysql to operate on files in /datadir and beyond.
         semanage fcontext -a -t mysqld_db_t "/datadir(/.*)?"
@@ -324,5 +324,3 @@ You can log your session in a file with
 Dump the output in HTML
 
         mysql --html
-
-

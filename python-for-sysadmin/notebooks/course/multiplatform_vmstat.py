@@ -2,8 +2,10 @@ def multiplatform_vmstat(count):
     """Get data in a multiplatform way
 
     """
-    import psutil
     import time
+
+    import psutil
+
     cpu_percent, io_stat, io_stat_0 = 0, 0, 0
     print("cpu%", "iops(r+w)")
     for x in range(-count, 1):

@@ -21,5 +21,3 @@ root:
   level: DEBUG
   handlers:
   - rfc5424
-
-

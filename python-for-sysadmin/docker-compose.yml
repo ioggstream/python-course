@@ -9,7 +9,7 @@ dev:
         - 8888:8888
     volumes:
         - ./rendered_notebooks:/notebooks
-       
+
 test:
     image: ioggstream/python-course
     volumes:
@@ -30,5 +30,4 @@ course:
 ansible:
     image: itscaro/debian-ssh:latest
     volumes:
-       - .:/code:z 
-
+       - .:/code:z

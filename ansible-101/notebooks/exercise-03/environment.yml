@@ -6,4 +6,3 @@
         ansible_env.{{item}}
     with_items: >
         {{ansible_env | map('regex_search', '^PATH') | select('string') | list  }}
-

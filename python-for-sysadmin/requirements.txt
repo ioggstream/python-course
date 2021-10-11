@@ -19,4 +19,3 @@ nbstripout
 # Load jupyter extensions for exercises.
 jupyter_contrib_nbextensions
 RISE
-

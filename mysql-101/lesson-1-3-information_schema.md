@@ -5,19 +5,19 @@
 Metadata and Statistics are stored in internal databases
 
 
-  | db | action | scope | 
+  | db | action | scope |
   |--|--|--|
-  | `mysql` | rw |configuration, logs, replication, user privileges| 
+  | `mysql` | rw |configuration, logs, replication, user privileges|
   | `information_schema`| ro | DDL, Privileges, Server status & conf|
   | `performance_schema`| rw | general runtime data |
   | `sys`| rw | wrapper on performance_schema|
 
-  
+
 ## Table informations
 MySQL stores schema infos in many mysql databases.
 
 The `SHOW` command is used to get those information.
- 
+
         SHOW TABLE STATUS [FROM db_name] [like_or_where]
         SHOW [FULL] TABLES [FROM db_name] [like_or_where]
         SHOW [FULL] COLUMNS FROM tbl_name [FROM db_name] [like_or_where]
@@ -35,12 +35,12 @@ The [information_schema](http://dev.mysql.com/doc/refman/5.6/en/information-sche
 
   - stored both on `performance_schema` and `information_schema`
   - will be moved to `performance_schema`
-  
-        
-        SELECT T1.TABLE_NAME 
-        FROM INFORMATION_SCHEMA.TABLES T1 JOIN INFORMATION_SCHEMA.TABLES T2 
-        WHERE T1.TABLE_SCHEMA='performance_schema'  
-            AND T2.TABLE_SCHEMA='information_schema' 
+
+
+        SELECT T1.TABLE_NAME
+        FROM INFORMATION_SCHEMA.TABLES T1 JOIN INFORMATION_SCHEMA.TABLES T2
+        WHERE T1.TABLE_SCHEMA='performance_schema'
+            AND T2.TABLE_SCHEMA='information_schema'
             AND T1.TABLE_NAME=T2.TABLE_NAME;
 
 ## Table informations
@@ -72,13 +72,13 @@ More informations
         +-------+------------------+-----------------+------+-----+---------+----------------+---------------------------------+---------+
         3 rows in set (0.00 sec)
 
-        
+
 ## USE information_schema;
 Listing databases with SQL.
 
         SELECT * FROM information_schema.schemata;
 
-Tables        
+Tables
 
         SELECT table_name, table_type, engine
             FROM information_schema.tables
@@ -89,19 +89,19 @@ Tables
 ## USE information_schema;
 More on tables
 
-        SELECT table_name, 
+        SELECT table_name,
             -- format numbers with 0 decimals
             FORMAT(table_rows,0),
-            -- bitwise shift (10 for KB, 20 for MB, 30 for GB) 
-            data_length >> 20   
-        FROM tables 
+            -- bitwise shift (10 for KB, 20 for MB, 30 for GB)
+            data_length >> 20
+        FROM tables
         WHERE table_schema = 'employees';
 
 And Columns
 
-        SELECT table_name, column_name, column_default, 
-                ordinal_position, column_key, privileges 
-        FROM columns 
+        SELECT table_name, column_name, column_default,
+                ordinal_position, column_key, privileges
+        FROM columns
         WHERE  table_schema='d1';
 
 ## USE information_schema;
@@ -111,7 +111,7 @@ Or Views (treated like tables)
         SELECT table_name, definer
         FROM views
         WHERE table_schema not in ('mysql', 'sys');
-        
+
 Or routines
 
         SELECT routine_name, definer
@@ -122,7 +122,7 @@ Or routines
 
 Net-fishing metadata from closed tables is expensive.
 
-        SELECT table_name, data_length >> 20 
+        SELECT table_name, data_length >> 20
         FROM tables;  -- all databases, all tables, all engines!
 
 causes to:
@@ -131,9 +131,9 @@ causes to:
   - seek|read data from disk
   - eventually pollute `table_cache`
 
-Be selective when [looking for metadata!](https://dev.mysql.com/doc/refman/5.7/en/information-schema-optimization.html) 
+Be selective when [looking for metadata!](https://dev.mysql.com/doc/refman/5.7/en/information-schema-optimization.html)
 
-Check the [improvements on MySQL 8.0 too!](https://dev.mysql.com/doc/refman/8.0/en/information-schema-optimization.html) 
+Check the [improvements on MySQL 8.0 too!](https://dev.mysql.com/doc/refman/8.0/en/information-schema-optimization.html)
 
 ## Indexes
 Indexes can be inspected with:
@@ -149,4 +149,3 @@ Indexes can be inspected with:
           Cardinality: 3
                  ...
         1 row in set (0.00 sec)
-

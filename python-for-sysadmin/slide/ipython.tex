@@ -4,13 +4,13 @@
 
 \begin{pyframe}{iPython I}
 \begin{itemize}
-\item Interactive interpreter with tons of                                                                                                        functionalities, and the main tool of our training.                                                                                                      
+\item Interactive interpreter with tons of                                                                                                        functionalities, and the main tool of our training.
 \item   The most fun way to learn and use python!
 
-\item   Supports \pyver{tab-completion}, \pyver{readline}, inline help 
+\item   Supports \pyver{tab-completion}, \pyver{readline}, inline help
 
-\item   Allows pasting from clipboard with \pyver{\%paste} , 
-    %elementary benchmarking with \pyver{\%timeit}, 
+\item   Allows pasting from clipboard with \pyver{\%paste} ,
+    %elementary benchmarking with \pyver{\%timeit},
     and multi-line editing with \pyver{\%edit}
 
 \item   Run it enabling plotting support: \\
@@ -37,13 +37,13 @@ ret = !type c: windows\system32\drivers\etc\hosts
 
 \begin{pyframe}{iPython III}
 \begin{pycode*}{escapeinside=||}
-# returned objects can be filtered with  
+# returned objects can be filtered with
 ret.|\pyver{grep}|('localhost')
 # Now get the first space-splitted column of the output
 ret.|\pyver{fields}|(0)
 ret.grep('localhost').fields(0)
 
-# And the last returned value is stored in 
+# And the last returned value is stored in
 localip = _
 
 # We can type long commands in an editor like `vi' using
@@ -52,6 +52,5 @@ localip = _
 
 \end{pycode*}
 %# An ipython script $must$ have the $\pyver{.ipy}$ extension
-%#  and begin with #!/usr/bin/ipython 
+%#  and begin with #!/usr/bin/ipython
 \end{pyframe}
-

@@ -6,10 +6,10 @@
 
 ## Who? What? Why?
 
-**Roberto Polli** - Solutions Architect @ par-tec.it. Loves writing in C, 
+**Roberto Polli** - Solutions Architect @ par-tec.it. Loves writing in C,
 Java and Python. Red Hat Certified Engineer and Virtualization Administrator.
 
-**Par-Tec** – Proud sponsor of this talk ;) Contributes to various FLOSS. 
+**Par-Tec** – Proud sponsor of this talk ;) Contributes to various FLOSS.
     Provides:
 
   - IT Infrastructure \& Services expertise;
@@ -17,4 +17,3 @@ Java and Python. Red Hat Certified Engineer and Virtualization Administrator.
   - Vertical Applications for the financial market.
 
 **Manage, replicate, scale** MySQL is easy with **python** (and Docker).
-

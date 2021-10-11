@@ -52,4 +52,3 @@ components:  # REMOVEME FOR EXERCISE
   schemas:
     Problem:
       $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/schemas/Problem'
-

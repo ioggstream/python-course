@@ -12,7 +12,7 @@ from __future__ import print_function
 
 def introducing_lists():
     # it's easy to create a list
-    list_a = ['this', 'is', 'a', 'list']
+    list_a = ["this", "is", "a", "list"]
     # you can append items to a list
     # with the append method
     list_a.append("mutable")
@@ -23,7 +23,7 @@ def introducing_lists():
     len(list_a)
 
     a = 11
-    #range in python 2 returns a list
+    # range in python 2 returns a list
     # of consecutive ints
     from_0_to_10 = range(a)
     len(from_0_to_10) == a
@@ -38,18 +38,18 @@ def introducing_lists():
     # python lists are doubly linked ;)
     from_0_to_10[-1]
     # please check the manual!
-    #help(list)
+    # help(list)
 
 
 def slicing():
     # I can slice a list with ":"
-    straight = [1, 2, 3, 'star']
+    straight = [1, 2, 3, "star"]
     straight[1:3]  # take the middle of the list...
     k = 2  # ... or using a separator
     straight[0:k], straight[k:4]
 
-    straight[:k]         # I can omit the first...
-    straight[k:]         # ...and last index
+    straight[:k]  # I can omit the first...
+    straight[k:]  # ...and last index
 
 
 def str_and_list():
@@ -68,14 +68,14 @@ def str_and_list():
 
 
 def iterating_with_for():
-    a_list = ['is', 'iterable', 'with']
+    a_list = ["is", "iterable", "with"]
     for x in a_list:
         print(x)
     for x in a_list:
         # python2 does not support the `end` argument
-        print((x), end=' ')
+        print((x), end=" ")
         y = x + str(2)
-        break       # stop now
+        break  # stop now
     # what's the expected output of the
     # following instruction?
     print(("x,y: ", (x, y)))
@@ -84,7 +84,7 @@ def iterating_with_for():
 
 
 def iterate_with_while():
-    a_list = ['is', 'iterable', 'with']
+    a_list = ["is", "iterable", "with"]
     while a_list:
         # pop() modifies a list removing
         #  and returning its last element

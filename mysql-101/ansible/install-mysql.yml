@@ -23,7 +23,7 @@
       enabled: yes
 
   - name: Distribute keys
-    copy: 
+    copy:
       src: "{{item}}"
       dest: /root/.ssh/
       mode: 0600
@@ -33,4 +33,3 @@
 
   - name: Configure innodb cluster
     include: initialize-innodbcluster.yml
-

@@ -14,14 +14,14 @@ see also: \href{https://docs.python.org/3/library/pathlib.html}{\pymodule{pathli
 \begin{pyframe}{Path management: os.path, sys}
 % This slide is the core one. Required for data gathering!
 \begin{pycode*}{escapeinside=||}
-basedir, hosts = "/", "etc/hosts" 
+basedir, hosts = "/", "etc/hosts"
 # Check the hosting platform with the sys module
 from sys import platform
 if platform.startswith('win'):
     basedir = 'c:/windows/system32/drivers'
 
 # Always use the os.path module!
-from os.path import join, normpath 
+from os.path import join, normpath
 hosts = join(basedir, hosts)
 hosts = normpath(hosts)
 print("Normalized path is", hosts)
@@ -37,7 +37,7 @@ print("Normalized path is", hosts)
  \item multiplatform
  \item safe
  \end{itemize}
- 
+
 \item \emph{join} removes redundant "/"
 \item \emph{normpath} fixes "/" orientation and redundant ".."
 \item \emph{realpath} resolves symlinks
@@ -48,13 +48,13 @@ And now, a rapid glance to other tools \ellipsis
 \begin{pyframe}{Move trees: shutil, os, os.path}
 \begin{pycode}
 from os import makedirs     # ...tree creation...
-from os.path import isdir   # ...checking...         
-from shutil import copytree, rmtree 
+from os.path import isdir   # ...checking...
+from shutil import copytree, rmtree
 makedirs("/tmp/py/foo/bar")
 
 # We can copy a whole tree and test it
-copytree("/tmp/py/foo", "/tmp/py/foo2") 
-assert isdir("/tmp/py/foo2/bar")            
+copytree("/tmp/py/foo", "/tmp/py/foo2")
+assert isdir("/tmp/py/foo2/bar")
 
 rmtree("/tmp/py/foo") # ... and finally delete it
 assert not isdir("/tmp/py/foo/bar")
@@ -67,14 +67,13 @@ assert not isdir("/tmp/py/foo/bar")
 # We can use exception handlers to investigate errors
 try:
     # python2 does not allow to ignore existing directories...
-    |\typeonly{makedirs}|("/tmp/py/foo/bar") 
+    |\typeonly{makedirs}|("/tmp/py/foo/bar")
     #  ...and raises an OSError
 except OSError as e:
     # Just use the errno module to check the error value
     import errno
     assert e.errno == errno.EEXIST
-    
+
 help(makedirs)
 \end{pycode*}
 \end{pyframe}
-

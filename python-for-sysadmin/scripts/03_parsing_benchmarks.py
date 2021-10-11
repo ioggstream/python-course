@@ -22,8 +22,8 @@ def grep(expr, fpath):
                 re.match matches from the beginning of the line.
 
     """
-    import re
     import os
+    import re
     re_expr = re.compile(expr)
     fpath = os.path.normpath(fpath)
     with open(fpath) as fp:
@@ -46,6 +46,7 @@ def splitting_with_findall():
        goal: improve string readability
     """
     from re import findall  # can be misused too;
+
     # eg for adding the ":" to a
     mac_address = "00""24""e8""b4""33""20"
     re_s_1 = "[0-9a-fA-F]"

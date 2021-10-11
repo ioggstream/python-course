@@ -1,14 +1,14 @@
 version: 1
 formatters:
-  detailed: 
+  detailed:
     class: logging.Formatter
     format: '%(asctime)s %(name)-15s %(levelname)-8s %(processName)-10s %(message)s'
 
 handlers:
-  console: 
+  console:
     class: logging.StreamHandler
     level: INFO
-  syslog: 
+  syslog:
     class: logging.handlers.SysLogHandler
     formatter: detailed
     level: DEBUG

@@ -109,9 +109,3 @@
     - debug:
         var: output
     when: true  # droplet_id|default(0) != 0
-
-
-
-
-
-

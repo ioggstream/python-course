@@ -1,5 +1,6 @@
-__author__ = 'rpolli'
+__author__ = "rpolli"
 from __future__ import print_function
+
 from . import grep
 
 
@@ -13,9 +14,12 @@ def linux_diskstats(disk):
        goal: use *magic with print+sep, splitting and slicing
     """
     from time import sleep
-    info = ('reads reads_merged reads_sectors reads_ms'
-            ' writes writes_merged writes_sectors writes_ms'
-            ' io_in_progress io_ms_weight').split()
+
+    info = (
+        "reads reads_merged reads_sectors reads_ms"
+        " writes writes_merged writes_sectors writes_ms"
+        " io_in_progress io_ms_weight"
+    ).split()
     print(*info, sep=",")
     old, cur = dict(), dict()
     while True:

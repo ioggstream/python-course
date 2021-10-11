@@ -5,7 +5,7 @@
 FROM python:3.8
 MAINTAINER roberto.polli@par-tec.it
 
-RUN apt-get -y update && apt-get -y install gcc make python-dev python-pip 
+RUN apt-get -y update && apt-get -y install gcc make python-dev python-pip
 RUN apt-get -y update && apt-get -y install build-essential libblas-dev liblapack-dev gfortran  libfreetype6-dev libpng-dev
 RUN apt-get -y update && apt-get -y install tree sshpass openssl
 RUN apt-get -y clean

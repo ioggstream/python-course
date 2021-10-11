@@ -31,5 +31,3 @@
     debug: msg="The device is {{item.device}}"
     with_items: >
       {{ansible_mounts}}
-
-

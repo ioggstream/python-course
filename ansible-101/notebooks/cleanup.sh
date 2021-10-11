@@ -1,18 +1,17 @@
 #!/bin/bash
-rm *_removed.ipynb 
+rm *_removed.ipynb
 
-for i in *ipynb; do 
+for i in *ipynb; do
 	python remove_output.py $i  || exit 1
-done 
+done
 
-for i in *_removed.ipynb; do 
+for i in *_removed.ipynb; do
 	mv $i ${i//_removed}
 done
 
 for i in *.ipynb; do
 	jupyter nbconvert --to notebook $i &
-done	
+done
 wait
 
 mv *nbconvert.ipynb rendered_notebooks
-

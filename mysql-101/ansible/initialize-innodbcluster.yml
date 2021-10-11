@@ -85,13 +85,13 @@
   with_items:
   - create-cluster.js
   - add-node.js
-  
+
 - name: Create cluster on local node
   run_once: yes
   delegate_to: "{{groups['innodb'][0]}}"
   shell: >
-    mysqlsh --uri icroot@{{ansible_default_ipv4_address}}:3306  
-       --password=Secret%2017 --log-level=DEBUG4 
+    mysqlsh --uri icroot@{{ansible_default_ipv4_address}}:3306
+       --password=Secret%2017 --log-level=DEBUG4
        --js -f /root/create-cluster.js
 
 - name: Add instances to cluster
@@ -99,7 +99,7 @@
   when: >-
     ansible_hostname in groups['innodb'][1:]
   shell: >
-    mysqlsh --uri icroot@localhost:3306  --password=Secret%2017 --log-level=DEBUG4 
+    mysqlsh --uri icroot@localhost:3306  --password=Secret%2017 --log-level=DEBUG4
     --js -f /root/add-node.js
 
 - name: Kill mysql

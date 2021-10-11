@@ -1,7 +1,4 @@
-from connexion import FlaskApp, problem
-from os.path import isfile, dirname
-from yaml import safe_load as yaml_load
-from logging import basicConfig
+from connexion import problem
 
 
 def basic_auth(username, password, required_scopes=None):
@@ -35,4 +32,3 @@ def post_hello(body):
         )
     print(f"body, {body.__class__}")
     return {"UNEXPECTED_STRING": 1}
-

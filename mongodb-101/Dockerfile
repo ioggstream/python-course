@@ -31,4 +31,3 @@ RUN dnf install -y docker-ce-cli
 RUN curl >/etc/profile.d/99-docker.sh https://gist.githubusercontent.com/ioggstream/cc7caffc8e038ac27a9390a80c8e7cc0/raw/5fd6e39141631ea9e196d31dcf01e4ccddae376f/z99-docker-profile.sh
 ENV DOCKER_HOST=tcp://172.17.0.1:2375
 ENTRYPOINT jupyter notebook --ip 0.0.0.0 --port 8001 --allow-root
-

@@ -32,7 +32,7 @@ Run the environemnt with:
 
     # make course
 
-or 
+or
 
     # docker-compose scale course=1 bastion=1 web=3
     # firefox http://localhost:8888
@@ -40,7 +40,7 @@ or
 
 ## Playing the course on DigitalOcean
 
-DigitalOcean is a great and cheap cloud-provider 
+DigitalOcean is a great and cheap cloud-provider
 
   - create an Ubuntu 16.04 docker droplet from the menu and ssh into your host
   - expose docker on local http port
@@ -68,5 +68,3 @@ ExecStart=/usr/bin/dockerd -H fd:// -H tcp://172.17.0.1:2375
 See asciicast here
 
 [![asciicast](https://asciinema.org/a/9xqX4akNND7Yc0Q1sTb3ZnEhI.png)](https://asciinema.org/a/9xqX4akNND7Yc0Q1sTb3ZnEhI)
-
-

@@ -8,7 +8,7 @@ def my_auth(username, password, required_scopes=None):
        :params: username, the username
        :params: password, the password
        :params: scopes, the scope
-       :returns: `{"sub": username, "scope": ""}` on success, 
+       :returns: `{"sub": username, "scope": ""}` on success,
                  None on failure
     """
     if username == password:

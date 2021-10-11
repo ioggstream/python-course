@@ -20,10 +20,10 @@
 I/O
 
   - accessed files
-  - threads in disk wait 
+  - threads in disk wait
   - table scans
   - connections attributes
-  - 
+  -
 
 CPU
 
@@ -49,6 +49,6 @@ Or `USE sys` and just check overviews.
 
 Use `information_schema` to find instruments & co:
 
-        SELECT table_name,column_name FROM information_schema.columns 
-            WHERE column_name LIKE '%lock%' 
-                AND table_schema LIKE 'perf%';     
+        SELECT table_name,column_name FROM information_schema.columns
+            WHERE column_name LIKE '%lock%'
+                AND table_schema LIKE 'perf%';

@@ -59,7 +59,7 @@ paths:
           content:
             application/problem+json:
               schema:
-                $ref: '#/components/schemas/Problem'  
+                $ref: '#/components/schemas/Problem'
               example:
                 title: Internal Server Errror
                 status: 500
@@ -69,4 +69,3 @@ components:
   schemas:
     Problem:  # EXERCIS SOLUTION, REMOVE
       $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/schemas/Problem'
-

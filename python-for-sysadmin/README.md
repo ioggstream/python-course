@@ -29,7 +29,7 @@ Each notebook is associated to a python file in scripts/.
 
 
 ## Outline
-- If you are a novice, consider reading the 
+- If you are a novice, consider reading the
    introductory crash course in ../python-basic/
 
 - Introducing ipython
@@ -54,4 +54,3 @@ Each notebook is associated to a python file in scripts/.
 
 - Ansible
   - 05_ansible.py
-

@@ -1,6 +1,6 @@
 #Logging
 
-## Effects of logging 
+## Effects of logging
 Logging impacts on performance and stability
 
 - general (text, table)
@@ -35,12 +35,12 @@ You can tune `binlog_format`:
 ## Managing Binary Logs
 Binary logs are written in the following files:
 
-        SHOW BINARY LOGS; 
+        SHOW BINARY LOGS;
         | Log_name          | File_size |
         | fabric-bin.000001 |     69414 |
         | fabric-bin.000002 |   1268759 |
-  
-You can show their content with 
+
+You can show their content with
 
         SHOW BINLOG EVENTS;
 
@@ -50,11 +50,11 @@ Use a new log file
         FLUSH BINARY LOGS;
         SHOW BINARY LOGS;
 
-or purge them 
-        
+or purge them
+
         -- NOW() won't remove the last one, FLUSH it before!
-        PURGE BINARY LOGS BEFORE NOW(); 
-        
+        PURGE BINARY LOGS BEFORE NOW();
+
         -- You can use SUBDATE to simplify expiration
         PURGE BINARY LOGS BEFORE SUBDATE(CURRENT_DATE, 1); -- yesterday
 
@@ -62,14 +62,14 @@ or purge them
         RESET MASTER;
 
 ## Expire binary logs
-    
+
 Use `expire_logs_days` in `my.cnf` to set a policy.
 
-        select @@GLOBAL.expire_logs_days; -- 3 
-        FLUSH LOGS;     -- closes and reopen all files and 
+        select @@GLOBAL.expire_logs_days; -- 3
+        FLUSH LOGS;     -- closes and reopen all files and
                         -- now deletes all binlogs older than 3 days
-        
-**Before purging binary logs checks if replication slaves are using them, 
+
+**Before purging binary logs checks if replication slaves are using them,
  or you'll break replication**
 
 
@@ -80,7 +80,7 @@ A `SUPER` user can skip logging queries with
         SET @@SESSION.SQL_LOG_BIN=0;  -- don't log now
         CREATE TABLE d1.ignore(i int);
         DROP TABLE d1.ignore;
-        
+
 This only applies to current SESSION!
 
 **Use `SQL_LOG_BIN=0` to avoid replicating database initialization**
@@ -102,22 +102,22 @@ Inspect binary logs with mysqlbinlog
         create table test.t(i int)
 
 And replay them on another server for:
- 
-  - PITR 
+
+  - PITR
   - replay load
   - backup.
-  
+
 ## mysqlbinlog
 
 mysqlbinlog output generates SQL files that can be replayed on other servers.
 
         mysqlbinlog hostname-bin.* | mysql
-        
+
 You can specify an interval on mysqlbinlog.
 
         mysqlbinlog hostname-bin.0* \
             --start-datetime="2015-05-25 15:00:00" \
             --stop-datetime="2015-05-25 15:01:00"  | wc -l
-            
+
 Exercise: modify ``--[start|end]``` -date and check that the output lines vary.
 Exercise: drop a table (eg. salaries) and use mysqlbinlog data to restore it.

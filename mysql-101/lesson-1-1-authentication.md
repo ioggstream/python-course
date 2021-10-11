@@ -3,8 +3,8 @@
 
 ## mysql.user table & co
   - Authentication is based on users
-  - A user is a **couple** $(user, host)$ 
-       
+  - A user is a **couple** $(user, host)$
+
         mysql> SELECT user,host,authentication_string FROM mysql.user;
         +------+--------------+-----------------------+
         | user | host         | authentication_string |
@@ -36,16 +36,16 @@ you can:
 
 ## mysql.user table & co
   - Create a user and show its privileges. By default host is '%'
-  
+
         CREATE USER admin IDENTIFIED BY 'admin';
-        SHOW GRANTS FOR 'admin' \G     
+        SHOW GRANTS FOR 'admin' \G
         HELP CREATE USER -- read carefully!
- 
+
   - Show `root` privileges, and remember **users are couples**
-  
+
         SHOW GRANTS; -- explain grants
         SHOW GRANTS FOR 'root'; -- does it work? Why?
-        SHOW GRANTS FOR 'root'@'localhost'; 
+        SHOW GRANTS FOR 'root'@'localhost';
 
 ## mysql.user table & co
 
@@ -53,18 +53,18 @@ you can:
 
          SELECT CURRENT_USER();  -- who am I
          ALTER USER CURRENT_USER() IDENTIFIED BY 'My.2018%Secret';
-        
+
   - We can change the password with
-  
+
          mysqladmin -u root password 'new-password'               # may use port 3306
          mysqladmin -u root password -h localhost 'new-password'  # uses socket
          mysqladmin -u root -h a02f12e917b1 password 'new-password'
 
-  
-## Securing installation 
+
+## Securing installation
 
   - Once you change the password *check* if you get extra rows.
-  
+
         mysql> SELECT user,host,authentication_string FROM mysql.user;
         +------+--------------+-----------------------+
         | user | host         | authentication_string |
@@ -79,18 +79,18 @@ you can:
         6 rows in set (0.00 sec)
 
   - In that case, it's not secured (anonymous user)!
-  
+
         mysql -u"" -e "SELECT 1;"
-  
+
 
 ## Securing installation - 5.6 only
 
   - secure the installation!
-  
+
         mysql_secure_installation
-  
+
   - and check the outcome
-  
+
         mysql> SELECT user,host,authentication_string FROM mysql.user;
         +------+-----------+-------------------------+
         | user | host      | authentication_string   |
@@ -102,11 +102,11 @@ you can:
         3 rows in set (0.00 sec)
 
 
-## Securing installation - 5.7 
+## Securing installation - 5.7
 
 MySQL 5.7 is secure by default:
 
-  - `--initialize` dumps a random password to error-log 
+  - `--initialize` dumps a random password to error-log
   - you must change this password at first login
   - the password policy plugin is enabled
 
@@ -124,27 +124,27 @@ Resetting root password requires a restart.
 MySQL loads authentication tables in memory and enables them after startup:
 
 Skipping this step allows unauthenticated connections
- 
+
         mysqld --skip-grant-tables \    # don't load authentication
             --skip-networking \         # don't use TCP
             --socket=mysql-$RANDOM.sock # use a non-standard socket!
-        
+
 Once you log-in you need to load privilege table to be able to change it.
 
         STATUS;
         FLUSH PRIVILEGES; -- (re)load grant tables
         ALTER USER 'root'@'localhost' IDENTIFIED BY 'new_password';
-        
+
 Now `mysqladmin shutdown` and restart normally.
-   
-## Reset root password   
+
+## Reset root password
 
   - You can put those instructions in `resetpassword.sql`
 and append `--init-file=resetpassword.sql` to `mysqld`.
 
-  - To stop mysql **never** use `SIGKILL`. 
-        
-        
+  - To stop mysql **never** use `SIGKILL`.
+
+
 
 ## Authentication plugins
 
@@ -169,9 +169,9 @@ Eg. `auth_socket`
 
         INSTALL PLUGIN 'auth_socket' SONAME 'auth_socket.so';
         CREATE USER 'mysql'@'localhost' IDENTIFIED WITH 'auth_socket';  -- passwords are ignored!
-        
-Now login with 
- 
+
+Now login with
+
         sudo -u mysql mysql -umysql  # tada!
 
 This `mysql` user has no special privilege!
@@ -191,10 +191,9 @@ Create a mysql user tied to the `jon` entry in `/etc/passwd` authenticating with
 
         $  cat /etc/pam.d/mysql
         $  grep jon /etc/passwd
-        SQL] CREATE USER 'jon'@'localhost' IDENTIFIED WITH authentication_pam AS 'mysql';  
-  
+        SQL] CREATE USER 'jon'@'localhost' IDENTIFIED WITH authentication_pam AS 'mysql';
+
 Login with `jon` using the enable-cleartext-plugin so that mysql can forward you password to PAM.
 
         $ mysql -ujon -p --enable-cleartext-plugin
         SQL]
-

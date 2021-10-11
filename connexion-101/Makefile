@@ -11,7 +11,7 @@ EXTERNAL_COURSES =
 
 
 course: .prepare .EXPORT_ALL_VARIABLES
-	docker-compose scale course=1 editor=1 
+	docker-compose scale course=1 editor=1
 	docker-compose logs course | grep token | sed -e "s/0.0.0.0/$(MAIN_IP)/g"  | sed -e "s/(.* or 127.0.0.1)/$(MAIN_IP)/g"
 
 clean:
@@ -28,7 +28,7 @@ clean-other:
 	docker-compose rm -vf editor dev
 
 test:
-	docker exec -ti connexion101_dev_1 bash -c ' (cd /notebooks; ./cleanup.sh ) ' 
+	docker exec -ti connexion101_dev_1 bash -c ' (cd /notebooks; ./cleanup.sh ) '
 
 dev: .prepare .EXPORT_ALL_VARIABLES
 	docker-compose scale dev=1 editor=1

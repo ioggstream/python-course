@@ -49,5 +49,3 @@
           map('extract', hostvars, ['ansible_default_ipv4', 'address']) |
           reject('undefined') |
           list }}
-
-

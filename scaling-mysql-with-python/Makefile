@@ -10,4 +10,4 @@ export TEXINPUTS = .:../texinputs/:./images/:/tmp/tox:
 include ../texinputs/Makefile
 
 training: 99-training.md.tex
-	pdflatex --shell-escape -interaction=nonstopmode training.tex	
+	pdflatex --shell-escape -interaction=nonstopmode training.tex

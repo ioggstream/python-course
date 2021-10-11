@@ -57,7 +57,7 @@
           <y:Geometry height="30.0" width="101.80799999999999" x="-205.51300000000006" y="59.322773125000055"/>
           <y:Fill color="#008080" transparent="false"/>
           <y:BorderStyle hasColor="false" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="31.9375" modelName="custom" textColor="#FFFFFF" visible="true" width="80.189453125" x="10.809273437499996" y="-0.96875">2. inventory 
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="31.9375" modelName="custom" textColor="#FFFFFF" visible="true" width="80.189453125" x="10.809273437499996" y="-0.96875">2. inventory
  / script<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
