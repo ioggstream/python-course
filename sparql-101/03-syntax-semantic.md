@@ -69,7 +69,7 @@ elementi di un grafo.
 Anche associando una `Location` al luogo di nascita
 di una persona tramite  `rdfs:range` con
 
-```
+```turtle
 prefix cpv: <https://w3id.org/italia/onto/CPV/> .
 prefix l0: <https://w3id.org/italia/onto/l0/> .
 
@@ -86,8 +86,8 @@ a `Location` che, in questo caso potrebbe essere ad esempio:
 ----
 
 Uno scambio efficiente di informazioni in tempo reale
-richiede quindi una sintassi ben definita
-da poter validare a runtime in modo efficiente.
+richiede una sintassi ben definita
+validabile a runtime in modo efficiente.
 
 La sintassi può essere validata con specifiche quali
 [json-schema]() e [xmlschema]().
@@ -139,8 +139,9 @@ Customer:
 
 ----
 
-O tramite content-negotiation
-ritornando più formati (json e json-ld)
+Descrivendo un'API in formato OAS3 possiamo
+descrivere i diversi formati usando i meccanismi
+di content-negotiation.
 
 ```yaml
 openapi: 3.0.1
@@ -170,4 +171,34 @@ paths:
 
 ```
 
+---
+
+### Vocabolario per la semantica
+
+Un altro meccanismo per collegare @context
+e schema, è quello di utilizzare un vocabolario
+e delle parole chiavi all'interno dello schema.
+
+Questo meccanismo è più semplice, ma richiede
+di generare il @context a partire da un vocabolario esterno.
+
+```yaml
+Person:
+  type: object
+  properties:
+    givenName:
+      type: string
+      x-refersTo: https://w3id.org/italia/onto/CPV/givenName
+    familyName:
+      x-refersTo: https://w3id.org/italia/onto/CPV/familyName
+      type: string
+  
+```
+
+### Ontologia per json-schema
+
+Il progetto [Web of Things](https://w3.org/ns/td.jsonld) definisce invece
+un vocabolario per "Thing description" in formato json-ld dove ad ogni property viene associato
+sia un valore semantico che uno sintattico tramite il vocabolario
+[json-schema](https://w3.org/ns/json-schema/).
 
