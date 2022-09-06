@@ -202,3 +202,21 @@ un vocabolario per "Thing description" in formato json-ld dove ad ogni property 
 sia un valore semantico che uno sintattico tramite il vocabolario
 [json-schema](https://w3.org/ns/json-schema/).
 
+## Trasformare dati semantici
+
+E' possibile trasformare dei dati semanticamente definiti in diversi formati
+usando una serie di specifiche.
+
+- https://www.w3.org/2013/csvw/wiki/CSV-LD
+- https://www.w3.org/TR/json-ld-framing/ force a specific tree layout to a JSON-LD document.
+
+
+
+
+```mermaid
+flowchart
+
+ RDF--Framing--> JSON --context--> RDF
+ CSV --csv-ld--> RDF
+ 
+```
