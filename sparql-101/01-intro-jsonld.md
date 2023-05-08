@@ -2,10 +2,11 @@
 
 ## Agenda
 
-  - Semantics what?
-  - Triples & co
-  - Attaching semantics
-  - Graph databases
+- Semantics what?
+- Triples & co
+- Attaching semantics
+- Graph databases
+- JsonLD
 
 *Beware*: commands contain small typos. You must fix them to properly complete the course!
 
@@ -18,7 +19,6 @@ Prerequisites:
 - SQL and database hints
 
 ---
-
 
 ## Intro: Semantics what?
 
@@ -65,8 +65,6 @@ Un altro esempio è l'interoperabilità semantica: il concetto di famiglia ha di
 Per standardizzare semanticamente i servizi e i loro contenuti, si utilizzano strumenti concettuali quali ontologie e vocabolari controllati (codelist, tassonomie, ..). 
 
 Ontologia: una ontologia è un insieme di assiomi logici che concettualizzano un dominio di interesse definendo dei concetti e la semantica delle relazioni tra essi. Quando le ontologie contengono ulteriori restrizioni (eg. vincoli allo schema) non sono propriamente vocabolari.
-
-----
 
 Vocabolario controllato: un vocabolario dove i termini sono validati da un'autorità designata. Può essere di diversi tipi - eg. una lista (codelist), una struttura gerarchica (tassonomia), un glossario ed un tesauro (che aggiunge ad una tassonomia ulteriori vincoli). Esempi di vocabolari controllati europei si trovano qui https://op.europa.eu/en/web/eu-vocabularies/controlled-vocabularies
 
@@ -158,7 +156,8 @@ a partire da vocabolari di base.
 @prefix dct:   <http://purl.org/dc/terms/> .
 
 https://w3id.org/italia/onto/CPV dct:modified  "2020-04-27"^^xsd:date ;
-https://w3id.org/italia/onto/CPV dct:title     "Person Ontology"@en, "Ontologia delle persone"@it ;
+https://w3id.org/italia/onto/CPV dct:title     "Person Ontology"@en,
+                                               "Ontologia delle persone"@it ;
 
 ```
 
@@ -166,13 +165,23 @@ https://w3id.org/italia/onto/CPV dct:title     "Person Ontology"@en, "Ontologi
 
 ### Json-LD
 
-JSON-LD è un formato che permette di serializzare in JSON delle informazioni basate sul RDF data model.
- https://www.w3.org/TR/json-ld11/#data-model.
+JSON-LD è un formato che permette di serializzare in JSON delle informazioni basate sul 
+[RDF data model](https://www.w3.org/TR/json-ld11/#data-model).
 
 Un documento JSON-LD è quindi sia un documento RDF che JSON, e rappresenta un'istanza di un RDF data model.
 
 JSON-LD inoltre *estende* RDF per permettere la serializzazione di dataset RDF generalizzati.
-Di seguito l'estratto di sopra serializzato in JSON-LD/yaml.
+
+----
+Dato un oggetto JSON
+
+```
+id: robipolli@gmail.com
+given_name: Roberto
+family_name: Polli
+```
+
+JSON-LD permette di trasformarlo in un grafo RDF associandogli un contesto.
 
 ```
 "@context":
@@ -197,8 +206,7 @@ https://schema.org/docs/jsonldcontext.jsonld
 È anche possibile ridefinire o localizzare i campi,
 eventualmente usando diversi namespace.
 
-
-```
+```yaml
 "@context":
   "sdo": "http://schema.org/"
   "nome":"sdo:name"
@@ -217,7 +225,7 @@ eventualmente usando diversi namespace.
 JSON-LD supporta nativamente informazioni
 localizzate:
 
-```
+```yaml
 -- come lista
 occupation:
 -  @value: "Student"
@@ -228,7 +236,7 @@ occupation:
 
 oppure
 
-```
+```yaml
 -- come oggetto
 @context:
   occupation:
@@ -240,7 +248,7 @@ occupation:
 
 oppure
 
-```
+```yaml
 --- tramite elementi multipli, utile anche per la serializzazione di API semplici
 @context:
   occupation: {@language: en}
@@ -250,110 +258,39 @@ occupation_fr: Etudiant
 ```
 
 ---
-### Json Schema e Json-LD
 
-Per validare un oggetto json-ld, serve risolvere
-ricorsivamente tutte le referenze:
-è complesso farlo in maniera sincrona.
+#### Context mangling
 
-Quando si crea un API, la semantica va
-definita in fase di specifica
-in modo da non dover risolvere a runtime
-referenze ricorsive
-ed evitare problemi come il "@context mangling".
+@context mangling: modificando il contesto di un oggetto
+se ne altera il significato.
 
-----
-
-Un modo è associare un @context ad uno schema
-integrandolo nella definizione attraverso
-un valore `const`.
-tramite un link
-In questo caso, `pet` viene [disassociato dal vocabolario](https://w3c.github.io/json-ld-syntax/#example-25-using-the-null-keyword-to-ignore-data)
-
+```yaml
+payment_from: alice@foo.example
+payment_to: bob@foo.example
+"@context": https://payment/context.jsonld
 ```
-# Associate a json-ld context to a schema
-Customer:
-  type: object
-  required: [email]
-  properties:
-    "@context":
-      const:
-        "@vocab": "http://schema.org"
-        pet: null
-    email: {type: string}
-    pet: {type: string}
+
+Alterando la risposta del server https://payment/context.jsonld
+possiamo invertire il verso del pagamento!
+
+```yaml
+@context:
+  payment_from: http://banking#debtor
+  payment_to: http://banking#creditor
+```
+
+->
+
+```yaml
+@context:
+  payment_to: http://banking#debtor
+  payment_from: http://banking#creditor
 ```
 
 ----
 
-E' anche possibile indicare un link
-```
-# Associate a json-ld context to a schema
-Customer:
-  type: object
-  required: [email]
-  properties:
-    "@context":
-      const: "https://api.example/customer-context.jsonld"
-    email: {type: string}
-    pet: {type: string}
-```
+Esistono diverse ipotesi tecnologiche basate
+sull'elaborazione semantica dei dati a runtime.
+Tutte queste implementazioni devono indirizzare
+questo tipo di rischi.
 
-
-
-----
-O tramite `Link` header
-
-```http
-HTTP/1.1 200 OK
-Content-Type: application/json
-Link: <https://api.example/simple-person.jsonld>;
-     rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"
-
-{ "given_name": "Roberto", "family_name": "Polli" }
-```
-
----
-
-O tramite content-negotiation
-ritornando più formati (json e json-ld)
-
-```
-openapi: 3.0.1
-...
-paths:
-  /users:
-    get:
-      ...
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Person"
-            application/ld+json:
-              schema:
-                allOf:
-                - type: object
-                  properties:
-                    "@context":
-                      const:
-                        "@vocab":   "https://w3id.org/italia/onto/CPV/"
-                        given_name:  givenName
-                        family_name: familyName
-                - $ref: "#/components/schemas/Person"
-
-
-```
-
-
-## API e Semantica
-
-Quando scambiamo informazioni tramite API
-la semantica non è sempre chiara:
-
-- è implicita;
-- è in qualche pdf/xls;
-- non è machine readable.
-
----
