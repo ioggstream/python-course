@@ -1,7 +1,15 @@
-FROM itscaro/debian-ssh:latest
-RUN apt-get -y update && apt-get -y install python sshpass
+FROM debian:stable-slim
+RUN apt-get -y update && apt-get -y install python sshpass openssh-server
 RUN apt-get -y clean
 RUN apt-get -y autoremove
 
+# Since this is a tutorial machine, we
+#   need to simplify things a bit.
 RUN echo "UseDNS no" >> /etc/ssh/sshd_config
 RUN echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
+
+# Create privilege separation directory.
+RUN mkdir -p /run/sshd
+
+ENTRYPOINT ["/usr/sbin/sshd"]
+CMD [ "-D", "-e"]
