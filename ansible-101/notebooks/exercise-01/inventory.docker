@@ -1,0 +1,12 @@
+#
+# This inventory file is used to access the course machines
+#   using the docker connection plugin and perform
+#   some management tasks. For example, you can change the root
+#   password of the machines using the following command:
+#
+#   ansible -i inventory.docker \
+#       -m shell -a "echo 'root:password' | chpasswd" docker
+#
+[docker]
+ansible-101_web_[1:2]  ansible_connection=docker
+ansible-101_bastion_1  ansible_connection=docker

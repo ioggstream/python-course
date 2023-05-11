@@ -72,6 +72,11 @@ See asciicast here
 
 ## Prerequisites
 
+After `make course`, prerequisites are in `/notebooks/rendered_notebooks`.
+
+Prerequisites can be found in the home directory:
+
+- Introduction to jupyter: logging in, showing the python interface, working with notebooks, opening terminals.
 - [Git 101](https://github.com/ioggstream/python-course/blob/master/git-101/notebooks/01-git.ipynb)
 - [Python basics](https://github.com/ioggstream/python-course/blob/master/python-basic/README.md)
 - Docker
