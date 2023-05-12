@@ -57,11 +57,9 @@ ExecStart=/usr/bin/dockerd -H fd:// -H tcp://172.17.0.1:2375
 - clone and run the project
 
 ```bash
-$ git clone https://github.com/ioggstream/python-course.git
-$ cd python-course/ansible-101
-$ make course
-
-
+git clone https://github.com/ioggstream/python-course.git
+cd python-course/ansible-101
+make course
 ```
 
 - point to the reference url
@@ -83,7 +81,7 @@ Prerequisites can be found in the home directory:
 
 ## Outline
 
-- 1. Prerequisites
+- 1. Prerequisites linked in [intro.ipynb](intro.ipynb)
 - Ansible architecture
 - Describe delivery layout in ansible.cfg
 - Host and Group variables, Filters
