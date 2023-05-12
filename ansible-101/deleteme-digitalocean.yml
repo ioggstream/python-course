@@ -1,7 +1,7 @@
 #
-# Provision current infrastructure on digitalocean
+# Delete the current infrastructure on digitalocean
 #   $ export DO_API_TOKEN=xxxx
-#   $ ansible-playbook -v site-digitalocean.yml
+#   $ ansible-playbook -v deleteme-digitalocean.yml
 #
 # This will output a series of jupyter urls with their associate ips.
 #
@@ -18,7 +18,6 @@
       name: "{{item}}"
       unique_name: yes
       region: fra1
-#      size: s-2vcpu-4gb
       image: docker-18-04
       wait_timeout: 500
     register: my_droplet

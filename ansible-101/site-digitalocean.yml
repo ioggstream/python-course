@@ -42,7 +42,7 @@
     register: my_droplet
     with_items:
     - deleteme-1
-    - deleteme-2
+#    - deleteme-2
 
   - name: Dynamically add the new servers to the inventory.
     add_host:
