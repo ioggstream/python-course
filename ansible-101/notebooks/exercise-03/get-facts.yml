@@ -1,3 +1,4 @@
+---
 #
 # Use this playbook to dump ansible facts
 #
@@ -9,8 +10,7 @@
   tasks:
     - name: Dump the requested facts.
       debug:
-        msg: "A string"
-
+        msg: A string
 
 #
 # Read this for reference
@@ -20,7 +20,7 @@
   tasks:
     - name: This is the debug module.
       debug:
-        msg: "A string"
+        msg: A string
 
     - name: The debug module can print variables too
       debug:
@@ -33,6 +33,6 @@
 
     - name: ..and inspect/format variables
       debug:
-        msg: "The device is {{ item.device }}"
+        msg: The device is {{ item.device }}
       with_items: >
         {{ ansible_mounts }}

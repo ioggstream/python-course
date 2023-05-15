@@ -1,15 +1,16 @@
+---
 - hosts: web
   tags: fileglob
   tasks:
-  - name: You can implement a remote fileglob in 2 steps
-    shell: >
-      ls /etc/host*
-    register: fileglob_remote
+    - name: You can implement a remote fileglob in 2 steps
+      shell: >
+        ls /etc/host*
+      register: fileglob_remote
 
-  - name: Here we go
-    debug: msg="{{item}}"
-    with_items: >
-      {{fileglob_remote.stdout_lines}}
+    - name: Here we go
+      debug: msg="{{item}}"
+      with_items: >
+        {{fileglob_remote.stdout_lines}}
 
 
 - hosts: web, localhost
@@ -17,9 +18,9 @@
   environment:
     WELCOME: Benvenuti a Rimini!
   tasks:
-  - name: Passing a shell variable to the whole play
-    shell: >
-      echo $WELCOME
-    register: o
-  - name: EuroPython is here
-    debug: var=o.stdout
+    - name: Passing a shell variable to the whole play
+      shell: >
+        echo $WELCOME
+      register: o
+    - name: EuroPython is here
+      debug: var=o.stdout

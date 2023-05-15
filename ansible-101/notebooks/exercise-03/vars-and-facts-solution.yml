@@ -30,5 +30,9 @@
   tasks:
     - name: >
         Show the free percentage of the local disk using
-        facts and filters
-      debug: msg="Replace me"
+        facts and filters. Restricted to unique devices.
+      debug:
+        msg: >
+          {{item.device}} {{ (100 * item.size_available / item.size_total) | int }}%
+      with_items: >-
+        {{ ansible_mounts}}

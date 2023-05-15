@@ -1,3 +1,4 @@
+---
 #
 # Use this playbook to dump ansible facts
 #
@@ -7,9 +8,9 @@
     and the next section as a reference for
     the debug module.
   tasks:
-    - name: "Dump the requested facts."
+    - name: Dump the requested facts.
       debug:
-        msg: "A string"
+        msg: A string
     - name: Hostname
       debug:
         msg: >-
