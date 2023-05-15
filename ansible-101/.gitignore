@@ -8,3 +8,6 @@
 core*
 *_python_intro.ipynb
 notebooks/rendered_notebooks/
+vault.yml
+vault.yaml
+.pin

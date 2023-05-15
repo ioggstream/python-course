@@ -5,7 +5,10 @@
 #   password of the machines using the following command:
 #
 #   ansible -i inventory.docker \
-#       -m shell -a "echo 'root:password' | chpasswd" docker
+#       -m shell \
+#       -a "echo 'root:{{root_password}}' | chpasswd" \
+#       -e@vault.yml \
+#       docker
 #
 [docker]
 ansible-101_web_[1:2]  ansible_connection=docker

@@ -1,3 +1,34 @@
+# Docker connectors
+
+
+```mermaid
+graph LR
+
+subgraph docker[docker fab:fa-docker]
+subgraph pad[ ]
+c1[container1 fa:fa-cube]
+c2[container2 fa:fa-cube]
+s1((IP 1 fa:fa-network-wired))
+s2((IP 2 fa:fa-network-wired))
+end
+dockerds((docker\nIP fa:fa-network-wired))
+dockerd[[Docker\nserver\n fa:fa-cogs fab:fa-docker]]
+end
+s1 -.-> c1
+s2 -.-> c2
+
+subgraph ansible_connection
+ssh-inventory[ssh module fa:fa-lock]
+docker-inventory[docker module fab:fa-docker]
+end
+
+ssh-inventory -->|ssh| s1 & s2
+docker-inventory -->|docker| dockerds
+dockerds -->dockerd
+c1 & c2 ---|<| dockerd
+
+```
+
 # Ansible architecture
 
 ```mermaid
