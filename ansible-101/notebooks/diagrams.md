@@ -28,6 +28,8 @@ s2 -.- gv2
 
 vault_config --> vault
 auth_config --> keys
+
+ansible.cfg --->|references| modules & roles[roles fa:fa-folder]
 ```
 
 
