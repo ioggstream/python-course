@@ -46,13 +46,15 @@
 
   - name: Dynamically add the new servers to the inventory.
     add_host:
-      hostname: "{{ item.data.droplet.networks.v4[0].ip_address }}"
+      hostname: >-
+        {{ item.data.droplet.networks.v4 | community.general.json_query(jq) | first }}
       groups:
       - do
       ansible_user: root
       host_key_checking: no
     with_items: "{{my_droplet.results}}"
-
+    vars:
+      jq: "[?(@.type=='public')].ip_address"
 
   - name: Create a sample inventory file with the server ips.
     file:
@@ -65,8 +67,10 @@
   - lineinfile:
       path: /tmp/inventory.do
       line: >
-        {{ item.data.droplet.networks.v4[0].ip_address  }} droplet_id={{item.data.droplet.id}}
+        {{ item.data.droplet.networks.v4 | community.general.json_query(jq) | first }} droplet_id={{item.data.droplet.id}}
     with_items: "{{my_droplet.results}}"
+    vars:
+      jq: "[?(@.type=='public')].ip_address"
 
 #
 # Configure the newly created machines
@@ -97,7 +101,6 @@
         state: restarted
         name: docker
         daemon_reload: yes
-      when: systemd_updated.changed
 
     - name: Check socket
       shell: |

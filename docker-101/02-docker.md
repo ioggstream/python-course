@@ -189,7 +189,7 @@ The Dockerfile is a text file that contains all the commands a user could
 call on the command line to assemble an image.
 
 ```dockerfile
-FROM debian:7.8
+FROM debian:stable-slim
 MAINTAINER Piuma "piuma@piumalab.org"
 RUN apt-get update && apt-get -y install apache2
 EXPOSE 80
