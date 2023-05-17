@@ -16,23 +16,12 @@ To resolve a necessity
 
 Mobility workload in cloud systems
 
----
-
-### Cargo transport pre-1960
-
-![text](slides/image/cargo-transport-pre-1960.png)
-
----
-
-### Solution: Intermodal Shipping Container
-
-![text](slides/image/standard_container.jpg)
+- Cargo transport pre-1960
+- Solution: Intermodal Shipping Container
 
 ---
 
 ### Docker is a Container System for Code
-
-![text](slides/image/container.png)
 
 Docker leverages LXC (Linux Containers), which encompasses Linux
 features like cgroups and namespaces for strong process isolation and
@@ -103,11 +92,5 @@ They are lightweight and consume less resources than a virtual machine.
   - remote access
   - network configuration
   - monitoring
-
----
-
-## Difference between docker and virtual machine
-
-![text](slides/image/VM-Diagram.png)
 
 ---
