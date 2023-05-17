@@ -9,6 +9,11 @@
 #         the digital_ocean module will create those droplets over and
 #         over again.
 #
+# You can retrieve the list of provisioned hosts with
+#
+#   $ ansible --user=root -i /tmp/inventory.do -mshell \
+#     -a 'docker exec -ti ansible-101_course_1 jupyter-notebook list | sed -e "s/0.0.0.0/{{ansible_host}}/" ' do
+#
 - hosts: localhost
   gather_facts: false
   vars:
