@@ -1,0 +1,12 @@
+#!/bin/bash
+# This is NOT a cloud-init file
+# as https://docs.digitalocean.com/products/droplets/how-to/provide-user-data/ suggests,
+# we may insert a payload script. 
+
+# If we had cloud-init file, we could have used this:
+# package_update: false
+# package_upgrade: false
+
+# but we are simply rewriting this config file 
+echo "APT::Periodic::Update-Package-Lists \"0\";" > /etc/apt/apt.conf.d/20auto-upgrades
+echo "APT::Periodic::Unattended-Upgrade \"0\";" >> /etc/apt/apt.conf.d/20auto-upgrades
