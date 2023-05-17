@@ -30,7 +30,6 @@ Check docker tools.
 
 ```python
 # Docker server version
-
 !dockerd --version
 ```
 
@@ -46,9 +45,7 @@ Let's pull and run an image
 
 ```python
 # Search images from catalog
-
 !docker search ubuntu|head
-
 ```
 
 Download an image from the remote registry.
@@ -56,7 +53,6 @@ Download an image from the remote registry.
 ```python
 # Download the ubuntu image
 !docker pull ubuntu:22.04
-
 ```
 
 Open a [terminal](/terminals/docker) and run an **interactive shell** (`--interactive`) with a terminal (`--tty`)
@@ -88,7 +84,7 @@ ip -4 -o a
 ```
 
 Can you retrieve the IP address in another way?
-Hint: the `/proc` filesystem contains information about the system. Try to find the IP address in one of the files in `/proc`.
+**Hint: the `/proc` filesystem contains information about the system. Try to find the IP address in one of the files in `/proc`.**
 
 ---
 
@@ -140,8 +136,8 @@ docker stats   # shows metrics, memory, cpu, filsystem
 # Use this cell to run the correct docker command.
 ```
 
-2a. Inspect the `ansible-101_bastion_1` container.
-2b. Use the `--format` option to get the IP address. Hint: you can google for the solution.
+1. Inspect the `ansible-101_bastion_1` container.
+1. Use the `--format` option to get the IP address. Hint: you can google for the solution.
 
 ```python
 # Use this cell to run the correct docker command.
@@ -201,6 +197,22 @@ Docker will execute all the commands in the Dockerfile and create a new image.
 ```python
 !docker build -t apache-example .
 ```
+
+Open the [terminal](/terminals/docker) and:
+
+- inspect the image
+- run the image with
+
+```bash
+docker run --rm --detach apache-example
+```
+
+- check the running container with `docker ps`
+- use `curl` to check if the webserver works
+- stop the container with `docker stop`
+- check the running container with `docker ps`
+- check the stopped container with `docker ps -a`
+- remove the container with `docker rm`
 
 ---
 

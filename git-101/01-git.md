@@ -2,10 +2,10 @@
 
 ## Agenda
 
-  - VCS intro
-  - tracking modifications
-  - using a local git repository
-  - remote repositories
+- VCS intro
+- tracking modifications
+- using a local git repository
+- remote repositories
 
 *Beware*: commands contain small typos. You must fix them to properly complete the course!
 
@@ -15,10 +15,10 @@ The importance of tracking changes.
 
 VCS basics:
 
-  - initialize a local repo
-  - change the software
-  - acknowledge (commit) changes
-  - eventually revert changes
+- initialize a local repo
+- change the software
+- acknowledge (commit) changes
+- eventually revert changes
 
 ---
 
@@ -28,7 +28,7 @@ Track modifications of our config files without messing
 with the real /etc.
 
 ```
-! mkdir -p /repo-path
+!mkdir -p /repo-path
 !cp -v /etc/host* /etc/s* /repo-path
 ```
 
@@ -47,7 +47,6 @@ Always timestamp backup copies, don't `.ori`.
 
 Exercise: Use `date +%s` to timestamp a backup copy of `hosts`.
 
-
 ```
 # Use this cell for the exercise.
 ```
@@ -62,9 +61,7 @@ Used to maintain the Linux Kernel.
 
 Distributed approach.
 
-
 ![Checkout and Push](https://git-scm.com/figures/18333fig0106-tn.png)
-
 
 ---
 
@@ -93,15 +90,16 @@ Track modifications with `git`
 
 ### Exercise
 
-  - get the previous `git config ... user.email`
-  - remove the `--global` flag  from the previous command
-  - run it
+- get the previous `git config ... user.email`
+- remove the `--global` flag  from the previous command
+- run it
 
 ```
 # Write here the command
 # and show the git config file.
 !cat .git/config
 ```
+
 ---
 
 Enter in the repo directory and check  the status: there
@@ -128,7 +126,7 @@ Now we have all `host*` files to be tracked.
 Add files to the index
 
 ```
-! git add hosts
+!git add hosts
 ```
 
 The file is now *staged* for commit. It's not archived though.
@@ -140,7 +138,7 @@ The file is now *staged* for commit. It's not archived though.
 Save files to the local index
 
 ```
-! git commit -m "Initial snapshot of hosts"
+!git commit -m "Initial snapshot of hosts"
 ```
 
 ![Git areas](https://git-scm.com/images/about/index1@2x.png)
@@ -168,17 +166,17 @@ and finally save them in the repo.
 ```
 !git commit  "Added localhost2 to hosts"
 ```
+
 ---
 
 ## History changes
 
 Now we have an history with two changes, containing:
 
- - commit messages
- - a commit hash
+- commit messages
+- a commit hash
 
 HEAD is the last commit.
-
 
 ```
 !git log
@@ -193,7 +191,7 @@ HEAD is the last commit.
 We can revert a change using the hash or an history log
 
 ```
-! git checkout HEAD~1 -- hosts  # revert hosts to the previous commit
+!git checkout HEAD~1 -- hosts  # revert hosts to the previous commit
 ```
 
 ---
@@ -203,10 +201,11 @@ We can revert a change using the hash or an history log
 Now some git commands, but first create a dir.
 
 ```
-! mkdir -p /repo-path
+!mkdir -p /repo-path
 !date >> /repo-path/file.txt
 !date >> /repo-path/hi.txt
 ```
+
 ---
 
 ```
@@ -217,14 +216,13 @@ Now some git commands, but first create a dir.
 
 ### Exercise
 
-  - add `file.txt` to the index and commit
+- add `file.txt` to the index and commit
 
 ```
 # Use this cell for the exercise
 ```
 
 ---
-
 
 ```
 !date >> /repo-path/file.txt
@@ -233,7 +231,6 @@ Now some git commands, but first create a dir.
 ```
 
 ---
-
 
 ```
 !git log /repo-path/file.txt  # show changes
@@ -258,14 +255,14 @@ Now some git commands, but first create a dir.
 Writing codes and configuration we may want to follow
 different strategies and save our different attempts.
 
-  - *tag*  makes an unmodifiable snapshot of the repo instead.
+- *tag*  makes an unmodifiable snapshot of the repo instead.
 
 ```
 !git tag myconfig-v1 # create a tag
 !git tag -l    # list tags
 ```
 
-  - *branch* create a modifiable copy of the code, allowing
+- *branch* create a modifiable copy of the code, allowing
      to save and work on different features
 
 ![Branches](https://git-scm.com/figures/18333fig0313-tn.png)
@@ -341,10 +338,10 @@ And switch back
 
 ### Exercise
 
-  - Create a new branch named `antani`
-  - modify `new-file.txt` as you please
-  - open a terminal, and use `git add -p` to stage the changes. What does it do?
-  - commit the changes
+- Create a new branch named `antani`
+- modify `new-file.txt` as you please
+- [open a terminal](/terminals/git), and use `git add -p` to stage the changes. What does it do?
+- commit the changes
 
 ```
 # Use this cell for the exercise
@@ -368,23 +365,34 @@ You have to remove the changes or commit them (in another branch too)
 # Use this cell for the exercise.
 ```
 
-
 ---
 
 ## Merge
 
-Once we have consolidated some changes (Eg. test, ...)
+Once we have consolidated some changes (e.g., test, ...)
 we can *merge* the changes into the master branch
 
 ```
 !git checkout master
+```
+
+Before merging, we have to check the differences
+
+```
 !git diff work-on-my-changes
+```
+
+And finally merge
+
+```
 !git merge work-on-my-changes
 ```
 
 ---
 
 After a merge, if the branch is no more useful, we can remove it.
+Note: before deleting a branch, you can double-check available
+branches with `git branch -a`.
 
 ```
 !git branch -d work-on-changes
@@ -394,9 +402,9 @@ If there are unmerged changes, git doesn't allow deleting a branch.
 
 Exercise:
 
-  - use `git branch -d` to remove the `antani` branch
-  - what happens?
-  - replace `-d` with `-D`. Does it work now?
+- use `git branch -d` to remove the `antani` branch
+- what happens?
+- replace `-d` with `-D`. Does it work now?
 
 ```
 # use this cell for the exrcise
@@ -413,16 +421,28 @@ You can stage partial changes with:
 !git add -p
 ```
 
-
 ---
 
 ## Remote repositories
 
 Remote repos may be either https, ssh or files.
 
+```
+! mkdir -p /repo-tmp && cd /repo-tmp && pwd # use another directory ;)
+```
+
+Exercise:
+
+- what happens in the following cell?
 
 ```
-! mkdir -p /repo-tmp && cd /repo-tmp # use another directory
+!pwd
+```
+
+Go to the correct directory now.
+
+```
+cd /repo-tmp
 ```
 
 ---
@@ -433,18 +453,23 @@ Git clone downloads a remote repo, with all its changes and history.
 Try with a remote https repo.
 
 ```
-! git clone https://github.com/ioggstream/python-course/ python-course
+!git clone https://github.com/ioggstream/python-course/ python-course
+```
+
+Now enter in the repo directory
+
+```
 cd /repo-tmp/python-course
 ```
 
-Show repository configuration. Remote origin.
+Show repository configuration. Which is the remote origin?
 
 ```
-! git config -l
-
+!git config -l
 ```
 
 The remote repo is retrieved with all its changes and history
+
 ```
 ! du -ms .git
 ```
@@ -454,22 +479,28 @@ And `log` can show branches and merges.
 ```
 !git log --graph
 ```
+
 ---
 
 ### file repo
 
 A local repo can be cloned too, and has the same features
-of a remote one. It's actually a remote file:// uri.
+of a remote one. It's actually a remote `file://` uri.
 
 ```
-! git clone /repo-tmp/python-course /repo-tmp/my-course
+!git clone /repo-tmp/python-course /repo-tmp/my-course
 ```
 
-Show repository configuration. Remote origin.
+Now move to the new directory
 
 ```
-! git config -l
+cd /repo-tmp/my-course
+```
 
+Show repository configuration. Which is the remote origin?
+
+```
+!git config -l
 ```
 
 ---
@@ -478,33 +509,54 @@ Show repository configuration. Remote origin.
 
 You can add new files to a repo with the above workflow:
 
-  - create a branch with `git checkout -b test-1`
-  - add a new file
-  - stage changes with `git add`
-  - commit with `git commit`
+- create a branch with `git checkout -b test-1`
+- add a new file
+- stage changes with `git add`
+- commit with `git commit`
+
+```
+# Use this cell for the exercise
+```
 
 Now that your changes are on your local repo, you can synchronize / upload them to the remote copy
 with:
 
 ```
-! git push origin test-1
+!git push origin test-1
 ```
 
 Remember:
 
-  - origin is the URI specified by `git config -l`
-  - `test-1` is the branch name where you want to upload
+- origin is the URI specified by `git config -l`
+- `test-1` is the branch name where you want to upload
 
 To upload changes to the remote master (default) branch, you need to
 
-  - merge the changes to your local master
+- merge the changes to your local master
 
 ```
 !git checkout master
+```
+
+Check the differences
+
+```
+!git diff test-1
+```
+
+And finally merge
+
+```
 !git merge test-1
 ```
 
-  - push changes to master
+Exercise:
+
+- check the master history;
+- check the difference with the last commit.
+
+
+Finally, push changes to `origin/master`
 
 ```
 !git push origin master
