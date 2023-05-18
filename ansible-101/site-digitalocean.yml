@@ -18,6 +18,13 @@
   gather_facts: false
   vars:
     oauth_token: "{{ lookup('ansible.builtin.env', 'DO_API_TOKEN') }}"
+    ssh_pubkeys:
+      - rpolli-ed25519
+      - esavo-rsa
+      - dabbasciano-rsa
+    droplet_names:
+      - deleteme-1
+      - deleteme-2
 
   tasks:
   - name: Retrieve ssh key id.
@@ -28,27 +35,29 @@
 
   - name: Set facts based on the gathered information
     set_fact:
-      do_key: "{{ item }}"
-    loop: "{{ ssh_keys.data | community.general.json_query(ssh_pubkey) }}"
+      do_key: "{{ do_key | default([]) + ssh_keys | community.general.json_query(search_query) | default(item) }}"
     vars:
-      ssh_pubkey: "[?name=='rpolli-ed25519']"
-
+      search_query: "data[?name=='{{ item }}'].fingerprint"
+      # search_query: "data[?(@.name.match('{{ ssh_pubkeys | join ('|') }}'))].fingerprint"
+      #
+      # This should be the correct query, but Ansible fatals:
+      #
+      # fatal: [localhost]: FAILED! => {"msg": "JMESPathError in json_query filter plugin:\nUnknown function: match()"}
+    loop: "{{ ssh_pubkeys }}"
+    
   - name: Create enough machine for the course.
     community.digitalocean.digital_ocean_droplet:
       state: present
       name: "{{item}}"
       unique_name: yes
-      ssh_keys:
-      - "{{ do_key.fingerprint }}"
+      ssh_keys: "{{ do_key }}"
       size: s-2vcpu-4gb
       region: fra1
       image: docker-18-04
       wait_timeout: 500
       user_data: "{{ lookup('file', 'cloudinit.txt') }}" # b64encode is not needed in Ansible
     register: my_droplet
-    with_items:
-    - deleteme-1
-#    - deleteme-2
+    with_items: "{{ droplet_names }}"
 
   - name: Dynamically add the new servers to the inventory.
     add_host:
