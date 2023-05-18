@@ -137,11 +137,16 @@ docker stats   # shows metrics, memory, cpu, filsystem
 ```
 
 1. Inspect the `ansible-101_bastion_1` container.
-1. Use the `--format` option to get the IP address. Hint: you can google for the solution.
+1. Use the `--format` option to get the IP address on a [terminal](/terminals/docker).
+   **Hint 1: you can google for the solution.**
+1. Try to run the `docker inspect --format ...` command above in the jupyter notebook.
+   Does it work? If not, why?
 
 ```python
 # Use this cell to run the correct docker command.
 ```
+
+💬 Discuss how python treats the `{` character.
 
 ---
 
@@ -176,6 +181,15 @@ docker commit  # creates image from a container.
 docker rmi     # removes an image.
 docker history # list changes of an image.
 ```
+----
+
+Images are stored in a Docker registry such as [Docker Hub](https://hub.docker.com/)
+or Github's [Container Registry](). You can also host your own registry.
+
+`docker commit` can create an image from a container. This is similar to the
+snapshot feature of Virtual Machines.
+
+[![](https://mermaid.ink/img/pako:eNqtlV1vmzAUhv-K5WuIwDak4WIXXXcxbd3FVmnS4qpysEmsgImwUcu6_vc5diCQfkxre3fMeY3f8_jj3MO85gJmcN2w3QZcnVNFVV4yrS9EAVYlU1ugTVNvRaZqJYJClqWLRqr1ptbmoAo50xvWNKzLQDJWU6XblV9EVuubdtUq0y4_V1Vr2KoUwH_IEJpFxCrYWoCCZQULyzrfXlPFZSNyI2sFvn6nasW0CFHodDcl60SzXCySBOdzAOLoy_n1QRJPJHOO5jyKAUD4cpBEE0kRpZhhDEAaOYlQ_JF3JW6X38StjXvzL_rdM41Dc2eWVxupgVsH1KrsQF4rw6TSlCqzEaCquSyk4MBiE_p6sm4cekA3eb3r_gNbHDaiWIK-ktNyGrGWduO6U77HLfKxLXmYPJrO7SKiiZcffSG2LvSo9EGMQi71dvmzkd56PkzySLxvzmzW7svJfwBV6FUMnemRh9dhRE9gPKFARhTi5ymQN1Ig70CBvJICefIwPSKBRiTw8yTwG0ngdyCBJyT-eanxy7dpqEBbs_5q9AHqAzJMc28CCMMP08u9P2x7MC6DphlyzJBpBh8zeJo5GNmn_vjY-qwqaSyhvBHMCP2nf9bAYBeEM6tv9Sg5VHCa6x-KYaWn04eOAdyTFLgbFTiggTtXvtkcRaMiggmGYFJgMAHhexFVMICVaComuW1t91QBQKE9DpWgMLMhFwVrS0MhVQ9W2u7sKROfuDR1AzPTtCKArDX1j07l_dhrLiSzW11BeyZKbb_umPpV11UvskOY3cM7mKGEzNJFksYoTlCULlIcwA5mcURmhJAIz9P5GUJnCX4I4G_3h2g2X0QojhYpQvtWhlAAhbN06Tu0a9QPfwEgtsUC?type=png)](https://mermaid.live/edit#pako:eNqtlV1vmzAUhv-K5WuIwDak4WIXXXcxbd3FVmnS4qpysEmsgImwUcu6_vc5diCQfkxre3fMeY3f8_jj3MO85gJmcN2w3QZcnVNFVV4yrS9EAVYlU1ugTVNvRaZqJYJClqWLRqr1ptbmoAo50xvWNKzLQDJWU6XblV9EVuubdtUq0y4_V1Vr2KoUwH_IEJpFxCrYWoCCZQULyzrfXlPFZSNyI2sFvn6nasW0CFHodDcl60SzXCySBOdzAOLoy_n1QRJPJHOO5jyKAUD4cpBEE0kRpZhhDEAaOYlQ_JF3JW6X38StjXvzL_rdM41Dc2eWVxupgVsH1KrsQF4rw6TSlCqzEaCquSyk4MBiE_p6sm4cekA3eb3r_gNbHDaiWIK-ktNyGrGWduO6U77HLfKxLXmYPJrO7SKiiZcffSG2LvSo9EGMQi71dvmzkd56PkzySLxvzmzW7svJfwBV6FUMnemRh9dhRE9gPKFARhTi5ymQN1Ig70CBvJICefIwPSKBRiTw8yTwG0ngdyCBJyT-eanxy7dpqEBbs_5q9AHqAzJMc28CCMMP08u9P2x7MC6DphlyzJBpBh8zeJo5GNmn_vjY-qwqaSyhvBHMCP2nf9bAYBeEM6tv9Sg5VHCa6x-KYaWn04eOAdyTFLgbFTiggTtXvtkcRaMiggmGYFJgMAHhexFVMICVaComuW1t91QBQKE9DpWgMLMhFwVrS0MhVQ9W2u7sKROfuDR1AzPTtCKArDX1j07l_dhrLiSzW11BeyZKbb_umPpV11UvskOY3cM7mKGEzNJFksYoTlCULlIcwA5mcURmhJAIz9P5GUJnCX4I4G_3h2g2X0QojhYpQvtWhlAAhbN06Tu0a9QPfwEgtsUC)
 
 ---
 
@@ -184,12 +198,8 @@ docker history # list changes of an image.
 The Dockerfile is a text file that contains all the commands a user could
 call on the command line to assemble an image.
 
-```dockerfile
-FROM debian:stable-slim
-MAINTAINER Piuma "piuma@piumalab.org"
-RUN apt-get update && apt-get -y install apache2
-EXPOSE 80
-CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
+```
+! cat Dockerfile
 ```
 
 Docker will execute all the commands in the Dockerfile and create a new image.
@@ -207,11 +217,14 @@ Open the [terminal](/terminals/docker) and:
 docker run --rm --detach apache-example
 ```
 
-- check the running container with `docker ps`
+#### Exercise
+
+Open the [terminal](/terminals/docker) and:
+
+- check if the container is running `docker ps`
 - use `curl` to check if the webserver works
 - stop the container with `docker stop`
-- check the running container with `docker ps`
-- check the stopped container with `docker ps -a`
+- check the container status with `docker ps -a`
 - remove the container with `docker rm`
 
 ---
