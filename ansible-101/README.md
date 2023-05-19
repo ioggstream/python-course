@@ -91,9 +91,9 @@ Prerequisites can be found in the home directory:
 - Use bastions and other ssh_opts
 
 - 3. writing basic playbooks, test driven deployment
-- Yaml pitfalls
+- YAML pitfalls
 - Inclusion and Roles
-- Ansible galaxy as a role repository (bonus track)
+- Ansible galaxy as a role repository
 
 ## Advanced topics
 
