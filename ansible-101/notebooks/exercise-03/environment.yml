@@ -4,6 +4,6 @@
     - name: Iterate thru environment
       debug:
         var: >
-          ansible_env.{{item}}
+          ansible_env.{{ item }}
       with_items: >
-        {{ansible_env | map('regex_search', '^PATH') | select('string') | list  }}
+        {{ ansible_env | map('regex_search', '^PATH') | select('string') | list  }}

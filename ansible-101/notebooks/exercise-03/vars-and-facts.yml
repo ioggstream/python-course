@@ -31,4 +31,5 @@
     - name: >
         Show the free percentage of the local disk using
         facts and filters
-      debug: msg="Replace me"
+      debug:
+        msg: "Replace me"

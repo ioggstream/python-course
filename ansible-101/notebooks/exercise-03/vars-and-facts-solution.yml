@@ -7,7 +7,7 @@
   tasks:
     - debug:
         msg: >
-          {{ansible_hostname }} {{ one }}
+          {{ ansible_hostname }} {{ one }}
     - debug:
         msg: >
           The output is {{ one + pi }}
@@ -33,6 +33,6 @@
         facts and filters. Restricted to unique devices.
       debug:
         msg: >
-          {{item.device}} {{ (100 * item.size_available / item.size_total) | int }}%
+          {{ item.device }} {{ (100 * item.size_available / item.size_total) | int }}%
       with_items: >-
         {{ ansible_mounts}}

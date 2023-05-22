@@ -8,9 +8,11 @@
       register: fileglob_remote
 
     - name: Here we go
-      debug: msg="{{item}}"
+      debug:
+        msg: >-
+          {{ item }}
       with_items: >
-        {{fileglob_remote.stdout_lines}}
+        {{ fileglob_remote.stdout_lines }}
 
 
 - hosts: web, localhost
@@ -23,4 +25,5 @@
         echo $WELCOME
       register: o
     - name: EuroPython is here
-      debug: var=o.stdout
+      debug:
+        var: o.stdout
