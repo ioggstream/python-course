@@ -1,4 +1,7 @@
 ---
+#
+# This playbook has 3 tasklists, each with a different tag.
+#
 - hosts: localhost
   tags: variables
   vars:
@@ -7,7 +10,7 @@
   tasks:
     - debug:
         msg: >
-          {{ansible_hostname }} {{ one }}
+          {{ ansible_hostname }} {{ one }}
     - debug:
         msg: >
           The output is {{ one + pi }}
@@ -22,7 +25,7 @@
     - name: Ansible can process expressions using filters
       debug:
         msg: >
-          Floor it  {{ ( one + pi ) | int }}
+          Floor it {{ ( one + pi ) | int }}
 
 - hosts: localhost
   tags: exercise
