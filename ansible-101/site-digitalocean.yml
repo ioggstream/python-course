@@ -44,7 +44,7 @@
       #
       # fatal: [localhost]: FAILED! => {"msg": "JMESPathError in json_query filter plugin:\nUnknown function: match()"}
     loop: "{{ ssh_pubkeys }}"
-    
+
   - name: Create enough machine for the course.
     community.digitalocean.digital_ocean_droplet:
       state: present
