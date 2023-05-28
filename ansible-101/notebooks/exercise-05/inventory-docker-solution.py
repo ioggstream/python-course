@@ -6,7 +6,7 @@ import json
 from collections import defaultdict
 
 #
-# Manage different docker libraries
+# Support different docker libraries.
 #
 try:
     from docker import Client
@@ -19,32 +19,48 @@ log = logging.getLogger()
 logging.basicConfig(level=logging.DEBUG)
 
 
-def print_hosts():
+def get_inventory_data(container):
+    return {
+        "container_name": container["Names"][0][1:],
+        "ip_address": container["NetworkSettings"]["Networks"]["bridge"]["IPAddress"],
+        "group_name": container["Labels"].get("com.docker.compose.service"),
+    }
+
+
+def create_inventory():
+    #
+    # Create a Docker client connecting to the docker daemon port.
+    #
     c = Client(base_url="http://172.17.0.1:2375")
-    container_fmt = lambda x: (
-        x["Names"][0][1:],
-        x["NetworkSettings"]["Networks"]["bridge"]["IPAddress"],
-    )
+    inventory = {}
 
-    inventory = dict()
+    for container in c.containers():
+        # Use str.format to log the container information.
+        host = get_inventory_data(container)
+        log.debug("Processing entry: {container_name}\t\t{ip_address}".format(**host))
 
-    for x in c.containers():
-        log.debug("Processing entry %r", "\t\t".join(container_fmt(x)))
+        # Skip parsing errors, and log a warning.
         try:
-            group_name = x["Labels"]["com.docker.compose.service"]
-            ip_address = x["NetworkSettings"]["Networks"]["bridge"]["IPAddress"]
+            group_name = host["group_name"]
+            ip_address = host["ip_address"]
             if group_name not in inventory:
                 inventory[group_name] = defaultdict(list)
             inventory[group_name]["hosts"].append(ip_address)
         except KeyError:
             log.warning("Host not run via docker-compose: skipping")
 
+    #
+    # Replace host_vars on hosts of the "web" group.
+    #
     inventory["web"]["host_vars"] = {
         "ansible_ssh_common_args": " -o StrictHostKeyChecking=no "
     }
     ret = json.dumps(inventory, indent=True)
     return ret
 
-
+#
+# Execute the script.
+#
 if __name__ == "__main__":
-    print(print_hosts())
+    inventory_text = create_inventory()
+    print(inventory_text)
