@@ -39,4 +39,3 @@ for container in c.containers():
         inventory[group_name]= {"hosts": []}
 
     inventory[group_name]["hosts"].append(ip_address)
-
