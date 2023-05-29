@@ -8,12 +8,13 @@
 from __future__ import print_function
 
 import logging
-from collections import defaultdict
 
 log = logging.getLogger()
 logging.basicConfig(level=logging.DEBUG)
 
-
+#
+# Run this script in jupyter and fix one issue at a time.
+#
 c = Client(base_url="http://172.17.0.1:2375")
 
 
@@ -25,7 +26,7 @@ def get_inventory_data(container):
     }
 
 
-inventory = defaultdict(list)
+inventory = {}
 
 for container in c.containers():
     # Use str.format to log the container information.
@@ -33,4 +34,9 @@ for container in c.containers():
     log.debug("Processing entry: {container_name}\t\t{ip_address}".format(**host))
     group_name = host["group_name"]
     ip_address = host["ip_address"]
-    inventory[group_name].append(ip_address)
+
+    if group_name not in inventory:
+        inventory[group_name]= {"hosts": []}
+
+    inventory[group_name]["hosts"].append(ip_address)
+
