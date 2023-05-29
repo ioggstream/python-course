@@ -8,8 +8,9 @@ web_milan
 web_rome_test
 web_rome_prod
 
+# Fix IP addresses if they don't match.
 [web_rome_prod]
-172.23.0.[3:4]
+172.17.0.[3:4]
 
 [web_milan]
 172.24.0.[5:6]

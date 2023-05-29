@@ -50,9 +50,9 @@ def create_inventory():
             log.warning("Host not run via docker-compose: skipping")
 
     #
-    # Replace host_vars on hosts of the "web" group.
+    # Replace host variables for the "web" group.
     #
-    inventory["web"]["host_vars"] = {
+    inventory["web"]["vars"] = {
         "ansible_ssh_common_args": " -o StrictHostKeyChecking=no "
     }
     ret = json.dumps(inventory, indent=True)
