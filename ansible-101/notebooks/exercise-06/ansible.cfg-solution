@@ -1,0 +1,7 @@
+[defaults]
+inventory = inventory
+host_key_checking = False
+vault_password_file = pin
+
+[ssh_connection]
+ssh_args = -F ssh_config
