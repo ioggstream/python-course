@@ -2,8 +2,6 @@
 ansible_connection=docker
 ansible_docker_extra_args="-Htcp://172.17.0.1"
 
-
-
 # The actual host reference
 [web]
-ansible101_web_[1:3]
+ansible-101_web_[1:2]
