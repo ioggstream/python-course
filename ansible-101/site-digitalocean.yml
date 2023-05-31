@@ -101,6 +101,15 @@
   tasks:
   - ping:
   - block:
+    - name: Automatic shutdown crontab entry
+      cron:
+        name: "shutdown"
+        hour: 2 # timezone is Etc/UTC
+        minute: 25
+        state: present
+        disabled: false
+        job: "/sbin/shutdown -r now"
+
     - name: Docker should listen on localhost.
       lineinfile:
         path: /etc/systemd/system/multi-user.target.wants/docker.service
