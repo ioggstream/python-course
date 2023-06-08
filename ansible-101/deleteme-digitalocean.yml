@@ -1,0 +1,26 @@
+#
+# Delete the current infrastructure on digitalocean
+#   $ export DO_API_TOKEN=xxxx
+#   $ ansible-playbook -v deleteme-digitalocean.yml
+#
+# This will output a series of jupyter urls with their associate ips.
+#
+# BEWARE: unless you populate accordingly the digital_ocean droplet ids
+#         the digital_ocean module will create those droplets over and
+#         over again.
+#
+- hosts: localhost
+  gather_facts: false
+  tasks:
+  - name: Delete machine for the course.
+    community.digitalocean.digital_ocean_droplet:
+      state: absent
+      name: "{{item}}"
+      unique_name: yes
+      region: fra1
+      image: docker-18-04
+      wait_timeout: 500
+    register: my_droplet
+    with_items:
+    - deleteme-1
+    - deleteme-2

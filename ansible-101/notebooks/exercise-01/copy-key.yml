@@ -2,7 +2,7 @@
 # Load variables from the following files
 - hosts: course
   vars_files:
-  - vault.yml
+  - vault.yaml
   tasks:
   - name: Ensure /root/.ssh is present
     file:
@@ -18,3 +18,8 @@
       owner: root
       group: root
       force: yes
+#
+# Bonus track:
+#  search on the Internet an Ansible module to
+#  manage the authorized_keys.
+#

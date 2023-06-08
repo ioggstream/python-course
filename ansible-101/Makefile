@@ -6,7 +6,7 @@
 .PHONY: course
 
 MAIN_IP = $(shell ip -4 -o a s scope global | awk -F'[/ ]+' '{print $$4; exit} ')
-EXTERNAL_COURSES = git-101 python-basic
+EXTERNAL_COURSES = git-101 python-basic docker-101
 
 
 course: .prepare

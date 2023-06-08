@@ -9,42 +9,67 @@
 #         the digital_ocean module will create those droplets over and
 #         over again.
 #
+# You can retrieve the list of provisioned hosts with
+#
+#   $ ansible --user=root -i /tmp/inventory.do -mshell \
+#     -a 'docker exec -ti ansible-101_course_1 jupyter-notebook list | sed -e "s/0.0.0.0/{{ansible_host}}/" ' do
+#
 - hosts: localhost
+  gather_facts: false
+  vars:
+    oauth_token: "{{ lookup('ansible.builtin.env', 'DO_API_TOKEN') }}"
+    ssh_pubkeys:
+      - rpolli-ed25519
+      - esavo-rsa
+      - dabbasciano-rsa
+    droplet_names:
+      - deleteme-1
+      - deleteme-2
+
   tasks:
   - name: Retrieve ssh key id.
-    digital_ocean:
-      state: present
-      command: ssh
-      name: rpolli
-    register: do_key
+    community.digitalocean.digital_ocean_sshkey_info:
+      oauth_token: "{{ oauth_token }}"
+    register: ssh_keys
     check_mode: no
 
+  - name: Set facts based on the gathered information
+    set_fact:
+      do_key: "{{ do_key | default([]) + ssh_keys | community.general.json_query(search_query) | default(item) }}"
+    vars:
+      search_query: "data[?name=='{{ item }}'].fingerprint"
+      # search_query: "data[?(@.name.match('{{ ssh_pubkeys | join ('|') }}'))].fingerprint"
+      #
+      # This should be the correct query, but Ansible fatals:
+      #
+      # fatal: [localhost]: FAILED! => {"msg": "JMESPathError in json_query filter plugin:\nUnknown function: match()"}
+    loop: "{{ ssh_pubkeys }}"
+
   - name: Create enough machine for the course.
-    digital_ocean:
+    community.digitalocean.digital_ocean_droplet:
       state: present
-      command: droplet
       name: "{{item}}"
       unique_name: yes
-      ssh_key_ids: >-
-        {{do_key.ssh_key.id}}
-      size_id: 2gb
-      region_id: fra1
-      image_id: docker-18-04
+      ssh_keys: "{{ do_key }}"
+      size: s-2vcpu-4gb
+      region: fra1
+      image: docker-18-04
       wait_timeout: 500
+      user_data: "{{ lookup('file', 'cloudinit.txt') }}" # b64encode is not needed in Ansible
     register: my_droplet
-    with_items:
-    - deleteme-1
-    - deleteme-2
+    with_items: "{{ droplet_names }}"
 
   - name: Dynamically add the new servers to the inventory.
     add_host:
-      hostname: >
-        {{ item.droplet.networks.v4[0].ip_address }}
-      groups: do
+      hostname: >-
+        {{ item.data.droplet.networks.v4 | community.general.json_query(jq) | first }}
+      groups:
+      - do
       ansible_user: root
       host_key_checking: no
     with_items: "{{my_droplet.results}}"
-
+    vars:
+      jq: "[?(@.type=='public')].ip_address"
 
   - name: Create a sample inventory file with the server ips.
     file:
@@ -57,13 +82,17 @@
   - lineinfile:
       path: /tmp/inventory.do
       line: >
-        {{ item.droplet.networks.v4[0].ip_address  }} droplet_id={{item.droplet.id}}
+        {{ item.data.droplet.networks.v4 | community.general.json_query(jq) | first }} droplet_id={{item.data.droplet.id}}
     with_items: "{{my_droplet.results}}"
+    vars:
+      jq: "[?(@.type=='public')].ip_address"
 
 #
 # Configure the newly created machines
 #
 - hosts: do
+  tags:
+  - setup
   vars:
   - ansible_python_interpreter: /usr/bin/python3
   - ansible_user: root
@@ -72,6 +101,15 @@
   tasks:
   - ping:
   - block:
+    - name: Automatic shutdown crontab entry
+      cron:
+        name: "shutdown"
+        hour: 2 # timezone is Etc/UTC
+        minute: 25
+        state: present
+        disabled: false
+        job: "/sbin/shutdown -r now"
+
     - name: Docker should listen on localhost.
       lineinfile:
         path: /etc/systemd/system/multi-user.target.wants/docker.service
@@ -87,7 +125,6 @@
         state: restarted
         name: docker
         daemon_reload: yes
-      when: systemd_updated.changed
 
     - name: Check socket
       shell: |
@@ -96,6 +133,7 @@
     - name: Download course
       git:
         repo: https://github.com/ioggstream/python-course.git
+        version: ansible-2023
         dest: /root/python-course
       ignore_errors: true
 

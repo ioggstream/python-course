@@ -1,7 +1,4 @@
 ---
-#
-# This playbook has 3 tasklists, each with a different tag.
-#
 - hosts: localhost
   tags: variables
   vars:
@@ -25,7 +22,7 @@
     - name: Ansible can process expressions using filters
       debug:
         msg: >
-          Floor it {{ ( one + pi ) | int }}
+          Floor it  {{ ( one + pi ) | int }}
 
 - hosts: localhost
   tags: exercise
@@ -33,6 +30,9 @@
   tasks:
     - name: >
         Show the free percentage of the local disk using
-        facts and filters
+        facts and filters. Restricted to unique devices.
       debug:
-        msg: "Replace me"
+        msg: >
+          {{ item.device }} {{ (100 * item.size_available / item.size_total) | int }}%
+      with_items: >-
+        {{ ansible_mounts}}

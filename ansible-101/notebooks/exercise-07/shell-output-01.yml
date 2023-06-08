@@ -9,9 +9,11 @@
     register: o
 
   - name: Show output in a single block...
-    debug: var=o.stdout
+    debug:
+      var: o.stdout
 
   - name: ... or one per line
-    debug: var=item
+    debug:
+      var: item
     with_items: >
       {{ o.stdout_lines }}

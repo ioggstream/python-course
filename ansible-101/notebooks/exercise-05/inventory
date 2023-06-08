@@ -1,4 +1,4 @@
-# I can group hosts in inventory
+# I can group hosts in an inventory.
 
 [web:children]
 web_rome
@@ -8,28 +8,29 @@ web_milan
 web_rome_test
 web_rome_prod
 
+# Fix IP addresses if they don't match.
 [web_rome_prod]
-172.23.0.[3:4]
+172.17.0.[3:4]
 
 [web_milan]
 172.24.0.[5:6]
 
-# further host variables
+# Further host variables.
 [web_rome:vars]
 ansible_username=root
 
 
-# Connect with docker
+# Connect with docker.
 [web_rome_test:vars]
 ansible_connection=docker
 ansible_docker_extra_args="-Htcp://172.17.0.1"
 
-# The actual host reference
+# The actual host reference.
 [web_rome_test]
 ansible101_web_1
 
 #
-# Don't need to be Ssh
+# Don't need to be ssh
 #  to be my local machine ;)
 #
 [course]

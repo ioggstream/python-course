@@ -1,0 +1,27 @@
+---
+#
+# Use this playbook to dump ansible facts
+#
+- hosts: localhost
+  name: >
+    Use this section to complete the exercise,
+    and the next section as a reference for
+    the debug module.
+  tasks:
+    - name: Dump the requested facts.
+      debug:
+        msg: A string
+    - name: Hostname
+      debug:
+        msg: >-
+          {{ ansible_hostname }}
+    - name: First ip address
+      debug:
+        msg: >-
+          {{ ansible_all_ipv4_addresses[0] }}
+    - name: Distribution
+      debug:
+        msg: "{{ ansible_distribution }}"
+    - name: Kernel release
+      debug:
+        msg: "{{ ansible_kernel }}"

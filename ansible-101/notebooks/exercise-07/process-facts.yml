@@ -1,3 +1,7 @@
+#
+# This playbook shows how to process facts without gathering them,
+#   e.g., for testing purposes.
+#
 ---
 - hosts: localhost
   gather_facts: no

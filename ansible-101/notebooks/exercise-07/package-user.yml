@@ -1,13 +1,16 @@
 - hosts: web
   tasks:
   - name: Install apache and other packages eventually iterating
-    apt: name="{{item}}"
+    apt:
+      name: "{{item}}"
     with_items:
     - apache2
     - curl
 
   - name: Remove wget
-    apt: name=wget state=absent
+    apt:
+      name: wget
+      state: absent
 
   - name: Create user
     user:
@@ -24,7 +27,7 @@
       src: package-user.yml
       dest: "{{ '~foo' | expanduser }}"
 
-  - name: >
+  - name: |-
       We can fetch files too (eg. logs):
       - files are dispatched to different directories.
       - we can avoid enforcing checksum as we're messing with

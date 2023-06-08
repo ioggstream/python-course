@@ -1,0 +1,43 @@
+# - hosts: web
+#   tasks:
+#   - name: >-
+#       Ensure iproute2 is installed on every node.
+#       NB: This may require specific python modules.
+#     apt:
+#       name: iproute2
+#       state: present
+- hosts: web
+  tags: hostvars
+  name: Last task runs only on first host
+  tasks:
+  - name: hostvars is a dictionary
+    debug:
+      var: hostvars
+  - name: Iterating over a dictionary yields the keys
+    debug:
+      msg: >
+        Host: {{ item }}
+    with_items: >
+      {{ hostvars }}
+  - name: >-
+      Use subscript to access entries.
+      NB: This task requires iproute2 installed on the remote host.
+    run_once: true
+    debug:
+      msg: >
+       address: {{ item }} -> {{ hostvars[item]['ansible_default_ipv4']['address'] }}
+    with_items: >
+      {{ groups['web'] }}
+
+
+- hosts: web[0]
+  tags: filters
+  name: Get a list of defined host IPs.
+  tasks:
+  - name: Using filters
+    debug:
+      msg: >
+       {{ groups['web'] |
+          map('extract', hostvars, ['ansible_default_ipv4', 'address']) |
+          reject('undefined') |
+          list }}
