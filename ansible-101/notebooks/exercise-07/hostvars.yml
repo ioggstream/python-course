@@ -7,12 +7,16 @@
 #       name: iproute2
 #       state: present
 - hosts: web
-  tags: hostvars
-  name: Last task runs only on first host
+  tags: debug
   tasks:
   - name: hostvars is a dictionary
     debug:
       var: hostvars
+
+- hosts: web
+  tags: hostvars
+  name: Last task runs only on first host
+  tasks:
   - name: Iterating over a dictionary yields the keys
     debug:
       msg: >

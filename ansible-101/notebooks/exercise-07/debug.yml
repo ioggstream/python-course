@@ -3,9 +3,12 @@
   name: those tasks are run on localhost only
   tasks:
   - name: This is the debug module.
-    debug: msg="A string"
+    debug:
+      msg: >-
+        "A string"
   - name: The debug module can print a variable too...
-    debug: var=ansible_hostname
+    debug:
+      var: ansible_hostname
 
 - hosts: web
   tags: groups
