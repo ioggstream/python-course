@@ -32,7 +32,13 @@ Run the environemnt with:
 make course
 ```
 
-or
+if you want override default value of EXTERNAL_COURSES, please use an environment variable
+
+```bash                                                                       
+EXTERNAL_COURSES=git-101 make course
+```
+
+or run docker-compose manually
 
 ```bash
 docker-compose scale course=1 bastion=1 web=3
