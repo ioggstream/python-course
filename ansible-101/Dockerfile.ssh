@@ -1,4 +1,4 @@
-FROM debian:stable-slim
+FROM debian:stable
 RUN apt-get -y update && apt-get -y install python sshpass openssh-server
 RUN apt-get -y clean
 RUN apt-get -y autoremove
