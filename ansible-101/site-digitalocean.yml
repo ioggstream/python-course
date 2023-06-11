@@ -19,10 +19,12 @@
   vars:
     oauth_token: "{{ lookup('ansible.builtin.env', 'DO_API_TOKEN') }}"
     ssh_pubkeys:
-      - d8o-mac
+      - rpolli-ed25519
+      - esavo-rsa
+      - dabbasciano-rsa
     droplet_names:
-      - ansible-test
-
+      - deleteme-1
+      - deleteme-2
   tasks:
   - name: Retrieve ssh key id.
     community.digitalocean.digital_ocean_sshkey_info:
