@@ -25,6 +25,7 @@
     droplet_names:
       - deleteme-1
       - deleteme-2
+
   tasks:
   - name: Retrieve ssh key id.
     community.digitalocean.digital_ocean_sshkey_info:
