@@ -133,7 +133,7 @@
     - name: Download course
       git:
         repo: https://github.com/ioggstream/python-course.git
-        version: ansible-2023
+        version: master
         dest: /root/python-course
       ignore_errors: true
 
