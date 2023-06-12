@@ -3,10 +3,16 @@
 #
 # # make course
 #
+# # or if you want override default value of EXTERNAL_COURSES, please use an environment variable
+# # EXTERNAL_COURSES=git-101 make course
+#
 .PHONY: course
 
 MAIN_IP = $(shell ip -4 -o a s scope global | awk -F'[/ ]+' '{print $$4; exit} ')
+
+ifndef EXTERNAL_COURSES
 EXTERNAL_COURSES = git-101 python-basic docker-101
+endif
 
 
 course: .prepare
