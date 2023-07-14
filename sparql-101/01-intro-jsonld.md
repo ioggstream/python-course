@@ -165,7 +165,7 @@ https://w3id.org/italia/onto/CPV dct:title     "Person Ontology"@en,
 
 ### Json-LD
 
-JSON-LD è un formato che permette di serializzare in JSON delle informazioni basate sul 
+JSON-LD è un formato che permette di serializzare in JSON delle informazioni basate sul
 [RDF data model](https://www.w3.org/TR/json-ld11/#data-model).
 
 Un documento JSON-LD è quindi sia un documento RDF che JSON, e rappresenta un'istanza di un RDF data model.
@@ -293,4 +293,3 @@ Esistono diverse ipotesi tecnologiche basate
 sull'elaborazione semantica dei dati a runtime.
 Tutte queste implementazioni devono indirizzare
 questo tipo di rischi.
-

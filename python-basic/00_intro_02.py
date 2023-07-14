@@ -1,6 +1,6 @@
 """Introducing lists
 
-   Roberto Polli - rpolli@babel.it
+   Roberto Polli - roberto.polli@par-tec.it
 """
 # before starting this lesson
 #  import the python3 print capabilities

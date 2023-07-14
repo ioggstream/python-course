@@ -80,7 +80,7 @@ to process complex queries.
 @prefix foaf:  <http://xmlns.com/foaf/0.1/> .
 
 SELECT * WHERE {
-  ?s foaf:knows ?o 
+  ?s foaf:knows ?o
 ```
 
 | s | o |
@@ -99,8 +99,8 @@ SELECT DISTINCT ?mail1, ?mail3 WHERE {
   ?user1 foaf:knows ?user2
   . ?user2 foaf:knows ?user3
 
-  . ?user1 foaf:mbox ?mail1  
-  . ?user3 foaf:mbox ?mail3  
+  . ?user1 foaf:mbox ?mail1
+  . ?user3 foaf:mbox ?mail3
 ```
 
 Note that the query describes each relation

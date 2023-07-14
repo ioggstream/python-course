@@ -192,7 +192,7 @@ Person:
     familyName:
       x-refersTo: https://w3id.org/italia/onto/CPV/familyName
       type: string
-  
+
 ```
 
 ### Ontologia per json-schema
@@ -218,5 +218,5 @@ flowchart
 
  RDF--Framing--> JSON --context--> RDF
  CSV --csv-ld--> RDF
- 
+
 ```

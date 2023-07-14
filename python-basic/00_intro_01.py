@@ -1,5 +1,5 @@
 """
-  Author: roberto.polli@babel.it
+  Author: roberto.polli@par-tec.it
 
   This file contains an introduction
     to the python for sysadmins course.

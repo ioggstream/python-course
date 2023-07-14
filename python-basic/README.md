@@ -8,7 +8,6 @@ and use it:
     - via ipython
     - via ipython notebook
 
-
 ## Setup on Linux
 
 Install the dependencies either with:
