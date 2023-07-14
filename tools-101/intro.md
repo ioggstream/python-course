@@ -39,11 +39,11 @@ You can:
 Try to add a cell below this one and write some text in it.
 
 ```python
-# This is a python cell.
+# Add a new python cell with ALT+ENTER.
 ```
 
 ---
- 
+
 ## Python terminal
 
 With Jupyter, you have a Python terminal at your disposal.
@@ -123,7 +123,6 @@ Exercise solutions are folded. You can show them clicking on the `+` sign.
 ```python solution="hidden"
 
 ```
-
 
 ---
 
