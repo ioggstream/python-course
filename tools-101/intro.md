@@ -58,6 +58,7 @@ print("a string and the number " + str(s))
 Jupyter remembers the variables you define in a cell, so you can use them in the next cells.
 
 ```python
+# Evaluate this cell with SHIFT+ENTER
 s = s + 1
 print("now s is increased " + str(s))
 ```
@@ -65,7 +66,7 @@ print("now s is increased " + str(s))
 Since Jupyter remembers the variables, you can run the cells in any order you want.
 This means that sometimes, you need to "reset" the environment, to start from scratch.
 
-This can be done with the "Kernel" menu.
+This can be done with the "Kernel > Restart" or "Kernel > Restart & Clear output" menu.
 
 ----
 
