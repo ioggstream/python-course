@@ -133,7 +133,7 @@
     - name: Download course
       git:
         repo: https://github.com/ioggstream/python-course.git
-        version: master
+        version: main
         dest: /root/python-course
       ignore_errors: true
 

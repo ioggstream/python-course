@@ -20,6 +20,8 @@ It requires a modern browser and an internet connection supporting
 websockets. If your proxy does not support websockets, you will not be able to
 execute the code.
 
+----
+
 While you might find the exercises' solutions in the environment,
 it is important for you to spend some time trying to do your homework!
 This will help you to remember the concepts and to learn how to use the tools.
@@ -32,6 +34,10 @@ You can:
 
 - [open a (named) terminal on the local machine](/terminals/example)
 - [edit an existing file](/edit/notebooks/untitled.txt)
+- execute the next cell with `SHIFT+ENTER` (try it now!)
+
+---
+
 - add more cells with `ALT+ENTER`
 
 ----
@@ -70,7 +76,7 @@ This can be done with the "Kernel > Restart" or "Kernel > Restart & Clear output
 
 ----
 
-To run simple, non interactive bash commands in a python cell, prefix them with `!`.
+To run simple, non interactive bash commands in a python cell, prefix them with `!` (we call it "bang").
 When you run a cell, the output is displayed below the cell.
 
 ```python
@@ -93,29 +99,31 @@ echo $A
 
 During the course, you will need to execute some shell code, that is rendered like the following
 
-```bash
+```text
 # Don't execute this non-interactive cell.
 echo "What is your name?"
 read name
 echo "Hello $name!"
 ```
 
-In these cases, you need to [open a terminal on the local machine](/terminals/example), for example following links like [this one](/terminals/example) and type the commands there. This is especially required for interactive tasks.
+In these cases, you need to [open a terminal on the local machine](/terminals/example),
+for example following links like [this one](/terminals/example) and type the commands there.
+This is especially required for interactive tasks.
 
-<!-- #endregion -->
+---
 
-<!-- #region solution="hidden" solution_first=true -->
 #### Exercises
 
-Exercise solutions are folded. You can show them clicking on the `+` sign.
+Exercise solutions may be hidden.
+You can show them double-clicking on the cell.
 
-<!-- #endregion -->
-
+<!-- 
 ```python
 
 ```
 
-<!-- #region solution="hidden" solution_first=true -->
+-->
+
 # Don't do that :D just try and
 
 ![Do your homework](http://s2.quickmeme.com/img/43/438ccdc454bc53dfe79f6190ee43b2be19bd578ad002426efcf90f7a327cedd1.jpg)

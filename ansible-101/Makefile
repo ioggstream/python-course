@@ -11,7 +11,7 @@
 MAIN_IP = $(shell ip -4 -o a s scope global | awk -F'[/ ]+' '{print $$4; exit} ')
 
 ifndef EXTERNAL_COURSES
-EXTERNAL_COURSES = git-101 python-basic docker-101
+EXTERNAL_COURSES = git-101 python-basic docker-101 tools-101
 endif
 
 
@@ -43,4 +43,4 @@ dev: .prepare
 	# build all EXTERNAL_COURSES
 	$(foreach dpath, $(EXTERNAL_COURSES), cd ../$(dpath); ! test -f Makefile || make; )
 	$(foreach dpath, $(EXTERNAL_COURSES), mkdir -p notebooks/rendered_notebooks/$(dpath); rsync -var  ../$(dpath)/notebooks/ notebooks/rendered_notebooks/$(dpath); )
-	cp ../python-for-sysadmin/Dockerfile ../python-for-sysadmin/requirements.txt .
+	cp ../python-for-sysadmin/requirements.txt .

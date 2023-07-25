@@ -21,7 +21,7 @@ At first, we will inspect this machine: the operating system, the IP address and
 
 ## Docker installation
 
-Check docker tools.
+Check that the docker tools are installed on your test environment.
 
 ```python
 # Docker CLI version.
@@ -37,15 +37,16 @@ Check docker tools.
 
 ## Running a container
 
-Docker comes with a catalog of possible operating systems and applications named Docker Registry. You can deploy your custom registry too.
+Docker comes with a catalog of possible operating systems and applications named [Docker Registry](https://hub.docker.com).
+You can deploy your custom registry too.
 
-Let's pull and run an image
+Let's pull (download) and run an image
 
 [![](https://mermaid.ink/img/pako:eNptU8tu2zAQ_BWCQG6SUT_kODr00hRoD70kQA8Vc6DEtcVaXArkMq1r5d9LPRzbScADZ7XD0exyeeSVVcBznqapQNLUQM7ubbUHxzQSOFmRtugFDoSdk20tUKAP5YDZA-y0J3coHsBYgteYbWWZb2WqBq0ngXpeCP7dyB34mOtTVSjBi15t4jpQtaTTyVAGpHCKfstnecLtgWqLgkdVQHVl55v1JHAsYKsbKM5w-usEr8092yYY8MXPcZ-oSpIspYdIqCyS1AjOF8WXV3xRyFMkNbaSTaxi6sj7Ys-G-3VhLU0_d2XQjerYtUifYR3J3dvEpaWRVFljNH0g0CddwI6dT7w93Rkbm92xqQ_v0p6ko8STbRMHQ3CtJrBv_EBtg6_jpeq--Mvau_NojLSm-Zg2XqHAmxvWk5hExaL9uLOBPYuN1rh_pENs3DK5ZVHT7iGP05OMMP2jFdV5xhNuwBmpVRzwo0DGBKcaDAieR6hgK0NDggt8idTQxvuGr0qTdTwnFyDhMpB9PGB1ikfOvZZx2gyPphsfv7YSf1lrTqQY8vzI__J8nm1mq_liucw2m8UyW9wuEn7g-eJuPVtnd-tNtlmuVllcLwn_Nyh8mmUJh8HDj_FhDu_z5T_yHk5s?type=png)](https://mermaid.live/edit#pako:eNptU8tu2zAQ_BWCQG6SUT_kODr00hRoD70kQA8Vc6DEtcVaXArkMq1r5d9LPRzbScADZ7XD0exyeeSVVcBznqapQNLUQM7ubbUHxzQSOFmRtugFDoSdk20tUKAP5YDZA-y0J3coHsBYgteYbWWZb2WqBq0ngXpeCP7dyB34mOtTVSjBi15t4jpQtaTTyVAGpHCKfstnecLtgWqLgkdVQHVl55v1JHAsYKsbKM5w-usEr8092yYY8MXPcZ-oSpIspYdIqCyS1AjOF8WXV3xRyFMkNbaSTaxi6sj7Ys-G-3VhLU0_d2XQjerYtUifYR3J3dvEpaWRVFljNH0g0CddwI6dT7w93Rkbm92xqQ_v0p6ko8STbRMHQ3CtJrBv_EBtg6_jpeq--Mvau_NojLSm-Zg2XqHAmxvWk5hExaL9uLOBPYuN1rh_pENs3DK5ZVHT7iGP05OMMP2jFdV5xhNuwBmpVRzwo0DGBKcaDAieR6hgK0NDggt8idTQxvuGr0qTdTwnFyDhMpB9PGB1ikfOvZZx2gyPphsfv7YSf1lrTqQY8vzI__J8nm1mq_liucw2m8UyW9wuEn7g-eJuPVtnd-tNtlmuVllcLwn_Nyh8mmUJh8HDj_FhDu_z5T_yHk5s)
 
 ```python
 # Search images from catalog
-!docker search ubuntu|head
+!docker search ubuntu | head
 ```
 
 Download an image from the remote registry.
@@ -55,18 +56,23 @@ Download an image from the remote registry.
 !docker pull ubuntu:22.04
 ```
 
-Open a [terminal](/terminals/docker) and run an **interactive shell** (`--interactive`) with a terminal (`--tty`)
-in a new container based on `ubuntu:22.04`. The `--rm` option removes the container when it exits.
+Open a [terminal](/terminals/docker)
+and run an **interactive shell** (`--interactive`) with a terminal (`--tty`)
+in a new container
+based on `ubuntu:22.04`.
+The `--rm` option removes the container when it exits.
 
-**NB: run the following commands in the terminal, not in the jupyter notebook**
+**NB: run the following commands [in the terminal](/terminals/docker), not in the jupyter notebook**
 
-```bash
+```text
 docker run --rm --tty --interactive ubuntu:22.04 /bin/bash
 ```
 
-Then run the above commands to ensure that you are on another virtual hosts.
+Now that you are on a "separate machine",
+run the following commands in the new terminal
+and ensure that you are on another "virtual host".
 
-```bash
+```text
 # Operating System
 cat /etc/issue
 # Linux version
@@ -77,20 +83,22 @@ uname -a
 
 #### Exercise
 
-What happens if you try to get the IP address using the following command?
+Now that you are in the [container's terminal](/terminals/docker),
+what happens if you try to get the IP address using the following command?
 
-```bash
+```text
 ip -4 -o a
 ```
 
-Can you retrieve the IP address in another way?
+Can you retrieve the container's IP address in another way?
 **Hint: the `/proc` filesystem contains information about the system. Try to find the IP address in one of the files in `/proc`.**
 
 ---
 
 ## Dockerizing Applications
 
-`busybox` is a lightweight Linux distribution. You can run an one-shot command in a container.
+`busybox` is a lightweight Linux distribution.
+You can run an one-shot command in a container.
 
 ```bash
 docker run busybox /bin/echo 'Hello world'
@@ -139,7 +147,7 @@ docker stats   # shows metrics, memory, cpu, filsystem
 1. Inspect the `ansible-101_bastion_1` container.
 1. Use the `--format` option to get the IP address on a [terminal](/terminals/docker).
    **Hint 1: you can google for the solution.**
-1. Try to run the `docker inspect --format ...` command above in the jupyter notebook.
+1. Try to run the above `docker inspect --format ...` command in the jupyter notebook.
    Does it work? If not, why?
 
 ```python
@@ -156,10 +164,11 @@ docker stats   # shows metrics, memory, cpu, filsystem
 
 Docker leverages a [copy-on-write filesystem](https://docs.docker.com/storage/storagedriver/).
 This allows Docker to instantiate containers very quickly.
-Docker use to layering one container filesytem on top of another.
-For example, you might create a container that is based on
-a base Debian image, and then in turn create another container that is
-based on the first container.
+Docker layers one container filesytem on top of another.
+For example, you might:
+
+- create a container image from a base Debian image;
+- then create another container based on the first image.
 
 [![](https://mermaid.ink/img/pako:eNpVkstO6zAQhl_FmnVS2U7iNFmwQLBAiBVIR6I-QtPYoRaxXSW2RE_Vd8ckp7Ts5vLN7dccofNKQwvvI-530kk3xe1sk867gMbpcfNnNAG3g76EyIAHPf6VLnyGzcvOTEuAeDccztQkU3qnSW8GPZGww0Bw1MR6ZXqjVSrWTn1PvJppLL7rt7nX5sHauIyN2-hCbDlf0XJBSI9tj_ngu4_UZ4uTznl-Xdw0VVV0NSGMPt6eEfYLqRWvFWWE8OLpB6G_kJ6KAouCEEFn5P_CFxny_OZ65-8kZGD1aNGopOpROkIkJBmsltAmU-ke4xAkSHdKaNwrDPpemeBHaMMYdQYYg38-uO7sL8ydwaSRhXT3MKXoHt2r9_YMJRfaI3xCy8pyVdKqYrTkxbqhTQYHaHlTrUTViIILwfma1acM_s31dCVYxWnFxLrmJRWUZaDnhZ6W15g_5PQF27i6QA?type=png)](https://mermaid.live/edit#pako:eNpVkstO6zAQhl_FmnVS2U7iNFmwQLBAiBVIR6I-QtPYoRaxXSW2RE_Vd8ckp7Ts5vLN7dccofNKQwvvI-530kk3xe1sk867gMbpcfNnNAG3g76EyIAHPf6VLnyGzcvOTEuAeDccztQkU3qnSW8GPZGww0Bw1MR6ZXqjVSrWTn1PvJppLL7rt7nX5sHauIyN2-hCbDlf0XJBSI9tj_ngu4_UZ4uTznl-Xdw0VVV0NSGMPt6eEfYLqRWvFWWE8OLpB6G_kJ6KAouCEEFn5P_CFxny_OZ65-8kZGD1aNGopOpROkIkJBmsltAmU-ke4xAkSHdKaNwrDPpemeBHaMMYdQYYg38-uO7sL8ydwaSRhXT3MKXoHt2r9_YMJRfaI3xCy8pyVdKqYrTkxbqhTQYHaHlTrUTViIILwfma1acM_s31dCVYxWnFxLrmJRWUZaDnhZ6W15g_5PQF27i6QA)
 
@@ -169,7 +178,6 @@ reuse the same filesystem layers.
 [![](https://mermaid.ink/img/pako:eNqlkk2P0zAQhv_KyAdOSRU7cb4OHBY4ILQnONEg5MaTrUVsV44ttnT733GTDaQSN-LL2HnmnZnXvpDeSiQteXLidOxMZ6ZwmGPorfFCGXR0_24NgcJPp7w4jAijOKP71hn_7On-y1FNywlYM57X5KmL_48IgxpxAn8UHoRD0FaqQaGM2Wjkv2qyTU22LcX-s9TdiEqLJ_w-a-0_ah2WwcIhGB9axnZZsSAwiHYQ6Wj7H1HnICZMWbpNbhrO874CoNmnhxWhd0glWSUzCsDyxz9IdocMWZmLPAcosxl5bfjvRcCbjUOQpm_hxaGQ6c2HOL7DMCHchNe2b168bMe86ZGEaHRaKBnv_dIZgI5E5zR2pI2hxEGE0XekM9eIhpMUHj9I5a0jrXcBEyKCt5_Ppl_3C_NeiWirJtGqcYqnJ2G-WqtXKG5JeyHPpKW83hWU5Tmva5ZzVrGEnEnLmnJX8qaseZ0XBY_rmpBfs0K249nyFVXDGOc0ITi39Lg83_kVX38DC_v2ew?type=png)](https://mermaid.live/edit#pako:eNqlkk2P0zAQhv_KyAdOSRU7cb4OHBY4ILQnONEg5MaTrUVsV44ttnT733GTDaQSN-LL2HnmnZnXvpDeSiQteXLidOxMZ6ZwmGPorfFCGXR0_24NgcJPp7w4jAijOKP71hn_7On-y1FNywlYM57X5KmL_48IgxpxAn8UHoRD0FaqQaGM2Wjkv2qyTU22LcX-s9TdiEqLJ_w-a-0_ah2WwcIhGB9axnZZsSAwiHYQ6Wj7H1HnICZMWbpNbhrO874CoNmnhxWhd0glWSUzCsDyxz9IdocMWZmLPAcosxl5bfjvRcCbjUOQpm_hxaGQ6c2HOL7DMCHchNe2b168bMe86ZGEaHRaKBnv_dIZgI5E5zR2pI2hxEGE0XekM9eIhpMUHj9I5a0jrXcBEyKCt5_Ppl_3C_NeiWirJtGqcYqnJ2G-WqtXKG5JeyHPpKW83hWU5Tmva5ZzVrGEnEnLmnJX8qaseZ0XBY_rmpBfs0K249nyFVXDGOc0ITi39Lg83_kVX38DC_v2ew)
 
 ----
-
 
 ## Commands for interacting with images
 
@@ -181,6 +189,7 @@ docker commit  # creates image from a container.
 docker rmi     # removes an image.
 docker history # list changes of an image.
 ```
+
 ----
 
 Images are stored in a Docker registry such as [Docker Hub](https://hub.docker.com/)
@@ -200,7 +209,7 @@ NB. This is similar to the snapshot feature of Virtual Machines.
 The Dockerfile is a text file that contains all the commands a user could
 call on the command line to assemble an image.
 
-```
+```python
 ! cat Dockerfile
 ```
 
@@ -210,7 +219,7 @@ Docker will execute all the commands in the Dockerfile and create a new image.
 !docker build -t apache-example .
 ```
 
-Open the [terminal](/terminals/docker) and:
+Open the [terminal](/terminals/docker-1) and:
 
 - inspect the image
 - run the image with
@@ -221,7 +230,7 @@ docker run --rm --detach apache-example
 
 #### Exercise
 
-Open the [terminal](/terminals/docker) and:
+Open the [terminal](/terminals/docker-1) and:
 
 - check if the container is running `docker ps`
 - use `curl` to check if the webserver works
@@ -248,10 +257,10 @@ Using Compose is basically a three-step process:
 
 1. define your app's image with a `Dockerfile`
 1. define the services that make up your app in
-`docker-compose.yaml` so they can be run together in an isolated
+   `docker-compose.yaml` so they can be run together in an isolated
 environment.
 1. run `docker-compose up` and Compose will start and run your
- entire app.
+   entire app.
 
 ----
 
@@ -259,7 +268,13 @@ environment.
 
 docker-compose.yaml
 
-```docker-compose
+```yaml
+# This is a compose file defining a simple python
+#   application with a redis database.
+#
+# Run with:
+#
+#  docker-compose up
 version: '2'
 services:
   web:
@@ -278,7 +293,7 @@ services:
 Now run docker-compose up and Compose will start and run your entire app.
 
 Docker Compose is a basic example of Infrastructure as Code.
-The infrastructure setup is defined in a file and can be versioned.
+The infrastructure setup is defined in a file, and can be versioned.
 All the changes are tracked and can be reverted.
 Administrators do not have to run commands on the server to setup the infrastructure.
 
@@ -290,7 +305,7 @@ docker-compose up -d
 
 ## docker-compose example
 
-```
+```yaml
 version: "2"
 services:
   web:
@@ -303,7 +318,7 @@ services:
 
 ## docker-compose example
 
-```docker-compose
+```yaml
 version: "2"
 services:
   web1:
@@ -323,7 +338,7 @@ services:
 
 ## docker-compose example
 
-```
+```yaml
 version: "2"
 services:
   web1:
@@ -346,7 +361,7 @@ services:
 
 ## docker-compose example
 
-```
+```yaml
 version: "2"
 services:
   phpmyadmin:

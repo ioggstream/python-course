@@ -7,5 +7,4 @@ all: $(BOOKS)
 	cp Dockerfile notebooks/Dockerfile
 
 notebooks/%.ipynb: %.md
-
 	notedown --to notebook $^ > $@

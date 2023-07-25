@@ -22,7 +22,7 @@ services:
 
 
   test:
-      image: ioggstream/python-course
+      image: ghcr.io/ioggstream/python-course:python27
       volumes:
       - ./notebooks:/notebooks:z
       # entrypoint: tail -f /etc/hosts
@@ -30,7 +30,8 @@ services:
 
   # Official image from docker hub
   course:
-      image: ioggstream/python-course
+      image: ghcr.io/ioggstream/python-course:python27
+      user: root
       environment:
       - USE_HTTP=1
       - DOCKER_HOST=172.17.0.1
@@ -45,24 +46,3 @@ services:
       command: -c "/usr/local/bin/jupyter-notebook --ip 0.0.0.0 --allow-root"
 
 
-  # Some ssh-enabled docker containers
-  #  for student homework
-  bastion:
-      build:
-          context: .
-          dockerfile:  Dockerfile.ssh
-      volumes:
-      - .:/code:z
-      network_mode: bridge
-
-
-  # Some ssh-enabled docker containers
-  #  for student homework
-  web:
-      build:
-          context: .
-          dockerfile:  Dockerfile.ssh
-      volumes:
-      - .:/code:z
-      # - ./notebooks/exercise-01/id_ansible.pub:/root/.ssh/authorized_keys:z
-      network_mode: bridge

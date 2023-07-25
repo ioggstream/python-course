@@ -16,8 +16,6 @@ endif
 
 
 course: .prepare
-	docker-compose scale course=1 web=2 bastion=1
-	docker-compose logs course | grep token | sed -e "s/0.0.0.0/$(MAIN_IP)/g"
 
 clean:
 	rm *.pyc __pycache__ -fr
@@ -27,20 +25,24 @@ clean:
 	# find notebooks -name \*.yml -type f -exec ansible-lint {} \;
 	find notebooks -name '*.ipynb' -exec  nbstripout {} \;
 	# $(foreach dpath, $(EXTERNAL_COURSES), rm -f notebooks/$(dpath)/*.ipynb; )
-
-clean-other:
-	docker-compose kill bastion web
-	docker-compose rm -vf bastion web
-
-test:
-	docker exec -ti ansible101_dev_1 bash -c ' (cd /notebooks; ./cleanup.sh ) '
-
-dev: .prepare
-	docker-compose scale dev=1 web=2 bastion=1
-	docker-compose logs dev | grep token | sed -e "s/0.0.0.0/$(MAIN_IP)/g" | sed -e "s/(sysadminpy or 127.0.0.1)/$(MAIN_IP)/g"
-
+ 
+# clean-other:
+# 	docker-compose kill bastion web
+# 	docker-compose rm -vf bastion web
+# 
+# test:
+# 	docker exec -ti tools101_dev_1 bash -c ' (cd /notebooks; ./cleanup.sh ) '
+# 
+# dev: .prepare
+# 	docker-compose scale dev=1
+# 	docker-compose logs dev | grep token | sed -e "s/0.0.0.0/$(MAIN_IP)/g" | sed -e "s/(sysadminpy or 127.0.0.1)/$(MAIN_IP)/g"
+# 
 .prepare:
 	# build all EXTERNAL_COURSES
 	$(foreach dpath, $(EXTERNAL_COURSES), cd ../$(dpath); ! test -f Makefile || make; )
 	$(foreach dpath, $(EXTERNAL_COURSES), mkdir -p notebooks/rendered_notebooks/$(dpath); rsync -var  ../$(dpath)/notebooks/ notebooks/rendered_notebooks/$(dpath); )
 	cp ../python-for-sysadmin/requirements.txt .
+	make -f markdown.mak
+
+run: course
+	jupyter notebook notebooks

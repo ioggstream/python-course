@@ -6,5 +6,4 @@ all: $(BOOKS)
 	@echo $(BOOKS)
 
 notebooks/%.ipynb: %.md
-
 	notedown --to notebook $^ > $@
