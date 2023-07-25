@@ -1,5 +1,4 @@
-#python-course
-
+# python-course
 
 Python exercises and materials for various courses.
 
@@ -7,28 +6,40 @@ Python exercises and materials for various courses.
 
 An introductory course for people knowing other languages.
 
- - lessons: 2
- - duration: 2 hours
+- lessons: 2
+- duration: 2 hours
 
 ## python for system administrator
 
- A course for system administrators (Linux, Windows, Mac)
-
+A course for system administrators (Linux, Windows, Mac)
 
 ## MySQL 101 - 5.7
 
- A MySQL course featuring data management basics
+A MySQL course featuring data management basics
 
 ## Ansible 101
 
- The training presented ad EuroPython 2017, with further revisions.
+The training presented ad EuroPython 2017, with further revisions.
 
 ## Git 101
 
- A fastrack for learning git.
+A fastrack for learning git.
 
+## Docker 101
 
-## TODO
+A fast track for learning docker and IoC basics.
 
-* intermediate python
-* python for performance testing
+## Further ideas
+
+- intermediate python
+- python for performance testing
+
+---
+
+## Developing
+
+Many courses are written in markdown and converted in jupyter notebooks.
+This is done to allow for a better versioning of the materials.
+
+The docker image is provided via ghcr.io. You can test it locally with
+`act`. See https://github.com/nektos/act.

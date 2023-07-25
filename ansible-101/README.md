@@ -34,7 +34,7 @@ make course
 
 if you want override default value of EXTERNAL_COURSES, please use an environment variable
 
-```bash                                                                       
+```bash
 EXTERNAL_COURSES=git-101 make course
 ```
 

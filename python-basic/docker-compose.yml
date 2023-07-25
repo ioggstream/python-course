@@ -4,6 +4,7 @@ sysadminpy:
     environment:
         - USE_HTTP=1
         - PASSWORD=secret
+        - SHELL=/bin/bash
     ports:
         - 8888:8888
     volumes:

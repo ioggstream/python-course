@@ -1,7 +1,0 @@
-ipython
-nose
-simplejson
-pyzmq
-markupsafe
-tornado
-jsonschema

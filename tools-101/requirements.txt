@@ -1,0 +1,21 @@
+scipy
+ipython
+matplotlib
+nose
+psutil
+simplejson
+pyzmq
+markupsafe
+tornado
+jsonschema
+jupyter
+ansible
+docker-py
+pyyaml
+
+# jupyter tools
+nbstripout
+
+# Load jupyter extensions for exercises.
+jupyter_contrib_nbextensions
+RISE
