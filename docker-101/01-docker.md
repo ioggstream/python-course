@@ -1,9 +1,5 @@
 
-# Docker 101
-
-This is a crash docker course.
-
-## What is?
+# Docker 101 - Containerization as an application packaging mechanism.
 
 Docker is a platform for developers and sysadmins to develop,
 ship, and run applications.
