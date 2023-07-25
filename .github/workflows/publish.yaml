@@ -1,0 +1,88 @@
+name: CI Test and Publish Workflow
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - '**/*.md'
+      - '**/*.txt'
+      - 'docs/*'
+      # This re-includes the requirements file
+      # while not touching any other previously
+      # excluded .txt files. For more information,
+      # see https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#filter-pattern-cheat-sheet
+      - '!requirements.txt'
+      - '!requirements-dev.txt'
+  pull_request:
+    branches: [main]
+    paths-ignore:
+      - '**/*.md'
+      - '**/*.txt'
+      - 'docs/*'
+      - '!requirements.txt'
+      - '!requirements-dev.txt'
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+  DOCKER_BUILDKIT: "1"
+  TERM: linux
+
+jobs:
+  security:
+    strategy:
+      matrix:
+        version: [python27]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: docker-security
+        uses: instrumenta/conftest-action@master
+        with:
+          files: tools-101/${{ matrix.version }}.dockerfile
+          policy: .dockerfile-security.rego
+  publish:
+    strategy:
+      matrix:
+        version: [python27]
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request'
+    permissions:
+      contents: read
+      packages: write
+    needs:
+      - security
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Log in to the Github Container registry
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Extract branch name
+        shell: bash
+        run: echo "branch=${GITHUB_REF##*/}" >> $GITHUB_OUTPUT
+        id: extract_branch
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          labels: |
+            maintainer=robipolli@gmail.com
+            org.opencontainers.image.source.branch=${{ steps.extract_branch.outputs.branch }}
+          tags: |
+            type=raw,value=${{ matrix.version }}-{{date 'YYYYMMDD'}}-${{github.run_number}}-{{sha}}
+            type=raw,value=${{ matrix.version }}
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: tools-101/
+          # no-cache: true
+          sbom: true
+          ulimit: nofile=2048:2048
+          file: ${{ matrix.version }}.dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
