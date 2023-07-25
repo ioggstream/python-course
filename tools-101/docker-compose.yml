@@ -2,7 +2,9 @@
 version: "2"
 services:
   dev:
-      build: .
+      build:
+        dockerfile: python27.dockerfile
+        context: .
       hostname: sysadminpy
       environment:
       - USE_HTTP=1
