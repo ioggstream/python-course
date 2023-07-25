@@ -76,13 +76,13 @@ jobs:
             type=raw,value=${{ matrix.version }}-{{date 'YYYYMMDD'}}-${{github.run_number}}-{{sha}}
             type=raw,value=${{ matrix.version }}
       - name: Build and push Docker image
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v4
         with:
           context: tools-101/
           # no-cache: true
-          sbom: true
+          # sbom: true
           ulimit: nofile=2048:2048
-          file: ${{ matrix.version }}.dockerfile
+          file: tools-101/${{ matrix.version }}.dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

@@ -6,5 +6,7 @@ all: $(BOOKS)
 	@echo $(BOOKS)
 
 notebooks/%.ipynb: %.md
-
 	notedown --to notebook $^ > $@
+
+run: all
+	jupyter notebook notebooks
