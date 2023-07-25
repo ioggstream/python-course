@@ -59,7 +59,7 @@ a = 11
 #range in python 2 returns a list
 # of consecutive ints
 from_0_to_10 = range(a)
-l = len(from_0_to_10) 
+l = len(from_0_to_10)
 l == a
 print(l)
 ```
@@ -74,14 +74,14 @@ from_0_to_10 = range(a)
 ```
 
 ```python
-# Exercise: can you print the content of from_0_to_10 
+# Exercise: can you print the content of from_0_to_10
 print(from_0_to_10)
 ```
 
 ```python
 
 # In python 3, you need to create a list from the range object.
-# The above code 
+# The above code
 # should be replaced with the following
 from_0_to_10 = list(range(a))
 print(from_0_to_10)
@@ -130,7 +130,7 @@ print(straight)
 
 ```python
 # I can take the middle of the list...
-straight[1:3]  
+straight[1:3]
 ```
 
 ```python
@@ -143,7 +143,7 @@ straight[:k]         # I can omit the first...
 ```
 
 ```python
-straight[k:]       # ...and last index   
+straight[k:]       # ...and last index
 ```
 
 ---

@@ -11,7 +11,7 @@ RUN ulimit -n 1024 && apt-get -y update && apt-get -y install tree sshpass opens
 RUN ulimit -n 1024 && apt-get -y clean
 
 RUN apt-get -y update && apt-get -y install curl apt-transport-https
-RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
+RUN wget -O/root/foo.key https://download.docker.com/linux/debian/gpg && apt-key add /root/foo.key && rm /root/foo.key
 RUN echo "deb [arch=amd64] https://download.docker.com/linux/debian buster stable" >> /etc/apt/sources.list
 RUN apt-get -y update && apt-get -y install docker-ce
 RUN apt-get -y clean
@@ -35,5 +35,5 @@ RUN pip install -r /requirements.txt
 
 # RUN jupyter nbextension install rise --py --sys-prefix
 # RUN jupyter nbextension enable rise --py --sys-prefix
-
+USER 1000
 ENTRYPOINT /usr/local/bin/jupyter-notebook --ip 0.0.0.0

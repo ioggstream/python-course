@@ -158,7 +158,7 @@ d, string_a, string_b = a + b, "foo", "bar"
 ```python
 
 # ...swap them...
-(a, b) = (b, a)  
+(a, b) = (b, a)
 ```
 
 ```python
@@ -167,7 +167,7 @@ d, string_a, string_b = a + b, "foo", "bar"
 
 ```python
 # but if right-side values are not defined, I get an exception
-e, f = c, e + d  
+e, f = c, e + d
 ```
 
 ----
@@ -234,7 +234,7 @@ ord('*')  # ...ooops!
 #   and reassigning the variable to the original function
 
 try:  # Try the python 2 syntax...
-    import __builtin__ as builtins 
+    import __builtin__ as builtins
 except ImportError:  # And if it fails, use the python 3 syntax.
     import builtins
 
@@ -262,7 +262,7 @@ type(a)
 ```python
 # while the format() function can be more flexible
 #  10 = 8ciphers + 2chars for the '0b' header
-binary_with_leading_zeroes = format(1, '#010b') 
+binary_with_leading_zeroes = format(1, '#010b')
 ```
 
 ----

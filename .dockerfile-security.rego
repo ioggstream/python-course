@@ -25,7 +25,7 @@ deny[msg] {
 trusted_registries = [
     "registry.access.redhat.com",
     "ghcr.io/par-tec",
-    "docker.io/maven",
+    "docker.io/python",
 ]
 deny_untrusted_base_image[msg] {
     input[i].Cmd == "from"
