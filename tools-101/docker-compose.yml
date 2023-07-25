@@ -44,5 +44,3 @@ services:
       - 8888:8888
       entrypoint: /bin/sh
       command: -c "/usr/local/bin/jupyter-notebook --ip 0.0.0.0 --allow-root"
-
-

@@ -115,23 +115,22 @@ This is especially required for interactive tasks.
 #### Exercises
 
 Exercise solutions may be hidden.
-You can show them double-clicking on the cell.
+You can show them double-clicking on cells
+like this one.
 
-<!-- 
-```python
+They will appear as `<!-- comments -->`.
 
-```
-
+<!--
+def solution():
+    print("Hey! I am a solution!")
+    print("Copy & paste me in a cell")
 -->
+
+---
 
 # Don't do that :D just try and
 
 ![Do your homework](http://s2.quickmeme.com/img/43/438ccdc454bc53dfe79f6190ee43b2be19bd578ad002426efcf90f7a327cedd1.jpg)
-<!-- #endregion -->
-
-```python solution="hidden"
-
-```
 
 ---
 
@@ -151,50 +150,9 @@ Go to your [git beginners course](/notebooks/notebooks/rendered_notebooks/git-10
 
 # Docker
 
-Docker is a lightweight container environment. Jupyter and all other "machines" are based on docker.
+Docker is a lightweight virtualization environment.
+Jupyter and all other "machines" are based on docker.
 
 [Presentation (in Italian)](https://docs.google.com/presentation/d/15swQ2gHWAKYAm_ZbBme9rmzV1CpLNl1npvgrUyODu1s/)
 
 Go to your [docker beginners course](/notebooks/notebooks/rendered_notebooks/docker-101/)
-
-<!-- #region -->
-## Setup with digitalocean (if you don't have your server)
-
-Create and `ssh` into your docker droplet.
-
-![Create droplet](https://cdn.pbrd.co/images/GA8dkaJ.png)
-
-## Setup example
-
-[![asciicast](https://asciinema.org/a/9xqX4akNND7Yc0Q1sTb3ZnEhI.png)](https://asciinema.org/a/9xqX4akNND7Yc0Q1sTb3ZnEhI)
-
-## Docker must listen on 172.17.0.1:2735
-
-```
-# vim /etc/systemd/system/multi-user.target.wants/docker.service
-[Service]
-...
-ExecStart=/usr/bin/dockerd -H fd:// -H tcp://172.17.0.1:2375
-...
-#wq!
-
-systemctl daemon-reload
-systemctl restart docker
-```
-
-## Clone and start
-
-```
-git clone https://github.com/ioggstream/python-course.git
-cd python-course/ansible-101
-make course
-
-```
-
-## Connect to jupyter
-
-```
-firefox http://43.32.54.212:8888/tree/notebooks/?token=....
-```
-
-<!-- #endregion -->

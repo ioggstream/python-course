@@ -3,24 +3,14 @@ name: CI Test and Publish Workflow
 on:
   push:
     branches: [main]
-    paths-ignore:
-      - '**/*.md'
-      - '**/*.txt'
-      - 'docs/*'
-      # This re-includes the requirements file
-      # while not touching any other previously
-      # excluded .txt files. For more information,
-      # see https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#filter-pattern-cheat-sheet
-      - '!requirements.txt'
-      - '!requirements-dev.txt'
+    paths:
+      - 'tools-101/python27.dockerfile'
+      - 'tools-101/requirements.txt'
   pull_request:
     branches: [main]
-    paths-ignore:
-      - '**/*.md'
-      - '**/*.txt'
-      - 'docs/*'
-      - '!requirements.txt'
-      - '!requirements-dev.txt'
+    paths:
+      - 'tools-101/python27.dockerfile'
+      - 'tools-101/requirements.txt'
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}

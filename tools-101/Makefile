@@ -25,18 +25,18 @@ clean:
 	# find notebooks -name \*.yml -type f -exec ansible-lint {} \;
 	find notebooks -name '*.ipynb' -exec  nbstripout {} \;
 	# $(foreach dpath, $(EXTERNAL_COURSES), rm -f notebooks/$(dpath)/*.ipynb; )
- 
+
 # clean-other:
 # 	docker-compose kill bastion web
 # 	docker-compose rm -vf bastion web
-# 
+#
 # test:
 # 	docker exec -ti tools101_dev_1 bash -c ' (cd /notebooks; ./cleanup.sh ) '
-# 
+#
 # dev: .prepare
 # 	docker-compose scale dev=1
 # 	docker-compose logs dev | grep token | sed -e "s/0.0.0.0/$(MAIN_IP)/g" | sed -e "s/(sysadminpy or 127.0.0.1)/$(MAIN_IP)/g"
-# 
+#
 .prepare:
 	# build all EXTERNAL_COURSES
 	$(foreach dpath, $(EXTERNAL_COURSES), cd ../$(dpath); ! test -f Makefile || make; )

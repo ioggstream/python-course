@@ -6,7 +6,7 @@ This is a crash docker course.
 ## What is?
 
 Docker is a platform for developers and sysadmins to develop,
- ship, and run applications.
+ship, and run applications.
 
 ---
 
