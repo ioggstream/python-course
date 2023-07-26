@@ -120,10 +120,14 @@ like this one.
 
 They will appear as `<!-- comments -->`.
 
-<!--
+<!-- solution
+# This solution is made of a comment,
+# a function definition and a function call.
 def solution():
     print("Hey! I am a solution!")
     print("Copy & paste me in a cell")
+
+solution()
 -->
 
 ---

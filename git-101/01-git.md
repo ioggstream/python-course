@@ -9,6 +9,8 @@
 
 *Beware*: commands contain small typos. You must fix them to properly complete the course!
 
+---
+
 ## VCS
 
 The importance of tracking changes.
@@ -27,27 +29,36 @@ VCS basics:
 Track modifications of our config files without messing
 with the real /etc.
 
-```
+```python
 !mkdir -p /repo-path
 !cp -v /etc/host* /etc/s* /repo-path
 ```
 
 All operations are local to /repo-path
 
-```
+```python
 cd /repo-path
 ```
 
 Always timestamp backup copies, don't `.ori`.
 
-```
+```python
 ! SIMPLE_BACKUP_SUFFIX="$(date -I)" cp -v -bf hosts hosts
 !ls -l hosts*
 ```
 
-Exercise: Use `date +%s` to timestamp a backup copy of `hosts`.
+Exercise:
 
-```
+- what happens if you run the `cp -v -bf hosts hosts` command again?
+<!-- solution
+The SIMPLE_BACKUP_SUFFIX is not updated.
+-->
+- use `date +%s` to timestamp a backup copy of `hosts`
+<!-- solution
+!cp -v -bf hosts hosts.$(date +%s)
+-->
+
+```python
 # Use this cell for the exercise.
 ```
 
@@ -95,8 +106,10 @@ Track modifications with `git`
 - run it
 
 ```
-# Write here the command
-# and show the git config file.
+# Write the command here.
+
+
+# Then, show the git config file.
 !cat .git/config
 ```
 
@@ -112,12 +125,12 @@ are a lot of files we are not interested in...
 `.gitignore` lists the files we're not interested in
 
 ```
-# Ignore all files not starting with h
+# Ignore all files not starting with "h"
 !echo "[^h]*" >> .gitignore
 !git status
 ```
 
-Now we have all `host*` files to be tracked.
+Now we trace all `host*` files!
 
 ---
 
@@ -176,7 +189,7 @@ Now we have an history with two changes, containing:
 - commit messages
 - a commit hash
 
-HEAD is the last commit.
+`HEAD` is a shorthand for the last commit.
 
 ```
 !git log
@@ -191,7 +204,9 @@ HEAD is the last commit.
 We can revert a change using the hash or an history log
 
 ```
-!git checkout HEAD~1 -- hosts  # revert hosts to the previous commit
+# revert the "hosts" file
+# to the previous commit
+!git checkout HEAD~1 -- hosts
 ```
 
 ---
@@ -233,26 +248,30 @@ Now some git commands, but first create a dir.
 ---
 
 ```
-!git log /repo-path/file.txt  # show changes
+# show changes
+!git log /repo-path/file.txt
 ```
 
 ```
-!git checkout HEAD~1 -- file.txt # revert file
+# revert file
+!git checkout HEAD~1 -- file.txt
 ```
 
 ```
-!git diff HEAD  # diff with reverted
+# diff with the reverted file
+!git diff HEAD
 ```
 
 ```
-!git checkout HEAD -- . # get *all files* from the latest commit
+# get *all files* from the latest commit
+!git checkout HEAD -- .
 ```
 
 ---
 
 ## Tags & Branches
 
-Writing codes and configuration we may want to follow
+When writing code and configuration we may want to follow
 different strategies and save our different attempts.
 
 - *tag*  makes an unmodifiable snapshot of the repo instead.
@@ -283,7 +302,7 @@ Create a branch
 !git checkout -b work-on-my-changes
 ```
 
-And list the branches, check the active one!
+List the branches again, check the active one!
 
 ```
 !git branch -a
@@ -338,7 +357,7 @@ And switch back
 
 ### Exercise
 
-- Create a new branch named `antani`
+- Create a new branch named `foobar`
 - modify `new-file.txt` as you please
 - [open a terminal](/terminals/git), and use `git add -p` to stage the changes. What does it do?
 - commit the changes
@@ -352,7 +371,7 @@ And switch back
 ## Checkout troubleshooting
 
 If you change a file, git won't make you checkout
-to avoid missing changes.
+to avoid overwriting unsaved changes.
 
 ```
 !date >> new-file.txt
@@ -388,8 +407,6 @@ And finally merge
 !git merge work-on-my-changes
 ```
 
----
-
 After a merge, if the branch is no more useful, we can remove it.
 Note: before deleting a branch, you can double-check available
 branches with `git branch -a`.
@@ -402,7 +419,7 @@ If there are unmerged changes, git doesn't allow deleting a branch.
 
 Exercise:
 
-- use `git branch -d` to remove the `antani` branch
+- use `git branch -d` to remove the `foobar` branch
 - what happens?
 - replace `-d` with `-D`. Does it work now?
 
@@ -415,10 +432,10 @@ Exercise:
 
 ## Selective adding
 
-You can stage partial changes with:
+Using an interactive [terminal](/terminals/git-partial) you can stage partial changes with:
 
-```
-!git add -p
+```text
+git add -p
 ```
 
 ---

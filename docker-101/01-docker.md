@@ -1,19 +1,20 @@
 
-# Docker 101 - Containerization as an application packaging mechanism.
+# Docker 101 - Containerization as an application packaging mechanism
 
-Docker is a platform for developers and sysadmins to develop,
+Docker is more than containers:
+it is a platform for developers and sysadmins to develop,
 ship, and run applications.
 
 ---
 
 ## Why it was born?
 
-To resolve a necessity
-
-Mobility workload in cloud systems
+To resolve the needs of mobility workload in cloud systems
 
 - Cargo transport pre-1960
 - Solution: Intermodal Shipping Container
+
+[![Cargo ship](https://zegetech.com/assets/images/blog/docker/docker_ship.png)]
 
 ---
 
@@ -59,17 +60,16 @@ They are lightweight and consume less resources than a virtual machine.
 
 ## Docker Concepts and Interactions
 
-- **Host**, the machine that is running the containers.
-- **Image**, a hierarchy of files, with meta-data for how to run a container.
+- **Host**, the machine that runs the containers.
+- **Image**, a hierarchy of files, with meta-data for running a container.
 - **Container**, a contained running process, started from an image.
 - **Registry**, a repository of images.
 - **Volume**, storage outside the container.
-- **Dockerfile**, a script for creating images.
+- **Dockerfile**, instruction for creating images.
 
 ----
 
 [![](https://mermaid.ink/img/pako:eNptU8lu2zAQ_RWBZ8moZctVdOilKdAeekmBHirmMJLGFhMuAjkM6lr-91JbbCcBD3qjefM4G0-sNg2ygiVJwjUJklhE96Z-RhsJTWihJmG043okHCx0LddcO1-NOHrAg3Bkj-UDKkP4akd7qIo9JM2o9ci1WJec_VBwQBd8g6v2FTo-qM1ci00LtET6ymvyi_UEL7Dg7kit0ZwFVdTNTTrfjSOupwL2QmJ5gfOtM7xN7sVIr9CVv6fvTG2AoAKHgVAbTSA0WleWX1_xVSGPgSRNDTJUMXfkfbGXhIdzlVqSfOkrL2TTR7cigyfqCQ5vHdcpTaTaKCXoA4HBab3uo0vE2-hemdDsPpr78M7tCCzFjkwXWxyNWzWuh8aP1M67NgxVDMVf195fVmOiSfkxbRohi5lCq0A0YTlPXEcRZ9SiQs6KABvcg5fEGdfnQPVdmBV-awQZywqyHmMGnsyvo64Xe-LcCwiboli4ULrwtwP9xxi1kILJihP7y4p1lq-263SzyfI83WTp5zRmR1akd7vVLrvb5Vm-2W6zcM4x-zcqfFplMcMxh5_Toxrf1vk_Byk2hw?type=png)](https://mermaid.live/edit#pako:eNptU8lu2zAQ_RWBZ8moZctVdOilKdAeekmBHirmMJLGFhMuAjkM6lr-91JbbCcBD3qjefM4G0-sNg2ygiVJwjUJklhE96Z-RhsJTWihJmG043okHCx0LddcO1-NOHrAg3Bkj-UDKkP4akd7qIo9JM2o9ci1WJec_VBwQBd8g6v2FTo-qM1ci00LtET6ymvyi_UEL7Dg7kit0ZwFVdTNTTrfjSOupwL2QmJ5gfOtM7xN7sVIr9CVv6fvTG2AoAKHgVAbTSA0WleWX1_xVSGPgSRNDTJUMXfkfbGXhIdzlVqSfOkrL2TTR7cigyfqCQ5vHdcpTaTaKCXoA4HBab3uo0vE2-hemdDsPpr78M7tCCzFjkwXWxyNWzWuh8aP1M67NgxVDMVf195fVmOiSfkxbRohi5lCq0A0YTlPXEcRZ9SiQs6KABvcg5fEGdfnQPVdmBV-awQZywqyHmMGnsyvo64Xe-LcCwiboli4ULrwtwP9xxi1kILJihP7y4p1lq-263SzyfI83WTp5zRmR1akd7vVLrvb5Vm-2W6zcM4x-zcqfFplMcMxh5_Toxrf1vk_Byk2hw)
-
 
 ---
 
