@@ -1,4 +1,3 @@
-<!-- #region solution="hidden" -->
 # Devops Tools 101
 
 This is a course on the tools you will need to work using the devops methodology.
@@ -9,7 +8,6 @@ and execute the commands on the course environment.
 We will start presenting the course environment, then we will go through the tools:
 
 Docker, Git and Python.
-<!-- #endregion -->
 
 ---
 
@@ -94,8 +92,6 @@ echo $A
 ```
 
 ----
-
-<!-- #region -->
 
 During the course, you will need to execute some shell code, that is rendered like the following
 

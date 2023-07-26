@@ -180,6 +180,12 @@ and finally save them in the repo.
 !git commit  "Added localhost2 to hosts"
 ```
 
+Exercise: what is the result of the previous command?
+
+<!-- solution
+git commit -m "Added localhost2 to hosts"
+-->
+
 ---
 
 ## History changes
@@ -237,7 +243,12 @@ Now some git commands, but first create a dir.
 # Use this cell for the exercise
 ```
 
----
+Don't check the solution :)
+
+<!-- solution
+git add -f file.txt
+git commit -m "Add file.txt"
+-->
 
 ```
 !date >> /repo-path/file.txt
@@ -252,10 +263,16 @@ Now some git commands, but first create a dir.
 !git log /repo-path/file.txt
 ```
 
+Hint: if you completed all the previous exercises,
+you should have at least two commits in the history!
+
 ```
 # revert file
 !git checkout HEAD~1 -- file.txt
 ```
+
+Hint: if the previous command didn't work,
+ensure you have completed all the previous exercises.
 
 ```
 # diff with the reverted file
