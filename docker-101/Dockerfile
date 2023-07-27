@@ -4,7 +4,7 @@
 #
 #  $ docker build -t test-apache2 .
 #
-FROM debian:stable-slim
+FROM docker.io/debian:bullseye
 
 # Set the maintainer. See https://docs.docker.com/engine/reference/builder/#maintainer-deprecated
 LABEL org.opencontainers.image.authors="piuma@piumalab.org"
