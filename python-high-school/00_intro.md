@@ -135,11 +135,22 @@ c = 1.2e2   # another float in exponential notation
 # Exercise: use the print() function to print the value of a, b and c.
 
 ```
+
 ----
 
 ```python
-# I can sum, multiply, and modulus
+# I can sum, multiply, and modulus (aka, the remainder of the division).
 print(a + b, 5 % 2)
+```
+
+```python
+# I can divide, and elevate to a power.
+print(b / a, 2 ** 3)
+```
+
+```python
+# Brackets are always round.
+print(((a + b) * c)/ a + (b *c))
 ```
 
 ----
@@ -149,7 +160,50 @@ print(a + b, 5 % 2)
 print(2 * c)
 ```
 
-----
+Exercise: use the cell above to compute the following values:
+
+- the remainder of 12 / 5
+- $3 \dot 8; 2^{10}; 2^{20}; 2^{30}$
+- $ \frac{[1 + (1/3 + 1/4)] + 1/5}{6} $
+
+Computers, for performance reasons, use memory in chunks called blocks or pages:
+for example you can't use a single bit of memory similarly to how you can't
+use a single line of your notebook.
+
+For this reasom it is convenient to use powers of $2^{10}$ to represent the size of files and memory.
+They are called "kibi (Ki)", "mebi (Mi)", "gibi (Gi)", .. to avoid confusion with the powers of $10^{3}$, that are called
+"kilo (k)", "mega (Mi)", "giga (Gi)", and so on.
+
+The unit of measure of information is the Byte $B$.
+Its multiples can be expressed in powers of $10^3$:
+
+$
+1 kilobyte = 1 kB = 10^3 B = 1000 B
+$
+
+or in powers of $2^{10}$:
+
+$
+1 kibibyte = 1 KiB = 2^{10} B = 1024 B
+$
+
+Nowadays it is very important to know the difference between the two units:
+when you buy an hard disk of 500GB, you are getting only 465GiB!
+
+Exercise:
+
+- you bought a 1 TB disk, how many bytes can you store on it?
+  How many TiB can you store on it?
+- check the advertised size of your devices (phone, tablet, computer)
+  and compute the difference between the one in $GiB$.
+
+```python
+# Use this cell to compute the answer.
+byte_size_in_tera = ...
+byte_size_in_tebi = ...
+```
+
+---
 
 ### Representing numbers
 
@@ -160,13 +214,33 @@ A number is represented using digits (in Italian, "cifre"):
 - the octal notation uses 8 digits, from 0 to 7;
 - the hexadecimal notation uses 16 digits, where 10 is represented by A, 11 by B, and so on.
 
-A number in base $b$ is represented as:
+A number
+represented in base $b$
+by the digits $c_0, c_1, c_2, \dots, c_n$
+can be computed as:
 
 $$
-\sum_{i=0}^{n} c_i b^i = c_0 b^0 + c_1 b^1 + c_2 b^2 + \dots + c_n b^n
+\sum_{i=0}^{n} c_i b^i = c_0 b^0 + c_1 b^1 + c_2 b^2 + \dots + c_n b^n \\
 $$
 
-where $c_i$ is the $i$-th digit of the number.
+Examples:
+
+$$
+12_{10} = 2 \cdot 10^0 + 1 \cdot 10^1 = 12 \\
+101_{2} = 1 \cdot 2^0 + 0 \cdot 2^1 + 1 \cdot 2^2 = 5_{10} \\
+200_{3} = 0 \cdot 3^0 + 0 \cdot 3^1 + 2 \cdot 3^2 = 18_{10} \\
+$$
+
+Exercise:
+
+- how can I compute the value of the fractional part? Hint: just use the same formula with negative exponents.
+
+$$
+0.5_{10} = 5 \cdot 10^{-1} \\
+0.5_{2} = \dots
+$$
+
+----
 
 Python supports the binary, the octal and the hexadecimal notation too!
 
@@ -211,336 +285,7 @@ d, string_a, string_b = a + b, "foo", "bar"
 
 ```python
 # but if right-side values are not defined, I get an error (aka exception)
-e, f = c, e + d
+z, f = c, z + d
 ```
 
 ---
-
-## Strings
-
-A string is a finite, ordered sequence of typographic characters (e.g., from an alphabet).
-
-Exercise: finite strings using an alphabet $\mathcal{A}$ where $|\mathcal{A}| = k$.
-
-- How many strings of length $n=8$ can you build?
-- How many strings of length $m \le n, n=8$, included the empty string, can you build?
-- 🦾 Can you generalize the solution for any $n$ and $k$?
-
-Hint: use the following cell to compute the answer.
-
-```python
-k = 2
-n = 8
-solution = 1 + ...  # compute the solution here
-print(solution)
-```
-
-We can represent the set of all finite strings with $\mathcal{S}$.
-
-In python you can define a string using single or double quotes:
-
-```python
-a_string = "Ciao"
-another_string = "2πr"
-```
-
-Python defines some operations on strings:
-
-```python
-print("a" + "b")  # concatenation
-print("a" * 3)    # repetition
-```
-
-You can template strings using the f-string notation:
-
-```python
-a = 1
-print(f"the value of a is {a}")
-```
-
-Exercise:
-
-```python
-# Use this cell to print the value of a_string and another_string
-```
-
----
-
-### Character encoding
-
-Computers represents typographic characters with numbers.
-The most common is the Extended ASCII table, that maps numbers to characters.
-
-Since the basic computer unit is the byte, the Extended ASCII table is limited to 256 characters.
-
-$
-byte \in \mathbb{Z}_{255} := \mathbb{Z} \cap [0, 255] \\
-\mathcal{A} = \{ a, b, c, \dots, A, B, C, \dots, ", !, ?, \dots  \}
-$
-
-$
-chr : \mathbb{Z}_{255} \rightarrow \mathcal{A} \\
-ord : \mathcal{A} \rightarrow \mathbb{Z}_{255}
-$
-
-```python
-# The function chr() returns the character corresponding to an integer.
-chr(42)
-```
-
-```python
-# The function ord() returns the integer value of a character.
-ord('*')
-```
-
-Nowadays, the most common character encoding is UTF, that is a superset of ASCII.
-It uses more than one byte to represent a character,
-so it can represent up to $17 * 2^{16}$ characters
-from different languages and symbols like emojis.
-
-```python
-smile = '😀'
-print(smile, "->", ord(smile))
-```
-
-```python
-# prefixing a string with 'r' disables the
-# interpretation of the string content
-print('Hello' * 2 + r'World\x21')
-```
-
-----
-
-### Notable escape sequences
-
-You can print special characters such as
-`new line` or `tabular spaces` using the escape sequence notation.
-
-```python
-# The \n and \t are
-# just the usual notation for newline and tab
-print("Hello\n\tWorld!")
-```
-
-```python
-# triple-quoting allows multi-line strings
-answer = ord('*')
-print(f"""The answer is
-
-{answer}
-""")
-
-```
-
----
-
-## Formatting numbers
-
-Formatting means representing a number with a string.
-Note: it is impossible to represent all the real numbers with finite strings ;)
-
-$
-formatting: \mathbb{Z} \rightarrow \mathcal{S}
-$
-
-```python
-# bin() and hex() returns a string representation
-# of a number. These are *different* formatting functions.
-a, b1 = hex(10), bin(1)
-```
-
-```python
-# Exercise: which is the type of a? And the type of b1?
-type(a)
-```
-
-----
-
-```python
-# The format() function is very flexible
-#  10 = 8digits + 2chars for the '0b' header
-binary_with_leading_zeroes = format(1, '#010b')
-```
-
-----
-
-```python
-# and reversible with
-b1 == int(binary_with_leading_zeroes, base=2)
-```
-
-----
-
-```python
-# Exercise: use this cell to inspect the values of the above variables.
-```
-
-```python
-# Exercise: use this cell to compute the value of the hexadecimal number `abc`.
-# Hint: read the int function manual.
-help(int)
-```
----
-
-## Bonus track: Formatting
-
-----
-
-```python
-# The new str.format function just replaces
-#  %s and %d with {}.
-s_a = "is a string "
-
-print(s_a)
-```
-
-----
-
-```python
-# A string
-s_a += "that can {} extended".format("be")
-```
-
-----
-
-```python
-# Exercise: print the value of s_a
-```
-
-----
-
-```python
-# Further formatting is done using ":", eg.
-#  %.6s -> {:.6}
-#  %3.2d -> {:3.2}
-s_a = "{} even with {:.6} formatting.\n".format(s_a, "positional")
-```
-
-----
-
-```python
-# Alignment identifiers are simpler: < left , ^ center,  > right
-s_a = "Align {:>10}% python!".format(100)
-print(s_a)
-print("just prints a string")
-```
-
-----
-
-```python
-# Exercise: modify s_a to align the string to the left and to the center.
-```
-
----
-
-### Formatting with names
-
-----
-
-```python
-# You can name variables to get
-# a better formatting experience ;)
-fmt_a = "{name:<.3} {nick:^.8} {sn:>30}"
-print(fmt_a.format(name="-"*10, nick="*"*15, sn="-"*40))
-print(fmt_a.format(name="Roberto", nick="ioggstream", sn="Polli"))
-```
-
-----
-
-## Importing functionalities
-
-----
-
-```python
-# Importing new features
-# ..is easy. Features are collected
-# in packages or modules. Just
-import math  # to use the
-math.sqrt  # function
-
-math.sqrt(2)
-```
-
-```python
-# We can even import single functions
-#  or constants from a module
-from math import pi as π
-π / 2
-```
-
-----
-
-Modules contain documentation in the form of docstrings,
-that jupyter presents in scrollable boxes.
-
-```python
-
-# Read the module documentation...
-help(math)
-```
-
-```python
-# ...or the function documentation
-help(math.sqrt)
-
-```
-
----
-
-#### Bonus track: reserved words
-
-Python has a set of reserved words that cannot be used as variable names, including:
-
-- `if, else, for, while, and, or, not, in, is, break, continue, pass, def, class, return, try, except, finally, lambda`.
-
-Sadly, some core, built-in function names in python 2 can be used as variable names, including:
-
-- `file, print, len, type, list, exit`.
-
-This means that a programmer can accidentally overwrite the built-in function with a variable of the same name, causing unexpected results.
-
-Now we will see an example of this, and how to fix it using the built-in module.
-
-```python
-# We should respect reserved words and built-in functions, like print, ord...
-print(("ord:\x20", ord))
-
-```
-
-----
-
-```python
-# We can discover the original module of an object with
-print(ord.__module__)
-```
-
-----
-
-Note:
-
-- python 2 uses the `__builtin__` module, while
-- python 3 uses the `builtins` module.
-
-In both cases, you should never use the `__builtins__` module (note the final **s**), because it's implementation dependent.
-For further information on this topic, see [the python execution model documentation](https://docs.python.org/3/reference/executionmodel.html#builtins-and-restricted-execution)
-
-----
-
-```python
-# If we override a function and call it...
-ord = 4
-ord('*')  # ...ooops!
-```
-
-```python
-# We can fix it up importing the version specific built-in module
-#   and reassigning the variable to the original function
-
-try:  # Try the python 2 syntax...
-    import __builtin__ as builtins
-except ImportError:  # And if it fails, use the python 3 syntax.
-    import builtins
-
-ord = builtins.ord
-ord('*')  # ...ooops!
-```
