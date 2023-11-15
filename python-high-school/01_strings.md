@@ -9,6 +9,8 @@
 - Bonus track: Formatting
 - Bonus track: reserved words
 
+---
+
 ## Strings
 
 In python you can define a string using single or double quotes:
@@ -19,13 +21,15 @@ a_string = "Ciao, I'm Roberto"
 another_string = 'I "love" python'
 ```
 
-A string is a finite, ordered sequence of typographic characters
-(e.g., from an alphabet like the one we learn at school).
+----
 
-Exercise: finite strings using an alphabet $\mathcal{A}$ where $|\mathcal{A}| = k$.
+A string is a finite, ordered sequence of typographic characters
+(e.g., from an alphabet, like the one thaught at school).
+
+Exercise: finite strings using an alphabet $\mathcal{A} : |\mathcal{A}| = k$.
 
 - How many strings of length $n=8$ can you build?
-- How many strings of length $m \le n, n=8$, included the empty string, can you build?
+- How many strings of length $m : m \le n=8$, included the empty string, can you build?
 - 🦾 Can you generalize the solution for any $n$ and $k$?
 
 Hint: use the following cell to compute the answer.
@@ -37,7 +41,11 @@ solution = 1 + ...  # compute the solution here
 print(solution)
 ```
 
-We can represent the set of all finite strings with $\mathcal{S}$.
+<!-- sum([2**i for i in range(0, 9)]) -->
+
+---
+
+Here we represent the set of all finite strings with $\mathcal{S}$.
 
 Python defines some operations on strings:
 
