@@ -1,25 +1,86 @@
-# Python for System Administrators
+# Python for High School
 
-Introductory Lesson 2
+Lesson 2
 
 - Roberto Polli - <roberto.polli@par-tec.it>
 
-```python
-# before starting this lesson
-#  import the python3 print capabilities
-#  using the following statement
-#  NB since now you *must* always use
-#     parenthesis with print!
-from __future__ import print_function, unicode_literals, division
-import sys
+## Agenda
 
-# Import further python3 features.
-if sys.version_info.major < 3:
-  from future_builtins import *
-  import __builtin__ as builtins
+- Sets
+- Introducing Lists
+- Getting list items
+- Slicing a list
+- Strings and Lists
+- Iterations: `for`
+- Iterations: `while`
+
+## Sets
+
+In maths, a set is a collection of distinct objects.
+
+```python
+# In python you can create sets.
+EMPTY = {}  # ø is the empty set
+A = {1, 2, 3}
+B = {3, 4, 5, "a"}  # sets can contain different types
+C = { A }   # a set can contain other sets
+```
+
+Here is an image from Wikipedia:
+[![Set Theory Operations](https://upload.wikimedia.org/wikipedia/commons/0/04/Set_Theory_Operations.svg)](https://en.wikipedia.org/wiki/Set_(mathematics)#/media/File:Set_Theory_Operations.svg)
+
+You can perform set operations on them, including:
+
+$
+U = A \cup B \\
+I = A \cap B \\
+D = A \setminus B \\
+S = A \Delta B := (A \cup B) \setminus (A \cap B) \\
+$
+
+```python
+# Union
+U = A | B
+# Intersection
+I = A & B
+# Difference
+D = A - B
+# Symmetric difference
+S = A ^ B
+```
+
+You can perform basic checks:
+
+```python
+A in U
+B not in U
+B in D
+5 in A
+{1} in A
+EMPTY in A
+I in S
+2 in C
+```
+
+Exercise: which of the above instructions are true?
+
+```python
+# Use this cell for the exercise
+
+```
+
+Exercise: print the content of the sets.
+
+```python
+# Use this cell for the exercise
+
 ```
 
 ## Introducing Lists
+
+A list is an ordered sequence of items.
+Differently from a set, a list is ordered
+and can contain duplicates.
 
 ```python
 # it's easy to create a list
@@ -48,44 +109,46 @@ len(list_a)
 
 #### Lists and Generators
 
-In python you can create lists of subsequent numbers.
-In python 2, the `range` function returns a list,
-while in python 3 it returns an iterable object.
-
-This is to avoid memory issues when dealing with large lists.
+In python you can generate a sequence of numbers.
+To avoid consuming too much memory, this is not doen using lists
+or sets, but using special objects that generate those sequences.
 
 ```python
 a = 11
-#range in python 2 returns a list
-# of consecutive ints
 from_0_to_10 = range(a)
+```
+
+Exercise:
+
+- print the length of `from_0_to_10`
+
+```python
+# Use this cell for the exercise
+
+```
+
+- print the `type` of `from_0_to_10`
+
+```python
+# Use this cell for the exercise
+
+```
+
+We can extract all the elements from a generator using the `list` function.
+
+```python
+from_0_to_10 = list(from_0_to_10)
 l = len(from_0_to_10)
 l == a
 print(l)
 ```
 
-```python
-# in python 3 things are slightly different
-# so the above code won't work.
-import sys
-if sys.version_info.major < 3:
-    range = xrange  # Override the range function with the xrange function.
-from_0_to_10 = range(a)
-```
 
 ```python
 # Exercise: can you print the content of from_0_to_10
 print(from_0_to_10)
 ```
 
-```python
-
-# In python 3, you need to create a list from the range object.
-# The above code
-# should be replaced with the following
-from_0_to_10 = list(range(a))
-print(from_0_to_10)
-```
 
 ---
 
@@ -106,6 +169,7 @@ from_0_to_10[11]
 from_0_to_10.__getitem__(0)
 ```
 
+Python lists are doubly linked, so you can get the last element using a negative index.
 
 ```python
 # python lists are doubly linked ;)
@@ -127,6 +191,25 @@ help(list)
 straight = [1, 2, 3, 'star']
 print(straight)
 ```
+
+Python supports slicing, that is, getting a subsequence of a list
+similarly to what you can do with mathematical intervals.
+Python uses a half-open interval
+( e.g. $[i, j)$ or $[i, j[$ ),
+that is, the first index is included
+and the last one is excluded. Given a list `l : |l| = 4`
+
+$
+l = [ l_{0}, \dots,  l_{3} ] \\
+l[0:2] := [ l_{0}, l_{1} ] \\
+l[i:j] := [ l_{i}, \dots, l_{j-1} ] \\
+$
+
+This means that the length of a sliced list is:
+
+$
+|l[i:j]| = j - i \\
+$
 
 ```python
 # I can take the middle of the list...
@@ -175,64 +258,9 @@ s_a[l_a] # ...what's happening there?
 
 ```python
 # ...we can even slice them
-f = "prova.txt"
-f[:-4], f[-4], f[-3:]
-```
-
-```python
-# Note: use the os.path module for path manipulation.
-# The above code will break with 4-letter extensions!
-from os.path import splitext
-splitext("prova.foo.yaml")
+f = "gatto.miao"
+f[:-5], f[-5], f[-4:]
 ```
 
 ---
 
-## Iterations: for
-
-```python
-a_list = ['is', 'iterable', 'with']
-for x in a_list:
-    print(x)
-```
-
-```python
-for x in a_list:
-    # You need `from __future__ import print_function`
-    # for python2 to support the `end` argument
-    print((x), end=' ')
-    y = x + str(2)
-    break       # stop now
-```
-
-```python
-# what's the expected output of the
-# following instruction?
-print(("x,y: ", (x, y)))
-# Differently from C, `for` does not create
-#  a scope
-```
-
----
-
-## Iterations: while
-
-```python
-a_list = ['is', 'iterable', 'with']
-while a_list:
-    # pop() modifies a list removing
-    #  and returning its last element
-    x = a_list.pop()
-    print(("pop out %s" % x))
-    break  # what happens if I remove this break?
-
-print(a_list)
-```
-
-```python
-# What's the expected behavior of the
-#  following instructions?
-for x in a_list:
-    print((x + a_list.pop()))
-# for + pop() is not always a good idea ;)
-```

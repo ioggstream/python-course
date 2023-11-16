@@ -21,18 +21,30 @@ a_string = "Ciao, I'm Roberto"
 another_string = 'I "love" python'
 ```
 
-----
-
 A string is a finite, ordered sequence of typographic characters
 (e.g., from an alphabet, like the one thaught at school).
 
-Exercise: finite strings using an alphabet $\mathcal{A} : |\mathcal{A}| = k$.
+Exercises: finite strings using an alphabet $\Sigma : |\Sigma| = k$.
 
-- How many strings of length $n=8$ can you build?
+- How many strings of length $n=8$ can you build when $|\Sigma| = 2$?
+
+```python
+k = 2
+n = 8
+solution =
+print(solution)
+```
+
 - How many strings of length $m : m \le n=8$, included the empty string, can you build?
-- 🦾 Can you generalize the solution for any $n$ and $k$?
 
-Hint: use the following cell to compute the answer.
+```python
+solution =
+print(solution)
+```
+
+- 🦾 Can you generalize the solution for any $n$ and $k$? Can you write a mathematical formula for the solution?
+
+Use the following cell to compute the answer.
 
 ```python
 k = 2
@@ -41,11 +53,14 @@ solution = 1 + ...  # compute the solution here
 print(solution)
 ```
 
-<!-- sum([2**i for i in range(0, 9)]) -->
+<!-- numerical solution: sum([k**i for i in range(0, n + 1)]) -->
+<!-- $$\sum_{i=0}^{n} k^i = \frac{k^{n+1} - 1}{k-1}$$ -->
 
----
+The set of all finite strings can be represented with the symbol $\Sigma^{*}$.
 
-Here we represent the set of all finite strings with $\mathcal{S}$.
+----
+
+### Operations on strings
 
 Python defines some operations on strings:
 
@@ -54,7 +69,7 @@ print("a" + "b")  # concatenation
 print("a" * 3)    # repetition
 ```
 
-You can template strings using the f-string notation:
+You can template strings using the so-called "f-string" notation:
 
 ```python
 a = 1
@@ -71,29 +86,35 @@ Exercise:
 
 ### Character encoding
 
-While at school we learn the alphabet with 26 letters,
-we actually use a much larger alphabet in our daily life:
-we use numbers, spaces (e.g. ``, a new line, ), punctuation, emojis, and so on.
+At school we learnt a 26-letter, A-Z alphabet.
+Today, we commonly use a much larger alphabet, featuring:
+lowercase and uppercase letters, numbers, spaces (e.g. " ", a new line, ), punctuation, emojis, and so on.
+
+----
 
 To communicate these charactes at the speed of light, we need to
 transmit them using electric signals.
 The Morse code was the first way of encoding characters
-made to be transmitted using electric signals.
+made to be transmitted using electric signals over a telegraph.
 
 Nowadays computers represents typographic characters with numbers,
 that are then encoded in sequences of $0$ and $1$ and transmitted using electric signals.
 
-The most common way of mapping characters to numbers is the Extended ASCII table.
-Since the basic computer unit is the byte, the Extended ASCII table is limited to 256 characters.
+----
+
+The most common way of mapping characters to integers is the Extended ASCII table.
+Since the basic unit used by computers is the byte, the Extended ASCII table is limited to 256 characters.
 
 $
 byte \in \mathbb{Z}_{255} : = \{ z : z \in \mathbb{Z}; 0 \le z \le 255 \} \\
-\mathcal{A} = \{ a, b, c, \dots, A, B, C, \dots, ", !, ?, \dots  \}
+\Sigma = \{ a, b, c, \dots, A, B, C, \dots, ", !, ?, \dots  \}
 $
 
+The python functions `chr` and `ord` are used to convert between characters and integers.
+
 $
-chr : \mathbb{Z}_{255} \rightarrow \mathcal{A} \\
-ord : \mathcal{A} \rightarrow \mathbb{Z}_{255}
+chr : \mathbb{Z}_{255} \rightarrow \Sigma \\
+ord : \Sigma \rightarrow \mathbb{Z}_{255}
 $
 
 ```python
@@ -105,6 +126,8 @@ chr(42)
 # The function ord() returns the integer value of a character.
 ord('*')
 ```
+
+----
 
 Nowadays, the most common character encoding is UTF, that is a superset of ASCII.
 It uses more than one byte to represent a character,
@@ -149,11 +172,11 @@ print(f"""The answer is
 
 ## Formatting numbers
 
-Formatting means representing a number with a string.
+Formatting means representing a number with a finite string.
 Note: it is impossible to represent all the real numbers with finite strings ;)
 
 $
-formatting: \mathbb{Q} \rightarrow \mathcal{S}
+formatting: \mathbb{Q} \rightarrow \Sigma^{*}
 $
 
 ```python
