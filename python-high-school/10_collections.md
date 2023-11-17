@@ -264,3 +264,42 @@ f[:-5], f[-5], f[-4:]
 
 ---
 
+## Juggling with iterables
+
+We can sort and reverse lists.
+
+```python
+l = [1, 2, 3, 4, 5]
+r = reversed(l)
+print(r)
+```
+reversed is a generator, so we need to convert it to a list to print it.
+
+```python
+# Exercise: print the reversed list
+
+```
+
+<!-- print(list(r)) -->
+
+If we have different lists, we can concatenate them.
+
+```python
+A = [1, 2, 3]
+B = [4, 5, 6]
+A + B
+```
+
+or associate pairwise elements using the `zip` function.
+
+$
+A = [a_0, a_1, a_2]
+B = [b_0, b_1, b_2]
+diag(A,B) = [ (a_i, b_i) \mid i < min(|A|, |B|) ]
+$
+
+```python
+D = zip(A, B)
+print(D)
+```
+
