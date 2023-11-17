@@ -103,7 +103,7 @@ Exercise: write a loop that prints all the divisors of $n=100$.
 n = 100
 for q in range(2, n):
     # Write your code here.
-    
+
 ```
 
 ---
@@ -136,7 +136,7 @@ q = 2
 while ...:
     if ...:
         print(q, end="; ")
-    ...    
+    ...
 ```
 
 Exercise: write a loop that prints all the prime factors of $n=100$, i.e. $2; 2; 5; 5;$.
@@ -150,7 +150,7 @@ while ...:
     ...
 
 ```
-<!-- 
+<!--
 n = 100
 q = 2
 while n>1:
@@ -183,4 +183,3 @@ for x in a_list:
     print((x + a_list.pop()))
 # for + pop() is not always a good idea ;)
 ```
-
