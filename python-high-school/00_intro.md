@@ -1,4 +1,4 @@
-# Python for System Administrator
+# Python for High School
 
  Author: <roberto.polli@par-tec.it>
 
@@ -160,11 +160,19 @@ print(((a + b) * c)/ a + (b *c))
 print(2 * c)
 ```
 
-Exercise: use the cell above to compute the following values:
+Exercise: use the cell below to compute the following values:
 
 - the remainder of 12 / 5
 - $3 \dot 8; 2^{10}; 2^{20}; 2^{30}$
 - $ \frac{[1 + (1/3 + 1/4)] + 1/5}{6} $
+
+```python
+# Use this cell for the exercise.
+```
+
+---
+
+**An historical note**
 
 Computers, for performance reasons, use memory in chunks called blocks or pages:
 for example you can't use a single bit of memory similarly to how you can't
@@ -177,31 +185,39 @@ They are called "kibi (Ki)", "mebi (Mi)", "gibi (Gi)", .. to avoid confusion wit
 The unit of measure of information is the Byte $B$.
 Its multiples can be expressed in powers of $10^3$:
 
-$
+$$
 1 kilobyte = 1 kB = 10^3 B = 1000 B
-$
+$$
 
 or in powers of $2^{10}$:
 
-$
+$$
 1 kibibyte = 1 KiB = 2^{10} B = 1024 B
-$
+$$
 
 Nowadays it is very important to know the difference between the two units:
 when you buy an hard disk of 500GB, you are getting only 465GiB!
 
+----
+
 Exercise:
 
-- you bought a 1 TB disk, how many bytes can you store on it?
-  How many TiB can you store on it?
+- you bought a 1TB hard disk: how many bytes can you store on it?
+
+  ```python
+  # Use this cell for the exercise.
+  size_B = ...
+  ```
+
+- How many GiB can you store on it? Hint: reuse the `size_B` variable.
+
+  ```python
+  # Use this cell for the exercise.
+  size_GiB = ...
+  ```
+
 - check the advertised size of your devices (phone, tablet, computer)
   and compute the difference between the one in $GiB$.
-
-```python
-# Use this cell to compute the answer.
-byte_size_in_tera = ...
-byte_size_in_tebi = ...
-```
 
 ---
 
@@ -214,31 +230,33 @@ A number is represented using digits (in Italian, "cifre"):
 - the octal notation uses 8 digits, from 0 to 7;
 - the hexadecimal notation uses 16 digits, where 10 is represented by A, 11 by B, and so on.
 
+----
+
 A number
 represented in base $b$
 by the digits $c_0, c_1, c_2, \dots, c_n$
 can be computed as:
 
-$$
+$
 \sum_{i=0}^{n} c_i b^i = c_0 b^0 + c_1 b^1 + c_2 b^2 + \dots + c_n b^n \\
-$$
+$
 
 Examples:
 
-$$
+$
 12_{10} = 2 \cdot 10^0 + 1 \cdot 10^1 = 12 \\
 101_{2} = 1 \cdot 2^0 + 0 \cdot 2^1 + 1 \cdot 2^2 = 5_{10} \\
 200_{3} = 0 \cdot 3^0 + 0 \cdot 3^1 + 2 \cdot 3^2 = 18_{10} \\
-$$
+$
 
 Exercise:
 
 - how can I compute the value of the fractional part? Hint: just use the same formula with negative exponents.
 
-$$
+$
 0.5_{10} = 5 \cdot 10^{-1} \\
 0.5_{2} = \dots
-$$
+$
 
 ----
 
