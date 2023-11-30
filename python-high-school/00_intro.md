@@ -15,6 +15,8 @@ This is a fast-track course for high school students with math knowledge.
 
 Students are expected to type and execute cells, and share their results.
 
+You can open this notebook [on jupyter lite](https://jupyter.org/try-jupyter/lab/?fromURL=https://raw.githubusercontent.com/ioggstream/python-course/main/python-high-school/notebooks/00_intro.ipynb).
+
 ---
 
 # Jupyter
