@@ -3,13 +3,18 @@
 ## More on binary numbers
 
 We can use f-strings to print the binary representation of a number.
+The pattern is `{variable:format specification}`.
+In the code below:
+
+- the variable is `a`
+- the format specification is `#b` (binary with the `0b` prefix).
 
 ```python
 a = 3
 print(f"{a:#b} is the binary representation of {a}")
 ```
 
-Exercise: print the following numbers in binary:
+Exercise: print the binary representation of the following numbers:
   3, 61, 35.
 
 <!-- Solution -->
@@ -21,7 +26,14 @@ Exercise: print the following numbers in binary:
 # Write your code here.
 ```
 
-To align the number representations, we can specify the length of the representation (e.g., 10 characters).
+Exercise: what happens if you remove the `#` in the format specification?
+
+```python
+# Use this cell for the exercise.
+
+```
+
+To align the number representations, we can specify their length (e.g., 10 characters).
 
 ```python
 a = 3
@@ -113,18 +125,8 @@ The AND operator has a physical meaning: it is used to check if, in a circuit, t
 - 🔋--1--0--💡OFF
 - 🔋--0--0--💡OFF
 
-```mermaid
-subgraph AND
-direction LR
-    b-1[fa:fa-battery-three-quarters]
-    led-1[far:fa-lightbulb OFF]
-    s1-1((fa:fa-toggle-off))
-    s2-1((fa:fa-toggle-on))
-    b-1 --->|e-| s1-1
-    s1-1 --- s2-1 --- led-1
-    --- b-1
-end
-```
+[![](https://mermaid.ink/img/pako:eNplkU9rwzAMxb-K8amFepAecxgM2p66Dbbb6h78R0kMjp0pMqOUfvc5TsIO00nS-_F4SHduogVe88bHH9MpJHb-kGFMukU1dOzl7XA5ejCEzjDj0CRHVxmsw7xzMRSa5dKiujSqbpTQigjwJqhDAPGdsifgeJ0xD7aAOJHetR3p5DV7P50WYKxEtdnMThTb1oOITbPdLur-vxpWMUdgQojn4vHntuz2a1cizLJ4yrOeJghWBr7jPWCvnM0HuU-I5NRBD5LXubXQqORJchkeGU2DVQRH6ygirwkT7LhKFD9vwazzzBycytfseU7tx7wdVPiKsV8hKBav8x_KOx6_iymCQQ?type=png)](https://mermaid.live/edit#pako:eNplkU9rwzAMxb-K8amFepAecxgM2p66Dbbb6h78R0kMjp0pMqOUfvc5TsIO00nS-_F4SHduogVe88bHH9MpJHb-kGFMukU1dOzl7XA5ejCEzjDj0CRHVxmsw7xzMRSa5dKiujSqbpTQigjwJqhDAPGdsifgeJ0xD7aAOJHetR3p5DV7P50WYKxEtdnMThTb1oOITbPdLur-vxpWMUdgQojn4vHntuz2a1cizLJ4yrOeJghWBr7jPWCvnM0HuU-I5NRBD5LXubXQqORJchkeGU2DVQRH6ygirwkT7LhKFD9vwazzzBycytfseU7tx7wdVPiKsV8hKBav8x_KOx6_iymCQQ)
+
 
 - Exercise: compute the bitwise AND of 192 and 71 by hand and check the result in the cell below.
 
@@ -161,23 +163,33 @@ print(f"{c:#010b}")
 
 The OR operator has a physical meaning: it is used to check if, in a circuit, at least one switch is ON.
 
-```mermaid
-flowchart LR
-
-subgraph OR
-direction LR
-    b[fa:fa-battery-three-quarters]
-    b --->|e-| s1 & s2 ---led -.-> b
-    led[fas:fa-lightbulb ON]
-    s1((fa:fa-toggle-on))
-    s2((fa:fa-toggle-off))
-end
-```
+[![](https://mermaid.ink/img/pako:eNpdkL1uAyEQhF8FbRHZkolkl1ekSro4luLOIQUcyx0SBxdYFFmW3z17P25CtcN8zIq5QZssQgMupN-215nE-6eKKpZquqzHXpxYWp-xJZ_ibAo-5svpxmlpNBHmq6Q-I8qfygGYy_cKCSnliyh78STKYREBrZDPPJiFYc1RZcoKvuvJ1GDE6WNNKPvNZllEqesCyhS329U6_LecmzyMVkXYwYB50N7y127TAwXU44AKGh4tOl0DKVDxzmgdrSZ8s55ShoZyxR3oSul8je1DL8yr19zKALw2FL4ddbykNDwgnCOOS6Nzsfc_f7R0Qw?type=png)](https://mermaid.live/edit#pako:eNpdkL1uAyEQhF8FbRHZkolkl1ekSro4luLOIQUcyx0SBxdYFFmW3z17P25CtcN8zIq5QZssQgMupN-215nE-6eKKpZquqzHXpxYWp-xJZ_ibAo-5svpxmlpNBHmq6Q-I8qfygGYy_cKCSnliyh78STKYREBrZDPPJiFYc1RZcoKvuvJ1GDE6WNNKPvNZllEqesCyhS329U6_LecmzyMVkXYwYB50N7y127TAwXU44AKGh4tOl0DKVDxzmgdrSZ8s55ShoZyxR3oSul8je1DL8yr19zKALw2FL4ddbykNDwgnCOOS6Nzsfc_f7R0Qw)
 
 ---
 
 
-## Max and min
+## Mathematical built-int functions
+
+Python has some built-in functions for numbers:
+
+```python
+M = max(1, 2)
+m = min(1, 2, -3)
+absolute_value = abs(-3)
+approximate_positive = round(1.4)
+approximate_negative = round(-1.4)
+```
+
+Execise:
+
+- see the [python manual](https://docs.python.org/3/library/functions.html)
+for a list of built-in functions;
+- share with your classmates the ones you know.
+
+
+Mathematical built-in functions can be used to implement simple algorithms,
+such as the Euclidean algorithm for the greatest common divisor (GCD)
+(:it: massimo comun divisore - MCD)
 
 ```python
 # Let's define two positive integers.
@@ -197,9 +209,7 @@ b, c = min(d, b), max(d, b)
 print("b =", b, "c =", c)
 ```
 
-
 ---
-
 
 ## Importing functionalities
 
