@@ -58,6 +58,7 @@ def create_inventory():
     ret = json.dumps(inventory, indent=True)
     return ret
 
+
 #
 # Execute the script.
 #

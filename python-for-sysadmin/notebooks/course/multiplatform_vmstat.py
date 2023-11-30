@@ -1,7 +1,5 @@
 def multiplatform_vmstat(count):
-    """Get data in a multiplatform way
-
-    """
+    """Get data in a multiplatform way"""
     import time
 
     import psutil

@@ -9,22 +9,22 @@ from __future__ import print_function, unicode_literals
 
 def encoding_basic():
     """S3
-        When the child was a child,
-        strings were a list of bytes.
-        In 21th century, that's False (and python2 was mainly
-        developed in 20th century;).
+    When the child was a child,
+    strings were a list of bytes.
+    In 21th century, that's False (and python2 was mainly
+    developed in 20th century;).
 
-        bytes is a list of bytes
-        A string is a couple: (bytes, encoding).
+    bytes is a list of bytes
+    A string is a couple: (bytes, encoding).
 
-        An encoding is a one-to-one map between a byte-sequence
-         and a typographical character.
+    An encoding is a one-to-one map between a byte-sequence
+     and a typographical character.
     """
 
 
 def touch_encoded_filenames(dirname, prefix, ext="txt", encoding="utf-8"):
-    """ Create filenames with a given encoding
-         Python2 default encoding is ascii.
+    """Create filenames with a given encoding
+    Python2 default encoding is ascii.
     """
     from os.path import join as pjoin
 
@@ -42,17 +42,17 @@ def touch_encoded_filenames(dirname, prefix, ext="txt", encoding="utf-8"):
 
 
 def windows_filenames():
-    """ As filenames are actually binary data
-         we should be careful when our scripts read
-         eg from a vfat filesystem.
+    """As filenames are actually binary data
+     we should be careful when our scripts read
+     eg from a vfat filesystem.
 
-        In this example we're creating 3 windows-encoded
-         filenames like wuerstelstrasse.X.txt
+    In this example we're creating 3 windows-encoded
+     filenames like wuerstelstrasse.X.txt
 
-        os.path functions fail mangling them as encoded strings
-         so we ask it to mangle as bytes.
-         moreover we use "{!r}".format to avoid further encoding
-         issues in the printing part
+    os.path functions fail mangling them as encoded strings
+     so we ask it to mangle as bytes.
+     moreover we use "{!r}".format to avoid further encoding
+     issues in the printing part
     """
     from os import listdir as ls
     from os.path import join as pjoin
@@ -78,17 +78,17 @@ def windows_filenames():
 
 
 def windows_filenames_short():
-    """ As filenames are actually binary data
-         we should be careful when our scripts read
-         eg from a vfat filesystem.
+    """As filenames are actually binary data
+     we should be careful when our scripts read
+     eg from a vfat filesystem.
 
-        In this example we're creating 3 windows-encoded
-         filenames like wuerstelstrasse.X.txt
+    In this example we're creating 3 windows-encoded
+     filenames like wuerstelstrasse.X.txt
 
-        os.path.* and glob.*  fail mangling them as encoded strings
-         so we ask it to mangle as bytes.
-         moreover we use "{!r}".format to avoid further encoding
-         issues in the printing part
+    os.path.* and glob.*  fail mangling them as encoded strings
+     so we ask it to mangle as bytes.
+     moreover we use "{!r}".format to avoid further encoding
+     issues in the printing part
     """
     from glob import glob
 

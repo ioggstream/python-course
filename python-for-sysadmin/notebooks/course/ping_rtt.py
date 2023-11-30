@@ -3,8 +3,8 @@ __author__ = "rpolli"
 
 def ping_rtt():
     """
-       goal: slicing data
-       goal: using zip to transpose data
+    goal: slicing data
+    goal: using zip to transpose data
     """
     import sys
 

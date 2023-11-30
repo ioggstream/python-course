@@ -5,8 +5,8 @@
 
 def sh(cmd):
     """A quick and dirty check_output wrapper.
-        Don't use in production as it won't honor
-        quoted spaces like "my document.docx"
+    Don't use in production as it won't honor
+    quoted spaces like "my document.docx"
     """
     from subprocess import check_output
 
@@ -15,8 +15,8 @@ def sh(cmd):
 
 def ping_rtt():
     """
-       goal: slicing data
-       goal: using zip to transpose data
+    goal: slicing data
+    goal: using zip to transpose data
     """
     import sys
 
@@ -37,9 +37,9 @@ def ping_rtt():
 
 def ping_stats():
     """
-       goal: remember to convert to numeric / float
-       goal: use scipy
-       goal: check stdev
+    goal: remember to convert to numeric / float
+    goal: use scipy
+    goal: check stdev
     """
     from scipy import mean, std
 

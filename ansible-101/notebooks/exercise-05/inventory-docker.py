@@ -36,6 +36,6 @@ for container in c.containers():
     ip_address = host["ip_address"]
 
     if group_name not in inventory:
-        inventory[group_name]= {"hosts": []}
+        inventory[group_name] = {"hosts": []}
 
     inventory[group_name]["hosts"].append(ip_address)

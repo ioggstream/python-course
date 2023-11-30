@@ -15,6 +15,8 @@ This is a fast-track course for high school students with math knowledge.
 
 Students are expected to type and execute cells, and share their results.
 
+You can open this notebook [on jupyter lite](https://jupyter.org/try-jupyter/lab/?fromURL=https://raw.githubusercontent.com/ioggstream/python-course/main/python-high-school/notebooks/00_intro.ipynb).
+
 ---
 
 # Jupyter
@@ -228,7 +230,7 @@ A number is represented using digits (in Italian, "cifre"):
 - the decimal notation uses 10 digits, from 0 to 9;
 - the binary notation uses 2 digits, 0 and 1;
 - the octal notation uses 8 digits, from 0 to 7;
-- the hexadecimal notation uses 16 digits, where 10 is represented by A, 11 by B, and so on.
+- the hexadecimal notation uses 16 digits, where `10` is represented by `A`, `11` by `B`, and so on.
 
 ----
 
@@ -247,6 +249,9 @@ $
 12_{10} = 2 \cdot 10^0 + 1 \cdot 10^1 = 12 \\
 101_{2} = 1 \cdot 2^0 + 0 \cdot 2^1 + 1 \cdot 2^2 = 5_{10} \\
 200_{3} = 0 \cdot 3^0 + 0 \cdot 3^1 + 2 \cdot 3^2 = 18_{10} \\
+9_{16} = 9 \cdot 16^0 = 9_{10} \\
+A_{16} = 10 \cdot 16^0 = 10_{10} \\
+FF_{16} = 15 \cdot 16^0 + 15 \cdot 16^1 = 255_{10} \\
 $
 
 Exercise:
@@ -254,7 +259,13 @@ Exercise:
 - how can I compute the value of the fractional part? Hint: just use the same formula with negative exponents.
 
 $
-0.5_{10} = 5 \cdot 10^{-1} \\
+0.5_{10} = 5 \cdot 10^{-1}
+$
+
+- can I compute the value of the following numbers?
+
+$
+0.1_{2} = \dots \\
 0.5_{2} = \dots
 $
 
@@ -262,11 +273,12 @@ $
 
 Python supports the binary, the octal and the hexadecimal notation too!
 
+
 ```python
-d = 0b11  # integer in binary notation
-e = 0o11  # integer in octal notation
-f = 0x10  # integer in hexadecimal (hex) notation
-g = 0x1F  # integer in hex notation
+d = 0b11  # `0b` is the prefix for binary notation
+e = 0o11  # `0o` is the prefix for octal notation
+f = 0x10  # `0x` is the prefix for hexadecimal (hex) notation
+g = 0x1F  # `Remember: hex numbers uses 16 digits, from 0 to F
 ```
 
 Exercise:

@@ -56,16 +56,26 @@ A in U
 B not in U
 B in D
 5 in A
+```
+
+Exercise: which of the above expressions are true?
+
+```python
+#  Make an hypothesis first, then check it using this cell.
+
+```
+
+```python
 {1} in A
 EMPTY in A
 I in S
 2 in C
 ```
 
-Exercise: which of the above instructions are true?
+Exercise: which of the above expressions are true?
 
 ```python
-# Use this cell for the exercise
+#  Make an hypothesis first, then check it using this cell.
 
 ```
 
@@ -76,9 +86,51 @@ Exercise: print the content of the sets.
 
 ```
 
+## Tuples (Vectors)
+
+A python `tuple` (:it: n-pla) represents an ordered list of objects,
+and can contain duplicates.
+
+They seem like vectors,
+
+$
+\underline{v} = (v_0, v_1, \dots, v_n) \in \mathbb{R}^n
+$
+
+but they are not!
+
+Here are two tuples in $\mathbb{R}^2$:
+
+```python
+v = (0, 0)
+w = (3, 4)
+```
+
+Exercise: print the content of the tuples.
+
+```python
+print(v[0])
+```
+
+Beware: operations on tuples are not the same as operations on vectors!
+
+```python
+# Exercise: try to sum and multiply v and w. Which is the result? What would you expect?
+
+```
+
+Exercise: try to modify the first element of v. What happens?
+
+```python
+# Use this cell for the exercise
+
+```
+
+Tuples are immutable!
+
 ## Introducing Lists
 
-A list is an ordered sequence of items.
+A list is an **ordered** sequence of objects.
 Differently from a set, a list is ordered
 and can contain duplicates.
 
@@ -89,8 +141,7 @@ list_a = ['this', 'is', 'a', 'list']
 ```
 
 ```python
-
-# you can append items to a list
+# you can append objects to a list
 # with the append method
 list_a.append("mutable")
 ```
@@ -109,8 +160,8 @@ len(list_a)
 
 #### Lists and Generators
 
-In python you can generate a sequence of numbers.
-To avoid consuming too much memory, this is not doen using lists
+The `range` function generates a sequence of numbers.
+To avoid consuming too much memory, this is not done using lists
 or sets, but using special objects that generate those sequences.
 
 ```python
@@ -145,10 +196,9 @@ print(l)
 
 
 ```python
-# Exercise: can you print the content of from_0_to_10
-print(from_0_to_10)
-```
+# Exercise: print the content of from_0_to_10
 
+```
 
 ---
 
@@ -190,6 +240,7 @@ help(list)
 ```python
 straight = [1, 2, 3, 'star']
 print(straight)
+type(straight)  # This is a list!
 ```
 
 Python supports slicing, that is, getting a subsequence of a list
@@ -240,7 +291,6 @@ s_a = "Counting: 123"
 ```
 
 ```python
-
 # Have length..
 l_a = len(s_a)
 print(l_a)
@@ -264,7 +314,7 @@ f[:-5], f[-5], f[-4:]
 
 ---
 
-## Juggling with iterables
+## Juggling with collections
 
 We can sort and reverse lists.
 
@@ -273,7 +323,8 @@ l = [1, 2, 3, 4, 5]
 r = reversed(l)
 print(r)
 ```
-reversed is a generator, so we need to convert it to a list to print it.
+
+reversed is a generator, so we need to "materialize" it into a list to print it.
 
 ```python
 # Exercise: print the reversed list
@@ -290,12 +341,34 @@ B = [4, 5, 6]
 A + B
 ```
 
-or associate pairwise elements using the `zip` function.
+create the cartesian product of two lists.
 
 $
-A = [a_0, a_1, a_2]
-B = [b_0, b_1, b_2]
-diag(A,B) = [ (a_i, b_i) \mid i < min(|A|, |B|) ]
+A \times B := \{ (a; b) \mid a \in A, b \in B \}
+$
+
+|AxB|   |   |   |
+|---|---|---|---|
+| | 1, 4 | 1, 5 | 1, 6 |
+| | 2, 4 | 2, 5 | 2, 6 |
+| | 3, 4 | 3, 5 | 3, 6 |
+
+```python
+AxB = [(a, b) for a in A for b in B]
+```
+
+or associate pairwise elements using the `zip` function.
+
+|$A \Delta B$|   |   |   |
+|---|---|---|---|
+| | 1, 4 |      |      |
+| |      | 2, 5 |
+| |      |      | 3, 6 |
+
+$
+A = [a_0, a_1, a_2] \\
+B = [b_0, b_1, b_2] \\
+A\DeltaB = [ (a_i; b_i) \mid i < min(|A|, |B|) ]
 $
 
 ```python
@@ -303,3 +376,54 @@ D = zip(A, B)
 print(D)
 ```
 
+Exercise: can you materialize the zip object into a list?
+<!-- D = list(D) -->
+
+```python
+# Use this cell for the exercise
+
+```
+
+
+## The itertools module
+
+The itertools module provides advanced tools for working with collections.
+
+```python
+import itertools
+from itertools import product, permutations, combinations
+```
+
+You can create combinations, permutations, and cartesian products.
+
+```python
+A = [1, 2, 3]
+B = [0, 1]
+n = len(A)
+k = 2
+```
+
+```python
+AxB = product(A, B)
+P_A = permutations(A)
+C_A_2 = combinations(A, k)
+```
+
+Exercise: print the content of the above objects.
+
+```python
+# Use this cell for the exercise
+
+```
+
+Combinations are useful to generate all the possible subsets of a set
+of a given size.
+
+Can you fix the expression below and compute its value?
+
+<!-- len(permutations(A)) == math.factorial(l) -->
+<!-- r == math.factorial(k)*math.factorial(n-k) -->
+
+```python
+r = len(P_A) / len(C_A_2)
+```
