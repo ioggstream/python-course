@@ -41,7 +41,7 @@ mail_delivered = "May 31 08:00:00 test-fe1 postfix/smtp[16669]: 7CD8E730020: rem
 def create_wuerstelstrasse(dirname="/tmp"):
     """Creates 3 files using cp1252 encoding
 
-       @param dirname - The base directory, default '/tmp'
+    @param dirname - The base directory, default '/tmp'
     """
     from os.path import isdir
 
@@ -54,7 +54,7 @@ def create_wuerstelstrasse(dirname="/tmp"):
 def create_espana(dirname="/tmp"):
     """Creates 3 files using cp1252 encoding
 
-       @param dirname - The base directory, default '/tmp'
+    @param dirname - The base directory, default '/tmp'
     """
     from os.path import isdir
 
@@ -65,8 +65,8 @@ def create_espana(dirname="/tmp"):
 
 
 def touch_encoded_filenames(dirname, prefix, ext="txt", encoding="utf-8"):
-    """ Create filenames with a given encoding
-         Python2 default encoding is ascii.
+    """Create filenames with a given encoding
+    Python2 default encoding is ascii.
     """
     from os.path import join as pjoin
 
@@ -95,8 +95,8 @@ diskstats_headers = (
 
 def sh(cmd):
     """A quick and dirty check_output wrapper.
-        Use shlex to honor quoted spaces
-        like "my document.docx"
+    Use shlex to honor quoted spaces
+    like "my document.docx"
     """
     from shlex import split
     from subprocess import check_output
@@ -107,8 +107,8 @@ def sh(cmd):
 def grep(expr, fpath):
     """grep reloaded with regular expressions and path normalization
 
-        GOAL: re.search matches anywhere (eg. '.*XXX.*')
-                re.match matches from the beginning of the line.
+    GOAL: re.search matches anywhere (eg. '.*XXX.*')
+            re.match matches from the beginning of the line.
 
     """
     import os
@@ -132,7 +132,7 @@ def igrep(expr, iterable):
 #
 def in_chunks(dataset, size=10):
     """Split dataset in bins of a given size
-       @return a generator
+    @return a generator
     """
     for i in range(0, len(dataset), size):
         yield dataset[i : i + size]

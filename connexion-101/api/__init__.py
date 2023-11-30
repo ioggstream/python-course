@@ -13,14 +13,14 @@ def forward_token():
 
 def get_hello():
     """Connexion processes the yaml, and
-         executes `get_hello`
+    executes `get_hello`
     """
     return {"hello": "world"}
 
 
 def get_hello_auth():
     """Connexion processes the yaml, and
-         executes `get_hello`
+    executes `get_hello`
     """
     return {"hello": "world"}
 

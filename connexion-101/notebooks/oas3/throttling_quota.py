@@ -8,11 +8,11 @@ from flask import request
 
 
 class ThrottlingQuota:
-    """ A simple class to implement quota.
+    """A simple class to implement quota.
 
-        BEWARE: It's a tutorial function, don't use in production!
-                this is not thread-safe nor process-aware and
-                stores everything in a dict().
+    BEWARE: It's a tutorial function, don't use in production!
+            this is not thread-safe nor process-aware and
+            stores everything in a dict().
     """
 
     def __init__(self, ttl, limit):
@@ -65,7 +65,7 @@ def throttle_user(user):
 def throttle(wrapped):
     """A decorator to apply throttling policies.
 
-        BEWARE: It's a tutorial function, don't use in production.
+    BEWARE: It's a tutorial function, don't use in production.
     """
 
     @wraps(wrapped)

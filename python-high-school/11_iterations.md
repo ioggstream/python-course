@@ -8,7 +8,6 @@ Lesson 3: Iterations
 - Iterations: `for`
 - Iterations: `while`
 
-
 ## Conditions: `if`
 
 Python can evaluate conditions using `if` statements.
@@ -139,30 +138,10 @@ while ...:
     ...
 ```
 
-Exercise: write a loop that prints all the prime factors of $n=100$, i.e. $2; 2; 5; 5;$.
-
-```python
-n = 100
-q = 2
-while ...:
-    if ...:
-        print(q, end="; ")
-    ...
-
-```
-<!--
-n = 100
-q = 2
-while n>1:
-    if n%q == 0:
-        print(q, end="; ")
-        n //= q
-    else:
-        q += 1 -->
 ---
 
-`while` can use an iterable to check if there are more elements.
 
+`while` can use an iterable to check if there are more elements.
 
 ```python
 a_list = ['is', 'iterable', 'with']
@@ -183,3 +162,55 @@ for x in a_list:
     print((x + a_list.pop()))
 # for + pop() is not always a good idea ;)
 ```
+
+---
+
+## Prime numbers
+
+A prime number is a number that can be divided only by 1 and itself.
+
+$
+p \in \mathbb{N} \text{ is prime } \iff \forall q \in \mathbb{N} \text{ if } q \mid p \text{ then } q = 1 \text{ or } q = p
+$
+
+Exercise: write a loop that prints all the prime factors of $n=100$, i.e. $2; 2; 5; 5;$.
+
+```python
+n = 100
+q = 2
+while ...:
+    if ...:
+        print(q, end="; ")
+    ...
+
+```
+<!--
+n = 100
+q = 2
+while n>1:
+    if n%q == 0:
+        print(q, end="; ")
+        n //= q
+    else:
+        q += 1 -->
+
+Question: do I need to check all the numbers up to $n$?
+
+primes = [2, ]
+def factr(n, primes):
+    q = 2
+    for p in primes:
+        while n % p == 0:
+            print("found", p)
+            yield p
+            n //= p
+    while n>1 and q <= math.sqrt(n)+1:
+        if n%q == 0:
+            primes.append(q)
+            yield q
+            n //= q
+        else:
+            q += 1
+    if n>1:
+        primes.append(n)
+    yield n

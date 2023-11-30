@@ -7,11 +7,11 @@ from . import grep
 def linux_diskstats(disk):
     """Get I/O information from /proc/diskstats
 
-       @param disk def sda
-       goal: usage of time.sleep
-       goal: usage of dict.setdefault
-       goal: use string concatenation to increase readability
-       goal: use *magic with print+sep, splitting and slicing
+    @param disk def sda
+    goal: usage of time.sleep
+    goal: usage of dict.setdefault
+    goal: use string concatenation to increase readability
+    goal: use *magic with print+sep, splitting and slicing
     """
     from time import sleep
 

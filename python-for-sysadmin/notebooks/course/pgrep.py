@@ -10,7 +10,7 @@ def igrep(expr, iterable):
 
 def system_info_from_command_output_solution():
     """Exercise: write a multiplatform
-        pgrep-like function
+    pgrep-like function
     """
 
     def pgrep(expr):

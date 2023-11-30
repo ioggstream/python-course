@@ -12,8 +12,8 @@ basedir = "/tmp/course"
 def simple_path_management():
     """S1 Show multiplatform path management
 
-        goal: sys.platform shows the current operating system
-        goal: os.path.normpath fixes the "/" orientation
+    goal: sys.platform shows the current operating system
+    goal: os.path.normpath fixes the "/" orientation
 
     """
     # .1- The os.path module seems verbose
@@ -36,16 +36,16 @@ def simple_path_management():
 def create_and_move_tree():
     """S2
 
-        modules: os.path, shutil, errno
-        goal: manage directory trees
-        goal: manage basic errors
+    modules: os.path, shutil, errno
+    goal: manage directory trees
+    goal: manage basic errors
 
-        os.path can be used to test file existence
-        while os and shutil supports basic file operations
-        like recursive copy and tree creation.
+    os.path can be used to test file existence
+    while os and shutil supports basic file operations
+    like recursive copy and tree creation.
 
-        We can use exception handlers to check
-         what happened.
+    We can use exception handlers to check
+     what happened.
     """
     from os import makedirs
     from os.path import isdir
