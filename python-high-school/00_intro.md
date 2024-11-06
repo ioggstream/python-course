@@ -177,7 +177,7 @@ Exercise: use the cell below to compute the following values:
 **An historical note**
 
 Computers, for performance reasons, use memory in chunks called blocks or pages:
-for example, you can't use a single bit of memory similarly to how you can't
+for example, you can't use a single *bit* of memory similarly to how you can't
 use a single line of your notebook 📓.
 
 For this reason, it is convenient to use powers of $2^{10}$ to represent the size of files and memory.
@@ -185,7 +185,7 @@ They are called "kibi (Ki)", "mebi (Mi)", "gibi (Gi)", etc., to avoid confusion 
 which are called
 "kilo (k)", "mega (Mi)", "giga (Gi)", and so on.
 
-The unit of measure of information is the Byte $B$.
+The unit of measure of information is the *Byte* $B$.
 Its multiples can be expressed in powers of $10^3$:
 
 $$
@@ -292,8 +292,8 @@ Exercise:
 
 Questions:
 
-- What is a bit?
-- What is a byte?
+- What is a *bit*?
+- What is a *byte*?
 - Why in the computer world the hex notation is very common?
 
 ---
