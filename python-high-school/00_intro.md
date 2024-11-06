@@ -165,7 +165,7 @@ print(2 * c)
 Exercise: use the cell below to compute the following values:
 
 - the remainder of 12 / 5
-- $3 \dot 8; 2^{10}; 2^{20}; 2^{30}$
+- $3 \cdot 8; 2^{10}; 2^{20}; 2^{30}$
 - $ \frac{[1 + (1/3 + 1/4)] + 1/5}{6} $
 
 ```python
@@ -177,11 +177,12 @@ Exercise: use the cell below to compute the following values:
 **An historical note**
 
 Computers, for performance reasons, use memory in chunks called blocks or pages:
-for example you can't use a single bit of memory similarly to how you can't
-use a single line of your notebook.
+for example, you can't use a single bit of memory similarly to how you can't
+use a single line of your notebook 📓.
 
-For this reasom it is convenient to use powers of $2^{10}$ to represent the size of files and memory.
-They are called "kibi (Ki)", "mebi (Mi)", "gibi (Gi)", .. to avoid confusion with the powers of $10^{3}$, that are called
+For this reason, it is convenient to use powers of $2^{10}$ to represent the size of files and memory.
+They are called "kibi (Ki)", "mebi (Mi)", "gibi (Gi)", etc., to avoid confusion with the powers of $10^{3}$,
+which are called
 "kilo (k)", "mega (Mi)", "giga (Gi)", and so on.
 
 The unit of measure of information is the Byte $B$.
@@ -246,12 +247,14 @@ $
 Examples:
 
 $
-12_{10} = 2 \cdot 10^0 + 1 \cdot 10^1 = 12 \\
-101_{2} = 1 \cdot 2^0 + 0 \cdot 2^1 + 1 \cdot 2^2 = 5_{10} \\
-200_{3} = 0 \cdot 3^0 + 0 \cdot 3^1 + 2 \cdot 3^2 = 18_{10} \\
-9_{16} = 9 \cdot 16^0 = 9_{10} \\
-A_{16} = 10 \cdot 16^0 = 10_{10} \\
-FF_{16} = 15 \cdot 16^0 + 15 \cdot 16^1 = 255_{10} \\
+\begin{align}
+& 12_{10} = 2 \cdot 10^0 + 1 \cdot 10^1 = 12 \\
+& 101_{2} = 1 \cdot 2^0 + 0 \cdot 2^1 + 1 \cdot 2^2 = 5_{10} \\
+& 200_{3} = 0 \cdot 3^0 + 0 \cdot 3^1 + 2 \cdot 3^2 = 18_{10} \\
+& 9_{16} = 9 \cdot 16^0 = 9_{10} \\
+& A_{16} = 10 \cdot 16^0 = 10_{10} \\
+& FF_{16} = 15 \cdot 16^0 + 15 \cdot 16^1 = 255_{10} \\
+\end{align}
 $
 
 Exercise:

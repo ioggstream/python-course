@@ -1,4 +1,4 @@
-FILES=$(wildcard *.md)
+FILES = $(wildcard *.md)
 BOOKS = $(patsubst %.md,notebooks/%.ipynb,$(FILES))
 
 
