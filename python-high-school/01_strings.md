@@ -22,7 +22,7 @@ another_string = 'I "love" python'
 ```
 
 A string is a finite, ordered sequence of typographic characters
-(e.g., from an alphabet, like the one thaught at school).
+(e.g., from an alphabet, like the one taught at school).
 
 Exercises: finite strings using an alphabet $\Sigma : |\Sigma| = k$.
 
