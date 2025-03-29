@@ -20,10 +20,15 @@ In maths, a set is a collection of distinct objects.
 
 ```python
 # In python you can create sets.
-EMPTY = {}  # ø is the empty set
 A = {1, 2, 3}
 B = {3, 4, 5, "a"}  # sets can contain different types
 C = { A }   # a set can contain other sets
+```
+
+The empty set can be created using `set()`.
+
+```python
+EMPTY = set()  # ø is the empty set
 ```
 
 Here is an image from Wikipedia:
