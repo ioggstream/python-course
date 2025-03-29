@@ -198,6 +198,16 @@ $$
 1 kibibyte = 1 KiB = 2^{10} B = 1024 B
 $$
 
+Exercise:
+
+- how many KiB are in 1KB?
+
+```python
+# Use this cell for the exercise.
+one_KB = 1e3
+one_KB_in_KiB = ...
+```
+
 Nowadays it is very important to know the difference between the two units:
 when you buy an hard disk of 500GB, you are getting only 465GiB!
 
@@ -207,20 +217,24 @@ Exercise:
 
 - you bought a 1TB hard disk: how many bytes can you store on it?
 
-  ```python
-  # Use this cell for the exercise.
-  size_B = ...
-  ```
+```python
+# Use this cell for the exercise.
+size_B = ...
+```
 
 - How many GiB can you store on it? Hint: reuse the `size_B` variable.
 
-  ```python
-  # Use this cell for the exercise.
-  size_GiB = ...
-  ```
+```python
+# Use this cell for the exercise.
+size_GiB = ...
+```
 
 - check the advertised size of your devices (phone, tablet, computer)
   and compute the difference between the one in $GiB$.
+
+```python
+# Use this cell for the exercise
+```
 
 ---
 
