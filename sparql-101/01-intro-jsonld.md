@@ -2,13 +2,14 @@
 
 ## Agenda
 
+- Knowledge management
 - Semantics what?
 - Triples & co
 - Attaching semantics
 - Graph databases
 - JsonLD
 
-*Beware*: commands contain small typos. You must fix them to properly complete the course!
+*Beware*: commands may contain small typos. You have to fix them to properly complete the course!
 
 ----
 
@@ -19,6 +20,86 @@ Prerequisites:
 - SQL and database hints
 
 ---
+
+## Intro: What is knowledge?
+
+Knowledge is a set of information that is useful for a given purpose.
+
+We express knowledge through language and symbols
+in various forms: text, images, and sounds.
+
+To use knowledge we need to:
+
+- sense;
+- interpret;
+- understand.
+
+When reading a book, for example, we not only need to read and understand the words,
+but also to interpret the meaning of the sentences and paragraphs
+based on the context and our previous knowledge.
+
+----
+
+## Intro: The Encyclopedia
+
+The Encyclopedia was one of the first attempts to organize knowledge,
+and to make it available to the public.
+
+Today, we have various encyclopedias on the web,
+such as Wikipedia and dbpedia.
+
+Exercise: open the "Python" page on dbpedia:
+
+- https://dbpedia.org/page/Python_(programming_language)
+
+And on Wikidata:
+
+- https://www.wikidata.org/wiki/Q28865
+
+----
+
+## Intro: The Encyclopedia
+
+Knowledge is organized in a graph structure,
+where each node is a concept and the edges are the relationships between them.
+
+```mermaid
+graph LR
+
+subgraph dbpedia[DBpedia]
+  dbr:Python[Python] -->|designer| dbr:gvr[Guido van Rossum]
+  dbr:Python[Python] -->|operating System| dbr:win[Windows] & dbr:linux[Linux] & ...
+  dbr:gvr -->|born| dbr:nl[Netherlands]
+end
+
+subgraph wikidata[WikiData]
+  wd:Q30942[Guido van Rossum] ---|developer| wd:Q28865[Python]
+  wd:Q16402[Monty Python] ---|named after| wd:Q28865
+end
+
+wd:Q28865 -.-|same as| dbr:Python
+wd:Q30942 -.-|same as| dbr:gvr
+```
+
+This is the basis of the Semantic Web,
+where knowledge is represented in a machine-readable format,
+but it is also the basis of the Web itself
+(e.g., see [Web Linking RFC 8288](https://datatracker.ietf.org/doc/html/rfc8288)).
+
+
+
+```python
+# Get a voice from dbpedia using rdflib
+from rdflib import Graph, Namespace, URIRef
+
+# Create a Graph and load Dog data in Turtle format from DBpedia
+g = Graph()
+g.parse("http://dbpedia.org/data/Dog.ttl", format="turtle")
+
+
+
+```
+
 
 ## Intro: Semantics what?
 
@@ -55,8 +136,7 @@ C((Data source 3)) ---Cm --> B
 ----
 
 Identifiers may differ between systems,
-and even registry data is not always interoperable.
-
+and even registry data are not always interoperable.
 
 ```mermaid
 graph LR
@@ -68,14 +148,15 @@ A((Data source 1)) ---Am --> B
 C((Data source 3)) ---Cm --> B
 ```
 
-
 ----
 
-The lack of standardization in the format and meaning of data hinders interoperability between the databases of different organizations, and even inside different branches of the same organization,
+The lack of standardization in the format and meaning of data
+hinders interoperability between the databases of different organizations,
+and even inside different branches of the same organization,
 and therefore the creation of digital services.
 
 A first example is the lack of syntactic interoperability:
-a well-defined entity (eg. The tax code) is represented with different fields or formats:
+a well-defined entity (eg. the tax code) is represented with different fields or formats:
 
 ```
 {"tax_code": "MRORSS77T05E472W"}
@@ -85,7 +166,7 @@ a well-defined entity (eg. The tax code) is represented with different fields or
 
 ----
 
-Another example is semantic interoperability: the concept of family has different meanings (eg. Tax, registry):
+Another example is semantic interoperability: the concept of family has different meanings (eg. in the fiscal domain, in the registry domain, ..):
 
 ```
 {"relatives": [
@@ -100,7 +181,20 @@ Another example is semantic interoperability: the concept of family has differen
 
 ---
 
-## Semantic standardization
+## Vocabularies to the rescue
+
+Controlled Vocabularies use URIs to disambiguate the meaning of terms and provide semantics.
+
+Every term is identified by an absolute URI.
+The prefix identifies the vocabulary name,
+and the suffix identifies the term.
+
+```python
+
+dog_uri = "https://dbpedia.org/data/Dog"
+
+```
+
 
 To semantically standardize data, services and their content, conceptual tools such as ontologies and controlled vocabularies (codelist, taxonomies, ..) are used.
 
@@ -108,7 +202,8 @@ Ontology: an ontology is a set of logical axioms that conceptualize a domain of 
 
 When ontologies contain further restrictions (e.g.,
 
-Controlled vocabulary: a vocabulary where the terms are validated by a designated authority.It can be of different types - EG.A list (codelist), a hierarchical structure (taxonomy), a glossary and a tesauro (which adds further constraints to a taxonomy).
+Controlled vocabulary: a vocabulary where the terms are validated by a designated authority.
+It can be of different types - EG.A list (codelist), a hierarchical structure (taxonomy), a glossary and a tesauro (which adds further constraints to a taxonomy).
 
 Examples of European controlled vocabularies are found here https://op.europa.eu/en/web/eu-vocabularies/controlled-vocabularies
 
