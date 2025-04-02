@@ -1,16 +1,34 @@
+import re
+
 import networkx as nx
 from bokeh.io import output_notebook, show
-from bokeh.models import Circle, ColumnDataSource, LabelSet, MultiLine
+from bokeh.models import Circle, ColumnDataSource, HoverTool, LabelSet, MultiLine
 from bokeh.plotting import figure, from_networkx
 from rdflib import Graph
 from rdflib.extras.external_graph_libs import rdflib_to_networkx_multidigraph
-import re
+
 # Make sure your notebook displays bokeh plots inline
 output_notebook()
+from bokeh.models import (
+    BoxSelectTool,
+    Circle,
+    EdgesAndLinkedNodes,
+    HoverTool,
+    MultiLine,
+    NodesAndLinkedEdges,
+    TapTool,
+)
+from bokeh.palettes import Spectral4
 
 
 def plot_graph(
-    g, label_property=None, layout=nx.circular_layout, limit : int=0, pattern=None
+    g,
+    label_property=None,
+    layout=nx.circular_layout,
+    limit: int = 0,
+    pattern=None,
+    line_color="gray",
+    fig=None,
 ) -> figure:
     # Convert the RDF Graph to a NetworkX MultiDiGraph
     f = Graph()
@@ -26,28 +44,38 @@ def plot_graph(
     if not count:
         raise ValueError("No triples found matching the pattern.")
 
-    
     G = rdflib_to_networkx_multidigraph(f)
-    plt = figure(title="RDF Graph Visualization with Bokeh")
-
+    fig = fig or figure(title="RDF Graph Visualization with Bokeh")
+    fig.add_tools(HoverTool(tooltips=None), TapTool(), BoxSelectTool())
+    radius = 0.01
     # Convert the networkx graph to a Bokeh graph renderer using the computed layout
     graph_renderer = from_networkx(G, layout, scale=1, center=(0, 0))
-    graph_renderer.node_renderer.glyph = Circle(radius=0.06, fill_color="fill_color")
-    graph_renderer.edge_renderer.glyph = MultiLine(
-        line_color="gray", line_alpha=0.8, line_width=1
+    graph_renderer.node_renderer.glyph = Circle(radius=radius, fill_color="fill_color")
+    graph_renderer.node_renderer.selection_glyph = Circle(
+        radius=3 * radius, fill_color=Spectral4[2]
     )
-    plt.renderers.append(graph_renderer)
+    graph_renderer.node_renderer.hover_glyph = Circle(
+        radius=3 * radius, fill_color=Spectral4[1]
+    )
+
+    graph_renderer.edge_renderer.glyph = MultiLine(
+        line_color=line_color, line_alpha=0.8, line_width=1
+    )
+    graph_renderer.edge_renderer.selection_glyph = MultiLine(
+        line_color="red", line_width=5
+    )
+    graph_renderer.edge_renderer.hover_glyph = MultiLine(line_color="red", line_width=5)
+    graph_renderer.selection_policy = NodesAndLinkedEdges()
+    graph_renderer.inspection_policy = EdgesAndLinkedNodes()
+
+    fig.renderers.append(graph_renderer)
 
     def _node_label(node):
-        try:
-            if ret := g.value(subject=node, predicate=label_property):
-                return str(ret)
-        except Exception:
-            return str(node)
+        return node_label(g, node, label_property)
 
     # Add labels
     x, y = zip(*graph_renderer.layout_provider.graph_layout.values())
-    node_labels = [str(node) for node in G.nodes()]
+    node_labels = [_node_label(node) for node in G.nodes()]
     graph_renderer.node_renderer.data_source.data["node_label"] = node_labels
     source = ColumnDataSource(
         {"x": x, "y": y, "node_label": [node_labels[i] for i in range(len(x))]}
@@ -58,11 +86,31 @@ def plot_graph(
         y="y",
         text="node_label",
         source=source,
-        text_font_size="8pt",
+        #   text_font_size="8pt",
         text_align="center",
     )
-    plt.renderers.append(labels)
+    fig.renderers.append(labels)
 
     # Display the plot in the notebook
-    show(plt)
-    return plt
+    show(fig)
+    return fig
+
+
+def node_label(g, node, label_property=None):
+    try:
+        if ret := g.value(subject=node, predicate=label_property):
+            return str(ret)
+    except Exception:
+        pass
+    return re.split(r"[/:#]", str(node))[-1]
+
+
+from rdflib import URIRef
+from rdflib.namespace import RDFS
+
+
+def test_node_label():
+    g = Graph()
+    g.parse("https://dbpedia.org/data/Tortelloni.n3", format="n3")
+    node = URIRef("http://dbpedia.org/resource/Broth")
+    assert node_label(g, node, RDFS.label) == "Broth"

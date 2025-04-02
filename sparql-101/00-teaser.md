@@ -141,7 +141,8 @@ plot_graph(g, label_property=FOAF.firstName)
 Convert it in [JSON-LD](https://json-ld.org/) format:
 
 ```python
-g.serialize(format="application/ld+json")
+json_text = g.serialize(format="application/ld+json")
+print(json_text)
 ```
 
 There's plenty of knowledge in the web!
@@ -153,14 +154,48 @@ import networkx as nx
 
 g = Graph()
 g.parse("https://dbpedia.org/data/Tortellini.n3", format="n3")
-plot_graph(g, label_property=RDFS.label, layout=nx.spring_layout, limit=30, filter="/dbpedia.org")
+plot_graph(g, label_property=RDFS.label, layout=nx.shell_layout, limit=60, filter=".*/dbpedia.org")
 ```
 
 And we can connect them together
 
 ```python
 # Extend our graph
-g.parse("https://dbpedia.org/data/Tortelloni.n3", format="n3")
+g.parse("https://dbpedia.org/data/Tagliatelle.n3", format="n3")
 
-plot_graph(g, label_property=RDFS.label, layout=nx.spring_layout, limit=30, filter="/dbpedia.org")
+plot_graph(g, label_property=RDFS.label, layout=nx.shell_layout, limit=30, filter=".*/dbpedia.org")
+```
+
+We can also query the graph for Italian food
+
+```python
+g.query("""
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+
+SELECT DISTINCT ?s
+WHERE {
+        ?s a dbo:Food ;
+           ?p dbr:Italy .
+}
+"""
+).bindings
+```
+
+Or ask what do some items have in common
+
+```python
+g.query("""
+PREFIX dbo: <http://dbpedia.org/ontology/>
+
+SELECT DISTINCT ?t
+WHERE {
+        ?s a dbo:Food .
+        ?q a dbo:Food .
+        ?s ?p ?t .
+        ?q ?p ?t .
+        FILTER (?s != ?q)
+}
+"""
+).bindings
 ```
