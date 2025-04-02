@@ -86,20 +86,114 @@ where knowledge is represented in a machine-readable format,
 but it is also the basis of the Web itself
 (e.g., see [Web Linking RFC 8288](https://datatracker.ietf.org/doc/html/rfc8288)).
 
+----
 
+## Intro: The Encyclopedia
+
+The above graph can be expressed by sentences such as:
+
+- Python is named after Monty Python.
+- Guido van Rossum is the designer of Python.
+- Python runs on Linux.
+
+their general form is
+
+```mermaid
+graph LR
+subject((subject)) --- predicate(predicate) --> object
+```
+
+## Intro: The Encyclopedia
+
+Encyclopedia voices on Wikipedia and dbpedia are expressed in
+[Resource Description Framework (RDF)](https://www.w3.org/TR/rdf11-primer/).
+
+It is a formal language to represent knowledge in a machine-readable format
+using triples of the form `subject predicate object`.
+
+Let's translate the above definition from English to RDF:
+
+> Tortellini are a typical Italian food,
+> <br>made with pasta filled with meat such as prosciutto.
+
+becomes something like
+
+```turtle
+:Tortellini a :Food .
+:Tortellini :country dbr:Italy .
+:Tortellini :relatedTo dbr:Prosciutto .
+```
+
+## Exercise: Get a voice from dbpedia
+
+Now, let's get the actual voice from dbpedia
+using the python RDF library.
 
 ```python
 # Get a voice from dbpedia using rdflib
-from rdflib import Graph, Namespace, URIRef
+from rdflib import Graph
 
-# Create a Graph and load Dog data in Turtle format from DBpedia
+# What's Tortellini?
 g = Graph()
-g.parse("http://dbpedia.org/data/Dog.ttl", format="turtle")
-
-
-
+g.parse("https://dbpedia.org/data/Tortellini.ttl", format="turtle")
 ```
 
+We get a graph with the information about Tortellini.
+
+```mermaid
+graph LR
+  subgraph dbpedia[DBpedia]
+    dbr:Tortellini[Tortellini] -->|is a| dbo:Food[Food]
+    dbr:Tortellini -->|related to| dbr:Prosciutto[Prosciutto]
+    dbr:Tortellini -->|country| dbp:Italy[Italy]
+    ...
+  end
+```
+
+An encyclopedia voice contains a list of sentences :)
+
+```python
+# List all the details about Tortellini.
+sentences = list(g)
+
+print('\n'.join([str(s) for s in sentences]))
+```
+
+Exercise:
+
+- how many sentences are there?
+- how many elements does each sentence have?
+
+
+----
+
+```python
+from rdflib.namespace import RDF, RDFS, FOAF
+
+# Now we get specific properties from the graph.
+_type = list(g.objects(predicate=RDF.type))
+print(_type)
+```
+
+
+```python
+import rdflib
+from rdflib.extras.external_graph_libs import rdflib_to_networkx_multidigraph
+import networkx as nx
+import matplotlib.pyplot as plt
+
+G = rdflib_to_networkx_multidigraph(g)
+
+# Plot Networkx instance of RDF Graph
+pos = nx.spring_layout(G, scale=2)
+edge_labels = nx.get_edge_attributes(G, 'r')
+nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels)
+nx.draw(G, with_labels=True)
+
+#if not in interactive mode for 
+plt.show()
+
+```
 
 ## Intro: Semantics what?
 
@@ -110,7 +204,7 @@ messages include data and HTTP exchanges.
 
 Here are some ambiguous messages:
 
-```
+```yaml
 name: FABIANO Romildo
 income: 4_000_000
 ```
@@ -122,6 +216,7 @@ Is it a monthly or yearly income?
 ----
 
 Integrating data from different sources is difficult because of the lack of semantic interoperability.
+
 
 ```mermaid
 graph LR
@@ -168,15 +263,19 @@ a well-defined entity (eg. the tax code) is represented with different fields or
 
 Another example is semantic interoperability: the concept of family has different meanings (eg. in the fiscal domain, in the registry domain, ..):
 
+```yaml
+relatives:
+  - name: Mario Rossi
+    relationship: father
+  - name: Carla Rossi
+    relationship: sister
+    cohabiting: false
 ```
-{"relatives": [
-  {"nome": "Mario Rossi", "relationship": "padre"},
-  {"nome": "Carla Rossi", "relationship": "sorella" , "cohabiting": false}   ]
-  }
 
-{"relatives": [
-  {"nome": "Mario Rossi", "relationship": "padre"} ]
-}
+```yaml
+relatives:
+  - name: Mario Rossi
+    relationship: padre
 ```
 
 ---
@@ -319,7 +418,7 @@ JSON-LD inoltre *estende* RDF per permettere la serializzazione di dataset RDF g
 ----
 Dato un oggetto JSON
 
-```
+```yaml
 id: robipolli@gmail.com
 given_name: Roberto
 family_name: Polli
@@ -327,7 +426,7 @@ family_name: Polli
 
 JSON-LD permette di trasformarlo in un grafo RDF associandogli un contesto.
 
-```
+```yaml
 "@context":
   cpv: "https://w3id.org/italia/onto/CPV"
   given_name: "cpv:givenName"
