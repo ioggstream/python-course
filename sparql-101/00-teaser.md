@@ -104,7 +104,7 @@ In this course, we will learn how to describe information in a
 machine-readable way using RDF.
 
 ```python
-%pip install rdflib bokeh
+%pip install rdflib bokeh networkx
 ```
 
 For example network of persons:
