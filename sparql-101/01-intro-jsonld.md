@@ -190,7 +190,7 @@ edge_labels = nx.get_edge_attributes(G, 'r')
 nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels)
 nx.draw(G, with_labels=True)
 
-#if not in interactive mode for 
+#if not in interactive mode for
 plt.show()
 
 ```

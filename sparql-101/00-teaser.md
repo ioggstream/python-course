@@ -120,7 +120,7 @@ PREFIX : <urn:simpsons:>
 
 :Homer foaf:knows :Marge, :Lisa, :Bart, :Maggie;
   foaf:interest <https://dbpedia.org/page/Beer>;
-  foaf:name "Homer";
+  foaf:name "Homer".
 
 :Lisa foaf:name "Lisa";
   foaf:interest <https://dbpedia.org/page/Jazz> .
@@ -134,41 +134,6 @@ g.parse(data=sentences, format="turtle")
 Now render a graph
 
 ```python
-from bokeh.io import output_notebook, show
-from bokeh.plotting import figure, from_networkx
-from bokeh.models import Circle, MultiLine, Ellipse
-import networkx as nx
-from rdflib.extras.external_graph_libs import rdflib_to_networkx_multidigraph
-
-# Make sure your notebook displays bokeh plots inline
-output_notebook()
-```
-
-```python
-# Convert the RDF Graph to a NetworkX MultiDiGraph
-G = rdflib_to_networkx_multidigraph(g)
-plot = figure(title="RDF Graph Visualization with Bokeh")
-
-# Convert the networkx graph to a Bokeh graph renderer using the computed layout
-graph_renderer = from_networkx(G, nx.circular_layout, scale=1, center=(0, 0))
-graph_renderer.node_renderer.glyph = Circle(radius=0.06, fill_color="fill_color")
-graph_renderer.edge_renderer.glyph = MultiLine(line_color="gray", line_alpha=0.8, line_width=1)
-plot.renderers.append(graph_renderer)
-
-# Add labels
-x, y = zip(*graph_renderer.layout_provider.graph_layout.values())
-node_labels = [str(g.value(subject=node, predicate=FOAF.name) or node) for node in G.nodes()]
-source = ColumnDataSource({'x': x, 'y': y,
-graph_renderer.node_renderer.data_source.data['node_label'] = node_labels
-                           'node_label': [node_labels[i] for i in range(len(x))]})
-
-labels = LabelSet(x='x', y='y', text='node_label', 
-                  source=source,
-                  text_font_size="8pt",
-                  text_align="center"
-                  )
-plot.renderers.append(labels)
-
-# Display the plot in the notebook
-show(plot)
+from tools import plot_graph
+plot_graph(g, label_property=FOAF.name)
 ```
