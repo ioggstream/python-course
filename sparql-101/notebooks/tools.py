@@ -1,6 +1,7 @@
 import re
 
 import networkx as nx
+import pandas as pd
 from bokeh.io import output_notebook, show
 from bokeh.models import Circle, ColumnDataSource, HoverTool, LabelSet, MultiLine
 from bokeh.plotting import figure, from_networkx
@@ -12,7 +13,6 @@ output_notebook()
 from bokeh.models import (
     BoxSelectTool,
     Circle,
-    EdgesAndLinkedNodes,
     HoverTool,
     MultiLine,
     NodesAndLinkedEdges,
@@ -21,10 +21,21 @@ from bokeh.models import (
 from bokeh.palettes import Spectral4
 
 
+def default_layout(G):
+    df = pd.DataFrame(index=G.nodes(), columns=G.nodes())
+    for row, data in nx.shortest_path_length(G):
+        for col, dist in data.items():
+            df.loc[row, col] = dist
+
+    df = df.fillna(df.max().max())
+
+    return nx.kamada_kawai_layout(G, dist=df.to_dict())
+
+
 def plot_graph(
     g,
     label_property=None,
-    layout=nx.circular_layout,
+    layout=None,
     limit: int = 0,
     pattern=None,
     line_color="gray",
@@ -47,15 +58,35 @@ def plot_graph(
     G = rdflib_to_networkx_multidigraph(f)
     fig = fig or figure(title="RDF Graph Visualization with Bokeh")
     fig.add_tools(HoverTool(tooltips=None), TapTool(), BoxSelectTool())
-    radius = 0.01
+
+    # Generate a customized layout if not provided.
+    if not layout:
+        layout = default_layout(G)
+
+    # Calculate node degrees
+    degrees = dict(G.degree())
+    max_degree = max(degrees.values()) if degrees else 1
+
     # Convert the networkx graph to a Bokeh graph renderer using the computed layout
     graph_renderer = from_networkx(G, layout, scale=1, center=(0, 0))
-    graph_renderer.node_renderer.glyph = Circle(radius=radius, fill_color="fill_color")
+
+    # Normalize node sizes based on degree
+    # Add node sizes to the data source
+    node_sizes = {
+        node: 0.01 + (degree / max_degree) * 0.05 for node, degree in degrees.items()
+    }
+    graph_renderer.node_renderer.data_source.data["node_size"] = [
+        node_sizes[node] for node in G.nodes()
+    ]
+
+    graph_renderer.node_renderer.glyph = Circle(
+        radius="node_size", fill_color="fill_color"
+    )
     graph_renderer.node_renderer.selection_glyph = Circle(
-        radius=3 * radius, fill_color=Spectral4[2]
+        radius="node_size", fill_color=Spectral4[2]
     )
     graph_renderer.node_renderer.hover_glyph = Circle(
-        radius=3 * radius, fill_color=Spectral4[1]
+        radius="node_size", fill_color=Spectral4[1]
     )
 
     graph_renderer.edge_renderer.glyph = MultiLine(
@@ -66,7 +97,7 @@ def plot_graph(
     )
     graph_renderer.edge_renderer.hover_glyph = MultiLine(line_color="red", line_width=5)
     graph_renderer.selection_policy = NodesAndLinkedEdges()
-    graph_renderer.inspection_policy = EdgesAndLinkedNodes()
+    graph_renderer.inspection_policy = NodesAndLinkedEdges()
 
     fig.renderers.append(graph_renderer)
 
@@ -114,3 +145,8 @@ def test_node_label():
     g.parse("https://dbpedia.org/data/Tortelloni.n3", format="n3")
     node = URIRef("http://dbpedia.org/resource/Broth")
     assert node_label(g, node, RDFS.label) == "Broth"
+
+
+def test_inputsource():
+    g = Graph()
+    g.parse("https://dbpedia.org/data/Tortelloni.n3", format="n3")
