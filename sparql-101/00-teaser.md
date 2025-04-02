@@ -107,7 +107,7 @@ machine-readable way using RDF.
 %pip install rdflib bokeh
 ```
 
-For example a person:
+For example network of persons:
 
 ```python
 from rdflib import Graph
@@ -120,20 +120,47 @@ PREFIX : <urn:simpsons:>
 
 :Homer foaf:knows :Marge, :Lisa, :Bart, :Maggie;
   foaf:interest <https://dbpedia.org/page/Beer>;
-  foaf:name "Homer".
+  foaf:firstName "Homer".
 
-:Lisa foaf:name "Lisa";
+:Lisa foaf:firstName "Lisa";
   foaf:interest <https://dbpedia.org/page/Jazz> .
 
 """
 
 g = Graph()
-g.parse(data=sentences, format="turtle")
+g.parse(data=sentences, format="text/turtle")
 ```
 
-Now render a graph
+... eventually rendered as a graph ...
 
 ```python
 from tools import plot_graph
-plot_graph(g, label_property=FOAF.name)
+plot_graph(g, label_property=FOAF.firstName)
+```
+
+Convert it in [JSON-LD](https://json-ld.org/) format:
+
+```python
+g.serialize(format="application/ld+json")
+```
+
+There's plenty of knowledge in the web!
+
+```python
+from rdflib import Graph
+from rdflib.namespace import RDFS
+import networkx as nx
+
+g = Graph()
+g.parse("https://dbpedia.org/data/Tortellini.n3", format="n3")
+plot_graph(g, label_property=RDFS.label, layout=nx.spring_layout, limit=30, filter="/dbpedia.org")
+```
+
+And we can connect them together
+
+```python
+# Extend our graph
+g.parse("https://dbpedia.org/data/Tortelloni.n3", format="n3")
+
+plot_graph(g, label_property=RDFS.label, layout=nx.spring_layout, limit=30, filter="/dbpedia.org")
 ```
