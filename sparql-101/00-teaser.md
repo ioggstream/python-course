@@ -21,7 +21,17 @@ In this course, we will learn how to describe information in a
 machine-readable way using RDF.
 
 ```python
-%pip install rdflib bokeh networkx
+%pip install rdflib
+```
+
+(and some graph libraries)
+
+```python
+%pip install bokeh
+```
+
+``python
+%pip install networkx
 ```
 
 For example network of persons:
@@ -84,13 +94,13 @@ g.parse(data=get("https://dbpedia.org/data/Tagliatelle.n3").text, format="n3")
 plot_graph(g, label_property=RDFS.label, layout=nx.shell_layout, limit=30, filter=".*/dbpedia.org")
 ```
 
-Graphs contains a lot of senteces
+Graphs contain a lot of senteces
 
 ```python
 len(g)
 ```
 
-but we can query them
+but we can query them (e.g., for Italian food)
 
 ```python
 g.query("""
@@ -119,4 +129,72 @@ WHERE {
 }
 """
 ).bindings
+```
+
+We can query remote graphs (e.g., DBPedia):
+
+```python
+dbpedia = Graph(store="SPARQLStore")
+dbpedia.open("https://dbpedia.org/sparql")
+
+dbpedia.query("""
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?subject ?label
+WHERE {
+    ?subject a dbo:Food ;
+             rdfs:label ?label
+    FILTER (lang(?label) = 'en')
+    .
+}
+LIMIT 10
+""").bindings
+```
+
+Provided by different organizations
+
+```python
+eu = Graph(store="SPARQLStore")
+eu.open("https://publications.europa.eu/webapi/rdf/sparql")
+
+eu.query("""
+PREFIX euvoc: <http://publications.europa.eu/resource/authority/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?URI, ?concept, ?identifier
+WHERE {
+ ?URI skos:inScheme euvoc:country ;
+ skos:prefLabel ?concept ;
+ dc:identifier ?identifier
+ FILTER(lang(?concept) = 'en')
+}
+LIMIT 5
+
+""").bindings
+```
+
+And their relations
+
+```python
+eu.query("""
+PREFIX euvoc: <http://publications.europa.eu/resource/authority/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX dct: <http://purl.org/dc/terms/>
+
+# Construct a graph of countries and their identifiers related by dct:replaces
+# countries must be in the euvoc:country scheme.
+
+CONSTRUCT { ?a dct:replaces ?b}
+WHERE {
+ ?a skos:inScheme euvoc:country.
+ ?b skos:inScheme euvoc:country.
+ ?a dct:replaces ?b .
+}
+
+LIMIT 5
+
+""").bindings
 ```
