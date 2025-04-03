@@ -114,3 +114,8 @@ def test_node_label():
     g.parse("https://dbpedia.org/data/Tortelloni.n3", format="n3")
     node = URIRef("http://dbpedia.org/resource/Broth")
     assert node_label(g, node, RDFS.label) == "Broth"
+
+
+def test_inputsource():
+    g = Graph()
+    g.parse("https://dbpedia.org/data/Tortelloni.n3", format="n3")
