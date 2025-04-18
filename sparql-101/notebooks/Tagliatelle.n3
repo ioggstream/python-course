@@ -1,0 +1,248 @@
+@prefix dbo:	<http://dbpedia.org/ontology/> .
+@prefix dbr:	<http://dbpedia.org/resource/> .
+dbr:Beat_Bobby_Flay	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+<http://dbpedia.org/resource/Hell\u0027s_Kitchen_Australia>	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+dbr:Lombard_cuisine	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+dbr:Italian_cuisine	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+dbr:Prosciutto	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+<http://dbpedia.org/resource/Bavette_(pasta)>	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+dbr:Maltagliati	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+dbr:Cuisine_of_Mantua	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+dbr:Chinese_noodles	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+dbr:Anna_Del_Conte	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+dbr:Cannalonga	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+@prefix foaf:	<http://xmlns.com/foaf/0.1/> .
+@prefix wikipedia-en:	<http://en.wikipedia.org/wiki/> .
+wikipedia-en:Tagliatelle	foaf:primaryTopic	dbr:Tagliatelle .
+dbr:Emilia-Romagna	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+dbr:Durum	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+dbr:Noodle	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+dbr:Molise	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+dbr:Gratin	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+dbr:Italian_food_products	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+dbr:List_of_English_words_of_Italian_origin	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+<http://dbpedia.org/resource/Harveys_(restaurant)>	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+dbr:Pizzoccheri	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+@prefix gold:	<http://purl.org/linguistics/gold/> .
+dbr:Pizzoccheri	gold:hypernym	dbr:Tagliatelle .
+dbr:Tumact_me_tulez	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+@prefix dbp:	<http://dbpedia.org/property/> .
+dbr:Tumact_me_tulez	dbp:mainIngredient	dbr:Tagliatelle ;
+	dbo:ingredient	dbr:Tagliatelle .
+dbr:Maurizio_Mosca	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+dbr:List_of_pasta_dishes	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+dbr:Griko_people	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+dbr:Argentine_cuisine	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+dbr:Pasta_primavera	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+<http://dbpedia.org/resource/Manuel_V\u00E1zquez_Montalb\u00E1n>	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+dbr:Fridge_Wars	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+<http://dbpedia.org/resource/Hell\u0027s_Kitchen_(American_season_8)>	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+<http://dbpedia.org/resource/Top_Chef_Canada_(season_8)>	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+dbr:Slovak_cuisine	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+dbr:Pasta_e_ceci	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+<http://dbpedia.org/resource/Talleres_de_C\u00F3rdoba>	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+dbr:Bolognese_sauce	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+@prefix rdf:	<http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl:	<http://www.w3.org/2002/07/owl#> .
+dbr:Tagliatelle	rdf:type	owl:Thing .
+@prefix wikidata:	<http://www.wikidata.org/entity/> .
+dbr:Tagliatelle	rdf:type	wikidata:Q2095 ,
+		dbo:Food .
+@prefix rdfs:	<http://www.w3.org/2000/01/rdf-schema#> .
+dbr:Tagliatelle	rdfs:label	"Tagliatelle"@in ,
+		"\uD0C8\uB9AC\uC544\uD154\uB808"@ko ,
+		"\u30BF\u30EA\u30A2\u30C6\u30C3\u30EC"@ja ,
+		"Tagliatelle"@nl ,
+		"Tallar\u00EDn"@es ,
+		"Tagliatelle"@cs ,
+		"Tagliatelle"@it ,
+		"Tagliatelle"@sv ,
+		"\u0422\u0430\u043B\u044C\u044F\u0442\u0435\u043B\u0435"@uk ,
+		"Tagliatelle"@pl ,
+		"Tagliatelle"@pt ,
+		"\u0422\u0430\u043B\u044C\u044F\u0442\u0435\u043B\u043B\u0435"@ru ,
+		"Tagliatelle"@en ,
+		"Tagliatelle"@de ,
+		"\u03A4\u03B1\u03BB\u03B9\u03B1\u03C4\u03AD\u03BB\u03B5\u03C2"@el ,
+		"Tallarina"@ca ,
+		"\u062A\u0627\u0644\u064A\u0627\u062A\u064A\u0644\u064A"@ar ,
+		"Tagliatelle"@fr ;
+	rdfs:comment	"\u0422\u0430\u043B\u044C\u044F\u0442\u0435\u043B\u0435 (\u0456\u0442\u0430\u043B. tagliatelle), \u0442\u0430\u043A\u043E\u0436 \u043F\u043E\u043C\u0438\u043B\u043A\u043E\u0432\u043E \u0442\u0430\u0433\u043B\u0456\u0430\u0442\u0435\u043B\u0435 \u2014 \u0440\u0456\u0437\u043D\u043E\u0432\u0438\u0434 \u043B\u043E\u043A\u0448\u0438\u043D\u0438, \u043A\u043B\u0430\u0441\u0438\u0447\u043D\u0430 \u0456\u0442\u0430\u043B\u0456\u0439\u0441\u044C\u043A\u0430 \u043F\u0430\u0441\u0442\u0430 \u0437 \u0440\u0435\u0433\u0456\u043E\u043D\u0443 \u0415\u043C\u0456\u043B\u0456\u044F-\u0420\u043E\u043C\u0430\u043D\u044C\u044F. \u0422\u0430\u043B\u044C\u044F\u0442\u0435\u043B\u0435 - \u0446\u0435 \u0434\u043E\u0432\u0433\u0456 \u043F\u043B\u0430\u0441\u043A\u0456 \u0441\u0442\u0440\u0456\u0447\u043A\u0438 \u0437\u0430\u0432\u0448\u0438\u0440\u0448\u043A\u0438 \u0443 0,65\u20141 \u0441\u043C, \u0437\u0430 \u0444\u043E\u0440\u043C\u043E\u044E \u0441\u0445\u043E\u0436\u0456 \u043D\u0430 \u0444\u0435\u0442\u0443\u0447\u0447\u0456\u043D\u0435. \u0417\u0430\u0437\u0432\u0438\u0447\u0430\u0439 \u0442\u0430\u043B\u044C\u044F\u0442\u0435\u043B\u0435 \u043F\u043E\u0434\u0430\u044E\u0442\u044C \u0437 \u0440\u0456\u0437\u043D\u0438\u043C\u0438 \u0432\u0438\u0434\u0430\u043C\u0438 \u0441\u043E\u0443\u0441\u0456\u0432, \u043D\u0430\u0439\u0447\u0430\u0441\u0442\u0456\u0448\u0438\u0439 \u0432\u0430\u0440\u0456\u0430\u043D\u0442 \u0441\u0435\u0440\u0432\u0456\u0440\u0443\u0432\u0430\u043D\u043D\u044F \u2014 \u0437 \u043C'\u044F\u0441\u043D\u0438\u043C \u0441\u043E\u0443\u0441\u043E\u043C \u0431\u043E\u043B\u043E\u043D\u044C\u0454\u0437\u0435 (\u0456\u0442\u0430\u043B. tagliatelle alla bolognese). \u041E\u0434\u0438\u043D \u0437 \u0440\u0456\u0437\u043D\u043E\u0432\u0438\u0434\u0456\u0432 \u0442\u0430\u043B\u044C\u044F\u0442\u0435\u043B\u0435 \u2014 \u043F\u0456\u0446\u043E\u043A\u0435\u0440\u0456."@uk ,
+		"Les tallarines o tallarins, i vetes, de tagliatelle (itali\u00E0), \u00E9s un tipus de pasta italiana amb forma de veta. Les tallarines s\u00F3n origin\u00E0ries de l'Emilia-Romagna. El nom tagliatelle (singular \"tagliatella\") prov\u00E9 de l'itali\u00E0 \"tagliare\" (tallar). Les tagliatelle s\u00F3n similars a les fettuccine per\u00F2 m\u00E9s fines (la forma \u00E9s pr\u00E0cticament id\u00E8ntica). Aquestes dues varietats de pasta s\u00F3n d'una amplada m\u00E9s gran que les linguine. Per\u00F2, en alguns indrets del Pa\u00EDs Valenci\u00E0, es diu tallarina a all\u00F2 que els castellans coneixen com a \"telara\u00F1a\"."@ca ,
+		"Tagliatelle, tamb\u00E9m conhecido como Tagliatella e Taiadela, s\u00E3o o tipo mais comum das massas cortadas em tiras. Por vezes, s\u00E3o consideradas sin\u00F3nimos dos fettuccine, embora outras fontes considerem que as tagliatelle devem ter, no m\u00E1ximo, 0,75 cm de largura e os tagliatelline ou fettuccine n\u00E3o podem ultrapassar os 0,5 cm. Os tagliatelle s\u00E3o tradicionalmente acompanhados de molho \u00E0 bolonhesa."@pt ,
+		"Tagliatelle [ta\u028E\u02D0a\u02C8t\u025Bl\u02D0e] (von italienisch tagliare, \u201Eschneiden\u201C) sind eine Variante von Bandnudeln. Sie gelten als klassische Pasta aus der Region Emilia-Romagna in Italien. Die einzelne Nudel ist wie ein langes flaches Band geformt, den Fettuccine \u00E4hnlich, aber mit typischerweise ungef\u00E4hr 5\u201310 mm etwas breiter. Um Tagliatelle von Hand herstellen zu k\u00F6nnen, muss man den Teig so ausrollen, dass dabei keine L\u00F6cher, Risse oder Unterschiede in der St\u00E4rke entstehen."@de ,
+		"\u30BF\u30EA\u30A2\u30C6\u30C3\u30EC\uFF08Tagliatelle, \u30BF\u30C3\u30EA\u30E3\u30C6\u30C3\u30EC\u3001\u30BF\u30C3\u30AE\u30E3\u30C6\u30C3\u30EC\uFF09\u306F\u30A4\u30BF\u30EA\u30A2\u5317\u90E8\u3067\u7528\u3044\u3089\u308C\u308B\u30D1\u30B9\u30BF\u306E\u4E00\u7A2E\u3067\u3042\u308B \u3002\u7D30\u9577\u3044\u30EA\u30DC\u30F3\u72B6\u3067\u539A\u30551\u30DF\u30EA\u30E1\u30FC\u30C8\u30EB\u3001\u5E45\u306F8\u30DF\u30EA\u30E1\u30FC\u30C8\u30EB\u307B\u3069\u3002\u30A4\u30BF\u30EA\u30A2\u8A9E tagliare\uFF08\u5207\u308B\uFF09\u306E\u6D3E\u751F\u8A9E\u3002 \u30DC\u30ED\u30FC\u30CB\u30E3\u3067\u306F\u30DF\u30FC\u30C8\u30BD\u30FC\u30B9\u3067\u3042\u3048\u308B\u306E\u304C\u5B9A\u756A\u3002 \u30A4\u30BF\u30EA\u30A2\u306E\u4E2D\u5357\u90E8\u306B\u304A\u3044\u3066\u306F\u3053\u306E\u30BF\u30A4\u30D7\u306E\u9EBA\u3092\u30D5\u30A7\u30C3\u30C8\u30A5\u30C1\u30FC\u30CD\u3068\u547C\u3076\u3002\u4E21\u8005\u306F\u57FA\u672C\u7684\u306B\u9055\u3044\u306F\u306A\u3044\u304C\u3001\u30D5\u30A7\u30C3\u30C8\u30A5\u30C1\u30FC\u30CD\u3068\u6BD4\u3057\u3066\u30BF\u30EA\u30A2\u30C6\u30C3\u30EC\u306F\u82E5\u5E72\u8584\u304F\u3001\u5E45\u3082\u72ED\u3044\u3002\u30BF\u30EA\u30A2\u30C6\u30C3\u30EC\u3088\u308A\u5C11\u3057\u7D30\u3044\u9EBA\u3092\u30BF\u30EA\u30AA\u30EA\u30FC\u30CB\u3068\u8A00\u3046\u3002"@ja ,
+		"\u0422\u0430\u043B\u044C\u044F\u0442\u0435\u0301\u043B\u043B\u0435 (\u0438\u0442\u0430\u043B. tagliatelle, \u043E\u0442 \u0433\u043B\u0430\u0433\u043E\u043B\u0430 tagliare (\u0442\u0430\u043B\u044C\u044F\u0440\u0435) \u2014 \u0440\u0435\u0437\u0430\u0442\u044C, \u0442\u0430\u043A\u0436\u0435 \u043E\u0448\u0438\u0431\u043E\u0447\u043D\u043E \u0442\u0430\u0433\u043B\u0438\u0430\u0442\u0435\u043B\u043B\u0435) \u2014 \u043A\u043B\u0430\u0441\u0441\u0438\u0447\u0435\u0441\u043A\u0438\u0435 \u0438\u0442\u0430\u043B\u044C\u044F\u043D\u0441\u043A\u0438\u0435 \u043C\u0430\u043A\u0430\u0440\u043E\u043D\u043D\u044B\u0435 \u0438\u0437\u0434\u0435\u043B\u0438\u044F \u0438\u0437 \u0440\u0435\u0433\u0438\u043E\u043D\u0430 \u042D\u043C\u0438\u043B\u0438\u044F-\u0420\u043E\u043C\u0430\u043D\u044C\u044F. \u0422\u0430\u043B\u044C\u044F\u0442\u0435\u043B\u043B\u0435 \u2014 \u044D\u0442\u043E \u0442\u0438\u043F\u0438\u0447\u043D\u0430\u044F \u043F\u0430\u0441\u0442\u0430 \u0411\u043E\u043B\u043E\u043D\u044C\u0438, \u0438\u043C\u0435\u043D\u043D\u043E \u0435\u0451 \u043F\u043E\u0434\u0430\u044E\u0442 \u0441 \u0441\u043E\u0443\u0441\u043E\u043C \u0431\u043E\u043B\u043E\u043D\u044C\u0435\u0437\u0435 (\u0438\u0442\u0430\u043B. tagliatelle alla bolognese). \u041E\u0434\u043D\u0430 \u0438\u0437 \u0440\u0430\u0437\u043D\u043E\u0432\u0438\u0434\u043D\u043E\u0441\u0442\u0435\u0439 \u0442\u0430\u043B\u044C\u044F\u0442\u0435\u043B\u043B\u0435 \u2014 \u043F\u0438\u0446\u0446\u043E\u043A\u0435\u0440\u0438."@ru ,
+		"Tagliatelle a tagliolini (z italsk\u00E9ho tagliare \u2013 \u201E\u0159ezat\u201C) jsou t\u011Bstoviny, kter\u00E9 se tradi\u010Dn\u011B vyr\u00E1b\u011Bj\u00ED v italsk\u00FDch oblastech Emilia-Romagna a Marche. Tagliatelle jsou dlouh\u00E9 ploch\u00E9 nudle, kter\u00E9 se tvarem podobaj\u00ED t\u011Bstovin\u00E1m fettuccine a m\u00EDvaj\u00ED na \u0161\u00ED\u0159ku 0,65 a\u017E 1 cm. Tagliatelle se pod\u00E1vaj\u00ED s r\u016Fzn\u00FDmi om\u00E1\u010Dkami, tradi\u010Dn\u011B p\u0159edev\u0161\u00EDm s om\u00E1\u010Dkou bolo\u0148skou. Tagliolini jsou jednou z variant tagliatelle \u2013 jsou stejn\u011B dlouh\u00E9, ale jsou ten\u010D\u00ED a maj\u00ED kruhov\u00FD profil. Dal\u0161\u00EDm druhem jsou bavette \u2013 ty jsou ten\u010D\u00ED ne\u017E tagliatelle. A je\u0161t\u011B o n\u011Bco ten\u010D\u00ED jsou pak bavettine."@cs ,
+		"Le tagliatelle sono una pasta all'uovo tipica dell'Emilia e della Romagnae diffuse nella cucina tradizionale del Centro e Nord Italia. Il loro nome deriva dal verbo \"tagliare\", dato che tradizionalmente si ottengono stendendo la pasta in sfoglia sottile e tagliandola, dopo averla arrotolata."@it ,
+		"Tagliatelle (tagliolini, reg. taglierini \u2013 z w\u0142. tagliare \u2013 ci\u0105\u0107) \u2013 klasyczny w\u0142oski makaron z rejonu Emilia-Romagna w kszta\u0142cie d\u0142ugich, p\u0142askich wst\u0105\u017Cek o grubo\u015Bci ok. 2 mm i szeroko\u015Bci 0,65-1 cm. Kszta\u0142tem przypomina fettuccine, lecz jest od niego szerszy. Tagliatelle podaje si\u0119 zwykle z sosami, zazwyczaj z bolognese."@pl ,
+		"\uD0C8\uB9AC\uC544\uD154\uB808(\uC774\uD0C8\uB9AC\uC544\uC5B4: Tagliatelle, ta\u028E\u02D0a't\u025Bl\u02D0e)\uB294 \uC774\uD0C8\uB9AC\uC544\uC758 \uD30C\uC2A4\uD0C0 \uC77C\uC885\uC73C\uB85C\uC11C \uD2B9\uBCC4\uD788 \uC5D0\uBC00\uB9AC\uC544\uB85C\uB9C8\uB0D0\uC8FC\uC5D0\uC11C \uB098\uD0C0\uB098\uB294 \uD615\uD0DC\uC774\uB2E4. \uBA74\uBC1C \uD558\uB098\uD558\uB098\uB97C \uBCF4\uC790\uBA74 \uC0C1\uB2F9\uD788 \uAE38\uACE0 \uB113\uC801\uD55C \uD615\uD0DC\uC758 \uBA74\uBC1C\uC774\uB2E4. \uD3ED\uC740 0.65cm ~ 1cm \uC815\uB3C4\uC778\uB370 \uBBF8\uD2B8 \uC18C\uC2A4\uB97C \uB9CE\uC774 \uACC1\uB4E4\uC5EC \uBA39\uB294\uB2E4. \uC2E0\uC120\uD55C \uD30C\uC2A4\uD0C0 \uBA74\uC73C\uB85C \uB9CC\uB4DC\uB294 \uD0C8\uB9AC\uC544\uD154\uB808\uB294 \uB2E4\uB978 \uBA74\uACFC \uB2E4\uB974\uAC8C \uD22C\uBC15\uD558\uAC70\uB098 \uD761\uC218\uC131\uC774 \uAC15\uD558\uAE30 \uB54C\uBB38\uC5D0 \uC18C\uC2A4\uB97C \uBC84\uBB34\uB824 \uBA39\uAE30\uC5D0\uB294 \uC544\uC8FC \uC88B\uB2E4. \uB300\uAC1C\uB294 \uC1E0\uACE0\uAE30\uB098 \uB3FC\uC9C0\uACE0\uAE30\uB97C \uC4F0\uBA70 \uD2B9\uBCC4\uD55C \uACBD\uC6B0\uC5D0\uB294 \uD1A0\uB07C\uACE0\uAE30\uB85C \uB9CC\uB4E0 \uC18C\uC2A4\uB97C \uCCA8\uAC00\uD574\uC11C \uBA39\uB294\uB2E4. \uCC44\uC2DD\uC8FC\uC758\uC790\uC5D0\uAC8C\uB294 \uB545\uCF69 \uB4F1 \uACAC\uACFC\uB098 \uD1A0\uB9C8\uD1A0\uC640 \uBC14\uC9C8\uB85C \uB9CC\uB4DC\uB294 \uC18C\uC2A4\uB97C \uC0AC\uC6A9\uD574\uC11C \uBA39\uB294\uB2E4."@ko ,
+		"Tagliatelle (Italian pronunciation: [ta\u028E\u028Ea\u02C8t\u025Blle]; from the Italian tagliare, meaning \"to cut\") are a traditional type of pasta from the Emilia-Romagna and Marche regions of Italy. Individual pieces of tagliatelle are long, flat ribbons that are similar in shape to fettuccine and are traditionally about 6 mm (1\u20444 in) wide. Tagliatelle can be served with a variety of sauces, though the classic is a meat sauce or Bolognese sauce. Tagliatelle are traditionally made with egg pasta. The traditional ratio is one egg to one hundred grams of flour."@en ,
+		"Tagliatelle (Italiaans: /ta\u028E\u028Ea\u02C8t\u025Blle/, spreek uit: tal.jia.tel.le) ) is een Italiaanse pasta uit de regio Emilia-Romagna. Naar vorm zijn het lintnoedels of bandnoedels, naar samenstelling meestal eiernoedels. In droge vorm zijn de linten zeven mm breed, in gekookte vorm worden zij acht mm breed. De pasta wordt meestal met saus geserveerd, waarvan de bolognesesaus de bekendste is. Om tagliatelle makkelijk te kunnen opdienen gebruikt men een spaghettitang."@nl ,
+		"Tagliatelle (ta\u028E\u02D0a\u02C8t\u025Bl\u02D0e) och tagliolini (fr\u00E5n det italienska tagliare, som betyder \"att sk\u00E4ra\") \u00E4r klassisk italiensk pasta fr\u00E5n regionen Emilia-Romagna. Pastan \u00E4r l\u00E5nga, platta bj\u00E4lkar liknande fettuccine, och \u00E4r vanligtvis mellan en halv och en centimeter breda. Tagliatelle kan serveras med flera olika sorters s\u00E5ser, \u00E4ven om den mest vanliga \u00E4r k\u00F6ttf\u00E4rss\u00E5s, s\u00E5 kallad spaghetti bolognese. Tagliolini \u00E4r en variant av tagliatellen som \u00E4r l\u00E5ng och cylinderformad, inte platt."@sv ,
+		"El tallar\u00EDn (del italiano taglierini) es un tipo de masa (pasta) alargada, de ancho peque\u00F1o y forma achatada que integran el conjunto de las paste asciutte (pastas secas) de origen italiano. Los que se conocen en toda Europa y en buena parte del mundo occidental provienen directamente de Italia y no deben ser confundidos con preparaciones parecidas, pero distintas, como las procedentes de China, donde se preparan fideos semejantes a los tallarines y a los spaghetti italianos, pero que tienen una historia y una t\u00E9cnica de procesamiento completamente diferente a los presentes en Italia.\u200B"@es ,
+		"Tagliatelle merupakan sebuah pasta klasik dari region Emilia-Romagna di Italia. Tagliatelle memiliki panjang berupa 0.65 cm hingga 1 cm (0.25 hingga 0.375 inci). Mereka dapat disajikan dalam berbagai saus, yang klasik adalah daging kecap atau saus Bolognese. Tagliatelle juga dihidangkan dalam berbagai selera seperti daging sapi, sayuran, ikan, dan sebagainya sesuai selera. \n* l \n* \n* s"@in ,
+		"\u039F\u03B9 \u03C4\u03B1\u03BB\u03B9\u03B1\u03C4\u03AD\u03BB\u03B5\u03C2 \u03B5\u03AF\u03BD\u03B1\u03B9 \u03C0\u03B1\u03C1\u03B1\u03B4\u03BF\u03C3\u03B9\u03B1\u03BA\u03CC \u03B5\u03AF\u03B4\u03BF\u03C2 \u03B6\u03C5\u03BC\u03B1\u03C1\u03B9\u03BA\u03BF\u03CD \u03B1\u03C0\u03CC \u03C4\u03B9\u03C2 \u03C0\u03B5\u03C1\u03B9\u03BF\u03C7\u03AD\u03C2 \u0395\u03BC\u03AF\u03BB\u03B9\u03B1-\u03A1\u03BF\u03BC\u03AC\u03BD\u03B9\u03B1 \u03BA\u03B1\u03B9 \u039C\u03AC\u03C1\u03BA\u03B5 \u03C4\u03B7\u03C2 \u0399\u03C4\u03B1\u03BB\u03AF\u03B1\u03C2."@el ,
+		"Les tagliatelles ou taliatelles sont une vari\u00E9t\u00E9 de p\u00E2tes longues en forme de lani\u00E8res de la cuisine italienne (centre et nord de l'Italie) variantes des fettuccine, tagliolini, pappardelle, ou des taillerins de la cuisine savoyarde."@fr ,
+		"\u062A\u0627\u0644\u064A\u0627\u062A\u064A\u0644\u064A (Tagliatelle) \u0647\u064A \u0643\u0644\u0645\u0629 \u0623\u0634\u062A\u0642\u062A \u0645\u0646 \u0627\u0644\u0643\u0644\u0645\u0629 \u0627\u0644\u0623\u064A\u0637\u0627\u0644\u064A\u0629 (tagliare) \u0628\u0645\u0639\u0646\u0649 \u00AB\u0627\u0644\u0642\u064E\u0637\u0652\u0639\u00BB \u0648 \u0627\u0644\u062A\u0627\u0644\u064A\u0627\u062A\u064A\u0644\u064A \u0647\u064A \u0627\u0644\u0628\u0627\u0633\u062A\u0627 \u0627\u0644\u0643\u0644\u0627\u0633\u064A\u0643\u064A\u0629 \u0644\u0625\u0642\u0644\u064A\u0645 \u0625\u0645\u064A\u0644\u064A\u0627 \u0631\u0648\u0645\u0627\u0646\u064A\u0627 \u0641\u064A \u0625\u064A\u0637\u0627\u0644\u064A\u0627. \u0628\u0634\u0643\u0644 \u0645\u0646\u0641\u0631\u062F \u0648\u0645\u062A\u0645\u064A\u0632 \u0638\u0644 \u0647\u0630\u0627 \u0627\u0644\u0646\u0648\u0639 \u0645\u0646 \u0627\u0644\u0628\u0627\u0633\u062A\u0627 \u0644\u0645\u062F\u0629 \u0637\u0648\u064A\u0644\u0629 \u0643\u0623\u0634\u0631\u0637\u0629 \u0645\u0633\u062A\u0648\u064A\u0629 \u0645\u0645\u0627\u062B\u0644\u0629 \u0641\u064A \u0627\u0644\u0634\u0643\u0644\u0650 \u0625\u0644\u0649 \u0645\u0639\u0643\u0631\u0648\u0646\u0629 \u0641\u064A\u062A\u0648\u062A\u0634\u0646\u064A\u060C \u0644\u0643\u0646 \u0627\u0644\u062D\u062C\u0645 \u0627\u0644\u0646\u0645\u0648\u0630\u062C\u064A \u0644\u0647\u0630\u0647 \u0627\u0644\u0628\u0627\u0633\u062A\u0627 \u062D\u0648\u0627\u0644\u064A 0.65 \u0633\u0646\u062A\u064A\u0645\u062A\u0631 \u0625\u0644\u0649 1 \u0633\u0646\u062A\u064A\u0645\u062A\u0631\u0650 (0.25 \u0625\u0644\u0649 0.375 \u0628\u0648\u0635\u0629) \u0639\u0631\u064A\u0636\u0629. \u064A\u0645\u0643\u0646 \u0623\u0646 \u062A\u064F\u0642\u062F\u0645 \u0647\u0630 \u0627\u0644\u0628\u0627\u0633\u062A\u0627 \u0645\u0639 \u062A\u0634\u0643\u064A\u0644\u0629 \u0645\u0646 \u0627\u0644\u0635\u0644\u0635\u0627\u062A \u0627\u0644\u0643\u0644\u0627\u0633\u064A\u0643\u064A\u0629 \u0645\u062B\u0644 \u0623\u0648 ."@ar ;
+	foaf:name	"Tagliatelle"@en ;
+	foaf:depiction	<http://commons.wikimedia.org/wiki/Special:FilePath/Fatte_in_casa.jpg> ,
+		<http://commons.wikimedia.org/wiki/Special:FilePath/Hand-cutting-pasta.jpg> ,
+		<http://commons.wikimedia.org/wiki/Special:FilePath/Heston_Blumenthal\u0027s_Perfect_Tagliatelle_Bolognese.jpg> ,
+		<http://commons.wikimedia.org/wiki/Special:FilePath/Tagliatelle_rag\u00F9_bolognese_01.jpg> ,
+		<http://commons.wikimedia.org/wiki/Special:FilePath/Nests_of_tagliatelle_bolognesi.jpg> .
+@prefix dc:	<http://purl.org/dc/elements/1.1/> .
+dbr:Tagliatelle	dc:type	"Primo" .
+@prefix dcterms:	<http://purl.org/dc/terms/> .
+@prefix dbc:	<http://dbpedia.org/resource/Category:> .
+dbr:Tagliatelle	dcterms:subject	dbc:Cuisine_of_Emilia-Romagna ,
+		dbc:Wide_pasta ;
+	dbo:abstract	"\u062A\u0627\u0644\u064A\u0627\u062A\u064A\u0644\u064A (Tagliatelle) \u0647\u064A \u0643\u0644\u0645\u0629 \u0623\u0634\u062A\u0642\u062A \u0645\u0646 \u0627\u0644\u0643\u0644\u0645\u0629 \u0627\u0644\u0623\u064A\u0637\u0627\u0644\u064A\u0629 (tagliare) \u0628\u0645\u0639\u0646\u0649 \u00AB\u0627\u0644\u0642\u064E\u0637\u0652\u0639\u00BB \u0648 \u0627\u0644\u062A\u0627\u0644\u064A\u0627\u062A\u064A\u0644\u064A \u0647\u064A \u0627\u0644\u0628\u0627\u0633\u062A\u0627 \u0627\u0644\u0643\u0644\u0627\u0633\u064A\u0643\u064A\u0629 \u0644\u0625\u0642\u0644\u064A\u0645 \u0625\u0645\u064A\u0644\u064A\u0627 \u0631\u0648\u0645\u0627\u0646\u064A\u0627 \u0641\u064A \u0625\u064A\u0637\u0627\u0644\u064A\u0627. \u0628\u0634\u0643\u0644 \u0645\u0646\u0641\u0631\u062F \u0648\u0645\u062A\u0645\u064A\u0632 \u0638\u0644 \u0647\u0630\u0627 \u0627\u0644\u0646\u0648\u0639 \u0645\u0646 \u0627\u0644\u0628\u0627\u0633\u062A\u0627 \u0644\u0645\u062F\u0629 \u0637\u0648\u064A\u0644\u0629 \u0643\u0623\u0634\u0631\u0637\u0629 \u0645\u0633\u062A\u0648\u064A\u0629 \u0645\u0645\u0627\u062B\u0644\u0629 \u0641\u064A \u0627\u0644\u0634\u0643\u0644\u0650 \u0625\u0644\u0649 \u0645\u0639\u0643\u0631\u0648\u0646\u0629 \u0641\u064A\u062A\u0648\u062A\u0634\u0646\u064A\u060C \u0644\u0643\u0646 \u0627\u0644\u062D\u062C\u0645 \u0627\u0644\u0646\u0645\u0648\u0630\u062C\u064A \u0644\u0647\u0630\u0647 \u0627\u0644\u0628\u0627\u0633\u062A\u0627 \u062D\u0648\u0627\u0644\u064A 0.65 \u0633\u0646\u062A\u064A\u0645\u062A\u0631 \u0625\u0644\u0649 1 \u0633\u0646\u062A\u064A\u0645\u062A\u0631\u0650 (0.25 \u0625\u0644\u0649 0.375 \u0628\u0648\u0635\u0629) \u0639\u0631\u064A\u0636\u0629. \u064A\u0645\u0643\u0646 \u0623\u0646 \u062A\u064F\u0642\u062F\u0645 \u0647\u0630 \u0627\u0644\u0628\u0627\u0633\u062A\u0627 \u0645\u0639 \u062A\u0634\u0643\u064A\u0644\u0629 \u0645\u0646 \u0627\u0644\u0635\u0644\u0635\u0627\u062A \u0627\u0644\u0643\u0644\u0627\u0633\u064A\u0643\u064A\u0629 \u0645\u062B\u0644 \u0623\u0648 ."@ar ,
+		"Tagliatelle merupakan sebuah pasta klasik dari region Emilia-Romagna di Italia. Tagliatelle memiliki panjang berupa 0.65 cm hingga 1 cm (0.25 hingga 0.375 inci). Mereka dapat disajikan dalam berbagai saus, yang klasik adalah daging kecap atau saus Bolognese. Tagliatelle juga dihidangkan dalam berbagai selera seperti daging sapi, sayuran, ikan, dan sebagainya sesuai selera. \n* l \n* \n* s"@in ,
+		"\uD0C8\uB9AC\uC544\uD154\uB808(\uC774\uD0C8\uB9AC\uC544\uC5B4: Tagliatelle, ta\u028E\u02D0a't\u025Bl\u02D0e)\uB294 \uC774\uD0C8\uB9AC\uC544\uC758 \uD30C\uC2A4\uD0C0 \uC77C\uC885\uC73C\uB85C\uC11C \uD2B9\uBCC4\uD788 \uC5D0\uBC00\uB9AC\uC544\uB85C\uB9C8\uB0D0\uC8FC\uC5D0\uC11C \uB098\uD0C0\uB098\uB294 \uD615\uD0DC\uC774\uB2E4. \uBA74\uBC1C \uD558\uB098\uD558\uB098\uB97C \uBCF4\uC790\uBA74 \uC0C1\uB2F9\uD788 \uAE38\uACE0 \uB113\uC801\uD55C \uD615\uD0DC\uC758 \uBA74\uBC1C\uC774\uB2E4. \uD3ED\uC740 0.65cm ~ 1cm \uC815\uB3C4\uC778\uB370 \uBBF8\uD2B8 \uC18C\uC2A4\uB97C \uB9CE\uC774 \uACC1\uB4E4\uC5EC \uBA39\uB294\uB2E4. \uC2E0\uC120\uD55C \uD30C\uC2A4\uD0C0 \uBA74\uC73C\uB85C \uB9CC\uB4DC\uB294 \uD0C8\uB9AC\uC544\uD154\uB808\uB294 \uB2E4\uB978 \uBA74\uACFC \uB2E4\uB974\uAC8C \uD22C\uBC15\uD558\uAC70\uB098 \uD761\uC218\uC131\uC774 \uAC15\uD558\uAE30 \uB54C\uBB38\uC5D0 \uC18C\uC2A4\uB97C \uBC84\uBB34\uB824 \uBA39\uAE30\uC5D0\uB294 \uC544\uC8FC \uC88B\uB2E4. \uB300\uAC1C\uB294 \uC1E0\uACE0\uAE30\uB098 \uB3FC\uC9C0\uACE0\uAE30\uB97C \uC4F0\uBA70 \uD2B9\uBCC4\uD55C \uACBD\uC6B0\uC5D0\uB294 \uD1A0\uB07C\uACE0\uAE30\uB85C \uB9CC\uB4E0 \uC18C\uC2A4\uB97C \uCCA8\uAC00\uD574\uC11C \uBA39\uB294\uB2E4. \uCC44\uC2DD\uC8FC\uC758\uC790\uC5D0\uAC8C\uB294 \uB545\uCF69 \uB4F1 \uACAC\uACFC\uB098 \uD1A0\uB9C8\uD1A0\uC640 \uBC14\uC9C8\uB85C \uB9CC\uB4DC\uB294 \uC18C\uC2A4\uB97C \uC0AC\uC6A9\uD574\uC11C \uBA39\uB294\uB2E4."@ko ,
+		"Les tagliatelles ou taliatelles sont une vari\u00E9t\u00E9 de p\u00E2tes longues en forme de lani\u00E8res de la cuisine italienne (centre et nord de l'Italie) variantes des fettuccine, tagliolini, pappardelle, ou des taillerins de la cuisine savoyarde."@fr ,
+		"Tagliatelle [ta\u028E\u02D0a\u02C8t\u025Bl\u02D0e] (von italienisch tagliare, \u201Eschneiden\u201C) sind eine Variante von Bandnudeln. Sie gelten als klassische Pasta aus der Region Emilia-Romagna in Italien. Die einzelne Nudel ist wie ein langes flaches Band geformt, den Fettuccine \u00E4hnlich, aber mit typischerweise ungef\u00E4hr 5\u201310 mm etwas breiter. Um Tagliatelle von Hand herstellen zu k\u00F6nnen, muss man den Teig so ausrollen, dass dabei keine L\u00F6cher, Risse oder Unterschiede in der St\u00E4rke entstehen."@de ,
+		"\u30BF\u30EA\u30A2\u30C6\u30C3\u30EC\uFF08Tagliatelle, \u30BF\u30C3\u30EA\u30E3\u30C6\u30C3\u30EC\u3001\u30BF\u30C3\u30AE\u30E3\u30C6\u30C3\u30EC\uFF09\u306F\u30A4\u30BF\u30EA\u30A2\u5317\u90E8\u3067\u7528\u3044\u3089\u308C\u308B\u30D1\u30B9\u30BF\u306E\u4E00\u7A2E\u3067\u3042\u308B \u3002\u7D30\u9577\u3044\u30EA\u30DC\u30F3\u72B6\u3067\u539A\u30551\u30DF\u30EA\u30E1\u30FC\u30C8\u30EB\u3001\u5E45\u306F8\u30DF\u30EA\u30E1\u30FC\u30C8\u30EB\u307B\u3069\u3002\u30A4\u30BF\u30EA\u30A2\u8A9E tagliare\uFF08\u5207\u308B\uFF09\u306E\u6D3E\u751F\u8A9E\u3002 \u30DC\u30ED\u30FC\u30CB\u30E3\u3067\u306F\u30DF\u30FC\u30C8\u30BD\u30FC\u30B9\u3067\u3042\u3048\u308B\u306E\u304C\u5B9A\u756A\u3002 \u30A4\u30BF\u30EA\u30A2\u306E\u4E2D\u5357\u90E8\u306B\u304A\u3044\u3066\u306F\u3053\u306E\u30BF\u30A4\u30D7\u306E\u9EBA\u3092\u30D5\u30A7\u30C3\u30C8\u30A5\u30C1\u30FC\u30CD\u3068\u547C\u3076\u3002\u4E21\u8005\u306F\u57FA\u672C\u7684\u306B\u9055\u3044\u306F\u306A\u3044\u304C\u3001\u30D5\u30A7\u30C3\u30C8\u30A5\u30C1\u30FC\u30CD\u3068\u6BD4\u3057\u3066\u30BF\u30EA\u30A2\u30C6\u30C3\u30EC\u306F\u82E5\u5E72\u8584\u304F\u3001\u5E45\u3082\u72ED\u3044\u3002\u30BF\u30EA\u30A2\u30C6\u30C3\u30EC\u3088\u308A\u5C11\u3057\u7D30\u3044\u9EBA\u3092\u30BF\u30EA\u30AA\u30EA\u30FC\u30CB\u3068\u8A00\u3046\u3002"@ja ,
+		"Tagliatelle (Italiaans: /ta\u028E\u028Ea\u02C8t\u025Blle/, spreek uit: tal.jia.tel.le) ) is een Italiaanse pasta uit de regio Emilia-Romagna. Naar vorm zijn het lintnoedels of bandnoedels, naar samenstelling meestal eiernoedels. In droge vorm zijn de linten zeven mm breed, in gekookte vorm worden zij acht mm breed. De pasta wordt meestal met saus geserveerd, waarvan de bolognesesaus de bekendste is. Om tagliatelle makkelijk te kunnen opdienen gebruikt men een spaghettitang."@nl ,
+		"Tagliatelle (Italian pronunciation: [ta\u028E\u028Ea\u02C8t\u025Blle]; from the Italian tagliare, meaning \"to cut\") are a traditional type of pasta from the Emilia-Romagna and Marche regions of Italy. Individual pieces of tagliatelle are long, flat ribbons that are similar in shape to fettuccine and are traditionally about 6 mm (1\u20444 in) wide. Tagliatelle can be served with a variety of sauces, though the classic is a meat sauce or Bolognese sauce. Tagliatelle are traditionally made with egg pasta. The traditional ratio is one egg to one hundred grams of flour."@en ,
+		"\u0422\u0430\u043B\u044C\u044F\u0442\u0435\u043B\u0435 (\u0456\u0442\u0430\u043B. tagliatelle), \u0442\u0430\u043A\u043E\u0436 \u043F\u043E\u043C\u0438\u043B\u043A\u043E\u0432\u043E \u0442\u0430\u0433\u043B\u0456\u0430\u0442\u0435\u043B\u0435 \u2014 \u0440\u0456\u0437\u043D\u043E\u0432\u0438\u0434 \u043B\u043E\u043A\u0448\u0438\u043D\u0438, \u043A\u043B\u0430\u0441\u0438\u0447\u043D\u0430 \u0456\u0442\u0430\u043B\u0456\u0439\u0441\u044C\u043A\u0430 \u043F\u0430\u0441\u0442\u0430 \u0437 \u0440\u0435\u0433\u0456\u043E\u043D\u0443 \u0415\u043C\u0456\u043B\u0456\u044F-\u0420\u043E\u043C\u0430\u043D\u044C\u044F. \u0422\u0430\u043B\u044C\u044F\u0442\u0435\u043B\u0435 - \u0446\u0435 \u0434\u043E\u0432\u0433\u0456 \u043F\u043B\u0430\u0441\u043A\u0456 \u0441\u0442\u0440\u0456\u0447\u043A\u0438 \u0437\u0430\u0432\u0448\u0438\u0440\u0448\u043A\u0438 \u0443 0,65\u20141 \u0441\u043C, \u0437\u0430 \u0444\u043E\u0440\u043C\u043E\u044E \u0441\u0445\u043E\u0436\u0456 \u043D\u0430 \u0444\u0435\u0442\u0443\u0447\u0447\u0456\u043D\u0435. \u0417\u0430\u0437\u0432\u0438\u0447\u0430\u0439 \u0442\u0430\u043B\u044C\u044F\u0442\u0435\u043B\u0435 \u043F\u043E\u0434\u0430\u044E\u0442\u044C \u0437 \u0440\u0456\u0437\u043D\u0438\u043C\u0438 \u0432\u0438\u0434\u0430\u043C\u0438 \u0441\u043E\u0443\u0441\u0456\u0432, \u043D\u0430\u0439\u0447\u0430\u0441\u0442\u0456\u0448\u0438\u0439 \u0432\u0430\u0440\u0456\u0430\u043D\u0442 \u0441\u0435\u0440\u0432\u0456\u0440\u0443\u0432\u0430\u043D\u043D\u044F \u2014 \u0437 \u043C'\u044F\u0441\u043D\u0438\u043C \u0441\u043E\u0443\u0441\u043E\u043C \u0431\u043E\u043B\u043E\u043D\u044C\u0454\u0437\u0435 (\u0456\u0442\u0430\u043B. tagliatelle alla bolognese). \u041E\u0434\u0438\u043D \u0437 \u0440\u0456\u0437\u043D\u043E\u0432\u0438\u0434\u0456\u0432 \u0442\u0430\u043B\u044C\u044F\u0442\u0435\u043B\u0435 \u2014 \u043F\u0456\u0446\u043E\u043A\u0435\u0440\u0456."@uk ,
+		"Tagliatelle a tagliolini (z italsk\u00E9ho tagliare \u2013 \u201E\u0159ezat\u201C) jsou t\u011Bstoviny, kter\u00E9 se tradi\u010Dn\u011B vyr\u00E1b\u011Bj\u00ED v italsk\u00FDch oblastech Emilia-Romagna a Marche. Tagliatelle jsou dlouh\u00E9 ploch\u00E9 nudle, kter\u00E9 se tvarem podobaj\u00ED t\u011Bstovin\u00E1m fettuccine a m\u00EDvaj\u00ED na \u0161\u00ED\u0159ku 0,65 a\u017E 1 cm. Tagliatelle se pod\u00E1vaj\u00ED s r\u016Fzn\u00FDmi om\u00E1\u010Dkami, tradi\u010Dn\u011B p\u0159edev\u0161\u00EDm s om\u00E1\u010Dkou bolo\u0148skou. Tagliolini jsou jednou z variant tagliatelle \u2013 jsou stejn\u011B dlouh\u00E9, ale jsou ten\u010D\u00ED a maj\u00ED kruhov\u00FD profil. Dal\u0161\u00EDm druhem jsou bavette \u2013 ty jsou ten\u010D\u00ED ne\u017E tagliatelle. A je\u0161t\u011B o n\u011Bco ten\u010D\u00ED jsou pak bavettine."@cs ,
+		"Le tagliatelle sono una pasta all'uovo tipica dell'Emilia e della Romagnae diffuse nella cucina tradizionale del Centro e Nord Italia. Il loro nome deriva dal verbo \"tagliare\", dato che tradizionalmente si ottengono stendendo la pasta in sfoglia sottile e tagliandola, dopo averla arrotolata."@it ,
+		"El tallar\u00EDn (del italiano taglierini) es un tipo de masa (pasta) alargada, de ancho peque\u00F1o y forma achatada que integran el conjunto de las paste asciutte (pastas secas) de origen italiano. Los que se conocen en toda Europa y en buena parte del mundo occidental provienen directamente de Italia y no deben ser confundidos con preparaciones parecidas, pero distintas, como las procedentes de China, donde se preparan fideos semejantes a los tallarines y a los spaghetti italianos, pero que tienen una historia y una t\u00E9cnica de procesamiento completamente diferente a los presentes en Italia.\u200B"@es ,
+		"Tagliatelle (tagliolini, reg. taglierini \u2013 z w\u0142. tagliare \u2013 ci\u0105\u0107) \u2013 klasyczny w\u0142oski makaron z rejonu Emilia-Romagna w kszta\u0142cie d\u0142ugich, p\u0142askich wst\u0105\u017Cek o grubo\u015Bci ok. 2 mm i szeroko\u015Bci 0,65-1 cm. Kszta\u0142tem przypomina fettuccine, lecz jest od niego szerszy. Tagliatelle podaje si\u0119 zwykle z sosami, zazwyczaj z bolognese."@pl ,
+		"Tagliatelle, tamb\u00E9m conhecido como Tagliatella e Taiadela, s\u00E3o o tipo mais comum das massas cortadas em tiras. Por vezes, s\u00E3o consideradas sin\u00F3nimos dos fettuccine, embora outras fontes considerem que as tagliatelle devem ter, no m\u00E1ximo, 0,75 cm de largura e os tagliatelline ou fettuccine n\u00E3o podem ultrapassar os 0,5 cm. Estas pastas, tradicionalmente feitas \u00E0 m\u00E3o, t\u00EAm como ingredientes a semolina ou farinha de trigo de gr\u00E3o duro e ovos, come\u00E7ando por uma massa estendida bem fina, chamada \u201Csfoglia\u201D. No entanto, existem ainda as pastas verdes, cuja massa pode ser preparada com espinafre (o mais comum), com urtiga, ou acelga. Os tagliatelle s\u00E3o tradicionalmente acompanhados de molho \u00E0 bolonhesa."@pt ,
+		"\u039F\u03B9 \u03C4\u03B1\u03BB\u03B9\u03B1\u03C4\u03AD\u03BB\u03B5\u03C2 \u03B5\u03AF\u03BD\u03B1\u03B9 \u03C0\u03B1\u03C1\u03B1\u03B4\u03BF\u03C3\u03B9\u03B1\u03BA\u03CC \u03B5\u03AF\u03B4\u03BF\u03C2 \u03B6\u03C5\u03BC\u03B1\u03C1\u03B9\u03BA\u03BF\u03CD \u03B1\u03C0\u03CC \u03C4\u03B9\u03C2 \u03C0\u03B5\u03C1\u03B9\u03BF\u03C7\u03AD\u03C2 \u0395\u03BC\u03AF\u03BB\u03B9\u03B1-\u03A1\u03BF\u03BC\u03AC\u03BD\u03B9\u03B1 \u03BA\u03B1\u03B9 \u039C\u03AC\u03C1\u03BA\u03B5 \u03C4\u03B7\u03C2 \u0399\u03C4\u03B1\u03BB\u03AF\u03B1\u03C2."@el ,
+		"\u0422\u0430\u043B\u044C\u044F\u0442\u0435\u0301\u043B\u043B\u0435 (\u0438\u0442\u0430\u043B. tagliatelle, \u043E\u0442 \u0433\u043B\u0430\u0433\u043E\u043B\u0430 tagliare (\u0442\u0430\u043B\u044C\u044F\u0440\u0435) \u2014 \u0440\u0435\u0437\u0430\u0442\u044C, \u0442\u0430\u043A\u0436\u0435 \u043E\u0448\u0438\u0431\u043E\u0447\u043D\u043E \u0442\u0430\u0433\u043B\u0438\u0430\u0442\u0435\u043B\u043B\u0435) \u2014 \u043A\u043B\u0430\u0441\u0441\u0438\u0447\u0435\u0441\u043A\u0438\u0435 \u0438\u0442\u0430\u043B\u044C\u044F\u043D\u0441\u043A\u0438\u0435 \u043C\u0430\u043A\u0430\u0440\u043E\u043D\u043D\u044B\u0435 \u0438\u0437\u0434\u0435\u043B\u0438\u044F \u0438\u0437 \u0440\u0435\u0433\u0438\u043E\u043D\u0430 \u042D\u043C\u0438\u043B\u0438\u044F-\u0420\u043E\u043C\u0430\u043D\u044C\u044F. \u0422\u0430\u043B\u044C\u044F\u0442\u0435\u043B\u043B\u0435 \u2014 \u044D\u0442\u043E \u0442\u0438\u043F\u0438\u0447\u043D\u0430\u044F \u043F\u0430\u0441\u0442\u0430 \u0411\u043E\u043B\u043E\u043D\u044C\u0438, \u0438\u043C\u0435\u043D\u043D\u043E \u0435\u0451 \u043F\u043E\u0434\u0430\u044E\u0442 \u0441 \u0441\u043E\u0443\u0441\u043E\u043C \u0431\u043E\u043B\u043E\u043D\u044C\u0435\u0437\u0435 (\u0438\u0442\u0430\u043B. tagliatelle alla bolognese). \u041E\u0434\u043D\u0430 \u0438\u0437 \u0440\u0430\u0437\u043D\u043E\u0432\u0438\u0434\u043D\u043E\u0441\u0442\u0435\u0439 \u0442\u0430\u043B\u044C\u044F\u0442\u0435\u043B\u043B\u0435 \u2014 \u043F\u0438\u0446\u0446\u043E\u043A\u0435\u0440\u0438."@ru ,
+		"Tagliatelle (ta\u028E\u02D0a\u02C8t\u025Bl\u02D0e) och tagliolini (fr\u00E5n det italienska tagliare, som betyder \"att sk\u00E4ra\") \u00E4r klassisk italiensk pasta fr\u00E5n regionen Emilia-Romagna. Pastan \u00E4r l\u00E5nga, platta bj\u00E4lkar liknande fettuccine, och \u00E4r vanligtvis mellan en halv och en centimeter breda. Tagliatelle kan serveras med flera olika sorters s\u00E5ser, \u00E4ven om den mest vanliga \u00E4r k\u00F6ttf\u00E4rss\u00E5s, s\u00E5 kallad spaghetti bolognese. Tagliolini \u00E4r en variant av tagliatellen som \u00E4r l\u00E5ng och cylinderformad, inte platt."@sv ,
+		"Les tallarines o tallarins, i vetes, de tagliatelle (itali\u00E0), \u00E9s un tipus de pasta italiana amb forma de veta. Les tallarines s\u00F3n origin\u00E0ries de l'Emilia-Romagna. El nom tagliatelle (singular \"tagliatella\") prov\u00E9 de l'itali\u00E0 \"tagliare\" (tallar). Les tagliatelle s\u00F3n similars a les fettuccine per\u00F2 m\u00E9s fines (la forma \u00E9s pr\u00E0cticament id\u00E8ntica). Aquestes dues varietats de pasta s\u00F3n d'una amplada m\u00E9s gran que les linguine. Per\u00F2, en alguns indrets del Pa\u00EDs Valenci\u00E0, es diu tallarina a all\u00F2 que els castellans coneixen com a \"telara\u00F1a\". Aquesta pasta \u00E9s ideal per menjar amb salses espesses, com la bolonyesa i la salsa napolitana. Les tallarines tamb\u00E9 es mengen sovint a la carbonara i amb salses a base de bolets (con funghi) o alberg\u00EDnia (con le melanzane)."@ca ;
+	dbo:wikiPageWikiLink	dbr:Italy ,
+		dbr:House_of_Este ,
+		dbr:Marche ,
+		<http://dbpedia.org/resource/Nut_(fruit)> ,
+		<http://dbpedia.org/resource/Bavette_(pasta)> ,
+		dbr:Flour ,
+		dbr:Pasta ,
+		dbc:Wide_pasta ,
+		dbc:Cuisine_of_Emilia-Romagna ,
+		dbr:Tagliolini ,
+		dbr:Sauce ,
+		dbr:Pappardelle ,
+		dbr:Bolognese_sauce ,
+		dbr:Emilia-Romagna ,
+		dbr:Bologna ,
+		dbr:Annibale_II_Bentivoglio ,
+		dbr:Passatelli ,
+		dbr:Fettuccine ,
+		dbr:Pizzoccheri ,
+		dbr:Chamber_of_Commerce .
+@prefix dbt:	<http://dbpedia.org/resource/Template:> .
+dbr:Tagliatelle	dbp:wikiPageUsesTemplate	dbt:Citation_needed ,
+		dbt:Cvt ,
+		dbt:Convert ,
+		dbt:Short_description ,
+		dbt:Pasta ,
+		dbt:Infobox_prepared_food ,
+		dbt:Reflist ,
+		dbt:IPA-it ;
+	dbo:thumbnail	<http://commons.wikimedia.org/wiki/Special:FilePath/Nests_of_tagliatelle_bolognesi.jpg?width=300> ;
+	dbo:wikiPageRevisionID	1090414673 ;
+	dbp:country	dbr:Italy .
+@prefix xsd:	<http://www.w3.org/2001/XMLSchema#> .
+dbr:Tagliatelle	dbo:wikiPageLength	"4058"^^xsd:nonNegativeInteger ;
+	dbo:wikiPageID	456363 ;
+	dbp:name	"Tagliatelle"@en ;
+	dbp:caption	"The distinctive shape of tagliatelle pasta"@en .
+@prefix dbpedia-fr:	<http://fr.dbpedia.org/resource/> .
+dbr:Tagliatelle	owl:sameAs	dbpedia-fr:Tagliatelle ,
+		dbr:Tagliatelle .
+@prefix dbpedia-ca:	<http://ca.dbpedia.org/resource/> .
+dbr:Tagliatelle	owl:sameAs	dbpedia-ca:Tallarina .
+@prefix dbpedia-is:	<http://is.dbpedia.org/resource/> .
+dbr:Tagliatelle	owl:sameAs	dbpedia-is:Tagliatelle ,
+		<http://ru.dbpedia.org/resource/\u0422\u0430\u043B\u044C\u044F\u0442\u0435\u043B\u043B\u0435> ,
+		<http://ar.dbpedia.org/resource/\u062A\u0627\u0644\u064A\u0627\u062A\u064A\u0644\u064A> .
+@prefix dbpedia-no:	<http://no.dbpedia.org/resource/> .
+dbr:Tagliatelle	owl:sameAs	dbpedia-no:Tagliatelle ,
+		<http://sr.dbpedia.org/resource/\u0422\u0430\u0459\u0430\u0442\u0435\u043B\u0435> .
+@prefix dbpedia-pl:	<http://pl.dbpedia.org/resource/> .
+dbr:Tagliatelle	owl:sameAs	dbpedia-pl:Tagliatelle .
+@prefix dbpedia-id:	<http://id.dbpedia.org/resource/> .
+dbr:Tagliatelle	owl:sameAs	dbpedia-id:Tagliatelle ,
+		<http://th.dbpedia.org/resource/\u0E15\u0E31\u0E25\u0E22\u0E32\u0E40\u0E15\u0E25\u0E40\u0E25> ,
+		<http://fa.dbpedia.org/resource/\u062A\u0627\u0644\u06CC\u0627\u062A\u0644\u0647> ,
+		<http://rdf.freebase.com/ns/m.02bpwp> .
+@prefix ns21:	<http://scn.dbpedia.org/resource/> .
+dbr:Tagliatelle	owl:sameAs	ns21:Tagghiateddi .
+@prefix dbpedia-hu:	<http://hu.dbpedia.org/resource/> .
+dbr:Tagliatelle	owl:sameAs	dbpedia-hu:Tagliatelle ,
+		<http://el.dbpedia.org/resource/\u03A4\u03B1\u03BB\u03B9\u03B1\u03C4\u03AD\u03BB\u03B5\u03C2> .
+@prefix ns23:	<https://global.dbpedia.org/id/> .
+dbr:Tagliatelle	owl:sameAs	ns23:vEKz .
+@prefix dbpedia-pt:	<http://pt.dbpedia.org/resource/> .
+dbr:Tagliatelle	owl:sameAs	dbpedia-pt:Tagliatelle .
+@prefix dbpedia-da:	<http://da.dbpedia.org/resource/> .
+dbr:Tagliatelle	owl:sameAs	dbpedia-da:Tagliatelle ,
+		<http://uk.dbpedia.org/resource/\u0422\u0430\u043B\u044C\u044F\u0442\u0435\u043B\u0435> ,
+		<http://ko.dbpedia.org/resource/\uD0C8\uB9AC\uC544\uD154\uB808> .
+@prefix dbpedia-fi:	<http://fi.dbpedia.org/resource/> .
+dbr:Tagliatelle	owl:sameAs	dbpedia-fi:Tagliatelle .
+@prefix dbpedia-af:	<http://af.dbpedia.org/resource/> .
+dbr:Tagliatelle	owl:sameAs	dbpedia-af:Tagliatelle .
+@prefix dbpedia-nl:	<http://nl.dbpedia.org/resource/> .
+dbr:Tagliatelle	owl:sameAs	dbpedia-nl:Tagliatelle ,
+		<http://bg.dbpedia.org/resource/\u0422\u0430\u043B\u0438\u0430\u0442\u0435\u043B\u0438> ,
+		<http://es.dbpedia.org/resource/Tallar\u00EDn> .
+@prefix ns29:	<http://jv.dbpedia.org/resource/> .
+dbr:Tagliatelle	owl:sameAs	ns29:Tagliatelle ,
+		wikidata:Q20044 .
+@prefix dbpedia-it:	<http://it.dbpedia.org/resource/> .
+dbr:Tagliatelle	owl:sameAs	dbpedia-it:Tagliatelle .
+@prefix dbpedia-de:	<http://de.dbpedia.org/resource/> .
+dbr:Tagliatelle	owl:sameAs	dbpedia-de:Tagliatelle .
+@prefix dbpedia-sv:	<http://sv.dbpedia.org/resource/> .
+dbr:Tagliatelle	owl:sameAs	dbpedia-sv:Tagliatelle .
+@prefix dbpedia-cs:	<http://cs.dbpedia.org/resource/> .
+dbr:Tagliatelle	owl:sameAs	dbpedia-cs:Tagliatelle ,
+		<http://ja.dbpedia.org/resource/\u30BF\u30EA\u30A2\u30C6\u30C3\u30EC> ,
+		<http://ml.dbpedia.org/resource/\u0D24\u0D2F\u0D4D\u0D2F\u0D3E\u0D24\u0D46\u0D32\u0D4D\u0D32\u0D47> ;
+	gold:hypernym	dbr:Type .
+@prefix prov:	<http://www.w3.org/ns/prov#> .
+dbr:Tagliatelle	prov:wasDerivedFrom	<http://en.wikipedia.org/wiki/Tagliatelle?oldid=1090414673&ns=0> ;
+	dbo:type	dbr:Pasta ;
+	dbp:type	dbr:Pasta ;
+	foaf:isPrimaryTopicOf	wikipedia-en:Tagliatelle ;
+	dbo:ingredientName	"flourand egg" ;
+	dbp:mainIngredient	"flour and egg"@en ;
+	dbo:ingredient	dbr:Flour ;
+	dbp:course	"Primo"@en ;
+	dbo:notes	"Long and thin. Can be served with a creamy sauce and cheese." ;
+	dbo:hasVariant	dbr:Pizzoccheri ,
+		dbr:Fettuccine ,
+		dbr:Tagliolini ;
+	dbp:variations	dbr:Pizzoccheri ,
+		dbr:Fettuccine ,
+		dbr:Tagliolini ;
+	dbo:country	dbr:Italy ;
+	dbp:imageSize	250 ;
+	dbo:region	dbr:Emilia-Romagna ,
+		dbr:Marche ;
+	dbp:other	"Long and thin. Can be served with a creamy sauce and cheese."@en ;
+	dbp:region	"Emilia-Romagna and Marche"@en .
+dbr:List_of_pasta	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+dbr:List_of_Italian_dishes	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+dbr:Fettuccine	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+dbr:Sfoglina	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+dbr:Ciclista_Lima_Association	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+dbr:Bologna	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+dbr:List_of_Burmese_dishes	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+dbr:Burmese_salads	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+dbr:Cuisine_of_Basilicata	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+dbr:Tagliolini	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+<http://dbpedia.org/resource/Iggy\u0027s>	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+dbr:Tourism_in_San_Marino	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+<http://dbpedia.org/resource/Comb_(anatomy)>	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+dbr:Rimini	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+dbr:Monghidoro	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+dbr:Chicken_paprikash	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+dbr:HJIM_van_Gasteren	dbo:wikiPageWikiLink	dbr:Tagliatelle .
+dbr:Marcella_Hazan	dbo:wikiPageWikiLink	dbr:Tagliatelle .
