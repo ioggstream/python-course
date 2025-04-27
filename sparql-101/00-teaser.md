@@ -5,89 +5,6 @@ Author: <roberto.polli@par-tec.it>
 
 ---
 
-## Introducing Python
-
-Python is an interpreted, object oriented language with
-a lot of built in features.
-It can be used as a calculator and for  mathematical operations,
-such as statistics, plotting and linear algebra.
-
-This is a fast-track course for high school students with math knowledge.
-
-Students are expected to type and execute cells, and share their results.
-
-You can open this notebook [on jupyter lite](https://jupyter.org/try-jupyter/lab/?fromURL=https://raw.githubusercontent.com/ioggstream/python-course/main/sparql-101/notebooks/00-teaser.ipynb).
-
----
-
-# Jupyter
-
-Is the course environment in your browser.
-It requires a modern browser and an internet connection supporting
-websockets. If your network setup (e.g. your proxy)
-does not support websockets, you will not be able to
-execute the code.
-
----
-
-While you might find the exercises' solutions in the environment,
-it is important for you to spend some time trying to do your homework!
-This will help you to remember the concepts and to learn how to use the tools.
-
----
-
-## What can I do with Jupyter?
-
-You can:
-
-- execute the next cell with `SHIFT+ENTER` (try it now!)
-
-If your environment supports it, you can use features requiring
-operating system access:
-
-- [open a (named) terminal on the local machine](/terminals/example)
-- [edit an existing file](/edit/notebooks/untitled.txt)
-
----
-
-- add more cells with `ALT+ENTER`
-
-----
-
-Try to add a cell below this one and write some text in it.
-
-```python
-# Add a new python cell with ALT+ENTER.
-```
-
----
-
-## Python terminal
-
-With Jupyter, you have a Python terminal at your disposal.
-You can run Python code:
-
-```python
-# You can evaluate maths and strings
-s = 1
-print("a string and the number " + str(s))
-```
-
-Jupyter remembers the variables you define in a cell, so you can use them in the next cells.
-
-```python
-# Evaluate this cell with SHIFT+ENTER
-s = s + 1
-print("now s is increased " + str(s))
-```
-
-Since Jupyter remembers the variables, you can run the cells in any order you want.
-This means that sometimes, you need to "reset" the environment, to start from scratch.
-
-This can be done with the "Kernel > Restart" or "Kernel > Restart & Clear output" menu.
-
-----
-
 ## Agenda
 
 - 1h. What is semantics and how to describe information in a
@@ -104,7 +21,17 @@ In this course, we will learn how to describe information in a
 machine-readable way using RDF.
 
 ```python
-%pip install rdflib bokeh
+%pip install rdflib
+```
+
+(and some graph libraries)
+
+```python
+%pip install bokeh
+```
+
+```python
+%pip install networkx
 ```
 
 For example network of persons:
@@ -151,22 +78,29 @@ There's plenty of knowledge in the web!
 from rdflib import Graph
 from rdflib.namespace import RDFS
 import networkx as nx
+from requests import get
 
 g = Graph()
-g.parse("https://dbpedia.org/data/Tortellini.n3", format="n3")
-plot_graph(g, label_property=RDFS.label, layout=nx.shell_layout, limit=60, filter=".*/dbpedia.org")
+g.parse(data=get("https://dbpedia.org/data/Tortellini.n3").text, format="n3")
+plot_graph(g, label_property=RDFS.label, limit=30, pattern=".*/dbpedia.org")
 ```
 
 And we can connect them together
 
 ```python
 # Extend our graph
-g.parse("https://dbpedia.org/data/Tagliatelle.n3", format="n3")
+g.parse(data=get("https://dbpedia.org/data/Tagliatelle.n3").text, format="n3")
 
-plot_graph(g, label_property=RDFS.label, layout=nx.shell_layout, limit=30, filter=".*/dbpedia.org")
+plot_graph(g, label_property=RDFS.label, limit=50, pattern=".*/dbpedia.org")
 ```
 
-We can also query the graph for Italian food
+Graphs contain a lot of senteces
+
+```python
+len(g)
+```
+
+but we can query them (e.g., for Italian food)
 
 ```python
 g.query("""
@@ -175,27 +109,199 @@ PREFIX dbr: <http://dbpedia.org/resource/>
 
 SELECT DISTINCT ?s
 WHERE {
-        ?s a dbo:Food ;
-           ?p dbr:Italy .
+  ?s
+    a   dbo:Food ;
+    ?p  dbr:Italy .
 }
 """
 ).bindings
 ```
 
-Or ask what do some items have in common
+and see if two resources have something in common...
 
 ```python
 g.query("""
-PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbr: <http://dbpedia.org/resource/>
 
 SELECT DISTINCT ?t
 WHERE {
-        ?s a dbo:Food .
-        ?q a dbo:Food .
-        ?s ?p ?t .
-        ?q ?p ?t .
-        FILTER (?s != ?q)
+  dbr:Tagliatelle ?p1 ?t .
+  dbr:Tortellini  ?p2 ?t .
 }
 """
 ).bindings
+```
+
+We can query remote graphs (e.g., DBPedia):
+
+```python
+dbpedia = Graph(store="SPARQLStore")
+dbpedia.open("https://dbpedia.org/sparql")
+
+dbpedia.query("""
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?subject ?label
+WHERE {
+  ?subject
+    a dbo:Food ;
+    rdfs:label ?label
+  FILTER (lang(?label) = 'en')
+  .
+}
+LIMIT 10
+""").bindings
+```
+
+Provided by different organizations
+
+```python
+eu = Graph(store="SPARQLStore")
+eu.open("https://publications.europa.eu/webapi/rdf/sparql")
+
+eu.query("""
+PREFIX euvoc: <http://publications.europa.eu/resource/authority/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?URI, ?concept, ?identifier
+WHERE {
+  ?URI
+    skos:inScheme euvoc:country ;
+    dc:identifier ?identifier ;
+    skos:prefLabel ?concept
+  .
+
+  FILTER(lang(?concept) = 'en')
+}
+LIMIT 5
+
+""").bindings
+```
+
+And their relations
+
+```python
+eu.query("""
+PREFIX euvoc: <http://publications.europa.eu/resource/authority/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX dct: <http://purl.org/dc/terms/>
+
+# Construct a graph of countries and their identifiers related by dct:replaces
+# countries must be in the euvoc:country scheme.
+
+CONSTRUCT { ?a dct:replaces ?b}
+WHERE {
+ ?a skos:inScheme euvoc:country.
+ ?b skos:inScheme euvoc:country.
+ ?a dct:replaces ?b .
+}
+
+LIMIT 5
+
+""").bindings
+```
+
+More relations
+
+```python
+from tools import plot_graph
+import networkx as nx
+ret = eu.query("""
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+
+CONSTRUCT   {
+
+?s skos:narrower ?q
+
+}
+WHERE {
+
+?s skos:inScheme <http://data.europa.eu/nuts/scheme/2024> ;
+skos:narrower ?q ;
+               <http://data.europa.eu/nuts/level> "0"
+.
+}
+LIMIT 400
+""")
+
+
+plot_graph(ret.graph, layout=nx.planar_layout)
+```
+
+---
+
+## Transform kube infra in graph
+
+```python
+% pip install d3fendtools
+```
+
+---
+
+List Basic attacks on your kube infrastructure
+
+```python
+from rdflib import Graph
+from tools import plot_graph
+
+kube = Graph()
+kube.parse('guestbook.ttl', format="text/turtle")
+
+# Simplify the graph ;)
+for s, p, q in kube:
+    if 'urn:k8s:default' in str(s):
+        continue
+    if str(s).startswith(("urn:k8s:", "rdfs:", "rdf:")):
+        kube.remove((s, p, q))
+    if str(q).startswith(("urn:k8s:", "rdfs:", "rds:")):
+        kube.remove((s, p, q))
+
+plot_graph(kube)
+```
+
+Get security insights from the NSA knowledge graph.
+
+```python
+kube=Graph()
+kube.parse('guestbook.ttl', format="text/turtle")
+kube.parse('d3fend.ttl', format="text/turtle")
+kube.query("""
+SELECT DISTINCT *
+WHERE {
+  ?artifact rdfs:subClassOf d3f:DigitalArtifact
+}
+""")
+```
+
+and apply this stuff to our infrastructure.
+
+```python
+
+attack_surface = list(kube.query("""
+SELECT DISTINCT
+  ?attack_label ?affects ?artifact ?uri
+WHERE {
+  ?kind rdfs:subClassOf* d3f:DigitalArtifact .
+  ?kind rdfs:subClassOf* k8s:Kind .
+  ?kind rdfs:subClassOf ?artifact .
+
+  ?attack
+    d3f:attack-id ?attack_id;
+    rdfs:label ?attack_label .
+
+  ?attack ?affects ?artifact .
+  ?uri a ?kind .
+
+}
+"""))
+
+print('\n'.join(sorted([
+    (f"Attack: {a['attack_label']},"
+     f" {a['affects'].fragment} {a['artifact'].fragment} for {a['uri']}")
+    for a in attack_surface
+])))
 ```

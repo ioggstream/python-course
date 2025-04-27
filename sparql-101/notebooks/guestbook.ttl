@@ -1,0 +1,249 @@
+@prefix d3f: <http://d3fend.mitre.org/ontologies/d3fend.owl#> .
+@prefix k8s: <urn:k8s:> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+k8s:Application a rdfs:Class ;
+    rdfs:subClassOf k8s:Kind .
+
+k8s:BuildConfig a rdfs:Class ;
+    rdfs:subClassOf k8s:Kind .
+
+k8s:Cluster a rdfs:Class ;
+    rdfs:subClassOf d3f:ContainerOrchestrationSoftware,
+        k8s:Kind .
+
+k8s:ConfigMap a rdfs:Class ;
+    rdfs:subClassOf d3f:ConfigurationResource,
+        k8s:Kind .
+
+k8s:Container a rdfs:Class ;
+    rdfs:subClassOf d3f:ContainerProcess,
+        k8s:Kind .
+
+k8s:Deployment a rdfs:Class ;
+    rdfs:subClassOf d3f:ApplicationConfiguration,
+        k8s:Kind,
+        k8s:Workload .
+
+k8s:DeploymentConfig a rdfs:Class ;
+    rdfs:subClassOf d3f:ApplicationConfiguration,
+        k8s:Kind .
+
+k8s:Endpoints a rdfs:Class ;
+    rdfs:subClassOf d3f:NetworkService,
+        k8s:Kind .
+
+k8s:Host a rdfs:Class ;
+    rdfs:subClassOf d3f:NetworkNode,
+        k8s:Kind .
+
+k8s:Image a rdfs:Class ;
+    rdfs:subClassOf d3f:ContainerImage,
+        k8s:Kind .
+
+k8s:ImageStream a rdfs:Class ;
+    rdfs:subClassOf d3f:ContainerImage,
+        k8s:Kind .
+
+k8s:Kind a rdfs:Class .
+
+k8s:Namespace a rdfs:Class ;
+    rdfs:subClassOf k8s:Kind .
+
+k8s:Node a rdfs:Class ;
+    rdfs:subClassOf d3f:Server,
+        k8s:Kind .
+
+k8s:PersistentVolumeClaim a rdfs:Class ;
+    rdfs:subClassOf d3f:Volume,
+        k8s:Kind .
+
+k8s:Port a rdfs:Class ;
+    rdfs:subClassOf d3f:NetworkService,
+        k8s:Kind .
+
+k8s:Registry a rdfs:Class ;
+    rdfs:subClassOf d3f:SoftwareArtifactServer .
+
+k8s:Route a rdfs:Class ;
+    rdfs:subClassOf d3f:InternetNetworkTraffic,
+        k8s:Kind .
+
+k8s:Secret a rdfs:Class ;
+    rdfs:subClassOf d3f:ConfigurationResource,
+        d3f:Credential,
+        k8s:Kind .
+
+k8s:Service a rdfs:Class ;
+    rdfs:subClassOf d3f:IntranetNetworkTraffic,
+        k8s:Kind .
+
+k8s:Workload a rdfs:Class ;
+    rdfs:subClassOf k8s:Kind .
+
+<https://docker.io> a k8s:Registry ;
+    k8s:hasChild <https://docker.io/registry.k8s.io/redis> .
+
+<https://gcr.io> a k8s:Registry ;
+    k8s:hasChild <https://gcr.io/google-samples/gb-frontend>,
+        <https://gcr.io/google_samples/gb-redisslave> .
+
+k8s:CronJob rdfs:comment "Runs on a schedule" ;
+    rdfs:subClassOf k8s:Workload .
+
+k8s:HorizontalPodAutoscaler rdfs:comment "Automatically scales the number of Pods in a replication controller, deployment, replica set or stateful set based on observed CPU utilization (or, with custom metrics support, on some other application-provided metrics)" ;
+    rdfs:subClassOf k8s:Workload ;
+    k8s:scaleTarget [ a d3f:Workload ] .
+
+k8s:Job rdfs:comment "Runs only once" ;
+    rdfs:subClassOf k8s:Workload .
+
+k8s:Pod rdfs:label "Pod" ;
+    d3f:contains [ a k8s:Container ] ;
+    d3f:hasClusterIP [ a d3f:IPAddress ] ;
+    d3f:hasNetNs [ a <https://man7.org/linux/man-pages/man7/network_namespaces.7.html> ] ;
+    d3f:runsOn [ a k8s:Node ] ;
+    rdfs:comment "A group of one or more containers, with shared storage/network, and a specification for how to run the containers" ;
+    rdfs:subClassOf k8s:Kind .
+
+k8s:ReplicaSet rdfs:subClassOf k8s:Workload .
+
+k8s:Selector rdfs:subClassOf d3f:NetworkService .
+
+k8s:StatefulSet rdfs:subClassOf k8s:Workload .
+
+k8s:accesses a rdf:Property ;
+    rdfs:subPropertyOf k8s:connected .
+
+k8s:cluster k8s:hasChild <https://k8s.local/default_> .
+
+k8s:executes a rdf:Property ;
+    rdfs:subPropertyOf k8s:connected .
+
+k8s:hasApplication a rdf:Property ;
+    rdfs:subPropertyOf k8s:connected .
+
+k8s:hasImage a rdf:Property ;
+    rdfs:subPropertyOf k8s:connected .
+
+k8s:hasNamespace a rdf:Property .
+
+k8s:hasSelector a rdf:Property ;
+    rdfs:subPropertyOf k8s:connected .
+
+k8s:runsOn a rdf:Property ;
+    rdfs:domain k8s:DaemonSet ;
+    rdfs:range k8s:Node ;
+    rdfs:subPropertyOf k8s:connected .
+
+<TCP://frontend.default_.svc:80> d3f:accesses <https://k8s.local/default_/Service/frontend:80> .
+
+<TCP://redis-master.default_.svc:6379> d3f:accesses <https://k8s.local/default_/Service/redis-master:6379> .
+
+<TCP://redis-replica.default_.svc:6379> d3f:accesses <https://k8s.local/default_/Service/redis-replica:6379> .
+
+<https://k8s.local/default_/Application/guestbook> a k8s:Application ;
+    k8s:hasChild <https://k8s.local/default_/Service/frontend> .
+
+<https://k8s.local/default_/Application/redis> a k8s:Application ;
+    k8s:hasChild <https://k8s.local/default_/Service/redis-master>,
+        <https://k8s.local/default_/Service/redis-replica> .
+
+<https://k8s.local/default_/Deployment/frontend> a k8s:Deployment ;
+    rdfs:label "dc/frontend" ;
+    d3f:runs <https://k8s.local/default_/Deployment/frontend/Container/php-redis> ;
+    k8s:hasChild <https://k8s.local/default_/Deployment/frontend/Container/php-redis> ;
+    k8s:hasNamespace <https://k8s.local/default_> .
+
+<https://k8s.local/default_/Deployment/redis-master> a k8s:Deployment ;
+    rdfs:label "dc/redis-master" ;
+    d3f:runs <https://k8s.local/default_/Deployment/redis-master/Container/master> ;
+    k8s:hasChild <https://k8s.local/default_/Deployment/redis-master/Container/master> ;
+    k8s:hasNamespace <https://k8s.local/default_> .
+
+<https://k8s.local/default_/Deployment/redis-replica> a k8s:Deployment ;
+    rdfs:label "dc/redis-replica" ;
+    d3f:runs <https://k8s.local/default_/Deployment/redis-replica/Container/replica> ;
+    k8s:hasChild <https://k8s.local/default_/Deployment/redis-replica/Container/replica> ;
+    k8s:hasNamespace <https://k8s.local/default_> .
+
+k8s:DaemonSet rdfs:comment "Ensures that all (or some) Nodes run a copy of a Pod" ;
+    rdfs:subClassOf k8s:Workload .
+
+<TCP://frontend:80> a k8s:Host ;
+    d3f:accesses <https://k8s.local/default_/Service/frontend:80> .
+
+<TCP://redis-master:6379> a k8s:Host ;
+    d3f:accesses <https://k8s.local/default_/Service/redis-master:6379> .
+
+<TCP://redis-replica:6379> a k8s:Host ;
+    d3f:accesses <https://k8s.local/default_/Service/redis-replica:6379> .
+
+<https://k8s.local/default_/Deployment/frontend/Container/php-redis> a k8s:Container ;
+    rdfs:label "php-redis" ;
+    d3f:runs <https://gcr.io/google-samples/gb-frontend> ;
+    k8s:hasImage <https://gcr.io/google-samples/gb-frontend> .
+
+<https://k8s.local/default_/Deployment/redis-master/Container/master> a k8s:Container ;
+    rdfs:label "master" ;
+    d3f:runs <https://docker.io/registry.k8s.io/redis> ;
+    k8s:hasImage <https://docker.io/registry.k8s.io/redis> .
+
+<https://k8s.local/default_/Deployment/redis-replica/Container/replica> a k8s:Container ;
+    rdfs:label "replica" ;
+    d3f:runs <https://gcr.io/google_samples/gb-redisslave> ;
+    k8s:hasImage <https://gcr.io/google_samples/gb-redisslave> .
+
+<https://k8s.local/default_/Service/frontend> a k8s:Service ;
+    rdfs:label "svc/frontend" ;
+    k8s:hasChild <TCP://frontend.default_.svc:80>,
+        <TCP://frontend:80>,
+        <https://k8s.local/default_/Service/frontend:80> ;
+    k8s:hasHost <TCP://frontend:80> ;
+    k8s:hasNamespace <https://k8s.local/default_> ;
+    k8s:hasPort <https://k8s.local/default_/Service/frontend:80> .
+
+<https://k8s.local/default_/Service/redis-master> a k8s:Service ;
+    rdfs:label "svc/redis-master" ;
+    k8s:hasChild <TCP://redis-master.default_.svc:6379>,
+        <TCP://redis-master:6379>,
+        <https://k8s.local/default_/Service/redis-master:6379> ;
+    k8s:hasHost <TCP://redis-master:6379> ;
+    k8s:hasNamespace <https://k8s.local/default_> ;
+    k8s:hasPort <https://k8s.local/default_/Service/redis-master:6379> ;
+    k8s:portForward "6379-TCP>6379" .
+
+<https://k8s.local/default_/Service/redis-replica> a k8s:Service ;
+    rdfs:label "svc/redis-replica" ;
+    k8s:hasChild <TCP://redis-replica.default_.svc:6379>,
+        <TCP://redis-replica:6379>,
+        <https://k8s.local/default_/Service/redis-replica:6379> ;
+    k8s:hasHost <TCP://redis-replica:6379> ;
+    k8s:hasNamespace <https://k8s.local/default_> ;
+    k8s:hasPort <https://k8s.local/default_/Service/redis-replica:6379> .
+
+<https://docker.io/registry.k8s.io/redis> a k8s:Image .
+
+<https://gcr.io/google-samples/gb-frontend> a k8s:Image .
+
+<https://gcr.io/google_samples/gb-redisslave> a k8s:Image .
+
+<https://k8s.local/default_/Service/frontend:80> a k8s:Port .
+
+<https://k8s.local/default_/Service/redis-master:6379> a k8s:Port .
+
+<https://k8s.local/default_/Service/redis-replica:6379> a k8s:Port .
+
+k8s:connected a rdf:Property .
+
+<https://k8s.local/default_> a k8s:Namespace ;
+    rdfs:label "default_" ;
+    k8s:hasChild <https://k8s.local/default_/Application/guestbook>,
+        <https://k8s.local/default_/Application/redis>,
+        <https://k8s.local/default_/Deployment/frontend>,
+        <https://k8s.local/default_/Deployment/redis-master>,
+        <https://k8s.local/default_/Deployment/redis-replica>,
+        <https://k8s.local/default_/Service/frontend>,
+        <https://k8s.local/default_/Service/redis-master>,
+        <https://k8s.local/default_/Service/redis-replica> .
