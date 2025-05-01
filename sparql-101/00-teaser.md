@@ -299,9 +299,9 @@ WHERE {
 }
 """))
 
-print('\n'.join(sorted([
+print(*sorted([
     (f"Attack: {a['attack_label']},"
      f" {a['affects'].fragment} {a['artifact'].fragment} for {a['uri']}")
     for a in attack_surface
-])))
+]), sep="\n")
 ```

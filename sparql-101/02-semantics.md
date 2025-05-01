@@ -13,188 +13,6 @@
 
 ----
 
-Prerequisites:
-
-- json, yaml, xmlschema
-- HTTP, OpenAPI 3
-- SQL and database hints
-
----
-
-## Intro: What is knowledge?
-
-Knowledge is a set of information that is useful for a given purpose.
-
-We express knowledge through language and symbols
-in various forms: text, images, and sounds.
-
-To use knowledge we need to:
-
-- sense;
-- interpret;
-- understand.
-
-When reading a book, for example, we not only need to read and understand the words,
-but also to interpret the meaning of the sentences and paragraphs
-based on the context and our previous knowledge.
-
-----
-
-## Intro: The Encyclopedia
-
-The Encyclopedia was one of the first attempts to organize knowledge,
-and to make it available to the public.
-
-Today, we have various encyclopedias on the web,
-such as Wikipedia and dbpedia.
-
-Exercise: open the "Python" page on dbpedia:
-
-- https://dbpedia.org/page/Python_(programming_language)
-
-And on Wikidata:
-
-- https://www.wikidata.org/wiki/Q28865
-
-----
-
-## Intro: The Encyclopedia
-
-Knowledge is organized in a graph structure,
-where each node is a concept and the edges are the relationships between them.
-
-```mermaid
-graph LR
-
-subgraph dbpedia[DBpedia]
-  dbr:Python[Python] -->|designer| dbr:gvr[Guido van Rossum]
-  dbr:Python[Python] -->|operating System| dbr:win[Windows] & dbr:linux[Linux] & ...
-  dbr:gvr -->|born| dbr:nl[Netherlands]
-end
-
-subgraph wikidata[WikiData]
-  wd:Q30942[Guido van Rossum] ---|developer| wd:Q28865[Python]
-  wd:Q16402[Monty Python] ---|named after| wd:Q28865
-end
-
-wd:Q28865 -.-|same as| dbr:Python
-wd:Q30942 -.-|same as| dbr:gvr
-```
-
-This is the basis of the Semantic Web,
-where knowledge is represented in a machine-readable format,
-but it is also the basis of the Web itself
-(e.g., see [Web Linking RFC 8288](https://datatracker.ietf.org/doc/html/rfc8288)).
-
-----
-
-## Intro: The Encyclopedia
-
-The above graph can be expressed by sentences such as:
-
-- Python is named after Monty Python.
-- Guido van Rossum is the designer of Python.
-- Python runs on Linux.
-
-their general form is
-
-```mermaid
-graph LR
-subject((subject)) --- predicate(predicate) --> object
-```
-
-## Intro: The Encyclopedia
-
-Encyclopedia voices on Wikipedia and dbpedia are expressed in
-[Resource Description Framework (RDF)](https://www.w3.org/TR/rdf11-primer/).
-
-It is a formal language to represent knowledge in a machine-readable format
-using triples of the form `subject predicate object`.
-
-Let's translate the above definition from English to RDF:
-
-> Tortellini are a typical Italian food,
-> <br>made with pasta filled with meat such as prosciutto.
-
-becomes something like
-
-```turtle
-:Tortellini a :Food .
-:Tortellini :country dbr:Italy .
-:Tortellini :relatedTo dbr:Prosciutto .
-```
-
-## Exercise: Get a voice from dbpedia
-
-Now, let's get the actual voice from dbpedia
-using the python RDF library.
-
-```python
-# Get a voice from dbpedia using rdflib
-from rdflib import Graph
-
-# What's Tortellini?
-g = Graph()
-g.parse("https://dbpedia.org/data/Tortellini.ttl", format="turtle")
-```
-
-We get a graph with the information about Tortellini.
-
-```mermaid
-graph LR
-  subgraph dbpedia[DBpedia]
-    dbr:Tortellini[Tortellini] -->|is a| dbo:Food[Food]
-    dbr:Tortellini -->|related to| dbr:Prosciutto[Prosciutto]
-    dbr:Tortellini -->|country| dbp:Italy[Italy]
-    ...
-  end
-```
-
-An encyclopedia voice contains a list of sentences :)
-
-```python
-# List all the details about Tortellini.
-sentences = list(g)
-
-print('\n'.join([str(s) for s in sentences]))
-```
-
-Exercise:
-
-- how many sentences are there?
-- how many elements does each sentence have?
-
-
-----
-
-```python
-from rdflib.namespace import RDF, RDFS, FOAF
-
-# Now we get specific properties from the graph.
-_type = list(g.objects(predicate=RDF.type))
-print(_type)
-```
-
-
-```python
-import rdflib
-from rdflib.extras.external_graph_libs import rdflib_to_networkx_multidigraph
-import networkx as nx
-import matplotlib.pyplot as plt
-
-G = rdflib_to_networkx_multidigraph(g)
-
-# Plot Networkx instance of RDF Graph
-pos = nx.spring_layout(G, scale=2)
-edge_labels = nx.get_edge_attributes(G, 'r')
-nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels)
-nx.draw(G, with_labels=True)
-
-#if not in interactive mode for
-plt.show()
-
-```
-
 ## Intro: Semantics what?
 
 Semantics: the study of meaning.
@@ -216,7 +34,6 @@ Is it a monthly or yearly income?
 ----
 
 Integrating data from different sources is difficult because of the lack of semantic interoperability.
-
 
 ```mermaid
 graph LR
@@ -294,7 +111,6 @@ dog_uri = "https://dbpedia.org/data/Dog"
 
 ```
 
-
 To semantically standardize data, services and their content, conceptual tools such as ontologies and controlled vocabularies (codelist, taxonomies, ..) are used.
 
 Ontology: an ontology is a set of logical axioms that conceptualize a domain of interest by defining concepts and the semantics of relationships between them.
@@ -304,11 +120,11 @@ When ontologies contain further restrictions (e.g.,
 Controlled vocabulary: a vocabulary where the terms are validated by a designated authority.
 It can be of different types - EG.A list (codelist), a hierarchical structure (taxonomy), a glossary and a tesauro (which adds further constraints to a taxonomy).
 
-Examples of European controlled vocabularies are found here https://op.europa.eu/en/web/eu-vocabularies/controlled-vocabularies
+Examples of European controlled vocabularies are found here <https://op.europa.eu/en/web/eu-vocabularies/controlled-vocabularies>
 
 ## Syntax standardization
 
-Data model: a data model, or data schema is a formal representation/description and machine-penadable of the actual or potential content of the data contained in a separate object.
+Data model: a data model, or data schema is a formal representation/description and machine-readable of the actual or potential content of the data contained in a separate object.
 
 In other words, it is the set of semantic and sequential instructions that can be used
 to check the stored input in a given file,
@@ -316,20 +132,19 @@ or to connect a file that respects these instructions to a system or an applicat
 
 There are several formats to describe the patterns,
 including XML Schema  and JSON Schema. Formal definition of the syntax of an entity.
-See https://json-schema.org/understanding-json-schema/about.html
+See <https://json-schema.org/understanding-json-schema/about.html>
 
 A Controlled vocabulary may support syntactic standardization.
 
 ----
 
-Per standardizzare sintatticamente i servizi serve pubblicare degli schemi dati a cui tutte le organizzazioni devono conformarsi. Storicamente la standardizzazione degli schemi dati si basa sul concetto di namespace eventualmente distribuiti - vedi il formato di specifica XSD.
+To syntactically standardize the services, you need to publish data patterns to which all organizations must conform.Historically, the standardization of the data schemes is based on the concept of Namespace possibly distributed - see the XSD specification format.
 
-Se in ecosistemi ben definiti questo approccio funziona, al crescere della dimensione si pongono una serie di problematiche legate sia alla compattezza dei dati trasportati che del contesto di sicurezza legato ad esempio alla eventuale necessità di dereferenziare gli URI (eg. https://owasp.org/www-pdf-archive/XML_Based_Attacks_-_OWASP.pdf ) .
+If in well-defined ecosystems this approach works, as the dimension grows, a series of problems related to both the compactness of the transported data and the security context linked for example to the possible need to dereference the URI (Eg. <Https://owasp.org/www-pdf-rchive/xml_based_attacks_-_owasp.pdf>) are
 
-Mentre poi la metadatazione delle pagine tramite json-ld ha come platea principale i sistemi di processamento batch dei motori di ricerca, i dati convogliati tramite API vengono sempre più frequentemente processati da applicazioni mobile che hanno dei vincoli sia in termini di banda che di consumo di risorse (eg. batteria dei cellulari, riscaldamento) più stringenti.
+While then the metadation of the pages via Json -ild has as its main audience the search engines batch processing systems, the data conveyed through APIs are increasingly frequently processed by mobile applications that have constraints both in terms of bandwidth and consumption of resources (eg. Cellular battery, heating) more stringent.
 
-Inoltre la creazione di servizi sempre più integrati porta ad un aumento del numero di richieste, e della conseguente necessità di supportare in maniera sostenibile i carichi sui sistemi IT.
-
+In addition, the creation of increasingly integrated services leads to an increase in the number of requests, and the consequent need to sustain the loads on IT systems in a sustainable way.
 ---
 
 ## Defining semantic contents
@@ -440,9 +255,9 @@ family_name: Polli
 ---
 
 Oltre all'ontologia italiana, un altro vocabolario
-molto usato sul web è www.schema.org. Le parole chiave
+molto usato sul web è <www.schema.org>. Le parole chiave
 che definisce sono disponibili in formato json-ld
-https://schema.org/docs/jsonldcontext.jsonld
+<https://schema.org/docs/jsonldcontext.jsonld>
 
 ---
 
@@ -513,7 +328,7 @@ payment_to: bob@foo.example
 "@context": https://payment/context.jsonld
 ```
 
-Alterando la risposta del server https://payment/context.jsonld
+Alterando la risposta del server <https://payment/context.jsonld>
 possiamo invertire il verso del pagamento!
 
 ```yaml
