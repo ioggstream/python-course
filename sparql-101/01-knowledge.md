@@ -59,21 +59,31 @@ For example, an hypotetical Python encyclopedia voice
 could be:
 
 > Python is a programming language
-> designed by Guido van Rossum and
-> named after the Monty Python comedy group.
+> \n designed by Guido van Rossum and
+> \n named after the Monty Python comedy group.
 
 ----
 
 Today, we have various encyclopedias on the web,
 such as Wikipedia and dbpedia.
 
-Exercise: open the "Python" page on dbpedia:
+Exercise:
 
-- <https://dbpedia.org/page/Python_(programming_language)>
+1. open the "Python" page on dbpedia:
 
-And on Wikidata:
+   - <https://dbpedia.org/page/Python_(programming_language)>
 
-- <https://www.wikidata.org/wiki/Q28865>
+   and on Wikidata:
+
+   - <https://www.wikidata.org/wiki/Q28865>
+
+2. note that in both sites every
+   piece of information is expressed in couples
+   such as "predicate" and "object".
+
+3. navigate those pages and
+   click on the links to see how
+   the information is organized.
 
 ----
 
@@ -84,6 +94,8 @@ it is natural to represent and organize knowledge
 in a graph structure,
 where each node is a concept and the edges are the relationships between them.
 
+Here is an excerpt from the Python encyclopedia voice of Dbpedia:
+
 ```mermaid
 graph LR
 
@@ -92,6 +104,37 @@ subgraph dbpedia[DBpedia]
   dbr:Python[Python] -->|operating System| dbr:win[Windows] & dbr:linux[Linux] & ...
   dbr:gvr -->|born| dbr:nl[Netherlands]
 end
+
+```
+
+----
+
+Another example is the Python encyclopedia voice of Wikidata:
+
+```mermaid
+graph LR
+subgraph wikidata[WikiData]
+  wd:Q30942[Guido van Rossum] ---|developer| wd:Q28865[Python]
+  wd:Q16402[Monty Python] ---|named after| wd:Q28865
+end
+```
+
+----
+
+We can connect the two graphs together:
+this can be done using existing cross-references
+between Dbpedia and Wikidata,
+or using our own knowledge.
+
+```mermaid
+graph LR
+
+subgraph dbpedia[DBpedia]
+  dbr:Python[Python] -->|designer| dbr:gvr[Guido van Rossum]
+  dbr:Python[Python] -->|operating System| dbr:win[Windows] & dbr:linux[Linux] & ...
+  dbr:gvr -->|born| dbr:nl[Netherlands]
+end
+
 
 subgraph wikidata[WikiData]
   wd:Q30942[Guido van Rossum] ---|developer| wd:Q28865[Python]
