@@ -101,7 +101,7 @@ graph LR
 
 subgraph dbpedia[DBpedia]
   dbr:Python[Python] -->|designer| dbr:gvr[Guido van Rossum]
-  dbr:Python[Python] -->|operating System| dbr:win[Windows] & dbr:linux[Linux] & ...
+  dbr:Python[Python] -->|operating system| dbr:win[Windows] & dbr:linux[Linux] & ...
   dbr:gvr -->|born| dbr:nl[Netherlands]
 end
 
@@ -121,10 +121,10 @@ end
 
 ----
 
-We can connect the two graphs together:
-this can be done using existing cross-references
+We can use further knowledge - using exisiting cross-references
 between Dbpedia and Wikidata,
-or using our own knowledge.
+or using our own knowledge -
+to connect the two graphs together.
 
 ```mermaid
 graph LR
@@ -146,13 +146,14 @@ wd:Q30942 -.-|same as| dbr:gvr
 ```
 
 This is the basis of the Semantic Web,
-where knowledge is represented in a machine-readable format,
-but it is also the basis of the Web itself
+where knowledge is represented in a machine-readable format.
+
+But it is also the basis of the Web itself
 (e.g., see [Web Linking RFC 8288](https://datatracker.ietf.org/doc/html/rfc8288)).
 
 ----
 
-## Intro: The Encyclopedia
+## Machine readable sentences and RDF
 
 Encyclopedia voices on Wikipedia and dbpedia are expressed in
 [Resource Description Framework (RDF)](https://www.w3.org/TR/rdf11-primer/).
@@ -164,11 +165,16 @@ using triples of the form
 subject predicate object .
 ```
 
-:warning: note the dot at the end of the sentence!
+:exclamation: note the dot at the end of the sentence :exclamation:
+
+```python
+# rdflib is a python library to work with RDF.
+%pip install rdflib
+```
 
 ----
 
-Subjects and predicates are uniquely identified by URIs,
+Subjects and predicates are uniquely identified by [URIs](https://www.w3.org/TR/rdf11-concepts/#section-uris),
 and objects can be either URIs or literals (strings, numbers, dates, etc.).
 
 URIs provide a definition context for subjects and predicates,
@@ -178,63 +184,165 @@ definition provided by a given vocabulary.
 Every term is identified by an absolute URI
 enclosed by `<>`.
 
-```turtle
+```python
+sentences = """
 <https://dbpedia.org/data/Tortellini> a <https://dbpedia.org/ontology/Food> .
+"""
 ```
 
-RDF allows the use of prefixes to shorten URIs
-( the [cURIe](https://www.w3.org/TR/curie/) syntax).
+----
 
-```turtle
+Let's parse our first RDF sentence using the [rdflib](https://rdflib.readthedocs.io/en/stable/) library.
+
+```python
+from rdflib import Graph
+
+g = Graph()
+g.parse(data=sentences, format="turtle")
+
+print(*g, sep="\n")
+```
+
+----
+
+We can also represent the same sentence in JSON-LD format.
+
+```python
+json_text = g.serialize(format="application/ld+json")
+print(json_text)
+```
+
+Exercise: take 2 minutes to map the JSON-LD
+format to the RDF format.
+
+We'll see JSON-LD in detail later.
+
+---
+
+### Namespaces and cURIe
+
+RDF use namespace prefixes to shorten URIs
+(the [cURIe](https://www.w3.org/TR/curie/) syntax).
+
+```python
+sentences = """
 @prefix dbr: <http://dbpedia.org/resource/> .
 @prefix dbo: <http://dbpedia.org/ontology/> .
 
 dbr:Tortellini a dbo:Food .
+"""
+
+g1 = Graph()
+g1.parse(data=sentences, format="turtle")
+print(*g1, sep="\n")
 ```
-
-----
-
-Another vocabulary could provide a different definition for the same term,
-though the URI could not always be human-readable.
 
 ```python
-prefix = "https://www.wikidata.org/wiki/"
-term = "Q28865"
-uri = "https://www.wikidata.org/wiki/Q28865"
+# Get the namespaces used in the g1 graph.
+g1_ns = set(g1.namespaces())
+print(*g1_ns, sep="\n")
+```
+
+
+```python
+# Expand an entry using predefined namespaces.
+g1.namespace_manager.expand_curie("dbr:Lasagne")
 ```
 
 ----
 
-Let's translate the following definition from English to RDF:
+Another vocabulary could provide a different definition for the same term.
+:warning: URI could not always be human-readable.
+
+```python
+from rdflib import URIRef
+wikidata_python = URIRef("https://www.wikidata.org/wiki/Q28865")
+
+wikidata_python
+```
+
+----
+
+Let's express the following English definition in RDF:
 
 > Tortellini are a typical Italian food,
 > <br>made with pasta filled with meat such as prosciutto.
 
-becomes something like
+We must use different sentences,
+and we'll express a generic relationship
+with the `dbo:WikiPageWikiLink`
+predicate.
 
-```turtle
+```python
+sentences = """
 @prefix : <http://dbpedia.org/resource/> .
 @prefix dbp: <http://dbpedia.org/property/> .
 @prefix dbo: <http://dbpedia.org/ontology/> .
 
-:Tortellini a          :Food .
-:Tortellini dbp:country   dbr:Italy .
+:Tortellini a          dbo:Food .
+:Tortellini dbp:country   :Italy .
 :Tortellini dbo:WikiPageWikiLink :Prosciutto .
 :Meat       dbo:WikiPageWikiLink :Prosciutto .
+"""
 ```
 
-## Exercise: Get a voice from dbpedia
+#### Exercise: parse the sentences using rdflib and answer the following questions:
 
-Now, let's get the actual voice from dbpedia
-using the python RDF library.
+- how many sentences are there?
+- how many subjects are there?
+- how many namespaces are there?
+
+```python
+from rdflib import Graph
+
+tortellini = Graph()
+
+# Use this cell for the exercise
+```
+
+#### Exercise: use `Graph.namespaces` to get the
+namespaces added by the sentences above.
+
+```python
+from rdflib import Graph
+
+default_ns = set(Graph().namespaces())
+
+# Use this cell for the exercise
+```
+
+#### Exercise: serialize the above graph in JSON-LD format.
+
+```python
+# Use this cell for the exercise
+tortellini_jsonld = ...
+```
+
+#### Exercise: Load the JSON-LD object in a variable
+
+- What's the type and len of the serialized object?
+- What's in the first element of the serialized object?
+
+```python
+import json
+
+# Use this cell for the exercise
+...
+```
+
+#### Exercise: Get a voice from dbpedia
+
+Now, let's get the actual voice from dbpedia.
 
 ```python
 # Get a voice from dbpedia using rdflib
 from rdflib import Graph
+tortellini_url = "https://dbpedia.org/data/Tortellini.n3"
+tortellini_n3 = Path("Tortellini.n3")
 
-# What's Tortellini?
+# What are Tortellini?
 g = Graph()
-g.parse("https://dbpedia.org/data/Tortellini.ttl", format="turtle")
+g.parse(tortellini_url, format="turtle")
 ```
 
 We get a graph with the information about Tortellini.
@@ -254,14 +362,18 @@ An encyclopedia voice contains a list of sentences :)
 ```python
 # List all the details about Tortellini.
 sentences = list(g)
-
-print(*[str(s) for s in sentences], sep="\n")
+excerpt = sentences[0:15]
+print(*[str(s) for s in excerpt], sep="\n")
 ```
 
-Exercise:
+#### Exercise: counting sentences
 
 - how many sentences are there?
 - how many elements does each sentence have?
+
+```python
+# Use this cell for the exercise
+```
 
 ----
 
@@ -275,5 +387,43 @@ print(_type)
 
 ```python
 from tools import plot_graph
-plot_graph(g, label_property=RDFS.label)
+plot_graph(g, limit=30)
+```
+
+#### Exercise: extending graphs
+
+There's plenty of knowledge in the web!
+
+```python
+from rdflib import Graph
+from rdflib.namespace import RDFS
+
+tortellini_url = "https://dbpedia.org/data/Tortellini.n3"
+tortellini_n3 = Path("Tortellini.n3")
+
+g = Graph()
+g.parse(tortellini_n3, format="n3")
+plot_graph(g, limit=30, pattern=".*/dbpedia.org")
+```
+
+And we can connect them together
+
+```python
+tagliatelle_url = "https://dbpedia.org/data/Tagliatelle.n3"
+tagliatelle_n3 = Path("Tagliatelle.n3")
+# Extend our graph
+g.parse(tagliatelle_n3, format="n3")
+```
+
+Exercise: how many sentences are there now?
+
+```python
+# Use this cell for the exercise
+```
+
+Plot the graph again to see the new nodes and
+their relations.
+
+```python
+plot_graph(g, label_property=RDFS.label, limit=50, pattern=".*/dbpedia.org")
 ```
