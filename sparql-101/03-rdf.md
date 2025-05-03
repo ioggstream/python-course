@@ -6,13 +6,13 @@
   - Virtuoso
   - GraphDB
 
-*Beware*: commands contain small typos. You must fix them to properly complete the course!
+*Beware*: commands may contain small typos. You must fix them to properly complete the course!
 
 ----
 
 Prerequisites:
 
-- json, yaml, xmlschema
+- JSON, YAML, xmlschema
 - HTTP, OpenAPI 3
 - SQL and database hints
 
@@ -21,24 +21,71 @@ Prerequisites:
 
 ## Graphs (again)
 
-A graph is a set (unordered) of triples.
+### RDF databases
+
+An RDF graph is an (unordered) set of triples.
 
 Each triple consists of a `subject`, `predicate`, `object`.
 
-Graph databases such as [Virtuoso (opensource)](),
+Graph databases such as [Virtuoso (opensource)](https://virtuoso.openlinksw.com/),
 [GraphDB (proprietary)](),
 [Amazon Nepture (proprietary SaaS)]()
-support the [SparQL]() language.
-Other databases - [Neo4j (opensource)]() use
-custom language.
+store triples into graphs.
+
+They can be queried using the [SparQL]() language.
 
 ----
 
-Let's populate some entries in SparQL
-and see how it works.
+A sparql query retrieves all entries
+matching one or more sentences
 
-Open [sample.ttl](sample.ttl) and list
-all entries
+```sparql
+SELECT * WHERE {
+  ?subject ?predicate ?object .
+  # ... more sentences ...
+}
+```
+
+This workshop provides a non-exhaustive introduction to SparQL.
+
+----
+
+### Non-RDF databases
+
+Other databases - [Neo4j (opensource)]()
+use a different approach to represent graphs
+such as [Labeled Property Graphs](https://en.wikipedia.org/wiki/Labeled_property_graph)
+Neo4j can be queried using the [Cypher](https://neo4j.com/developer/cypher-query-language/) language.
+
+Neo4j supports RDF datasets via the Neosemantics plugin.
+
+---
+
+## My first SparQL query
+
+We will simulate a graph database using
+[rdflib](https://rdflib.readthedocs.io/en/stable/index.html),
+that supports SparQL queries.
+
+Let's create a graph
+and load into it the [European vocabulary for countries](countries.ttl).
+
+See also:
+
+- [EU Authority Tables](https://op.europa.eu/en/web/eu-vocabularies/authority-tables)
+
+```python
+from rdflib import Graph
+
+# Let's create a graph.
+g = Graph()
+
+# And load into it the European
+# vocabulary for countries.
+g.parse("countries.ttl", format="text/turtle")
+```
+
+Now let's navigate this database.
 
 ```sparql
 SELECT * WHERE {

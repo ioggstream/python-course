@@ -84,19 +84,23 @@ There's plenty of knowledge in the web!
 ```python
 from rdflib import Graph
 from rdflib.namespace import RDFS
-import networkx as nx
-from requests import get
+
+tortellini_url = "https://dbpedia.org/data/Tortellini.n3"
+tortellini_n3 = Path("Tortellini.n3")
 
 g = Graph()
-g.parse(data=get("https://dbpedia.org/data/Tortellini.n3").text, format="n3")
+g.parse(tortellini_url, format="n3")
 plot_graph(g, label_property=RDFS.label, limit=30, pattern=".*/dbpedia.org")
 ```
 
 And we can connect them together
 
 ```python
+tagliatelle_url = "https://dbpedia.org/data/Tagliatelle.n3"
+tagliatelle_n3 = Path("Tagliatelle.n3")
+
 # Extend our graph
-g.parse(data=get("https://dbpedia.org/data/Tagliatelle.n3").text, format="n3")
+g.parse(tagliatelle_url, format="n3")
 
 plot_graph(g, label_property=RDFS.label, limit=50, pattern=".*/dbpedia.org")
 ```
