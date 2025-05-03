@@ -57,6 +57,7 @@ use a different approach to represent graphs
 such as [Labeled Property Graphs](https://en.wikipedia.org/wiki/Labeled_property_graph)
 Neo4j can be queried using the [Cypher](https://neo4j.com/developer/cypher-query-language/) language.
 
+
 Neo4j supports RDF datasets via the Neosemantics plugin.
 
 ---
@@ -85,17 +86,247 @@ g = Graph()
 g.parse("countries.ttl", format="text/turtle")
 ```
 
-Now let's navigate this database.
+Now let's run our first SparQL query!
 
-```sparql
+```python
+# List the first 3 triples.
+q = """
 SELECT * WHERE {
-  ?subject ?predicate ?object
+  ?subject ?predicate ?object .
 }
+LIMIT 3
+"""
+result = g.query(q)
+
+# Print it!
+for r in result:
+  print(r.asdict())
 ```
 
-(describe sparql query)
+Now print the result using
+variable names.
+
+```python
+for r in result:
+    print(r.subject, r.predicate, r.object, sep="\t")
+```
+
+Exercise:
+
+- Replace `?subject` with `?foo`
+  and see what happens.
+
+```python
+q = """
+WRITEME!
+"""
+result = g.query(q)
+
+# Print it!
+for r in result:
+  print(r.asdict())
+```
+
+- Remove the `LIMIT` clause.
+  How many triples are in the graph?
+
+```python
+# Use this cell for the exercise.
+```
+
+---
+
+## Metadata, Metadata
+
+Between all triples,
+some contain metadata,
+such as the type of the subjects.
+
+```python
+q = """
+SELECT DISTINCT
+  ?type
+WHERE {
+  ?s a ?type .
+}
+"""
+result = g.query(q)
+
+[r.type  for r in result]
+```
+
+We can simplify the above query
+avoiding gathering `?s` at all
+using the `[]` syntax
+that matches anything.
+
+```python
+q = """
+SELECT DISTINCT
+  ?type
+WHERE {
+  [] a ?type .
+}
+"""
+result = g.query(q)
+
+[r.type  for r in result]
+```
+
+Exercise:
+
+- what's a `skos:Concept`?
+- what's a `skos:ConceptScheme`?
+
+<!-- Open the URIRef in your browser -->
 
 ----
+
+List `skos:ConceptScheme`s
+and their labels.
+
+```python
+q = """
+SELECT DISTINCT *
+WHERE {
+  ?ConceptScheme
+    a skos:ConceptScheme  ;
+    skos:prefLabel ?label .
+    # Only English labels
+    FILTER (lang(?label) = "en")
+}
+"""
+result = g.query(q)
+[r.asdict() for r in result]
+```
+
+Exercise:
+
+- Rewrite the above query using
+  two sentences.
+
+<!-- SELECT DISTINCT * WHERE { ?ConceptScheme a skos:ConceptScheme . ?ConceptScheme skos:prefLabel ?label . } -->
+
+----
+
+Now find all the triples
+where the `object` is
+`<http://publications.europa.eu/resource/authority/country/0005>
+
+
+```python
+q = """
+SELECT DISTINCT *
+WHERE {
+  ?s ?p <http://publications.europa.eu/resource/authority/country/0005> .
+}
+"""
+result = g.query(q)
+[r.asdict() for r in result]
+```
+
+Exercise:
+
+- Rewrite the above query using
+  the PREFIX directive.
+
+<!-- PREFIX euvoc: <http://publications.europa.eu/resource/authority/country/> -->
+<!-- SELECT DISTINCT * WHERE { ?s ?p euvoc:0005 } LIMIT 6-->
+
+```python
+q = """
+PREFIX euvoc: <http://publications.europa.eu/resource/authority/country/>
+
+SELECT DISTINCT *
+WHERE {
+  ?s ?p ...
+}
+LIMIT 6
+"""
+result = g.query(q)
+[r.asdict() for r in result]
+```
+
+---
+
+Let's visualize the graph
+using:
+
+- dotted lines to represent type relations
+- parallelograms to represent literals
+
+```mermaid
+graph
+
+skos:ConceptScheme
+skos:ConceptScheme -->|skos:prefLabel| _l1[/"Concept Scheme"/]
+
+country:0005 -.->|a| skos:ConceptScheme
+country:0005 ---|skos:prefLabel| _l[/"Current EU members"/]
+
+country -.->|a| skos:ConceptScheme
+country:AUT --->|skos:inScheme| country:0005
+country:BEL --->|skos:inScheme| country:0005
+country:... --->|skos:inScheme| country:0005
+
+```
+
+---
+
+Now, query for the information
+associated with the `country:AUT` node.
+
+```python
+q = """
+PREFIX euvoc: <http://publications.europa.eu/resource/authority/country/>
+
+SELECT DISTINCT *
+WHERE {
+  country:AUT ?p ?o .
+
+  # Remove blank nodes.
+  FILTER(!isBlank(?o))
+
+}
+"""
+
+result = g.query(q)
+print(*[(r.p.n3(), r.o.n3()) for r in result],sep="\n")
+```
+
+Exercise:
+
+- query all skos:Schemes and their labels
+  where `country:AUT`
+- Hint: use two distinct sentences
+
+<!-- SELECT DISTINCT * WHERE { country:AUT skos:inScheme ?o . ?o skos:prefLabel ?l . } -->
+
+---
+
+**A knowledge graph contains both data and the associated metadata.**
+**There isn't a fixed schema, but a set of relations.**
+**The actual schema is defined by the ontology and may evolve over time.**
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 SparQL can then be used to correlate
 entries using semantically defined
