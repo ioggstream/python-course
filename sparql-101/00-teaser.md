@@ -15,6 +15,13 @@ Author: <roberto.polli@par-tec.it>
 
 - Bonus track: Graphs and semantic search: mixing graphs and vector databases
 
+### Hints
+
+- **Type in** exercises so you can learn from your mistakes
+- If your notebook get stuck, **restart the kernel and run all** cells
+- **Repetita iuvant**: concepts will be explained multiple times,
+  from different perspectives, thoughout various notebooks.
+
 ## Teaser
 
 In this course, we will learn how to describe information in a
@@ -41,9 +48,9 @@ from rdflib import Graph
 from rdflib.namespace import FOAF, OWL
 
 sentences = """
-PREFIX owl: <http://www.w3.org/2002/07/owl#>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-PREFIX : <urn:simpsons:>
+@prefix owl: <http://www.w3.org/2002/07/owl#>
+@prefix foaf: <http://xmlns.com/foaf/0.1/>
+@prefix : <urn:simpsons:>
 
 :Homer foaf:knows :Marge, :Lisa, :Bart, :Maggie;
   foaf:interest <https://dbpedia.org/page/Beer>;

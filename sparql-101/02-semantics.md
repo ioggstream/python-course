@@ -112,7 +112,6 @@ dog_uri = URIRef("https://dbpedia.org/data/Dog")
 
 ```
 
-
 ### RDF: Resource Description Framework
 
 It allows to represent information on the web based on two data structures:
@@ -134,23 +133,41 @@ are used.
 
 #### Exercise: the DBpedia ontology and dataset
 
-Read the following RDF sentences
+Parse the following RDF sentences
 
 ```python
+from rdflib import Graph
+
 sentences = """
-@prefix : <http://dbpedia.org/resource/> .
+@prefix    : <http://dbpedia.org/resource/> .
 @prefix dbp: <http://dbpedia.org/property/> .
 @prefix dbo: <http://dbpedia.org/ontology/> .
 
-:Tortellini a          dbo:Food .
-:Tortellini dbp:country   :Italy .
-:Tortellini dbo:WikiPageWikiLink :Prosciutto .
+# We can group together sentences with the same subject
+# using `;`
+:Tortellini
+  # `a` is a shortcut for `rdf:type`
+  a                    dbo:Food     ;
+  dbp:country          :Italy       ;
+  dbo:WikiPageWikiLink :Prosciutto  . # Always end with a dot
+
 :Meat       dbo:WikiPageWikiLink :Prosciutto .
 """
 
+g = Graph()
+...
+
 ```
 
-- Get the URIs representing Tortellini and Food;
+- Get the URIs representing Tortellini and Food using the `Graph.subjects`  and `Graph.objects` methods.
+
+```python
+# Deduplicate subjects using set()
+subjects = set( ... )
+objects = set( ... )
+print(subjects | objects)
+```
+
 - what's the namespace of the `Tortellini` URI?
 - what's the namespace of the `Food` URI?
 - Open both URIs in a browser and check their content,
@@ -159,8 +176,7 @@ sentences = """
 
 ### Ontologies and controlled vocabularies
 
-To standardize the semantics of digital content,
-we use ontologies.
+Ontologies are used to standardize the semantics of digital content.
 
 - **Ontology**: an ontology is a set of logical axioms that conceptualize a domain of interest by defining concepts and the semantics of relationships between them.
 
@@ -173,14 +189,15 @@ Examples of European controlled vocabularies are here <https://op.europa.eu/en/w
 
 #### Ontologies
 
-In Italy, there's the official ontology of person
+In Italy, there's the official ontology for person
 (Common Person Vocabulary) that we can use to uniquely describe someone.
 
-```turtle
-@prefix cpv: <https://w3id.org/italia/onto/CPV> .
+```text
+@prefix CPV: <https://w3id.org/italia/onto/CPV> .
 
-<email:robipolli@gmail.com> cpv:givenName "Roberto" .
-<email:robipolli@gmail.com> cpv:familyName "Polli" .
+<email:robipolli@gmail.com>
+  CPV:givenName "Roberto" ;
+  CPV:familyName "Polli" .
 
 ```
 
@@ -188,12 +205,31 @@ In Italy, there's the official ontology of person
 
 An ontology is defined by a set of IRIs and their relationships.
 
-```turtle
-@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
-@prefix dct:   <http://purl.org/dc/terms/> .
+```python
+from rdflib import Graph
 
-https://w3id.org/italia/onto/CPV dct:modified  "2020-04-27"^^xsd:date ;
-https://w3id.org/italia/onto/CPV dct:title     "Person Ontology"@en,
-                                               "Ontologia delle persone"@it ;
+sentences = """
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+
+<https://w3id.org/italia/onto/CPV>
+  dct:modified "2020-04-27"^^xsd:date ;
+  # Use `,` to group multiple objects
+  dct:title    "Person Ontology"@en,
+               "Ontologia delle persone"@it .
+
+# An ontology defines the meaning of predicates.
+<https://w3id.org/italia/onto/CPV/givenName>
+  rdfs:comment "The given name of a person. E.g. 'Mario' is the given name of the person 'Mario Rossi'."@en ;
+  rdfs:label  "given name"@en ;
+  rdfs:range xsd:string .
+
+"""
 
 ```
+<!-- g = Graph() -->
+<!-- g.parse(data=sentences, format="turtle") -->
+<!-- print(*g, sep="\n") -->
+<!-- len(list(g)) -->
+
+Exercise: how many triples are in the graph?

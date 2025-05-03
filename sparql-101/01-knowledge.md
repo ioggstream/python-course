@@ -34,9 +34,14 @@ To use knowledge we need to:
 - interpret;
 - understand.
 
-When reading a book, for example, we not only need to read and understand the words,
-but also to interpret the meaning of the sentences and paragraphs
-based on the context and our previous knowledge.
+When reading a book, we need to:
+
+- read and understand the words,
+- interpret the meaning of the sentences and paragraphs;
+- understand the meaning of the text as a whole.
+
+This requires an awareness of the context
+and our previous knowledge.
 
 ----
 
@@ -59,8 +64,23 @@ For example, an hypotetical Python encyclopedia voice
 could be:
 
 > Python is a programming language
-> \n designed by Guido van Rossum and
-> \n named after the Monty Python comedy group.
+> <br> designed by Guido van Rossum and
+> <br> named after the Monty Python comedy group.
+
+----
+
+### We can represent this text as a graph
+
+💡 The object of a sentece
+can be the subject of another sentence.
+
+```mermaid
+graph LR
+python[Python] -->|is a| programming_language[programming language]
+python -->|designed by| gvr[Guido van Rossum]
+python -->|named after| monty_python[Monty Python]
+monty_python -->|is a| comedy_group[comedy group]
+```
 
 ----
 
@@ -87,8 +107,6 @@ Exercise:
 
 ----
 
-## Intro: The Encyclopedia
-
 Since we can represent sentences as graphs,
 it is natural to represent and organize knowledge
 in a graph structure,
@@ -101,7 +119,7 @@ graph LR
 
 subgraph dbpedia[DBpedia]
   dbr:Python[Python] -->|designer| dbr:gvr[Guido van Rossum]
-  dbr:Python[Python] -->|operating system| dbr:win[Windows] & dbr:linux[Linux] & ...
+  dbr:Python[Python] -->|runs on<br>operating system| dbr:win[Windows] & dbr:linux[Linux] & ...
   dbr:gvr -->|born| dbr:nl[Netherlands]
 end
 
@@ -119,7 +137,9 @@ subgraph wikidata[WikiData]
 end
 ```
 
-----
+---
+
+### The Semantic Web
 
 We can use further knowledge - using exisiting cross-references
 between Dbpedia and Wikidata,
@@ -131,7 +151,7 @@ graph LR
 
 subgraph dbpedia[DBpedia]
   dbr:Python[Python] -->|designer| dbr:gvr[Guido van Rossum]
-  dbr:Python[Python] -->|operating System| dbr:win[Windows] & dbr:linux[Linux] & ...
+  dbr:Python[Python] -->|runs on<br>operating System| dbr:win[Windows] & dbr:linux[Linux] & ...
   dbr:gvr -->|born| dbr:nl[Netherlands]
 end
 
@@ -158,8 +178,16 @@ But it is also the basis of the Web itself
 Encyclopedia voices on Wikipedia and dbpedia are expressed in
 [Resource Description Framework (RDF)](https://www.w3.org/TR/rdf11-primer/).
 
-It is a formal language to represent knowledge in a machine-readable format
-using triples of the form
+It is a W3C formal language to represent knowledge in a machine-readable format
+using triples subject-predicate-object.
+
+RDF has different serialization formats,
+such as [Turtle](https://www.w3.org/TR/turtle/),
+[JSON-LD](https://json-ld.org/),
+and [XML](https://www.w3.org/TR/rdf-syntax-grammar/).
+
+We'll use the Turtle format in this course,
+where a sentence is expressed as a
 
 ```text
 subject predicate object .
@@ -174,8 +202,9 @@ subject predicate object .
 
 ----
 
-Subjects and predicates are uniquely identified by [URIs](https://www.w3.org/TR/rdf11-concepts/#section-uris),
-and objects can be either URIs or literals (strings, numbers, dates, etc.).
+Subjects and predicates are uniquely identified by [URIs](https://www.w3.org/TR/rdf11-concepts/#section-uris).
+
+Objects can be either URIs or literals (strings, numbers, dates, etc.).
 
 URIs provide a definition context for subjects and predicates,
 and allow to disambiguate their meaning depending on the
@@ -205,7 +234,7 @@ print(*g, sep="\n")
 
 ----
 
-We can also represent the same sentence in JSON-LD format.
+We can also represent the same sentence in JSON-LD.
 
 ```python
 json_text = g.serialize(format="application/ld+json")
@@ -213,7 +242,7 @@ print(json_text)
 ```
 
 Exercise: take 2 minutes to map the JSON-LD
-format to the RDF format.
+format to the Turtle format.
 
 We'll see JSON-LD in detail later.
 
@@ -226,6 +255,7 @@ RDF use namespace prefixes to shorten URIs
 
 ```python
 sentences = """
+# The @prefix directive defines a namespace prefix
 @prefix dbr: <http://dbpedia.org/resource/> .
 @prefix dbo: <http://dbpedia.org/ontology/> .
 
@@ -300,8 +330,7 @@ tortellini = Graph()
 # Use this cell for the exercise
 ```
 
-#### Exercise: use `Graph.namespaces` to get the
-namespaces added by the sentences above.
+#### Exercise: use `Graph.namespaces` to get the namespaces added by the sentences above
 
 ```python
 from rdflib import Graph
