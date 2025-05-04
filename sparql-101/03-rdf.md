@@ -310,23 +310,185 @@ Exercise:
 
 ---
 
+## Bonus content: rdflib backends
+
+rdflib supports multiple backends to parse and store triples.
+
+oxrdflib is a performant backend: let's test it.
+
+```python
+from rdflib import Graph
+
+g = Graph()
+
+# Use the default backend.
+%time g.parse("countries-skos-ap-act.ttl", format="text/turtle")
+print("The graph contains", len(g), "triples.")
+```
+
+```python
+g=Graph(store="Oxygraph")
+
+# Use the ox-turtle parser.
+%time g.parse("countries-skos-ap-act.ttl", format="ox-turtle")
+print("The graph contains", len(g), "triples.")
+```
+
+Questions:
+
+- List the namespaces registered in the graph.
+
+<!-- list(g.namespaces()) -->
+
+```python
+q = """
+SELECT DISTINCT *
+WHERE {
+  [] a ?type .
+}
+"""
+result = g.query(q)
+[r.type  for r in result]
+```
+
+```python
+# For human readable results, bind prefixes.
+g.bind("euvoc", "http://publications.europa.eu/ontology/euvoc#Country")
+g.bind("country", "http://publications.europa.eu/resource/authority/country/")
+to_curie = g.namespace_manager.curie
+
+result = g.query("""
+# You always need to bind the prefixes
+PREFIX euvoc: <http://publications.europa.eu/ontology/euvoc#>
+
+SELECT DISTINCT *
+WHERE {
+  ?c a euvoc:Country .
+}
+LIMIT 3
+""")
+[to_curie(r.c)  for r in result]
+```
+
+Now we will infer how countries are modeled
+retrieving all associated predicates,
+starting with the types.
+
+We can list all the predicates
+associated with `euvoc:Country`,
+thus inferring how countries are modeled.
+
+The fact that every property is defined by
+an URI allows us to use
+the same property in different contexts.
+
+```python
+q = """
+PREFIX euvoc: <http://publications.europa.eu/ontology/euvoc#>
+PREFIX country: <http://publications.europa.eu/resource/authority/country/>
+
+SELECT DISTINCT *
+WHERE {
+  [] a euvoc:Country ;
+     a ?type .
+}
+"""
+result = g.query(q)
+country_types = {r.type for r in result}
+```
+
+The data model extracted from the graph:
+subjects in the country:0005 ConceptScheme
+inherit properties from both `euvoc:Country`
+and `skos:Concept`.
+
+```mermaid
+graph LR
+
+country:... --->|skos:inScheme| country:0005
+
+country:... -.->|a| euvoc:Country & skos:Concept
+
+skos:Concept -.->|a| rdfs:Class
+euvoc:Country -.->|a| rdfs:Class
+euvoc:status -->|rdfs:domain| euvoc:Country
+skos:prefLabel -->|rdfs:domain| skos:Concept
+
+```
+
+### Traversing the graph
+
+The Country graph contains more than countries.
+
+```python
+q = """
+PREFIX country: <http://publications.europa.eu/resource/authority/country/>
+
+SELECT DISTINCT *
+WHERE {
+  country:ITA skos:narrower ?narrower .
+  ?narrower skos:prefLabel ?label .
+  FILTER (lang(?label) = "en")
+}
+"""
+result = g.query(q)
+narrower = {to_curie(r.narrower): str(r.label) for r in result}
+print(*narrower.items(), sep="\n")
+```
+
+Exercise:
+
+- run the above query replacing `skos:narrower` with `skos:narrower*`;
+  what happens?
+- run the above query using `country:FRA` and see what happens;
+  then replace `skos:narrower` with `skos:narrower/skos:narrower`:
+  do you see the same number of results?
+
+<b>
+The `*` operator is used to traverse the graph
+and find all the nodes reachable from the starting node.
+The `*` operator is not supported by all graph databases.
+</b>
+
+#### Creating a graph
+
+SparQL can create new graphs from an existing one.
+
+```sparql
+q = """
+PREFIX country: <http://publications.europa.eu/resource/authority/country/>
+
+CONSTRUCT {
+?narrower skos:prefLabel ?label ;
+  skos:broader ?broader .
+}
+WHERE {
+  ?narrower
+    # All entries reachable from country:FRA...
+    skos:broader* country:FRA ;
+
+    # ... with their labels ...
+    skos:prefLabel ?label ;
+    # ... and their broader relations.
+    skos:broader ?broader .
+  FILTER (lang(?label) = "en")
+}
+"""
+result = g.query(q)
+list(result.graph)
+```
+
+Let's visualize the graph.
+
+```python
+import tools
+from rdflib import SKOS
+
+tools.plot_graph(result.graph, label=SKOS.prefLabel)
+```
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+---
 
 SparQL can then be used to correlate
 entries using semantically defined

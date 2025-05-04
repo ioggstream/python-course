@@ -1,0 +1,7 @@
+rdflib
+ipython
+jupyter
+oxrdflib
+bokeh
+networkx
+matplotlib
