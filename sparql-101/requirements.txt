@@ -1,7 +1,9 @@
-rdflib
+bokeh
 ipython
 jupyter
-oxrdflib
-bokeh
-networkx
 matplotlib
+networkx
+oxrdflib
+pandas
+rdflib
+scipy

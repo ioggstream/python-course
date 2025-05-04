@@ -2,9 +2,9 @@
 
 ## Agenda
 
-  - Storing and retrieving triples
-  - Virtuoso
-  - GraphDB
+- Storing and retrieving triples
+- Virtuoso
+- GraphDB
 
 *Beware*: commands may contain small typos. You must fix them to properly complete the course!
 
@@ -15,7 +15,6 @@ Prerequisites:
 - JSON, YAML, xmlschema
 - HTTP, OpenAPI 3
 - SQL and database hints
-
 
 ---
 
@@ -57,16 +56,52 @@ use a different approach to represent graphs
 such as [Labeled Property Graphs](https://en.wikipedia.org/wiki/Labeled_property_graph)
 Neo4j can be queried using the [Cypher](https://neo4j.com/developer/cypher-query-language/) language.
 
-
 Neo4j supports RDF datasets via the Neosemantics plugin.
 
----
+----
 
-## My first SparQL query
+## rdflib backends
 
 We will simulate a graph database using
 [rdflib](https://rdflib.readthedocs.io/en/stable/index.html),
 that supports SparQL queries.
+
+rdflib supports multiple backends to parse and store triples.
+
+oxrdflib is a performant one
+based on [Oxigraph](https://github.com/oxigraph/oxigraph).
+
+```python
+%pip install oxrdflib
+```
+
+Let's test it.
+
+```python
+from rdflib import Graph
+
+g = Graph()
+
+# Use the default backend.
+%time g.parse("countries-skos-ap-act.ttl", format="text/turtle")
+print("The graph contains", len(g), "triples.")
+```
+
+```python
+g=Graph(store="Oxigraph")
+
+# Use the ox-turtle parser.
+%time g.parse("countries-skos-ap-act.ttl", format="ox-turtle")
+print("The graph contains", len(g), "triples.")
+```
+
+See also:
+
+- <https://rdflib.readthedocs.io/en/stable/persistence.html>
+
+---
+
+## My first SparQL query
 
 Let's create a graph
 and load into it the [European vocabulary for countries](countries.ttl).
@@ -79,11 +114,11 @@ See also:
 from rdflib import Graph
 
 # Let's create a graph.
-g = Graph()
+g = Graph(store="Oxigraph")
 
 # And load into it the European
 # vocabulary for countries.
-g.parse("countries.ttl", format="text/turtle")
+g.parse("countries-skos-ap-act.ttl", format="ox-turtle")
 ```
 
 Now let's run our first SparQL query!
@@ -113,8 +148,8 @@ for r in result:
 
 Exercise:
 
-- Replace `?subject` with `?foo`
-  and see what happens.
+- Replace `?subject` with `?foo`:
+  what happens?
 
 ```python
 q = """
@@ -136,291 +171,13 @@ for r in result:
 
 ---
 
-## Metadata, Metadata
-
-Between all triples,
-some contain metadata,
-such as the type of the subjects.
-
-```python
-q = """
-SELECT DISTINCT
-  ?type
-WHERE {
-  ?s a ?type .
-}
-"""
-result = g.query(q)
-
-[r.type  for r in result]
-```
-
-We can simplify the above query
-avoiding gathering `?s` at all
-using the `[]` syntax
-that matches anything.
-
-```python
-q = """
-SELECT DISTINCT
-  ?type
-WHERE {
-  [] a ?type .
-}
-"""
-result = g.query(q)
-
-[r.type  for r in result]
-```
-
-Exercise:
-
-- what's a `skos:Concept`?
-- what's a `skos:ConceptScheme`?
-
-<!-- Open the URIRef in your browser -->
-
-----
-
-List `skos:ConceptScheme`s
-and their labels.
-
-```python
-q = """
-SELECT DISTINCT *
-WHERE {
-  ?ConceptScheme
-    a skos:ConceptScheme  ;
-    skos:prefLabel ?label .
-    # Only English labels
-    FILTER (lang(?label) = "en")
-}
-"""
-result = g.query(q)
-[r.asdict() for r in result]
-```
-
-Exercise:
-
-- Rewrite the above query using
-  two sentences.
-
-<!-- SELECT DISTINCT * WHERE { ?ConceptScheme a skos:ConceptScheme . ?ConceptScheme skos:prefLabel ?label . } -->
-
-----
-
-Now find all the triples
-where the `object` is
-`<http://publications.europa.eu/resource/authority/country/0005>
-
-
-```python
-q = """
-SELECT DISTINCT *
-WHERE {
-  ?s ?p <http://publications.europa.eu/resource/authority/country/0005> .
-}
-"""
-result = g.query(q)
-[r.asdict() for r in result]
-```
-
-Exercise:
-
-- Rewrite the above query using
-  the PREFIX directive.
-
-<!-- PREFIX euvoc: <http://publications.europa.eu/resource/authority/country/> -->
-<!-- SELECT DISTINCT * WHERE { ?s ?p euvoc:0005 } LIMIT 6-->
-
-```python
-q = """
-PREFIX euvoc: <http://publications.europa.eu/resource/authority/country/>
-
-SELECT DISTINCT *
-WHERE {
-  ?s ?p ...
-}
-LIMIT 6
-"""
-result = g.query(q)
-[r.asdict() for r in result]
-```
-
----
-
-Let's visualize the graph
-using:
-
-- dotted lines to represent type relations
-- parallelograms to represent literals
-
-```mermaid
-graph
-
-skos:ConceptScheme
-skos:ConceptScheme -->|skos:prefLabel| _l1[/"Concept Scheme"/]
-
-country:0005 -.->|a| skos:ConceptScheme
-country:0005 ---|skos:prefLabel| _l[/"Current EU members"/]
-
-country -.->|a| skos:ConceptScheme
-country:AUT --->|skos:inScheme| country:0005
-country:BEL --->|skos:inScheme| country:0005
-country:... --->|skos:inScheme| country:0005
-
-```
-
----
-
-Now, query for the information
-associated with the `country:AUT` node.
-
-```python
-q = """
-PREFIX euvoc: <http://publications.europa.eu/resource/authority/country/>
-
-SELECT DISTINCT *
-WHERE {
-  country:AUT ?p ?o .
-
-  # Remove blank nodes.
-  FILTER(!isBlank(?o))
-
-}
-"""
-
-result = g.query(q)
-print(*[(r.p.n3(), r.o.n3()) for r in result],sep="\n")
-```
-
-Exercise:
-
-- query all skos:Schemes and their labels
-  where `country:AUT`
-- Hint: use two distinct sentences
-
-<!-- SELECT DISTINCT * WHERE { country:AUT skos:inScheme ?o . ?o skos:prefLabel ?l . } -->
-
----
-
-**A knowledge graph contains both data and the associated metadata.**
-**There isn't a fixed schema, but a set of relations.**
-**The actual schema is defined by the ontology and may evolve over time.**
-
----
-
-## Bonus content: rdflib backends
-
-rdflib supports multiple backends to parse and store triples.
-
-oxrdflib is a performant backend: let's test it.
-
-```python
-from rdflib import Graph
-
-g = Graph()
-
-# Use the default backend.
-%time g.parse("countries-skos-ap-act.ttl", format="text/turtle")
-print("The graph contains", len(g), "triples.")
-```
-
-```python
-g=Graph(store="Oxygraph")
-
-# Use the ox-turtle parser.
-%time g.parse("countries-skos-ap-act.ttl", format="ox-turtle")
-print("The graph contains", len(g), "triples.")
-```
-
-Questions:
-
-- List the namespaces registered in the graph.
-
-<!-- list(g.namespaces()) -->
-
-```python
-q = """
-SELECT DISTINCT *
-WHERE {
-  [] a ?type .
-}
-"""
-result = g.query(q)
-[r.type  for r in result]
-```
-
-```python
-# For human readable results, bind prefixes.
-g.bind("euvoc", "http://publications.europa.eu/ontology/euvoc#Country")
-g.bind("country", "http://publications.europa.eu/resource/authority/country/")
-to_curie = g.namespace_manager.curie
-
-result = g.query("""
-# You always need to bind the prefixes
-PREFIX euvoc: <http://publications.europa.eu/ontology/euvoc#>
-
-SELECT DISTINCT *
-WHERE {
-  ?c a euvoc:Country .
-}
-LIMIT 3
-""")
-[to_curie(r.c)  for r in result]
-```
-
-Now we will infer how countries are modeled
-retrieving all associated predicates,
-starting with the types.
-
-We can list all the predicates
-associated with `euvoc:Country`,
-thus inferring how countries are modeled.
-
-The fact that every property is defined by
-an URI allows us to use
-the same property in different contexts.
-
-```python
-q = """
-PREFIX euvoc: <http://publications.europa.eu/ontology/euvoc#>
-PREFIX country: <http://publications.europa.eu/resource/authority/country/>
-
-SELECT DISTINCT *
-WHERE {
-  [] a euvoc:Country ;
-     a ?type .
-}
-"""
-result = g.query(q)
-country_types = {r.type for r in result}
-```
-
-The data model extracted from the graph:
-subjects in the country:0005 ConceptScheme
-inherit properties from both `euvoc:Country`
-and `skos:Concept`.
-
-```mermaid
-graph LR
-
-country:... --->|skos:inScheme| country:0005
-
-country:... -.->|a| euvoc:Country & skos:Concept
-
-skos:Concept -.->|a| rdfs:Class
-euvoc:Country -.->|a| rdfs:Class
-euvoc:status -->|rdfs:domain| euvoc:Country
-skos:prefLabel -->|rdfs:domain| skos:Concept
-
-```
-
 ### Traversing the graph
 
 The Country graph contains more than countries.
 
 ```python
+to_curie = g.namespace_manager.curie
+
 q = """
 PREFIX country: <http://publications.europa.eu/resource/authority/country/>
 
@@ -432,7 +189,9 @@ WHERE {
 }
 """
 result = g.query(q)
+
 narrower = {to_curie(r.narrower): str(r.label) for r in result}
+
 print(*narrower.items(), sep="\n")
 ```
 
@@ -459,18 +218,21 @@ q = """
 PREFIX country: <http://publications.europa.eu/resource/authority/country/>
 
 CONSTRUCT {
-?narrower skos:prefLabel ?label ;
-  skos:broader ?broader .
+  ?narrower
+    skos:prefLabel ?label ;
+    skos:broader ?broader .
 }
 WHERE {
   ?narrower
-    # All entries reachable from country:FRA...
+    # All resources transitively related to country:FRA...
     skos:broader* country:FRA ;
 
     # ... with their labels ...
     skos:prefLabel ?label ;
+
     # ... and their broader relations.
     skos:broader ?broader .
+
   FILTER (lang(?label) = "en")
 }
 """
@@ -481,220 +243,8 @@ list(result.graph)
 Let's visualize the graph.
 
 ```python
-import tools
+from tools import plot_graph
 from rdflib import SKOS
 
-tools.plot_graph(result.graph, label=SKOS.prefLabel)
-```
-
-
----
-
-SparQL can then be used to correlate
-entries using semantically defined
-vocabularies such as FOAF.
-
-```sparql
-@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
-
-SELECT * WHERE {
-  ?s foaf:name ?o
-}
-```
-
-| s | o |
-| --- | --- |
-| <mail:r@x.it> | "Roberto"|
-| <mail:j@x.it> | "Jon"|
-
-In this case `foaf:name` has a very specific meaning.
-You don't need to create indexes in your database
-to search for specific predicates.
-
-----
-
-Graph databases have an inference engine that can be used
-to process complex queries.
-
-```sparql
-@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
-
-SELECT * WHERE {
-  ?s foaf:knows ?o
-```
-
-| s | o |
-| --- | --- |
-| r@example | j@example |
-
-----
-
-And using multiple lines we can infer things
-such as friend-of-a-friend emails.
-
-```sparql
-@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
-
-SELECT DISTINCT ?mail1, ?mail3 WHERE {
-  ?user1 foaf:knows ?user2
-  . ?user2 foaf:knows ?user3
-
-  . ?user1 foaf:mbox ?mail1
-  . ?user3 foaf:mbox ?mail3
-```
-
-Note that the query describes each relation
-ignoring the way data is stored.
-
----
-
-# Querying DBPedia
-
-[DBPedia](https://dbpedia.org/sparql) is a graph database with a lot of data inside.
-
-We can use it to learn sparql.
-
-- list concepts
-
-```
-select distinct ?Concept where {[] a ?Concept} LIMIT 20
-```
-
-----
-
-Now we want to list all `Person`
-
-```sparql
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
-
-SELECT DISTINCT * WHERE {
-  ?s a foaf:Person
-} LIMIT 10
-```
-
-----
-
-All `Person`s born in Pisa
-
-```sparql
-
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@prefix dbp: <http://dbpedia.org/property/> .
-@prefix dbr: <http://dbpedia.org/resource/> .
-
-select distinct * where {
-  ?s a foaf:Person .
-  ?s dbp:birthPlace dbr:Pisa
-} LIMIT 10
-
-```
-
-... with their deathplaces
-
-```sparql
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@prefix dbp: <http://dbpedia.org/property/> .
-@prefix dbr: <http://dbpedia.org/resource/> .
-@prefix dbo: <http://dbpedia.org/ontology/> .
-
-
-select distinct * where {
-?s a foaf:Person .
-?s dbp:birthPlace dbr:Pisa .
-?s dbp:deathPlace ?death_place
-} LIMIT 10
-```
-
-----
-
-If deathplace is in UK
-
-```sparql
-
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@prefix dbp: <http://dbpedia.org/property/> .
-@prefix dbr: <http://dbpedia.org/resource/> .
-@prefix dbo: <http://dbpedia.org/ontology/> .
-
-select distinct * where {
-  ?s a foaf:Person .
-  ?s dbp:birthPlace dbr:Rome .
-  ?s dbp:deathPlace ?deathPlace .
-  ?deathPlace dbo:country dbr:United_Kingdom
-} LIMIT 50
-
-```
-
-----
-
-We can extend the search to every person
-born in Italy and dead in UK:
-
-- replacing `dbr:Rome` with `?birth_place`
-- restricting `?birth_place` to `dbr:Italy`
-
-```sparql
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@prefix dbp: <http://dbpedia.org/property/> .
-@prefix dbr: <http://dbpedia.org/resource/> .
-@prefix dbo: <http://dbpedia.org/ontology/> .
-
-SELECT DISTINCT * WHERE {
-
-?s a foaf:Person .
-?s dbp:birthPlace ?birth_place .
-?s dbp:deathPlace ?deathPlace .
-
-?deathPlace dbo:country dbr:United_Kingdom .
-?birth_place dbo:country dbr:Italy
-
-} LIMIT 50
-```
-
-----
-
-There's no limit to the inference, for example
-we could require that the birthplace of that
-person should match the one of a Pope.
-
-```sparql
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@prefix dbp: <http://dbpedia.org/property/> .
-@prefix dbr: <http://dbpedia.org/resource/> .
-@prefix dbo: <http://dbpedia.org/ontology/> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-
-select distinct * where {
-  ?s a foaf:Person .
-  ?s dbp:birthPlace ?birth_place .
-  ?birth_place dbo:country dbr:Italy .
-  ?s dbp:deathPlace ?death_place .
-  ?death_place dbo:country dbr:France .
-
-  ?pope rdf:type dbo:Pope .
-  ?pope dbp:birthPlace ?birth_place .  # relation with the birth_place
-} LIMIT 50
-```
-
-----
-
-Shortening sparql queries
-
-```sparql
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@prefix dbp: <http://dbpedia.org/property/> .
-@prefix dbr: <http://dbpedia.org/resource/> .
-@prefix dbo: <http://dbpedia.org/ontology/> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-
-select distinct * where {
-  ?s a foaf:Person ;
-     dbp:birthPlace ?birth_place ;
-     dbp:deathPlace ?death_place .
-  ?birth_place dbo:country dbr:Italy .
-  ?death_place dbo:country dbr:France .
-
-  ?pope rdf:type dbo:Pope ;
-        dbp:birthPlace ?birth_place .  # relation with the birth_place
-} LIMIT 50
+plot_graph(result.graph, label=SKOS.prefLabel)
 ```

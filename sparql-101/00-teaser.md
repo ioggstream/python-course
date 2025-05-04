@@ -48,13 +48,13 @@ from rdflib import Graph
 from rdflib.namespace import FOAF, OWL
 
 sentences = """
-@prefix owl: <http://www.w3.org/2002/07/owl#>
-@prefix foaf: <http://xmlns.com/foaf/0.1/>
-@prefix : <urn:simpsons:>
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/>    .
+@prefix : <urn:simpsons:>                     .
 
 :Homer foaf:knows :Marge, :Lisa, :Bart, :Maggie;
   foaf:interest <https://dbpedia.org/page/Beer>;
-  foaf:firstName "Homer".
+  foaf:firstName "Homer" .
 
 :Lisa foaf:firstName "Lisa";
   foaf:interest <https://dbpedia.org/page/Jazz> .
@@ -82,14 +82,16 @@ print(json_text)
 There's plenty of knowledge in the web!
 
 ```python
+from pathlib import Path
 from rdflib import Graph
 from rdflib.namespace import RDFS
 
+# We can parse either a local file or a remote URL.
 tortellini_url = "https://dbpedia.org/data/Tortellini.n3"
 tortellini_n3 = Path("Tortellini.n3")
 
 g = Graph()
-g.parse(tortellini_url, format="n3")
+g.parse(tortellini_n3, format="n3")
 plot_graph(g, label_property=RDFS.label, limit=30, pattern=".*/dbpedia.org")
 ```
 
@@ -100,7 +102,7 @@ tagliatelle_url = "https://dbpedia.org/data/Tagliatelle.n3"
 tagliatelle_n3 = Path("Tagliatelle.n3")
 
 # Extend our graph
-g.parse(tagliatelle_url, format="n3")
+g.parse(tagliatelle_n3, format="n3")
 
 plot_graph(g, label_property=RDFS.label, limit=50, pattern=".*/dbpedia.org")
 ```
@@ -181,8 +183,8 @@ SELECT ?URI, ?concept, ?identifier
 WHERE {
   ?URI
     skos:inScheme euvoc:country ;
-    dc:identifier ?identifier ;
-    skos:prefLabel ?concept
+    skos:prefLabel ?concept ;
+    dc:identifier ?identifier
   .
 
   FILTER(lang(?concept) = 'en')
@@ -195,52 +197,56 @@ LIMIT 5
 And their relations
 
 ```python
-eu.query("""
+result = eu.query("""
 PREFIX euvoc: <http://publications.europa.eu/resource/authority/>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX dct: <http://purl.org/dc/terms/>
 
-# Construct a graph of countries and their identifiers related by dct:replaces
+# Construct a new graph of countries and their identifiers related by dct:replaces
 # countries must be in the euvoc:country scheme.
 
-CONSTRUCT { ?a dct:replaces ?b}
+CONSTRUCT {
+  ?a dct:replaces ?b
+}
 WHERE {
- ?a skos:inScheme euvoc:country.
- ?b skos:inScheme euvoc:country.
+ ?a skos:inScheme euvoc:country .
+ ?b skos:inScheme euvoc:country .
  ?a dct:replaces ?b .
 }
 
 LIMIT 5
 
-""").bindings
+""")
+
+list(result.graph)
 ```
 
 More relations
 
 ```python
 from tools import plot_graph
-import networkx as nx
+from rdflib.namespace import SKOS
 ret = eu.query("""
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-
+PREFIX nuts: <http://data.europa.eu/nuts/code/>
 
 CONSTRUCT   {
-
-?s skos:narrower ?q
-
+  ?s skos:narrower ?q ;
+     skos:prefLabel ?label .
 }
 WHERE {
+  # Austrian administrative units.
+  nuts:AT skos:narrower+ ?q .
 
-?s skos:inScheme <http://data.europa.eu/nuts/scheme/2024> ;
-skos:narrower ?q ;
-               <http://data.europa.eu/nuts/level> "0"
-.
+  ?s skos:inScheme <http://data.europa.eu/nuts/scheme/2024> ;
+     skos:narrower ?q ;
+     skos:prefLabel ?label
+  .
 }
-LIMIT 400
+LIMIT 40
 """)
 
-
-plot_graph(ret.graph, layout=nx.planar_layout)
+plot_graph(ret.graph, label_property=SKOS.prefLabel,)
 ```
 
 ---
