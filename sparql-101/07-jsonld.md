@@ -213,19 +213,26 @@ jane_ld["@context"].update({
 
 #### Context mangling
 
-When you modify a JSON-LD context, you are actually modifying the
+Modifying a JSON-LD context,
+alters the
 meaning of the data.
 
+Imagine you have a JSON-LD document
+with a referenced context (i.e., a URL)
+that is supposed to be downloaded
+and used to interpret the data.
+
 ```yaml
+"@context": https://payment/context.jsonld
 payment_from: alice@foo.example
 payment_to: bob@foo.example
-"@context": https://payment/context.jsonld
 ```
 
-Alterando la risposta del server <https://payment/context.jsonld>
-possiamo invertire il verso del pagamento!
+Someone altering the <https://payment/context.jsonld>
+could reverse the payment flow.
 
 ```yaml
+# Original context
 @context:
   payment_from: http://banking#debtor
   payment_to: http://banking#creditor
@@ -234,6 +241,7 @@ possiamo invertire il verso del pagamento!
 ->
 
 ```yaml
+# Altered context
 @context:
   payment_to: http://banking#debtor
   payment_from: http://banking#creditor
@@ -241,7 +249,5 @@ possiamo invertire il verso del pagamento!
 
 ----
 
-Esistono diverse ipotesi tecnologiche basate
-sull'elaborazione semantica dei dati a runtime.
-Tutte queste implementazioni devono indirizzare
-questo tipo di rischi.
+When resolving contexts at runtime,
+implementations should address these risks.
