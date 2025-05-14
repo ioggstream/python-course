@@ -1,103 +1,220 @@
-### Json-LD
+# Agenda
 
-JSON-LD è un formato che permette di serializzare in JSON delle informazioni basate sul
+- Storing data vs Describing Knowledge
+- JSON-LD
+
+## Storing data
+
+We store data in different ways and formats:
+using constrained or loose schemas,
+with more or less rigid serializations.
+
+JSON (and YAML) is a human-readable way to
+store data.
+
+```yaml
+[
+  { name: Homer, surname: Simpson, spouse: Marge Simpson },
+  { name: Marge, surname: Simpson, spouse: Homer Simpson },
+]
+```
+
+We can then add identifiers (such as UUIDs or email), to be sure that cross references
+are not ambiguous.
+
+```yaml
+[
+  { email: homer@simpson.org, name: Homer, surname: Simpson, spouse: marge@simpson.org },
+  { email: marge@simpson.org, name: Marge, surname: Simpson, spouse: homer@simpson.org },
+]
+```
+
+Now we may have different datasets, such as the Springfield Elementary
+school. Luckily we can "join" on an identifying field, but this is
+not true for all fields.
+
+```yaml
+[
+  { email: bart@simpson.org, name: Bart Simpson, parent: marge@simpson.org },
+  { email: milhouse@vanhouten.org, name: Milhouse Van Houten, parent: roger@vanhouten.org}
+]
+```
+
+So we actually store data, but we lack knowledge.
+
+### JSON-LD
+
+JSON-LD is a JSON serialization for information described using the
 [RDF data model](https://www.w3.org/TR/json-ld11/#data-model).
 
-Un documento JSON-LD è quindi sia un documento RDF che JSON, e rappresenta un'istanza di un RDF data model.
-
-JSON-LD inoltre *estende* RDF per permettere la serializzazione di dataset RDF generalizzati.
+A JSON-LD document is both an RDF and a JSON document.
 
 ----
-Dato un oggetto JSON
 
-```yaml
-id: robipolli@gmail.com
-given_name: Roberto
-family_name: Polli
+```python
+homer = {
+  "email": "homer@simpson.org",
+  "name": "Homer",
+  "surname": "Simpson",
+  "spouse": "marge@simpson.org"
+}
 ```
 
-JSON-LD permette di trasformarlo in un grafo RDF associandogli un contesto.
+JSON-LD associates it with a context that disambiguates information
 
-```yaml
-"@context":
-  cpv: "https://w3id.org/italia/onto/CPV"
-  given_name: "cpv:givenName"
-  family_name: "cpv:familyName"
-  id: "@id"
-id: robipolli@gmail.com
-given_name: Roberto
-family_name: Polli
+```python
+import json
+
+# A context maps JSON keys to IRIs.
+context = {
+  # Map name and surname to the IRI of the FOAF vocabulary.
+  "name": "foaf:givenName",
+  "surname": "foaf:familyName",
+  # Use the email key as an IRI,
+  #   prefixing it with the base IRI.
+  "email": "@id",
+  "@base": "https://simpsons.org#",
+}
 ```
+
+```python
+homer_ld_json = json.dumps({
+  "@context": context
+  **homer
+})
+```
+
+Exercise:
+
+- load `homer_ld_json` in a Graph()
+- print the serialization of the graph in `text/turtle` format
+
+
+```python
+from rdflib import Graph
+
+```
+
+<!-- g=Graph()-->
+<!-- g.parse(data=homer_ld_json, format="application/ld+json")-->
+<!-- print(g.serialize(format="text/turtle"))-->
 
 ---
 
-Oltre all'ontologia italiana, un altro vocabolario
-molto usato sul web è <www.schema.org>. Le parole chiave
-che definisce sono disponibili in formato json-ld
-<https://schema.org/docs/jsonldcontext.jsonld>
+<schema.org> is a collaborative vocabulary to
+describe information about people, places, events, and more.
+While it is not a formal ontology, and should be used with care
+(e.g., in regulated domains),
+it is widely used for search engine optimization (SEO) and
+structured data markup, as well as for increase interoperability
+in non-critical applications (e.g., e-commerce, marketing, ...).
+
+Its terms are availabe here <https://schema.org/docs/jsonldcontext.jsonld>
 
 ---
 
-È anche possibile ridefinire o localizzare i campi,
-eventualmente usando diversi namespace.
+Start with an object with fields in Italian:
 
-```yaml
-"@context":
-  "sdo": "http://schema.org/"
-  "nome":"sdo:name"
-  "nome_proprio": "sdo:givenName"
-"@type": "Person"
-  "nome": "Jane Doe"
-  "nome_proprio": "Jane"
-  "sdo:jobTitle": "Professor"
-  "sdo:telephone": "(425) 123-4567"
+
+```python
+jane = {
+  "nome": "Jane Doe",
+  "nome_proprio": "Jane",
+  "titolo": "Professor",
+  "telefono": "(425) 123-4567"
+}
 ```
+
+Annotate it with schema.org.
+
+```python
+context = {
+    "sdo": "http://schema.org/",
+    "nome": "sdo:name",
+    "nome_proprio": "sdo:givenName",
+    "titolo": "sdo:jobTitle",
+    "telefono": "sdo:telephone",
+  }
+```
+
+```python
+import json
+jane_ld = {
+  "@context": context,
+  "@type": "sdo:Person",
+  **jane
+  }
+print(json.dumps(jane_ld))
+```
+
+Exercise:
+
+- load `jane_ld` in a Graph()
+- what's the subject of the sentences?
+
+```python
+jane_ld_json = ...
+```
+
 
 ---
 
-### Localizzazione
+### Localization
 
-JSON-LD supporta nativamente informazioni
-localizzate:
+RDF (and JSON-LD) support localization natively.
 
-```yaml
--- come lista
-occupation:
--  @value: "Student"
-   @language: en
--  @value: "Etudiant"
-   @language: fr
+```python
+jane_ld["competenze"] =  {
+    'it': 'Informatica',
+    'en': 'Computer Science',
+    'fr': 'Informatique'
+}
+
+# Associate the entry to the context.
+jane_ld["@context"].update({
+  "competenze" : {
+    "@id": "sdo:skills",
+    # The @container keyword
+    #   does the magic of converting
+    #   a dictionary into a list of objects.
+    "@container": "@language"
+  }
+})
 ```
 
-oppure
+Now we can serialize the graph.
 
-```yaml
--- come oggetto
-@context:
-  occupation:
-    @container: @language
-occupation:
-  en: Student
-  fr: Etudiant
+```python
+from rdflib import Graph
+g=Graph()
+g.parse(data=json.dumps(jane_ld), format='json-ld')
+print(g.serialize(format='turtle'))
 ```
 
-oppure
 
-```yaml
---- tramite elementi multipli, utile anche per la serializzazione di API semplici
-@context:
-  occupation: {@language: en}
-  occupation_fr: {@language: fr}
-occupation: Student
-occupation_fr: Etudiant
+Another localization mechanism allows
+to map multiple values to a single property.
+
+```python
+jane_ld["soprannome"] = "Gianna"
+jane_ld["soprannome_fr"] = "Jeanette"
+
+# And the annotations.
+jane_ld["@context"].update({
+  "soprannome" : "sdo:alternateName",
+  "soprannome_fr" : {
+    "@id": "sdo:alternateName",
+    "@language": "fr"
+  }
+})
 ```
 
 ---
 
 #### Context mangling
 
-@context mangling: modificando il contesto di un oggetto
-se ne altera il significato.
+When you modify a JSON-LD context, you are actually modifying the
+meaning of the data.
 
 ```yaml
 payment_from: alice@foo.example

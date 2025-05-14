@@ -26,35 +26,27 @@ An RDF graph is an (unordered) set of triples.
 
 Each triple consists of a `subject`, `predicate`, `object`.
 
-Graph databases such as [Virtuoso (opensource)](https://virtuoso.openlinksw.com/),
-[GraphDB (proprietary)](),
-[Amazon Nepture (proprietary SaaS)]()
+Graph databases such as:
+
+- [Virtuoso (opensource)](https://virtuoso.openlinksw.com/),
+- [GraphDB (proprietary)](),
+- [Amazon Nepture (proprietary SaaS)]()
+
 store triples into graphs.
 
 They can be queried using the [SparQL]() language.
 
-----
-
-A sparql query retrieves all entries
-matching one or more sentences
-
-```sparql
-SELECT * WHERE {
-  ?subject ?predicate ?object .
-  # ... more sentences ...
-}
-```
-
-This workshop provides a non-exhaustive introduction to SparQL.
 
 ----
 
-### Non-RDF databases
+### Non-RDF databases: Neo4j
 
-Other databases - [Neo4j (opensource)]()
-use a different approach to represent graphs
-such as [Labeled Property Graphs](https://en.wikipedia.org/wiki/Labeled_property_graph)
-Neo4j can be queried using the [Cypher](https://neo4j.com/developer/cypher-query-language/) language.
+Another notable graph database is [Neo4j (opensource)]().
+
+It is not a triple store, and it
+adopt a different approach named [Labeled Property Graphs](https://en.wikipedia.org/wiki/Labeled_property_graph)
+
+Neo4j can be queried with the [Cypher](https://neo4j.com/developer/cypher-query-language/) language.
 
 Neo4j supports RDF datasets via the Neosemantics plugin.
 
@@ -101,10 +93,9 @@ See also:
 
 ---
 
-## My first SparQL query
+## SparQL practice
 
-Let's create a graph
-and load into it the [European vocabulary for countries](countries.ttl).
+Let's load into it the [European vocabulary for countries](countries.ttl).
 
 See also:
 
@@ -121,53 +112,8 @@ g = Graph(store="Oxigraph")
 g.parse("countries-skos-ap-act.ttl", format="ox-turtle")
 ```
 
-Now let's run our first SparQL query!
 
-```python
-# List the first 3 triples.
-q = """
-SELECT * WHERE {
-  ?subject ?predicate ?object .
-}
-LIMIT 3
-"""
-result = g.query(q)
 
-# Print it!
-for r in result:
-  print(r.asdict())
-```
-
-Now print the result using
-variable names.
-
-```python
-for r in result:
-    print(r.subject, r.predicate, r.object, sep="\t")
-```
-
-Exercise:
-
-- Replace `?subject` with `?foo`:
-  what happens?
-
-```python
-q = """
-WRITEME!
-"""
-result = g.query(q)
-
-# Print it!
-for r in result:
-  print(r.asdict())
-```
-
-- Remove the `LIMIT` clause.
-  How many triples are in the graph?
-
-```python
-# Use this cell for the exercise.
-```
 
 ---
 
@@ -248,3 +194,38 @@ from rdflib import SKOS
 
 plot_graph(result.graph, label=SKOS.prefLabel)
 ```
+
+#### More metadata
+
+The Country graph contains more than countries ;)
+the resource type is identified by the `lemon:context` property.
+
+```python
+q = """
+PREFIX lemon: <http://lemon-model.net/lemon#>
+PREFIX country: <http://publications.europa.eu/resource/authority/country/>
+PREFIX context: <http://publications.europa.eu/resource/authority/use-context/>
+
+SELECT DISTINCT
+  ?broader
+  (COUNT(?narrower) AS ?count)
+WHERE {
+  ?broader
+    skos:narrower+ ?narrower ;
+
+    lemon:context context:COUNTRY ;
+
+    # ... with their labels ...
+    skos:prefLabel ?label .
+
+
+  FILTER (lang(?label) = "en")
+}
+GROUP BY ?broader
+ORDER BY ?count
+"""
+result = g.query(q)
+list(result)
+```
+
+```python

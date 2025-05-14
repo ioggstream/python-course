@@ -14,15 +14,22 @@ environment before the tutorial.
 
 ## Agenda
 
+### Introduction
+
+- [ ] Environment setup
+- [x] Jupyter [00-jupyter-intro.md]
+- [x] Teaser [00-teaser.md]
+
 ### Part 1
 
-What is semantics? Describing information in a meaningful way: RDF and JSON-LD
-Knowledge Graphs and related technologies
-Exercises: using and querying the EU Country vocabulary
+- [x] What is semantics? Describing information in a meaningful way: RDF and JSON-LD [01-knowledge.md], [02-semantics.md], [05-sparql.md], [10-rdf.md]
+- [x] Knowledge Graphs and related technologies
+- [x] Exercises: using and querying the EU Country vocabulary
 
 ### Part 2
 
-Storing data vs describing knowledge.
+- [ ] Storing data vs describing knowledge. [07-jsonld.md](07-jsonld.md)
+
 Exercises: the DevSecOps dataset as a Knowledge Graph
 Getting security insights using SparQL
 
