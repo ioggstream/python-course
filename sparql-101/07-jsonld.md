@@ -36,7 +36,7 @@ not true for all fields.
 ```yaml
 [
   { email: bart@simpson.org, name: Bart Simpson, parent: marge@simpson.org },
-  { email: milhouse@vanhouten.org, name: Milhouse Van Houten, parent: roger@vanhouten.org}
+  { email: milhouse@vanhouten.org, name: Milhouse Van Houten, parent: kirk@vanhouten.org}
 ]
 ```
 

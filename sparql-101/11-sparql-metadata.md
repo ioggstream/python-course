@@ -15,7 +15,7 @@ such as:
 
 
 ```python
-g=Graph(store="Oxygraph")
+g=Graph(store="Oxigraph")
 
 # Load the graph.
 g.parse("countries-skos-ap-act.ttl", format="ox-turtle")

@@ -228,4 +228,24 @@ result = g.query(q)
 list(result)
 ```
 
+---
+
+## Datasets
+
+An RDF dataset is made of multiple graphs.
+
 ```python
+from rdflib import Dataset
+
+d = Dataset(store='Oxigraph')
+# Add ns shortcuts.
+d.bind("eu", "https://publications.europa.eu/resource/authority/")
+d.bind("schema": "https://schema.org/")
+d.bind("euvoc": "http://publications.europa.eu/ontology/euvoc#")
+
+
+
+d.graph(identifier="urn:People").parse(data=json.dumps(nodes_ld), format="application/ld+json")
+d.graph(identifier="eu:country").parse("countries-skos-ap-act.ttl", format="ox-turtle")
+[len(x) for x in d.graphs()]
+```

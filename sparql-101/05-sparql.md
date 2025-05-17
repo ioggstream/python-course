@@ -282,11 +282,11 @@ LIMIT 10
 
 ... with their deathplaces
 
-```t
-@prefix foaf: <http://xmlns.com/foaf/0.1/>
-@prefix dbp: <http://dbpedia.org/property/>
-@prefix dbr: <http://dbpedia.org/resource/>
-@prefix dbo: <http://dbpedia.org/ontology/>
+```raw
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+PREFIX dbo: <http://dbpedia.org/ontology/>
 
 
 SELECT DISTINCT *
@@ -302,12 +302,11 @@ LIMIT 10
 
 If deathplace is in UK
 
-```text
-
-@prefix foaf: <http://xmlns.com/foaf/0.1/>
-@prefix dbp: <http://dbpedia.org/property/>
-@prefix dbr: <http://dbpedia.org/resource/>
-@prefix dbo: <http://dbpedia.org/ontology/>
+```raw
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+PREFIX dbo: <http://dbpedia.org/ontology/>
 
 SELECT DISTINCT * WHERE {
   ?s a foaf:Person .
@@ -328,10 +327,10 @@ born in Italy and dead in UK:
 - restricting `?birth_place` to `dbr:Italy`
 
 ```sparql
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@prefix dbp: <http://dbpedia.org/property/> .
-@prefix dbr: <http://dbpedia.org/resource/> .
-@prefix dbo: <http://dbpedia.org/ontology/> .
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+PREFIX dbo: <http://dbpedia.org/ontology/>
 
 SELECT DISTINCT *
 WHERE {
@@ -352,11 +351,11 @@ we could require that the birthplace of that
 person should match the one of a Pope.
 
 ```sparql
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@prefix dbp: <http://dbpedia.org/property/> .
-@prefix dbr: <http://dbpedia.org/resource/> .
-@prefix dbo: <http://dbpedia.org/ontology/> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
 SELECT DISTINCT * WHERE {
   ?s a foaf:Person .
@@ -376,11 +375,11 @@ LIMIT 50
 Shortening sparql queries
 
 ```sparql
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@prefix dbp: <http://dbpedia.org/property/> .
-@prefix dbr: <http://dbpedia.org/resource/> .
-@prefix dbo: <http://dbpedia.org/ontology/> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
 SELECT DISTINCT * WHERE {
   ?s a foaf:Person ;
