@@ -3,8 +3,8 @@
 ## Agenda
 
 - Storing and retrieving triples
-- Virtuoso
-- GraphDB
+- Using the `rdflib.Dataset` class
+- Querying and traversing graphs
 
 *Beware*: commands may contain small typos. You must fix them to properly complete the course!
 
@@ -52,6 +52,41 @@ Neo4j supports RDF datasets via the Neosemantics plugin.
 
 ----
 
+### RDF databases
+
+An RDF dataset is a set of RDF graphs.
+
+A graph is a set of triples.
+
+```mermaid
+graph LR
+
+subgraph Dataset
+subgraph Graph1["Graph &lt;https\://example.org/graph1&gt;"]
+t1[
+subject predicate object .
+subject predicate object .
+subject predicate object .
+]
+end
+subgraph Graph2[Graph &lt;urn:example:graph2&gt;]
+t2[
+subject predicate object .
+subject predicate object .
+subject predicate object .
+]
+end
+subgraph Graph3[Graph &lt;_:anonymous_graph&gt;]
+t3[
+subject predicate object .
+subject predicate object .
+subject predicate object .
+]
+end
+end
+```
+----
+
 ## rdflib backends
 
 We will simulate a graph database using
@@ -67,21 +102,38 @@ based on [Oxigraph](https://github.com/oxigraph/oxigraph).
 %pip install oxrdflib
 ```
 
-Let's test it.
+Let's create a `Dataset`.
 
 ```python
-from rdflib import Graph
+from rdflib import Dataset
 
-g = Graph()
+d = Dataset(store="Oxigraph")
+dir(d)
+```
 
-# Use the default backend.
+Exercise:
+
+- use the `Dataset.graphs` method to list the graphs in the dataset;
+- use the `Dataset.bind` method to bind the `eu` prefix to the
+  `https://publications.europa.eu/resource/authority/` namespace;
+- use the `Dataset.graph` method to create the `eu:country` graph;
+
+```python
+print(list(d.graphs()))
+d.bind("eu", "https://publications.europa.eu/resource/authority/")
+eu_country_id = d.namespace_manager.expand_curie("eu:country")
+```
+
+```python
+# Use the default backend
+g = d.graph(eu_country_id)
 %time g.parse("countries-skos-ap-act.ttl", format="text/turtle")
 print("The graph contains", len(g), "triples.")
 ```
 
 ```python
-g=Graph(store="Oxigraph")
-
+d = Dataset(store="Oxigraph")
+g = d.graph(eu_country_id)
 # Use the ox-turtle parser.
 %time g.parse("countries-skos-ap-act.ttl", format="ox-turtle")
 print("The graph contains", len(g), "triples.")
@@ -90,6 +142,54 @@ print("The graph contains", len(g), "triples.")
 See also:
 
 - <https://rdflib.readthedocs.io/en/stable/persistence.html>
+
+Now create another graph
+
+```python
+simpsons = d.graph(identifier="urn:example:simpsons")
+simpsons.parse("simpsons.ttl", format="ox-turtle")
+```
+
+Now list the graphs in the dataset:
+note that the default graph does not contain triples.
+
+```python
+print(
+  {k.identifier.n3(): len(k) for k in d.graphs()}
+)
+```
+
+What happens if I query the dataset?
+
+```python
+q = """SELECT DISTINCT *
+WHERE {
+  [] a ?Class
+}
+LIMIT 10
+"""
+d.query(q).bindings
+```
+
+Now, try to query each graph
+
+```python
+for g in d.graphs():
+  print({g.identifier.n3(): g.query(q).bindings})
+```
+
+There's a Dataset flag that allows to query all the graphs in the dataset.
+
+```python
+# By default, sparql does not query all the graphs.
+assert d.default_union == False
+
+#  .. but you can change this behaviour...
+d.default_union = True
+
+# ... and now you can query all the graphs.
+d.query(q).bindings
+```
 
 ---
 
@@ -192,7 +292,7 @@ Let's visualize the graph.
 from tools import plot_graph
 from rdflib import SKOS
 
-plot_graph(result.graph, label=SKOS.prefLabel)
+plot_graph(result.graph, label_property=SKOS.prefLabel)
 ```
 
 #### More metadata

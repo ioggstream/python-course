@@ -27,9 +27,9 @@ may have a different schema.
 
 | email              | name  | surname | parent         |
 |--------------------|-------|---------|----------------|
-| homer@simpsons.com | Homer | Simpson ||
-| marge@simpsons.com | Marge | Simpson ||
-| bart@simpsons.com | Bart  | Simpson |
+| <homer@simpsons.com> | Homer | Simpson ||
+| <marge@simpsons.com> | Marge | Simpson ||
+| <bart@simpsons.com> | Bart  | Simpson |
 
 With RDF, there is no fixed schema.
 Instead, we have a public set of predicates
@@ -134,14 +134,18 @@ d.bind("my":  "https://a.test/my#")
 
 Exercise:
 
-- list the graphs in the dataset
-- update the
+- list the graphs in the dataset; how many are there?
 
 ```python
 import json
 # Create a people graph and add the entries
 d.graph(identifier="urn:People").parse(data=json.dumps(nodes_ld), format="application/ld+json")
 ```
+
+Exercise:
+
+- list the triples in the dataset;
+- list the triples in the `urn:People` graph;
 
 Load the countries vocabulary in a new graph.
 
@@ -150,7 +154,6 @@ d.graph(identifier="eu:country").parse("countries-skos-ap-act.ttl", format="ox-t
 ```
 
 Now we have a graph to enrich with external data.
-
 
 Match the custom country property with the ISO code
 contained in the EU vocabulary
@@ -253,7 +256,6 @@ WHERE {
 d.update(q)
 
 ```
-
 
 We can also mangle the data a bit...
 
