@@ -8,7 +8,7 @@ Author: <roberto.polli@par-tec.it>
 ## Agenda
 
 - 1h. What is semantics and how to describe information in a
-  meaningful (and machine-readable) way using RDF.
+  meaningful (and machine-readable) way using Resource Description Format (RDF).
 
 - 1h. Storing data or describing knowledge?
   Practical use of getting security insights from data.

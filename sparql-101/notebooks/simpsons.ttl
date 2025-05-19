@@ -1,16 +1,15 @@
 # I simpsons.
 
 @prefix : <https://www.simpsons.com#> .
-@prefix foaf: <http://xmlns.com/foaf/0.1/>    .
 @prefix schema: <http://schema.org/> .
 
 :Homer a schema:Person .
-:Homer foaf:givenName "Homer" .
-:Homer foaf:familyName "Simpsons" .
-:Homer foaf:hasSpouse :Marge .
+:Homer schema:givenName "Homer" .
+:Homer schema:familyName "Simpsons" .
+:Homer schema:spouse :Marge .
 
 :Marge a schema:Person .
-:Marge foaf:givenName "Marge" .
-:Marge foaf:familyName "Simpsons" .
-:Marge foaf:hasChildren :Bart .
-:Marge foaf:hasChildren :Lisa .
+:Marge schema:givenName "Marge" .
+:Marge schema:familyName "Simpsons" .
+:Marge schema:children :Bart .
+:Marge schema:children :Lisa .

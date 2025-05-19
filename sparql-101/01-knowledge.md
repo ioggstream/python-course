@@ -2,12 +2,9 @@
 
 ## Agenda
 
-- Knowledge management
-- Semantics what?
-- Triples & co
-- Attaching semantics
-- Graph databases
-- JsonLD
+- What is knowledge?
+- Knowledge and graphs
+- RDF: machine-readable knowledge
 
 *Beware*: commands may contain small typos. You have to fix them to properly complete the course!
 
@@ -19,20 +16,31 @@ Prerequisites:
 - HTTP, OpenAPI 3
 - SQL and database hints
 
+```python
+# rdflib is a python library to work with resources.
+%pip install rdflib
+```
+
 ---
 
-## Intro: What is knowledge?
+
+
+## What is knowledge?
 
 Knowledge is a set of information that is useful for a given purpose.
 
 We express knowledge through language and symbols
 in various forms: text, images, and sounds.
 
+----
+
 To use knowledge we need to:
 
 - sense;
 - interpret;
 - understand.
+
+----
 
 When reading a book, we need to:
 
@@ -45,18 +53,33 @@ and our previous knowledge.
 
 ----
 
-## Intro: The Encyclopedia
+## What is knowledge? The Encyclopedia
 
-The Encyclopedia was one of the first attempts to organize knowledge,
+The [Encyclopédie](https://en.wikipedia.org/wiki/Encyclop%C3%A9die)
+was one of the first modern attempts to organize knowledge,
 and to make it available to the public.
 
-Encyclopedia voices can be basically seen as a collection of sentences,
+Its voices can be basically seen as a collection of sentences,
 each of the form
 
 ```mermaid
 graph LR
 subject((subject)) --- predicate(predicate) --> object
 ```
+
+----
+
+Every term is identified by an absolute URI.
+
+The prefix identifies the vocabulary name,
+and the suffix identifies the term.
+
+```python
+from rdflib import URIRef
+dog_uri = URIRef("https://dbpedia.org/data/Dog")
+```
+
+We'll see how to use URIs to express knowledge.
 
 ----
 
@@ -69,7 +92,9 @@ could be:
 
 ----
 
-### We can represent this text as a graph
+## Knowledge and Graphs
+
+We can represent this text as a graph
 
 💡 The object of a sentece
 can be the subject of another sentence.
@@ -84,10 +109,10 @@ monty_python -->|is a| comedy_group[comedy group]
 
 ----
 
-Today, we have various encyclopedias on the web,
+There are various encyclopedias on the web,
 such as Wikipedia and dbpedia.
 
-Exercise:
+##### Exercise: web encyclopedias
 
 1. open the "Python" page on dbpedia:
 
@@ -137,14 +162,13 @@ subgraph wikidata[WikiData]
 end
 ```
 
----
+----
 
-### The Semantic Web
+## Knowledge and Graphs: The Semantic Web
 
 We can use further knowledge - using exisiting cross-references
 between Dbpedia and Wikidata,
-or using our own knowledge -
-to connect the two graphs together.
+or using our own knowledge - to connect the two graphs together.
 
 ```mermaid
 graph LR
@@ -173,7 +197,7 @@ But it is also the basis of the Web itself
 
 ----
 
-## Machine readable sentences and RDF
+## RDF: Machine Readable Knowledge
 
 Encyclopedia voices on Wikipedia and dbpedia are expressed in
 [Resource Description Framework (RDF)](https://www.w3.org/TR/rdf11-primer/).
@@ -189,18 +213,15 @@ and [XML](https://www.w3.org/TR/rdf-syntax-grammar/).
 We'll use the Turtle format in this course,
 where a sentence is expressed as a
 
-```text
+```raw
 subject predicate object .
 ```
 
 :exclamation: note the dot at the end of the sentence :exclamation:
 
-```python
-# rdflib is a python library to work with RDF.
-%pip install rdflib
-```
-
 ----
+
+## RDF: Machine Readable Knowledge
 
 Subjects and predicates are uniquely identified by [URIs](https://www.w3.org/TR/rdf11-concepts/#section-uris).
 
@@ -241,14 +262,13 @@ json_text = g.serialize(format="application/ld+json")
 print(json_text)
 ```
 
-Exercise: take 2 minutes to map the JSON-LD
-format to the Turtle format.
+##### Exercise: take 2 minutes to map the JSON-LD format to the Turtle format.
 
 We'll see JSON-LD in detail later.
 
 ---
 
-### Namespaces and cURIe
+## RDF: Namespaces and cURIe
 
 RDF use namespace prefixes to shorten URIs
 (the [cURIe](https://www.w3.org/TR/curie/) syntax).
@@ -272,7 +292,6 @@ print(*g1, sep="\n")
 g1_ns = set(g1.namespaces())
 print(*g1_ns, sep="\n")
 ```
-
 
 ```python
 # Expand an entry using predefined namespaces.
@@ -316,7 +335,7 @@ sentences = """
 """
 ```
 
-#### Exercise: parse the sentences using rdflib and answer the following questions:
+#### Exercise: parse the sentences using rdflib and answer the following questions
 
 - how many sentences are there?
 - how many subjects are there?
@@ -340,7 +359,7 @@ default_ns = set(Graph().namespaces())
 # Use this cell for the exercise
 ```
 
-#### Exercise: serialize the above graph in JSON-LD format.
+#### Exercise: serialize the above graph in JSON-LD format
 
 ```python
 # Use this cell for the exercise

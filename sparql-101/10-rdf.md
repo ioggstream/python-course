@@ -16,6 +16,11 @@ Prerequisites:
 - HTTP, OpenAPI 3
 - SQL and database hints
 
+```python
+%pip install oxrdflib
+```
+
+
 ---
 
 ## Graphs (again)
@@ -52,41 +57,6 @@ Neo4j supports RDF datasets via the Neosemantics plugin.
 
 ----
 
-### RDF databases
-
-An RDF dataset is a set of RDF graphs.
-
-A graph is a set of triples.
-
-```mermaid
-graph LR
-
-subgraph Dataset
-subgraph Graph1["Graph &lt;https\://example.org/graph1&gt;"]
-t1[
-subject predicate object .
-subject predicate object .
-subject predicate object .
-]
-end
-subgraph Graph2[Graph &lt;urn:example:graph2&gt;]
-t2[
-subject predicate object .
-subject predicate object .
-subject predicate object .
-]
-end
-subgraph Graph3[Graph &lt;_:anonymous_graph&gt;]
-t3[
-subject predicate object .
-subject predicate object .
-subject predicate object .
-]
-end
-end
-```
-----
-
 ## rdflib backends
 
 We will simulate a graph database using
@@ -98,22 +68,16 @@ rdflib supports multiple backends to parse and store triples.
 oxrdflib is a performant one
 based on [Oxigraph](https://github.com/oxigraph/oxigraph).
 
-```python
-%pip install oxrdflib
-```
-
 Let's create a `Dataset`.
 
 ```python
 from rdflib import Dataset
 
 d = Dataset(store="Oxigraph")
-dir(d)
 ```
 
 Exercise:
 
-- use the `Dataset.graphs` method to list the graphs in the dataset;
 - use the `Dataset.bind` method to bind the `eu` prefix to the
   `https://publications.europa.eu/resource/authority/` namespace;
 - use the `Dataset.graph` method to create the `eu:country` graph;

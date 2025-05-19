@@ -2,7 +2,6 @@
 
 ## Agenda
 
-- Knowledge management
 - Semantics what?
 - Triples & co
 - Attaching semantics
@@ -13,7 +12,7 @@
 
 ----
 
-## Intro: Semantics what?
+## Semantics what?
 
 Semantics: the study of meaning.
 
@@ -70,10 +69,10 @@ and therefore the creation of digital services.
 A first example is the lack of syntactic interoperability:
 a well-defined entity (eg. the tax code) is represented with different fields or formats:
 
-```
-{"tax_code": "MRORSS77T05E472W"}
-{"cf": "mrorss77T05E472W"}
-{"taxCode": "MRORSS77T05E472W"}
+```json
+{"tax_code": "RSSMRO77T05E472W"}
+{"cf": "RSSMRO77T05E472W"}
+{"taxCode": "RSSMRO77T05E472W"}
 ```
 
 ----
@@ -92,12 +91,12 @@ relatives:
 ```yaml
 relatives:
   - name: Mario Rossi
-    relationship: padre
+    relationship: father
 ```
 
 ---
 
-## Vocabularies to the rescue
+## Vocabularies to the rescue: Controlled vocabularies
 
 Controlled Vocabularies use URIs to disambiguate the meaning of terms and provide semantics.
 
@@ -109,10 +108,11 @@ and the suffix identifies the term.
 ```python
 from rdflib import URIRef
 dog_uri = URIRef("https://dbpedia.org/data/Dog")
-
 ```
 
-### RDF: Resource Description Framework
+## Vocabularies to the rescue: RDF
+
+RDF: Resource Description Framework
 
 It allows to represent information on the web based on two data structures:
 
@@ -122,7 +122,48 @@ It allows to represent information on the web based on two data structures:
 
 and on **vocabularies** of elements identified by IRIs and namespaces.
 
+---
+
 An RDF dataset is a set of **graphs**.
+
+```mermaid
+graph LR
+
+subgraph Dataset
+  subgraph Graph1["Graph &lt;https\://example.org/graph1&gt;"]
+    t1[
+    subject predicate object .
+    subject predicate object .
+    subject predicate object .
+    ]
+  end
+  subgraph Graph2[Graph &lt;urn:example:graph2&gt;]
+    t2[
+    subject predicate object .
+    subject predicate object .
+    subject predicate object .
+    ]
+  end
+  subgraph Graph3[Graph &lt;_:anonymous_graph&gt;]
+  t3[
+  subject predicate object .
+  subject predicate object .
+  subject predicate object .
+  ]
+  end
+end
+```
+
+```python
+from rdflib import Dataset
+
+d = Dataset()
+```
+
+#### Exercise: dataset
+
+- use the `Dataset.graphs` method to list the graphs in the dataset;
+
 
 ----
 
@@ -133,7 +174,7 @@ are used.
 
 #### Exercise: the DBpedia ontology and dataset
 
-Parse the following RDF sentences
+Parse the following RDF sentences in a dataset.
 
 ```python
 from rdflib import Graph
@@ -154,7 +195,8 @@ sentences = """
 :Meat       dbo:WikiPageWikiLink :Prosciutto .
 """
 
-g = Graph()
+# Create a new named graph in the dataset.
+g = d.graph(identifier="urn:my_dbpedia")
 ...
 
 ```
@@ -174,7 +216,7 @@ print(subjects | objects)
   then try to understand the difference between
   their namespaces.
 
-### Ontologies and controlled vocabularies
+## Ontologies and controlled vocabularies
 
 Ontologies are used to standardize the semantics of digital content.
 
@@ -187,7 +229,7 @@ Examples of European controlled vocabularies are here <https://op.europa.eu/en/w
 
 ----
 
-#### Ontologies
+## Ontologies
 
 In Italy, there's the official ontology for person
 (Common Person Vocabulary) that we can use to uniquely describe someone.
