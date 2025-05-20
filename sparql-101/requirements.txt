@@ -1,0 +1,9 @@
+bokeh
+ipython
+jupyter
+matplotlib
+networkx
+oxrdflib
+pandas
+rdflib
+scipy

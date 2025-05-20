@@ -1,0 +1,35 @@
+#
+# Turtle file with a simple FOAF example.
+#
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+
+<mailto:r@example.com> a foaf:Person ;
+    foaf:name "Roberto" ;
+    foaf:mbox <mailto:r@example.com> ;
+    foaf:knows <mailto:m@example.com>,
+               <mailto:j@example.com>
+.
+
+<mailto:j@example.com> a foaf:Person ;
+    foaf:name "Jon" ;
+    foaf:mbox <mailto:j@example.com> ;
+    foaf:knows <mailto:r@example.com>
+.
+
+<mailto:d@example.com> a foaf:Person ;
+    foaf:name "Danilo" ;
+    foaf:mbox <mailto:d@example.com> ;
+    foaf:knows <mailto:j@example.com>
+.
+
+<mailto:m@example.com> a foaf:Person ;
+    foaf:name "Moin" ;
+    foaf:mbox <mailto:m@example.com> ;
+    foaf:knows <mailto:d@example.com>
+.
+
+
+<mailto:h@example.com> a foaf:Person ;
+    foaf:name "Hermit" ;
+    foaf:mbox <mailto:h@example.com>
+.

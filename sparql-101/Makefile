@@ -1,4 +1,4 @@
-FILES=$(wildcard *.md)
+FILES=$(wildcard [0-9]*.md)
 BOOKS = $(patsubst %.md,notebooks/%.ipynb,$(FILES))
 SLIDES = $(patsubst %.ipynb,%.html,$(BOOKS))
 

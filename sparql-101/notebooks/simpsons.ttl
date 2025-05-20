@@ -1,0 +1,15 @@
+# I simpsons.
+
+@prefix : <https://www.simpsons.com#> .
+@prefix schema: <http://schema.org/> .
+
+:Homer a schema:Person .
+:Homer schema:givenName "Homer" .
+:Homer schema:familyName "Simpsons" .
+:Homer schema:spouse :Marge .
+
+:Marge a schema:Person .
+:Marge schema:givenName "Marge" .
+:Marge schema:familyName "Simpsons" .
+:Marge schema:children :Bart .
+:Marge schema:children :Lisa .

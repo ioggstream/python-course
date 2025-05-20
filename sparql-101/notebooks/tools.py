@@ -48,6 +48,8 @@ def plot_graph(
     for x in g:
         if pattern and not pattern.match(str(x[2])):
             continue
+        if x[1] == label_property:
+            continue
         f.add(x)
         count += 1
         if limit and count > limit:
