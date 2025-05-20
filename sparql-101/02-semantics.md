@@ -114,15 +114,58 @@ dog_uri = URIRef("https://dbpedia.org/data/Dog")
 
 RDF: Resource Description Framework
 
-It allows to represent information on the web based on two data structures:
+It allows to represent information on the web based on:
 
 - **elements** (IRIs, blank nodes and literals);
+
+```python
+from rdflib import URIRef, Literal, BNode
+
+iri = URIRef("mailto:mr@test")
+iri2 = URIRef("https://schema.org/name")
+blank_node = BNode("anon")
+literal = Literal("Mario Rossi")
+
+# Serialize in the N3 format
+# (Notation 3 is a compact, human-readable format for RDF)
+print(iri.n3(),  blank_node.n3(), literal.n3(), sep="\n")
+```
+
+Exercise: RDF elements
+
+In the cell below, create a literal with the following values
+and look at its [Notation 3 (N3)](https://www.w3.org/TeamSubmission/n3/) serialization.
+
+- `42` (integer), `42.0` (float), `"42"` (string);
+- `datetime.now()` (date);
+
+```python
+from datetime import datetime
+...
+for value in (42, 42.0, "42", datetime.now()):
+    literal = Literal(value)
+    print(literal.n3())
+```
+
 - **triples** (subject-predicate-object);
+
+```python
+triple = (iri, iri2, literal)
+print(triple)
+```
+
 - **graphs** (sets of triples).
+
+```python
+from rdflib import Graph
+g = Graph()
+g.add(triple)
+print(g.serialize(format="turtle"))
+```
 
 and on **vocabularies** of elements identified by IRIs and namespaces.
 
----
+----
 
 An RDF dataset is a set of **graphs**.
 
@@ -164,7 +207,23 @@ d = Dataset()
 
 - use the `Dataset.graphs` method to list the graphs in the dataset;
 
+- add a graph to the dataset.
 
+```python
+simpsons = d.graph(identifier="urn:example:simpsons")
+simpsons.parse("simpsons.ttl", format="turtle")
+
+```
+
+- list the graphs in the dataset again, together with their identifiers.
+
+<!-- len(graphs) -->
+<!-- graphs = list(d.graphs()) -->
+
+- get the `identifier` of one graph. What's its type?
+
+
+<!-- [(g.identifier.n3(), type(g.identifier) ) for g in graphs] -->
 ----
 
 To semantically standardize data, services and their content,
@@ -177,8 +236,6 @@ are used.
 Parse the following RDF sentences in a dataset.
 
 ```python
-from rdflib import Graph
-
 sentences = """
 @prefix    : <http://dbpedia.org/resource/> .
 @prefix dbp: <http://dbpedia.org/property/> .
@@ -201,6 +258,8 @@ g = d.graph(identifier="urn:my_dbpedia")
 
 ```
 
+
+
 - Get the URIs representing Tortellini and Food using the `Graph.subjects`  and `Graph.objects` methods.
 
 ```python
@@ -209,7 +268,7 @@ subjects = set( ... )
 objects = set( ... )
 print(subjects | objects)
 ```
-
+<!-- print(set(g.subjects())) -->
 - what's the namespace of the `Tortellini` URI?
 - what's the namespace of the `Food` URI?
 - Open both URIs in a browser and check their content,
@@ -222,6 +281,37 @@ Ontologies are used to standardize the semantics of digital content.
 
 - **Ontology**: an ontology is a set of logical axioms that conceptualize a domain of interest by defining concepts and the semantics of relationships between them.
 
+Example: the Italian ontology for person defines:
+
+- the concept of person;
+- its properties (e.g., givenName, familyName, hasChildren);
+- the range of each property (e.g., string, date, person);
+- the domain of each property (e.g., person, organization, place);
+- See also <https://w3id.org/italia/onto/CPV/Person>.
+
+```mermaid
+graph TD
+
+subgraph CPV["CPV Ontology"]
+  Person
+  familyName([familyName])
+  givenName([givenName])
+  hasChildren([hasChildren])
+end
+
+subgraph xsd[XMLSchema]
+  xsd:string
+end
+
+givenName & familyName & hasChildren -.-o|domain| Person
+
+familyName & givenName ---->|range| xsd:string
+hasChildren -->|range| Person
+
+
+```
+
+
 - **Controlled vocabulary**: a vocabulary where the terms are validated by a designated authority.
   It can be of different types - e.g., a list (codelist), a hierarchical structure (taxonomy), a glossary and a thesaurus (which adds further constraints to a taxonomy).
 
@@ -229,9 +319,10 @@ Examples of European controlled vocabularies are here <https://op.europa.eu/en/w
 
 ----
 
-## Ontologies
+## Ontologies in Italy
 
-In Italy, there's the official ontology for person
+In Italy, there's <https://schema.gov.it>, a National Data Catalog for Semantic Interoperatbility
+containing the official ontology for person
 (Common Person Vocabulary) that we can use to uniquely describe someone.
 
 ```text
