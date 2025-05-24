@@ -22,7 +22,16 @@ An RDF graph is an (unordered) set of triples.
 
 Each triple consists of a `subject`, `predicate`, `object`.
 
-SparQL is a query language for RDF graphs.
+An RDF dataset is a collection of graphs.
+
+SparQL is a query language for RDF datasets.
+
+See: https://rdflib.readthedocs.io/en/stable/apidocs/rdflib.html#dataset
+
+```python
+from rdflib import Dataset
+d = Dataset()
+```
 
 ----
 
@@ -41,22 +50,24 @@ This workshop provides a non-exhaustive introduction to SparQL.
 
 ----
 
+### Sparql: the _:sample graph
+
 Open [sample.ttl](sample.ttl) in another tab
 and see its content.
 
+Now load into the dataset.
+
 ```python
-from rdflib import Graph
-g = Graph()
+g = d.graph("_:sample")
 g.parse("sample.ttl", format="text/turtle")
 ```
 
 Use our utility function to print the graph.
 
 ```python
-from tools import plot_graph
-plot_graph(g, label_property=FOAF.name)
+import tools
+tools.plot_graph(g, label_property=FOAF.name)
 ```
-
 
 List all entries
 
@@ -230,6 +241,8 @@ ignoring the way data is stored.
 ---
 
 # Querying DBPedia
+
+:warning: DBPedia may rate limit your queries.
 
 [DBPedia](https://dbpedia.org/sparql) is a graph database with a lot of data inside.
 

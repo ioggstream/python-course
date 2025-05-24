@@ -96,74 +96,14 @@ relatives:
 
 ---
 
-## Vocabularies to the rescue: Controlled vocabularies
-
-Controlled Vocabularies use URIs to disambiguate the meaning of terms and provide semantics.
-
-Every term is identified by an absolute URI.
-
-The prefix identifies the vocabulary name,
-and the suffix identifies the term.
-
-```python
-from rdflib import URIRef
-dog_uri = URIRef("https://dbpedia.org/data/Dog")
-```
-
 ## Vocabularies to the rescue: RDF
 
-RDF: Resource Description Framework
+RDF (Resource Description Framework) is a standard for representing information about resources in the web.
+See [01-knowledge.ipynb](01-knowledge.ipynb).
 
-It allows to represent information on the web based on:
+Vocabularies contain a set of terms (IRIs) and their relationships
+that can be used to describe the meaning of data.
 
-- **elements** (IRIs, blank nodes and literals);
-
-```python
-from rdflib import URIRef, Literal, BNode
-
-iri = URIRef("mailto:mr@test")
-iri2 = URIRef("https://schema.org/name")
-blank_node = BNode("anon")
-literal = Literal("Mario Rossi")
-
-# Serialize in the N3 format
-# (Notation 3 is a compact, human-readable format for RDF)
-print(iri.n3(),  blank_node.n3(), literal.n3(), sep="\n")
-```
-
-Exercise: RDF elements
-
-In the cell below, create a literal with the following values
-and look at its [Notation 3 (N3)](https://www.w3.org/TeamSubmission/n3/) serialization.
-
-- `42` (integer), `42.0` (float), `"42"` (string);
-- `datetime.now()` (date);
-
-```python
-from datetime import datetime
-...
-for value in (42, 42.0, "42", datetime.now()):
-    literal = Literal(value)
-    print(literal.n3())
-```
-
-- **triples** (subject-predicate-object);
-
-```python
-triple = (iri, iri2, literal)
-print(triple)
-```
-
-- **graphs** (sets of triples).
-
-```python
-from rdflib import Graph
-g = Graph()
-g.add(triple)
-print(g.serialize(format="turtle"))
-```
-
-and on **vocabularies** of elements identified by IRIs and namespaces.
 
 ----
 
@@ -172,29 +112,39 @@ An RDF dataset is a set of **graphs**.
 ```mermaid
 graph LR
 
+classDef pad fill:none,stroke:none;
+
 subgraph Dataset
-  subgraph Graph1["Graph &lt;https\://example.org/graph1&gt;"]
+  subgraph Graph1["Graph <br/>&lt;https\://example.org/graph1&gt;"]
+  subgraph p1[ ]
     t1[
     subject predicate object .
     subject predicate object .
     subject predicate object .
     ]
+    end
   end
-  subgraph Graph2[Graph &lt;urn:example:graph2&gt;]
+  subgraph Graph2[Graph <br/>&lt;urn:example:graph2&gt;]
+  subgraph p2[ ]
     t2[
     subject predicate object .
     subject predicate object .
     subject predicate object .
     ]
   end
-  subgraph Graph3[Graph &lt;_:anonymous_graph&gt;]
+  end
+  subgraph Graph3[Graph <br/>&lt;_:anonymous_graph&gt;]
+  subgraph p3[ ]
   t3[
   subject predicate object .
   subject predicate object .
   subject predicate object .
   ]
   end
+  end
 end
+
+class p1,p2,p3 pad;
 ```
 
 ```python
@@ -224,6 +174,49 @@ simpsons.parse("simpsons.ttl", format="turtle")
 
 
 <!-- [(g.identifier.n3(), type(g.identifier) ) for g in graphs] -->
+
+Now list the graphs in the dataset:
+note that the default graph does not contain triples.
+
+```python
+print(
+  {k.identifier.n3(): len(k) for k in d.graphs()}
+)
+```
+
+
+What happens if I query the dataset?
+
+```python
+q = """SELECT DISTINCT *
+WHERE {
+  [] a ?Class
+}
+LIMIT 10
+"""
+d.query(q).bindings
+```
+
+Now, try to query each graph
+
+```python
+for g in d.graphs():
+  print({g.identifier.n3(): g.query(q).bindings})
+```
+
+There's a Dataset flag that allows to query all the graphs in the dataset.
+
+```python
+# By default, sparql does not query all the graphs.
+assert d.default_union == False
+
+#  .. but you can change this behaviour...
+d.default_union = True
+
+# ... and now you can query all the graphs.
+d.query(q).bindings
+```
+
 ----
 
 To semantically standardize data, services and their content,
@@ -266,7 +259,8 @@ g = d.graph(identifier="urn:my_dbpedia")
 # Deduplicate subjects using set()
 subjects = set( ... )
 objects = set( ... )
-print(subjects | objects)
+items = subjects | objects
+print(*items, sep="\n")
 ```
 <!-- print(set(g.subjects())) -->
 - what's the namespace of the `Tortellini` URI?
@@ -279,12 +273,15 @@ print(subjects | objects)
 
 Ontologies are used to standardize the semantics of digital content.
 
-- **Ontology**: an ontology is a set of logical axioms that conceptualize a domain of interest by defining concepts and the semantics of relationships between them.
+- **Ontology**: a set of logical axioms
+                that conceptualize a domain of interest
+                by defining concepts (e.g., a `Person`)
+                and the semantics of relationships (e.g., `isParentOf`) between them.
 
 Example: the Italian ontology for person defines:
 
 - the concept of person;
-- its properties (e.g., givenName, familyName, hasChildren);
+- its properties (e.g., givenName, familyName, isParentOf);
 - the range of each property (e.g., string, date, person);
 - the domain of each property (e.g., person, organization, place);
 - See also <https://w3id.org/italia/onto/CPV/Person>.
@@ -296,21 +293,27 @@ subgraph CPV["CPV Ontology"]
   Person
   familyName([familyName])
   givenName([givenName])
-  hasChildren([hasChildren])
+  isParentOf([isParentOf])
+
+  givenName_description>"The given name of a person. E.g. 'Mario' is the given name of the person 'Mario Rossi'."]
+  isParentOf_description>"Has a parental relationship with."]
 end
 
 subgraph xsd[XMLSchema]
   xsd:string
 end
 
-givenName & familyName & hasChildren -.-o|domain| Person
+givenName_description -.-|description| givenName
+isParentOf_description
+-.-|description|
+isParentOf
+givenName & familyName & isParentOf -.-o|domain| Person
 
 familyName & givenName ---->|range| xsd:string
-hasChildren -->|range| Person
+isParentOf -->|range| Person
 
 
 ```
-
 
 - **Controlled vocabulary**: a vocabulary where the terms are validated by a designated authority.
   It can be of different types - e.g., a list (codelist), a hierarchical structure (taxonomy), a glossary and a thesaurus (which adds further constraints to a taxonomy).
@@ -319,13 +322,64 @@ Examples of European controlled vocabularies are here <https://op.europa.eu/en/w
 
 ----
 
+## Standard vocabularies
+
+Standard vocabularies that are used to semantically describe data
+are the RDF Schema (RDFS) vocabulary,
+the Web Ontology Language (OWL) vocabulary,
+and the Simple Knowledge Organization System (SKOS) vocabulary.
+
+Here are some example IRIs described using RDFS:
+
+```raw
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex:  <http://example.org/> .
+
+# The ex:Person Resource classifies a group of Resources.
+ex:Person rdf:type rdfs:Class .
+
+# ex:Alive classifies a group of ex:Person
+ex:Alive rdf:type rdfs:Class ;
+  rdfs:subClassOf ex:Person ;
+  .
+
+ex:givenName rdf:type rdf:Property ;
+  rdfs:domain ex:Person ;
+  rdfs:range xsd:string ;
+
+```
+
+You can see vocabularies as a set of globally unique labels
+that can be used to describe data in a standardized way.
+
+These labels may or may not overlap (e.g., I can use labels
+from different vocabularies to describe the same data),
+like in the following example:
+
+```raw
+@prefix ex: <http://example.org/> .
+
+ex:Person a rdfs:Class ;
+  # Using RDFS vocabulary...
+  rdfs:label "Person"@en, "Persona"@it ;
+  rdfs:comment "A human being."@en, "Un essere umano."@it ;
+
+  # Using SKOS vocabulary...
+  a skos:Concept ;
+  skos:prefLabel "Person"@en, "Persona"@it ;
+  skos:definition "A human being."@en, "Un essere umano."@it
+.
+```
+
 ## Ontologies in Italy
 
-In Italy, there's <https://schema.gov.it>, a National Data Catalog for Semantic Interoperatbility
-containing the official ontology for person
-(Common Person Vocabulary) that we can use to uniquely describe someone.
+In Italy, <https://schema.gov.it> is the National Data Catalog for Semantic Interoperability.
 
-```text
+It contains Controlled Vocabularies and Ontologies,
+including the Italian Ontology for Person (CPV),
+that we can use to uniquely describe someone.
+
+```raw
 @prefix CPV: <https://w3id.org/italia/onto/CPV> .
 
 <email:robipolli@gmail.com>
@@ -344,6 +398,9 @@ from rdflib import Graph
 sentences = """
 @prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
 @prefix dct:  <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+
 
 <https://w3id.org/italia/onto/CPV>
   dct:modified "2020-04-27"^^xsd:date ;
@@ -351,10 +408,18 @@ sentences = """
   dct:title    "Person Ontology"@en,
                "Ontologia delle persone"@it .
 
+<https://w3id.org/italia/onto/CPV/Person>
+  a rdfs:Class ;
+  rdfs:isDefinedBy <https://w3id.org/italia/onto/CPV> ;
+  rdfs:comment "An individual human being .."@en .
+
 # An ontology defines the meaning of predicates.
 <https://w3id.org/italia/onto/CPV/givenName>
+  a owl:DatatypeProperty ;
+  rdfs:isDefinedBy <https://w3id.org/italia/onto/CPV> ;
   rdfs:comment "The given name of a person. E.g. 'Mario' is the given name of the person 'Mario Rossi'."@en ;
   rdfs:label  "given name"@en ;
+  rdfs:domain <https://w3id.org/italia/onto/CPV/Person> ;
   rdfs:range xsd:string .
 
 """
@@ -366,3 +431,9 @@ sentences = """
 <!-- len(list(g)) -->
 
 Exercise: how many triples are in the graph?
+
+```python
+import tools
+
+tools.plot_graph(g)
+```
