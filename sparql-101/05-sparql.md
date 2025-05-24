@@ -46,7 +46,7 @@ WHERE {
 }
 ```
 
-This workshop provides a non-exhaustive introduction to SparQL.
+This lesson provides a non-exhaustive introduction to SparQL.
 
 ----
 
@@ -65,6 +65,7 @@ g.parse("sample.ttl", format="text/turtle")
 Use our utility function to print the graph.
 
 ```python
+from rdflib import FOAF
 import tools
 tools.plot_graph(g, label_property=FOAF.name)
 ```
@@ -239,6 +240,73 @@ Note that the query describes each relation
 ignoring the way data is stored.
 
 ---
+
+### Querying the whole dataset
+
+Let's add another graph to the dataset.
+
+```python
+g2 = d.graph("_:simpsons")
+g2.parse("simpsons.ttl", format="text/turtle")
+```
+
+What happens if I query the whole dataset?
+
+```python
+q = """SELECT DISTINCT *
+WHERE {
+  [] a ?Class
+}
+LIMIT 10
+"""
+d.query(q).bindings
+```
+
+Now, try to query each graph
+
+```python
+for g in d.graphs():
+  print({g.identifier.n3(): g.query(q).bindings})
+```
+
+There's a Dataset flag that allows to query all the graphs in the dataset.
+
+```python
+# By default, sparql does not query all the graphs.
+assert d.default_union == False
+
+#  .. but you can change this behaviour...
+d.default_union = True
+
+# ... and now you can query all the graphs.
+d.query(q).bindings
+```
+
+I can also query all the graphs in the dataset
+
+```python
+q = """SELECT DISTINCT *
+WHERE {
+  GRAPH ?g {}
+}
+"""
+result = d.query(q)
+{str(r.g): len(r) for r in result}
+```
+
+Or querying triples in a specific graph:
+
+```python
+q = """SELECT DISTINCT *
+WHERE {
+  GRAPH <_:simpsons> {
+    ?p a foaf:Person .
+  }
+}
+"""
+result = d.query(q)
+{str(r.p): r.p for r in result}
+```
 
 # Querying DBPedia
 

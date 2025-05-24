@@ -160,7 +160,7 @@ d = Dataset()
 - add a graph to the dataset.
 
 ```python
-simpsons = d.graph(identifier="urn:example:simpsons")
+simpsons = d.graph(identifier="_:simpsons")
 simpsons.parse("simpsons.ttl", format="turtle")
 
 ```
@@ -182,39 +182,6 @@ note that the default graph does not contain triples.
 print(
   {k.identifier.n3(): len(k) for k in d.graphs()}
 )
-```
-
-
-What happens if I query the dataset?
-
-```python
-q = """SELECT DISTINCT *
-WHERE {
-  [] a ?Class
-}
-LIMIT 10
-"""
-d.query(q).bindings
-```
-
-Now, try to query each graph
-
-```python
-for g in d.graphs():
-  print({g.identifier.n3(): g.query(q).bindings})
-```
-
-There's a Dataset flag that allows to query all the graphs in the dataset.
-
-```python
-# By default, sparql does not query all the graphs.
-assert d.default_union == False
-
-#  .. but you can change this behaviour...
-d.default_union = True
-
-# ... and now you can query all the graphs.
-d.query(q).bindings
 ```
 
 ----
@@ -246,7 +213,7 @@ sentences = """
 """
 
 # Create a new named graph in the dataset.
-g = d.graph(identifier="urn:my_dbpedia")
+g = d.graph(identifier="_:my_dbpedia")
 ...
 
 ```
