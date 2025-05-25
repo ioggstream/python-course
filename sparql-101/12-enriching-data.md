@@ -7,7 +7,16 @@
 
 ## Graphs vs Tables
 
-Storing data in tables requires to have a fixed schema.
+When we store data in tables,
+whe have a fixed schema.
+
+Constraints have advantages:
+
+- performance;
+- data integrity;
+- consistency.
+
+----
 
 Column meaning is defined outside the table, or
 where possible, in the table header.
@@ -18,9 +27,9 @@ usually indexed.
 
 | id | name  | surname | spouse         |
 |----|-------|---------|----------------|
-| 1  | Homer | Simpson ||
-| 2  | Marge | Simpson ||
-| 3  | Bart  | Simpson | ||
+| 1  | Homer | Simpson |  ... |
+| 2  | Marge | Simpson |  ... |
+| 3  | Bart  | Simpson |  ... |
 
 Another database related to the same entity
 may have a different schema.
