@@ -5,6 +5,8 @@
 
 <mailto:r@example.com> a foaf:Person ;
     foaf:name "Roberto" ;
+    foaf:age 40 ;
+    foaf:status "Coding"@en, "Programmando"@it ;
     foaf:mbox <mailto:r@example.com> ;
     foaf:knows <mailto:m@example.com>,
                <mailto:j@example.com>
@@ -12,18 +14,22 @@
 
 <mailto:j@example.com> a foaf:Person ;
     foaf:name "Jon" ;
+    foaf:age 20 ;
+    foaf:status "Lunch"@en, "A pranzo"@it ;
     foaf:mbox <mailto:j@example.com> ;
     foaf:knows <mailto:r@example.com>
 .
 
 <mailto:d@example.com> a foaf:Person ;
     foaf:name "Danilo" ;
+    foaf:age 35 ;
     foaf:mbox <mailto:d@example.com> ;
     foaf:knows <mailto:j@example.com>
 .
 
 <mailto:m@example.com> a foaf:Person ;
     foaf:name "Moin" ;
+    foaf:age 20 ;
     foaf:mbox <mailto:m@example.com> ;
     foaf:knows <mailto:d@example.com>
 .
@@ -31,5 +37,6 @@
 
 <mailto:h@example.com> a foaf:Person ;
     foaf:name "Hermit" ;
+    foaf:age 90 ;
     foaf:mbox <mailto:h@example.com>
 .
