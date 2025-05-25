@@ -1,24 +1,30 @@
 # The simpsons.
 
-@prefix : <https://www.simpsons.com#> .
-@prefix schema: <http://schema.org/> .
+# This is the URI for the first series of the Simpsons:
+#   See https://web.isan.org/public/it/isan/0000-0000-EBC9
+@prefix : <urn:isan:0000-0000-EBC9#> .
+@prefix schema: <https://schema.org/> .
 
+# schema.org/Person describes both
+#  real and fictional people.
 :Homer a schema:Person .
 :Homer schema:givenName "Homer" .
-:Homer schema:familyName "Simpsons" .
+:Homer schema:familyName "Simpson" .
 :Homer schema:spouse :Marge .
-:Homer schema:nationality [
-    a schema:Country ;
-    schema:name "United States of America"@en
-] .
+:Homer schema:nationality :USA .
 
+
+# I can use a compact syntax
+#  to define the same thing.
 :Marge a schema:Person ;
   schema:givenName "Marge" ;
-  schema:familyName "Simpsons" ;
+  schema:familyName "Simpson" ;
   schema:children :Bart, :Lisa ;
-  schema:nationality [
-    a schema:Country ;
-    schema:name "United States of America"@en
-]
+  schema:nationality :USA
+.
 
+# This is the fictional USA country
+#   in the Simpsons universe.
+:USA a schema:Country ;
+  schema:name "United States of America"@en
 .
