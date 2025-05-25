@@ -129,7 +129,7 @@ Annotate it with schema.org.
 
 ```python
 context = {
-    "sdo": "http://schema.org/",
+    "sdo": "https://schema.org/",
     "nome": "sdo:name",
     "nome_proprio": "sdo:givenName",
     "titolo": "sdo:jobTitle",

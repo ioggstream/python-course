@@ -3,6 +3,11 @@
 ## Agenda
 
 - Storing and retrieving triples
+- Using the `rdflib.Dataset` class
+- A dataset with multiple graphs
+- Querying graphs
+- Enriching graphs with UPDATE
+- Traversing graphs with SparQL (`*` and `/` modifiers)
 
 *Beware*: commands contain small typos. You must fix them to properly complete the course!
 
@@ -18,47 +23,92 @@ Prerequisites:
 
 ## Querying graphs with SparQL
 
-An RDF graph is an (unordered) set of triples.
+A triple consists of a $(subject, predicate, object)$.
 
-Each triple consists of a `subject`, `predicate`, `object`.
+An RDF graph is an (unordered) set of triples:
 
-SparQL is a query language for RDF graphs.
+$G = \{(s_1, p_1, o_1), (s_2, p_2, o_2), \ldots\}$.
+
+An RDF dataset is a collection of graphs, including a $default$ graph.
+
+$D = \{G_{default}, G_1, \ldots\}$.
+
+$ Resources < Triples < Graph < Dataset $
+
+SparQL is a query language for RDF datasets and graphs.
+
+This lesson provides a non-exhaustive introduction to SparQL.
+
+See: https://rdflib.readthedocs.io/en/stable/apidocs/rdflib.html#dataset
+
+```python
+from rdflib import Dataset
+d = Dataset()
+```
+
+Exercise: list the graphs in the dataset.
 
 ----
 
 A sparql query retrieves all entries
-matching one or more sentences
+matching one or more sentences.
 
-```raw
-SELECT *
+```python
+q = """SELECT *
 WHERE {
   ?subject ?predicate ?object .
   # ... more sentences ...
 }
+"""
+
+# The Dataset is still empty :)
+d.query(q).bindings
 ```
 
-This workshop provides a non-exhaustive introduction to SparQL.
+
 
 ----
+
+
+
+### Sparql: adding graphs: _:sample
 
 Open [sample.ttl](sample.ttl) in another tab
 and see its content.
 
+Now load into the dataset
+creating a new graph.
+
 ```python
-from rdflib import Graph
-g = Graph()
+# Create hte _:sample graph
+g = d.graph("_:sample")
+
+# Add triples from sample.ttl
 g.parse("sample.ttl", format="text/turtle")
 ```
 
 Use our utility function to print the graph.
 
 ```python
-from tools import plot_graph
-plot_graph(g, label_property=FOAF.name)
+from rdflib import FOAF
+import tools
+tools.plot_graph(g, label_property=FOAF.name)
 ```
 
+That's what we have
 
-List all entries
+```mermaid
+graph
+
+subgraph d["d"]
+  def_graph[("default graph")]
+  g_graph[("_:sample")]
+end
+
+g[[g variable]] -->|references| g_graph
+```
+
+List all entries from th `_:sample` graph.
 
 ```python
 q = """
@@ -76,6 +126,8 @@ Exercise:
 
 - Remove the `LIMIT` clause.
   How many triples are in the graph?
+- Replace the `*` with `?subject ?predicate ?object`.
+  What happens?
 
 ```python
 # Use this cell for the exercise.
@@ -89,17 +141,149 @@ for r in result:
 - Replace `?subject` with `?foo`:
   what happens?
 
+### Serializing datasets
+
+The [Trig](https://www.w3.org/TR/2013/REC-trig-20130321/) format
+extends Turtle to support multiple graphs.
+
+```python
+# Serialize the dataset in Trig format
+print(d.serialize(format="trig"))
+```
+
+
+
+### Sparql: querying graphs: _:simpsons
+
+Let's add another graph to the dataset.
+
+```python
+simpsons = d.graph("_:simpsons")
+simpsons.parse("simpsons.ttl", format="text/turtle")
+```
+
+That's what we have
+
+```mermaid
+graph
+
+subgraph d["d"]
+  def_graph[("default graph")]
+  g_graph[("_:sample")]
+  simpsons_graph[("_:simpsons")]
+end
+
+g[[g variable]] -->|references| g_graph
+simpsons[[simpsons variable]] -->|references| simpsons_graph
+```
+
+Now use the extended syntax with the `GRAPH` keyword.
+
+```python
+q = """
+SELECT *
+WHERE {
+  GRAPH ?g {}
+}
+"""
+result = d.query(q)
+{str(r.g): len(r) for r in result}
+```
+
+Query the classes used in the dataset.
+
+```python
+q = """
+SELECT DISTINCT
+  ?g ?Class
+WHERE {
+  GRAPH ?g {
+    [] a ?Class .
+  }
+}
+"""
+result = d.query(q)
+list(result)
+```
+
+Exercise:
+
+- replace `?g` with `_:sample`:
+  what happens?
+
+
 ----
 
+### Enriching graphs: UPDATE
+
+The SparQL `UPDATE` command allows to modify a graph.
+See https://www.w3.org/TR/sparql11-update/
+
+
+```python
+q = """
+PREFIX schema: <https://schema.org/>
+
+INSERT {
+  # Insert a new triple
+  ?s schema:name ?name .
+}
+WHERE {
+  # Match existing triples
+  ?s a schema:Person ;
+    schema:givenName ?givenName ;
+    schema:familyName ?familyName .
+
+  # Create a new variable
+  # that concatenates the givenName and familyName
+  # into a single name.
+  BIND(CONCAT(?givenName, " ",  ?familyName) AS ?name)
+}
+"""
+
+result = simpsons.update(q)
+```
+
+💪: check the graph
+
+```python
+assert "Homer Simpson" in simpsons.serialize(format="turtle")
+```
+
+Update the <_:sample> graph
+with the following sentence.
+
+> <mailto:r@example.com> foaf:topic_interest <urn:isan:0000-0000-EBC9#Homer>
+
+
+Use `INSERT DATA` to add a new triple,
+and read the rdflib documentation https://rdflib.readthedocs.io/en/7.1.1/intro_to_sparql.html
+
+````python
+q = """
+INSERT DATA {
+  GRAPH <_:sample> {
+    <mailto:r@example.com> foaf:topic_interest <urn:isan:0000-0000-EBC9#Homer> .
+    }
+}
+"""
+
+result = d.update(q)
+assert "Homer" in g.serialize(format="turtle")
+
+```
+
+
+### The `/` and the `*` predicate modifiers
 
 SparQL can correlate
 entries using semantically defined
-vocabularies such as FOAF.
+vocabularies such as [FOAF](http://xmlns.com/foaf/0.1/).
 
 :warning: The `PREFIX` statement in a sparql query
 must not have a trailing dot, because it is not a sentence.
 This is different from the `@prefix` statement
-in turtle.
+in Turtle.
 
 ```python
 q = """
@@ -229,7 +413,77 @@ ignoring the way data is stored.
 
 ---
 
+### Querying the whole dataset
+
+
+What happens if I query the whole dataset?
+
+```python
+q = """SELECT DISTINCT *
+WHERE {
+  [] a ?Class
+}
+LIMIT 10
+"""
+d.query(q).bindings
+```
+
+Now, try to query each graph
+
+```python
+for g in d.graphs():
+  print({g.identifier.n3(): g.query(q).bindings})
+```
+
+There's a `Dataset` attribute that allows to query all the graphs in the dataset.
+
+```python
+# By default, sparql does not query all the graphs.
+assert d.default_union == False
+
+#  .. but you can change this behaviour...
+d.default_union = True
+
+# ... and now you can query all the graphs.
+d.query(q).bindings
+```
+
+I can also query all the graphs in the dataset
+
+```python
+q = """SELECT DISTINCT *
+WHERE {
+  GRAPH ?g {}
+}
+"""
+result = d.query(q)
+{str(r.g): len(r) for r in result}
+```
+
+Or querying triples in a specific graph:
+
+```python
+q = """SELECT DISTINCT *
+WHERE {
+  GRAPH <_:simpsons> {
+    ?p a foaf:Person .
+  }
+}
+"""
+result = d.query(q)
+{str(r.p): r.p for r in result}
+```
+
+💪 Exercise: querying the dataset
+
+- Query the `_:sample` graph
+  to list all the `foaf:Person`s in it.
+
+
+
 # Querying DBPedia
+
+:warning: DBPedia may rate limit your queries.
 
 [DBPedia](https://dbpedia.org/sparql) is a graph database with a lot of data inside.
 

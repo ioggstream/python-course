@@ -113,7 +113,7 @@ Customer:
   properties:
     "@context":
       const:
-        "@vocab": "http://schema.org"
+        "@vocab": "https://schema.org"
         pet: null
     email: {type: string}
     pet: {type: string}

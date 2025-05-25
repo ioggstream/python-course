@@ -112,7 +112,7 @@ monty_python -->|is a| comedy_group[comedy group]
 There are various encyclopedias on the web,
 such as Wikipedia and dbpedia.
 
-##### Exercise: web encyclopedias
+💪 Exercise: web encyclopedias
 
 1. open the "Python" page on dbpedia:
 
@@ -202,7 +202,9 @@ But it is also the basis of the Web itself
 Encyclopedia voices on Wikipedia and dbpedia are expressed in
 [Resource Description Framework (RDF)](https://www.w3.org/TR/rdf11-primer/).
 
-It is a W3C formal language to represent knowledge in a machine-readable format
+It is a W3C formal language to
+represent knowledge on the web
+in a machine-readable format
 using triples subject-predicate-object.
 
 RDF has different serialization formats,
@@ -211,11 +213,9 @@ such as [Turtle](https://www.w3.org/TR/turtle/),
 and [XML](https://www.w3.org/TR/rdf-syntax-grammar/).
 
 We'll use the Turtle format in this course,
-where a sentence is expressed as a
+where a sentence is expressed as a tripe:
 
-```raw
-subject predicate object .
-```
+`subject predicate object .`
 
 :exclamation: note the dot at the end of the sentence :exclamation:
 
@@ -223,16 +223,74 @@ subject predicate object .
 
 ## RDF: Machine Readable Knowledge
 
-Subjects and predicates are uniquely identified by [URIs](https://www.w3.org/TR/rdf11-concepts/#section-uris).
+RDF uses [URIs](https://www.w3.org/TR/rdf11-concepts/#section-uris)
+to disambiguate the meaning of terms and provide semantics.
+
+Every term is identified by an absolute URI enclosed by `<>`.
+
+The prefix identifies the source of the term definition
+(that we'll call **vocabulary**),
+and the suffix identifies the term.
+
+```python
+from rdflib import URIRef
+dog_uri = URIRef("https://dbpedia.org/data/Dog")
+print(dog_uri.n3())
+```
+
+RDF is based on:
+
+- **elements** (IRIs, blank nodes and literals);
+- **triples** (subject-predicate-object);
+- **graphs** (sets of triples).
+- **vocabularies** (graphs containing terms and their definitions).
+
+### Elements
+
+Subjects and predicates are uniquely identified by URIs.
 
 Objects can be either URIs or literals (strings, numbers, dates, etc.).
 
-URIs provide a definition context for subjects and predicates,
-and allow to disambiguate their meaning depending on the
-definition provided by a given vocabulary.
+```python
+from rdflib import URIRef, Literal, BNode
 
-Every term is identified by an absolute URI
-enclosed by `<>`.
+iri = URIRef("mailto:mr@test")
+predicate_iri = URIRef("https://schema.org/name")
+blank_node = BNode("anon")
+literal = Literal("Mario Rossi")
+
+# Serialize in the N3 format
+# (Notation 3 is a compact, human-readable format for RDF)
+print(iri.n3(),  blank_node.n3(), literal.n3(), sep="\n")
+```
+
+#### Exercise: RDF elements
+
+In the cell below, create a literal with the following values
+and look at its [Notation 3 (N3)](https://www.w3.org/TeamSubmission/n3/) serialization.
+
+- `42` (integer), `42.0` (float), `"42"` (string);
+- `datetime.now()` (date);
+
+```python
+from datetime import datetime
+...
+for value in (42, 42.0, "42", datetime.now()):
+    literal = Literal(value)
+    print(literal.n3())
+```
+
+### Triples
+
+A triple represents a statement about a resource;
+remember: the second element is the predicate!
+
+```python
+triple = (iri, predicate_iri, literal)
+print(triple)
+```
+
+Another triple serialized in the N3 format:
 
 ```python
 sentences = """
@@ -240,18 +298,46 @@ sentences = """
 """
 ```
 
-----
+The `a` keyword is a shorthand for the `rdf:type` predicate,
+which is used to indicate the type of a resource.
 
-Let's parse our first RDF sentence using the [rdflib](https://rdflib.readthedocs.io/en/stable/) library.
+The following statements are equivalent:
+
+```python
+# Serialized on multiple lines...
+same_sentences = """
+<https://dbpedia.org/data/Tortellini>
+  <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>
+  <https://dbpedia.org/ontology/Food>
+.
+"""
+```
+
+### Graphs
+
+A graph is a set of triples.
 
 ```python
 from rdflib import Graph
+g = Graph()
+g.add(triple)
+print(g.serialize(format="turtle"))
+```
 
+----
+
+```python
+# Create a new graph and parse the above sentences.
 g = Graph()
 g.parse(data=sentences, format="turtle")
 
 print(*g, sep="\n")
 ```
+
+💪 Exercise: parse sentences
+
+Parse the `same_sentences` variable
+and check the content of the graph.
 
 ----
 
@@ -262,13 +348,13 @@ json_text = g.serialize(format="application/ld+json")
 print(json_text)
 ```
 
-##### Exercise: take 2 minutes to map the JSON-LD format to the Turtle format.
+💪 Exercise: take 2 minutes to map the JSON-LD format to the Turtle format.
 
 We'll see JSON-LD in detail later.
 
 ---
 
-## RDF: Namespaces and cURIe
+## Graphs: Namespaces and cURIe
 
 RDF use namespace prefixes to shorten URIs
 (the [cURIe](https://www.w3.org/TR/curie/) syntax).
@@ -434,8 +520,8 @@ print(_type)
 ```
 
 ```python
-from tools import plot_graph
-plot_graph(g, limit=30)
+import tools
+tools.plot_graph(g, limit=30)
 ```
 
 #### Exercise: extending graphs
@@ -451,7 +537,7 @@ tortellini_n3 = Path("Tortellini.n3")
 
 g = Graph()
 g.parse(tortellini_n3, format="n3")
-plot_graph(g, limit=30, pattern=".*/dbpedia.org")
+tools.plot_graph(g, limit=30, pattern=".*/dbpedia.org")
 ```
 
 And we can connect them together
@@ -473,5 +559,6 @@ Plot the graph again to see the new nodes and
 their relations.
 
 ```python
-plot_graph(g, label_property=RDFS.label, limit=50, pattern=".*/dbpedia.org")
+import tools
+tools.plot_graph(g, label_property=RDFS.label, limit=50, pattern=".*/dbpedia.org")
 ```
