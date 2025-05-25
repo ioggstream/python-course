@@ -112,7 +112,7 @@ monty_python -->|is a| comedy_group[comedy group]
 There are various encyclopedias on the web,
 such as Wikipedia and dbpedia.
 
-##### Exercise: web encyclopedias
+💪 Exercise: web encyclopedias
 
 1. open the "Python" page on dbpedia:
 
@@ -334,7 +334,7 @@ g.parse(data=sentences, format="turtle")
 print(*g, sep="\n")
 ```
 
-##### Exercise: parse sentences
+💪 Exercise: parse sentences
 
 Parse the `same_sentences` variable
 and check the content of the graph.
@@ -348,7 +348,7 @@ json_text = g.serialize(format="application/ld+json")
 print(json_text)
 ```
 
-##### Exercise: take 2 minutes to map the JSON-LD format to the Turtle format.
+💪 Exercise: take 2 minutes to map the JSON-LD format to the Turtle format.
 
 We'll see JSON-LD in detail later.
 

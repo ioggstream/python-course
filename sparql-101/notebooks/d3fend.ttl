@@ -35822,7 +35822,7 @@ On Linux, the process is sent a signal on the occurrence of various events: when
 
 Therefore, sending a signal to the process to ask it to terminate may not always work.
 
-##### Avoiding Signal Traps
+💪 Avoiding Signal Traps
 
 On Unix-like systems, sending the `SIGKILL` signal for a process does not send a message to the process or invoke an implementation-defined handler; instead, it immediately does not allow the process to execute any further processor instructions.   On Windows `TerminateProcess()` instead of `ExitProcess()` performs the equivalent.
 
@@ -35851,10 +35851,10 @@ On Windows, a DLL is unloaded when the reference count of the library reaches 0.
 
 After a process has been terminated, it may still take up an entry in the operating system process table until another event occurs.
 
-##### Windows
+💪 Windows
 In Windows, a process object is deleted when the last handle to the process is closed.
 
-##### Linux
+💪 Linux
 In Linux, a process is removed from the process table when it is reaped by its parent process.  If the parent terminates, historically the parent has been changed to pid 1; however, in the Linux kernel 3.4 and above, processes can set a different process as the subreaper using the `prctl()` system call.
 
 Zombie processes and hung processes could be resolved with a restart of the system.

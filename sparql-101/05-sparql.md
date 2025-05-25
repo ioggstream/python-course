@@ -106,12 +106,12 @@ for r in result:
 
 SparQL can correlate
 entries using semantically defined
-vocabularies such as FOAF.
+vocabularies such as [FOAF](http://xmlns.com/foaf/0.1/).
 
 :warning: The `PREFIX` statement in a sparql query
 must not have a trailing dot, because it is not a sentence.
 This is different from the `@prefix` statement
-in turtle.
+in Turtle.
 
 ```python
 q = """
@@ -269,7 +269,7 @@ for g in d.graphs():
   print({g.identifier.n3(): g.query(q).bindings})
 ```
 
-There's a Dataset flag that allows to query all the graphs in the dataset.
+There's a `Dataset` attribute that allows to query all the graphs in the dataset.
 
 ```python
 # By default, sparql does not query all the graphs.
@@ -307,6 +307,13 @@ WHERE {
 result = d.query(q)
 {str(r.p): r.p for r in result}
 ```
+
+💪 Exercise: querying the dataset
+
+- Query the `_:sample` graph
+  to list all the `foaf:Person`s in it.
+
+
 
 # Querying DBPedia
 
