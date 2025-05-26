@@ -16,7 +16,7 @@ This is a fast-track course for high school students with math knowledge.
 
 Students are expected to type and execute cells, and share their results.
 
-You can open this notebook [on jupyter lite](https://jupyter.org/try-jupyter/lab/?fromURL=https://raw.githubusercontent.com/ioggstream/python-course/ioggstream-86/sparql-101/notebooks/00-teaser.ipynb).
+You can open this notebook [on jupyter lite](https://jupyter.org/try-jupyter/lab/?fromURL=https://raw.githubusercontent.com/ioggstream/python-course/main/sparql-101/notebooks/00-teaser.ipynb).
 
 ---
 
