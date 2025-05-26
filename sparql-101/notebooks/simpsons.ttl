@@ -23,8 +23,12 @@
   schema:nationality :USA
 .
 
+:Bart a schema:Person .
+:Lisa a schema:Person .
+
 # This is the fictional USA country
 #   in the Simpsons universe.
 :USA a schema:Country ;
-  schema:name "United States of America"@en
+  schema:name "United States of America"@en,
+  "Stati Uniti d'America"@it ;
 .

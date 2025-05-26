@@ -39,7 +39,7 @@ Graph databases such as:
 
 store triples into graphs.
 
-They can be queried using the [SparQL]() language.
+They can be queried via [SparQL]().
 
 
 ----
@@ -60,8 +60,7 @@ Neo4j supports RDF datasets via the Neosemantics plugin.
 ## rdflib backends
 
 We will simulate a graph database using
-[rdflib](https://rdflib.readthedocs.io/en/stable/index.html),
-that supports SparQL queries.
+[rdflib](https://rdflib.readthedocs.io/en/stable/index.html).
 
 rdflib supports multiple backends to parse and store triples.
 
