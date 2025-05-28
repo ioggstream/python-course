@@ -79,7 +79,7 @@ context = {
 
 ```python
 homer_ld_json = json.dumps({
-  "@context": context
+  "@context": context,
   **homer
 })
 ```

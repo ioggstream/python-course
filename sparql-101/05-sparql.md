@@ -18,6 +18,7 @@ Prerequisites:
 - json, yaml, xmlschema
 - HTTP, OpenAPI 3
 - SQL and database hints
+- basics of RDF and Turtle
 
 ---
 
@@ -81,10 +82,10 @@ creating a new graph.
 
 ```python
 # Create hte _:sample graph
-g = d.graph("_:sample")
+sample = d.graph("_:sample")
 
 # Add triples from sample.ttl
-g.parse("sample.ttl", format="text/turtle")
+sample.parse("sample.ttl", format="text/turtle")
 ```
 
 Use our utility function to print the graph.
@@ -92,7 +93,7 @@ Use our utility function to print the graph.
 ```python
 from rdflib import FOAF
 import tools
-tools.plot_graph(g, label_property=FOAF.name)
+tools.plot_graph(sample, label_property=FOAF.name)
 ```
 
 That's what we have
@@ -118,7 +119,7 @@ WHERE {
 }
 LIMIT 2
 """
-result : Result = g.query(q)
+result : Result = sample.query(q)
 [r.asdict() for r in result]
 ```
 
@@ -160,7 +161,7 @@ WHERE {
   ?subject foaf:status ?status .
 }
 """
-result = g.query(q)
+result = sample.query(q)
 list(result)
 ```
 
@@ -178,7 +179,7 @@ WHERE {
   ?subject foaf:status ?status .
 }
 """
-result = g.query(q)
+result = sample.query(q)
 list(result)
 ```
 
@@ -198,7 +199,7 @@ WHERE {
 }
 
 """
-result = g.query(q)
+result = sample.query(q)
 list(result)
 ```
 
@@ -218,11 +219,9 @@ WHERE {
 GROUP BY ?subject
 ORDER BY DESC(?count)
 """
-result = g.query(q)
+result = sample.query(q)
 {str(r.subject): r.count for r in result}
 ```
-
-
 
 ### Serializing datasets in Trig format
 
@@ -471,7 +470,7 @@ SELECT * WHERE {
 }
 """
 
-result = g.query(q)
+result = sample.query(q)
 [r.asdict() for r in result]
 ```
 
@@ -500,7 +499,7 @@ WHERE {
 }
 """
 
-result = g.query(q)
+result = sample.query(q)
 [r.asdict() for r in result]
 ```
 
@@ -531,8 +530,24 @@ WHERE {
 }
 GROUP BY ?s
 """
-result = g.query(q)
+result = sample.query(q)
 {str(r.s): {"network": str(r.friends) } for r in result}
+```
+
+```mermaid
+graph LR
+
+r((r)) & j((j))
+d((d)) & m((m))
+h((h)) & k((k))
+q((q)) & a((a))
+
+r <-->|knows| j & d
+j <-->|knows| m & k
+d <-->|knows| k
+d <-->|knows| q
+m <-->|knows| k
+q <-->|knows| a
 ```
 
 ----
@@ -557,7 +572,7 @@ WHERE {
 }
 """
 
-result = g.query(q)
+result = sample.query(q)
 [r.asdict() for r in result]
 ```
 
@@ -579,7 +594,7 @@ WHERE {
   ?user3 foaf:mbox ?mail3
 }
 """
-result = g.query(q)
+result = sample.query(q)
 {str(r.mail1): str(r.mail3) for r in result}
 ```
 
@@ -613,7 +628,6 @@ Exercise:
 
 - remove the GRAPH information from the query
   and see what happens.
-
 
 ---
 
@@ -783,3 +797,8 @@ SELECT DISTINCT * WHERE {
 }
 LIMIT 50
 ```
+
+## Closing question
+
+If you ask, should I rewrite all my data in RDF?
+NO :) Let's see how JSON-LD can help us.
