@@ -330,7 +330,7 @@ are:
 
 Here are some example IRIs described using RDFS:
 
-```raw
+```turtle
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix ex:  <http://example.org/> .
 

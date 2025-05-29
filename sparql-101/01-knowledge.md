@@ -8,6 +8,8 @@
 
 *Beware*: commands may contain small typos. You have to fix them to properly complete the course!
 
+TODO: add from pathlib import Path
+consider extending n. nodes limit in plot
 ----
 
 Prerequisites:
