@@ -339,7 +339,8 @@ result = country.query(q)
 ]
 ```
 
-In RDF, you don't have hierarchies!
+In RDF, you don't have hierarchies,
+just triples.
 
 ```mermaid
 graph

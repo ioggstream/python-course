@@ -331,7 +331,12 @@ are:
 Here are some example IRIs described using RDFS:
 
 ```turtle
+# Standard vocabularies.
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# Custom vocabulary.
 @prefix ex:  <http://example.org/> .
 
 # The ex:Person Resource classifies a group of Resources.
@@ -339,12 +344,51 @@ ex:Person rdf:type rdfs:Class .
 
 # ex:Alive classifies a group of ex:Person
 ex:Alive rdf:type rdfs:Class ;
-  rdfs:subClassOf ex:Person ;
+  rdfs:subClassOf ex:Person
   .
 
-ex:givenName rdf:type rdf:Property ;
+ex:name rdf:type rdfs:Property ;
+  rdfs:domain ex:Entity ;
+  rdfs:range xsd:string
+  .
+
+ex:givenName rdfs:subPropertyOf ex:name ;
   rdfs:domain ex:Person ;
-  rdfs:range xsd:string ;
+  rdfs:range xsd:string
+  .
+```
+
+```python
+from rdflib import Graph
+import tools
+
+sentences = """
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex:  <http://example.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+# The ex:Person Resource classifies a group of Resources.
+ex:Person rdf:type rdfs:Class .
+
+# ex:Alive classifies a group of ex:Person
+ex:Alive rdf:type rdfs:Class ;
+  rdfs:subClassOf ex:Person
+  .
+
+ex:name rdf:type rdfs:Property ;
+  rdfs:domain ex:Entity ;
+  rdfs:range xsd:string
+  .
+
+ex:givenName rdfs:subPropertyOf ex:name ;
+  rdfs:domain ex:Person ;
+  rdfs:range xsd:string
+  .
+"""
+g = Graph()
+g.parse(data=sentences, format="turtle")
+tools.plot_graph(g)
 
 ```
 
