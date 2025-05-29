@@ -8,6 +8,8 @@
 
 *Beware*: commands may contain small typos. You have to fix them to properly complete the course!
 
+TODO: add from pathlib import Path
+consider extending n. nodes limit in plot
 ----
 
 Prerequisites:
@@ -22,8 +24,6 @@ Prerequisites:
 ```
 
 ---
-
-
 
 ## What is knowledge?
 
@@ -221,6 +221,20 @@ where a sentence is expressed as a tripe:
 
 ----
 
+If you are familiar with SQL,
+you can see a graph as a table,
+where each row is a sentence.
+
+| Subject | Predicate | Object |
+|---------|-----------|--------|
+| dbr:Python | rdf:type | dbo:ProgrammingLanguage |
+| dbr:Python | dbo:designer | dbr:gvr |
+| dbr:Python | dbo:runsOn | dbr:win |
+| dbr:Python | dbo:runsOn | dbr:linux |
+
+
+----
+
 ## RDF: Machine Readable Knowledge
 
 RDF uses [URIs](https://www.w3.org/TR/rdf11-concepts/#section-uris)
@@ -264,7 +278,7 @@ literal = Literal("Mario Rossi")
 print(iri.n3(),  blank_node.n3(), literal.n3(), sep="\n")
 ```
 
-#### Exercise: RDF elements
+💪: RDF elements
 
 In the cell below, create a literal with the following values
 and look at its [Notation 3 (N3)](https://www.w3.org/TeamSubmission/n3/) serialization.
@@ -421,7 +435,7 @@ sentences = """
 """
 ```
 
-#### Exercise: parse the sentences using rdflib and answer the following questions
+💪: parse the sentences using rdflib and answer the following questions
 
 - how many sentences are there?
 - how many subjects are there?
@@ -435,7 +449,7 @@ tortellini = Graph()
 # Use this cell for the exercise
 ```
 
-#### Exercise: use `Graph.namespaces` to get the namespaces added by the sentences above
+💪: use `Graph.namespaces` to get the namespaces added by the sentences above
 
 ```python
 from rdflib import Graph
@@ -445,14 +459,14 @@ default_ns = set(Graph().namespaces())
 # Use this cell for the exercise
 ```
 
-#### Exercise: serialize the above graph in JSON-LD format
+💪: serialize the above graph in JSON-LD format
 
 ```python
 # Use this cell for the exercise
 tortellini_jsonld = ...
 ```
 
-#### Exercise: Load the JSON-LD object in a variable
+💪: Load the JSON-LD object in a variable
 
 - What's the type and len of the serialized object?
 - What's in the first element of the serialized object?
@@ -464,7 +478,7 @@ import json
 ...
 ```
 
-#### Exercise: Get a voice from dbpedia
+💪: Get a voice from dbpedia
 
 Now, let's get the actual voice from dbpedia.
 
@@ -500,7 +514,7 @@ excerpt = sentences[0:15]
 print(*[str(s) for s in excerpt], sep="\n")
 ```
 
-#### Exercise: counting sentences
+💪: counting sentences
 
 - how many sentences are there?
 - how many elements does each sentence have?
@@ -524,7 +538,7 @@ import tools
 tools.plot_graph(g, limit=30)
 ```
 
-#### Exercise: extending graphs
+💪: extending graphs
 
 There's plenty of knowledge in the web!
 

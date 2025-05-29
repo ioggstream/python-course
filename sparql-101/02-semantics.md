@@ -36,8 +36,8 @@ Integrating data from different sources is difficult because of the lack of sema
 
 ```mermaid
 graph LR
-Am>"{name: FABIANO Romildo\nincome: 4_000_000}"]
-Cm>"{givenName: FABIANO\nfamilyName: Romildo\ntax: 12_000EUR}"]
+Am>"{name: FABIANO Romildo<br/>income: 4_000_000}"]
+Cm>"{givenName: FABIANO<br/>familyName: Romildo<br/>tax: 12_000EUR}"]
 B((Data sink))
 
 A((Data source 1)) ---Am --> B
@@ -51,8 +51,8 @@ and even registry data are not always interoperable.
 
 ```mermaid
 graph LR
-Am>"{givenName: Angela\nfamilyName: Merkel\ndate_of_birth: 1954-07-17}"]
-Cm>"{givenName: Angela\nfamilyName: Kasner\ndate_of_birth: 1954-07-17}"]
+Am>"{givenName: Angela<br/>familyName: Merkel<br/>date_of_birth: 1954-07-17}"]
+Cm>"{givenName: Angela<br/>familyName: Kasner<br/>date_of_birth: 1954-07-17}"]
 B((Data sink))
 
 A((Data source 1)) ---Am --> B
@@ -146,6 +146,38 @@ end
 
 class p1,p2,p3 pad;
 ```
+----
+
+### Graphs and RDBMS
+
+From a relationa perspective,
+you can see a dataset as a set of different tables
+
+<_:Person>
+
+|subject|predicate|object|
+|---|---|---|
+|:Mario| a | :Person|
+|:Mario| givenName | "Mario"|
+
+<_:Country>
+
+|subject|predicate|object|
+|---|---|---|
+|:ITA| a | :Country|
+|:ITA| name | "Italy"@en|
+|:ITA| name | "Italia"@it|
+
+Or as a single 4-ple table:
+
+|graph|subject|predicate|object|
+|---|---|---|---|
+| <_:Person>|:Mario| a | :Person|
+| <_:Person>|:Mario| givenName | "Mario"|
+| <_:Country>|:ITA| a | :Country|
+| <_:Country>|:ITA| name | "Italy"@en|
+| <_:Country>|:ITA| name | "Italia"@it|
+
 
 ```python
 from rdflib import Dataset
@@ -153,7 +185,7 @@ from rdflib import Dataset
 d = Dataset()
 ```
 
-#### Exercise: dataset
+💪: dataset
 
 - use the `Dataset.graphs` method to list the graphs in the dataset;
 
@@ -191,7 +223,7 @@ conceptual tools such as ontologies
 and controlled vocabularies (codelist, taxonomies, ..)
 are used.
 
-#### Exercise: the DBpedia ontology and dataset
+💪: the DBpedia ontology and dataset
 
 Parse the following RDF sentences in a dataset.
 
@@ -270,10 +302,8 @@ subgraph xsd[XMLSchema]
   xsd:string
 end
 
-givenName_description -.-|description| givenName
-isParentOf_description
--.-|description|
-isParentOf
+givenName_description  -.-|description| givenName
+isParentOf_description -.-|description| isParentOf
 givenName & familyName & isParentOf -.-o|domain| Person
 
 familyName & givenName ---->|range| xsd:string
@@ -292,13 +322,15 @@ Examples of European controlled vocabularies are here <https://op.europa.eu/en/w
 ## Standard vocabularies
 
 Standard vocabularies that are used to semantically describe data
-are the RDF Schema (RDFS) vocabulary,
-the Web Ontology Language (OWL) vocabulary,
-and the Simple Knowledge Organization System (SKOS) vocabulary.
+are:
+
+- the RDF Schema (RDFS) vocabulary,
+- the Web Ontology Language (OWL) vocabulary,
+- and the Simple Knowledge Organization System (SKOS) vocabulary.
 
 Here are some example IRIs described using RDFS:
 
-```raw
+```turtle
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix ex:  <http://example.org/> .
 

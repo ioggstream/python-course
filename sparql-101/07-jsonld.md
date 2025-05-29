@@ -1,7 +1,11 @@
 # Agenda
 
+In this lesson we will answer the following question:
+should I rewrite all my data in RDF? NO :)
+
+
 - Storing data vs Describing Knowledge
-- JSON-LD
+- Adding metadata to existing data with JSON-LD
 
 ## Storing data
 
@@ -49,6 +53,8 @@ JSON-LD is a JSON serialization for information described using the
 
 A JSON-LD document is both an RDF and a JSON document.
 
+:warning: Its media-type is `application/ld+json`.
+
 ----
 
 ```python
@@ -79,7 +85,7 @@ context = {
 
 ```python
 homer_ld_json = json.dumps({
-  "@context": context
+  "@context": context,
   **homer
 })
 ```
@@ -90,14 +96,12 @@ Exercise:
 - print the serialization of the graph in `text/turtle` format
 
 
-```python
+```solution
 from rdflib import Graph
-
+g = Graph()
+g.parse(data=homer_ld_json, format="application/ld+json")
+print(g.serialize(format="text/turtle"))
 ```
-
-<!-- g=Graph()-->
-<!-- g.parse(data=homer_ld_json, format="application/ld+json")-->
-<!-- print(g.serialize(format="text/turtle"))-->
 
 ---
 
@@ -114,7 +118,6 @@ Its terms are availabe here <https://schema.org/docs/jsonldcontext.jsonld>
 ---
 
 Start with an object with fields in Italian:
-
 
 ```python
 jane = {
@@ -144,17 +147,32 @@ jane_ld = {
   "@type": "sdo:Person",
   **jane
   }
-print(json.dumps(jane_ld))
+print(json.dumps(jane_ld, indent=2))
 ```
 
 Exercise:
 
 - load `jane_ld` in a Graph()
 - what's the subject of the sentences?
+- Does the subject have an URI?
 
 ```python
-jane_ld_json = ...
+from rdflib import Graph
+
+# Serialize the JSON-LD document
+jane_ld_json = json.dumps(jane_ld)
+
+# Load the JSON-LD document into a Graph
+g = Graph()
+g.parse(data=jane_ld_json, format="application/ld+json")
+
+# Print the serialization of the graph in text/turtle format
+print(g.serialize(format="text/turtle"))
+
+# Print the subjects of the graph
+subjects = set(g.subjects())
 ```
+
 
 
 ---
@@ -211,7 +229,9 @@ jane_ld["@context"].update({
 
 ---
 
-#### Context mangling
+#### :warning: Context mangling
+
+Pay attention!
 
 Modifying a JSON-LD context,
 alters the
@@ -233,7 +253,7 @@ could reverse the payment flow.
 
 ```yaml
 # Original context
-@context:
+"@context":
   payment_from: http://banking#debtor
   payment_to: http://banking#creditor
 ```
@@ -242,7 +262,7 @@ could reverse the payment flow.
 
 ```yaml
 # Altered context
-@context:
+"@context":
   payment_to: http://banking#debtor
   payment_from: http://banking#creditor
 ```

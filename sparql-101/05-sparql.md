@@ -18,6 +18,7 @@ Prerequisites:
 - json, yaml, xmlschema
 - HTTP, OpenAPI 3
 - SQL and database hints
+- basics of RDF and Turtle
 
 ---
 
@@ -47,6 +48,10 @@ d = Dataset()
 ```
 
 Exercise: list the graphs in the dataset.
+
+```solution
+list(d.graphs())
+```
 
 ----
 
@@ -81,10 +86,10 @@ creating a new graph.
 
 ```python
 # Create hte _:sample graph
-g = d.graph("_:sample")
+sample = d.graph("_:sample")
 
 # Add triples from sample.ttl
-g.parse("sample.ttl", format="text/turtle")
+sample.parse("sample.ttl", format="text/turtle")
 ```
 
 Use our utility function to print the graph.
@@ -92,7 +97,7 @@ Use our utility function to print the graph.
 ```python
 from rdflib import FOAF
 import tools
-tools.plot_graph(g, label_property=FOAF.name)
+tools.plot_graph(sample, label_property=FOAF.name)
 ```
 
 That's what we have
@@ -105,7 +110,7 @@ subgraph d["d"]
   g_graph[("_:sample")]
 end
 
-g[[g variable]] -->|references| g_graph
+g[[sample variable]] -->|references| g_graph
 ```
 
 List all entries from th `_:sample` graph.
@@ -118,7 +123,7 @@ WHERE {
 }
 LIMIT 2
 """
-result : Result = g.query(q)
+result : Result = sample.query(q)
 [r.asdict() for r in result]
 ```
 
@@ -160,7 +165,7 @@ WHERE {
   ?subject foaf:status ?status .
 }
 """
-result = g.query(q)
+result = sample.query(q)
 list(result)
 ```
 
@@ -178,7 +183,7 @@ WHERE {
   ?subject foaf:status ?status .
 }
 """
-result = g.query(q)
+result = sample.query(q)
 list(result)
 ```
 
@@ -198,7 +203,7 @@ WHERE {
 }
 
 """
-result = g.query(q)
+result = sample.query(q)
 list(result)
 ```
 
@@ -211,18 +216,19 @@ and aggregate functions like `COUNT`, `SUM`, `AVG`, `GROUP_CONCAT`, etc.
 q = """
 SELECT
   ?subject
-  (COUNT(?object) AS ?count)
+  (COUNT(?object) AS ?count_)
 WHERE {
   ?subject foaf:knows ?object .
 }
 GROUP BY ?subject
 ORDER BY DESC(?count)
 """
-result = g.query(q)
-{str(r.subject): r.count for r in result}
+result = sample.query(q)
+{str(r.subject): r.count_ for r in result}
 ```
 
-
+Note that the count_ value references
+the datatype of the variable.
 
 ### Serializing datasets in Trig format
 
@@ -297,7 +303,8 @@ d.query(q).bindings
 Now I can query all the graphs in the dataset
 
 ```python
-q = """SELECT DISTINCT *
+q = """
+SELECT DISTINCT *
 WHERE {
   GRAPH ?g {}
 }
@@ -324,8 +331,23 @@ list(result)
 
 Exercise:
 
-- replace `?g` with `_:sample`:
+- replace `?g` with the graph URI `<_:sample>`:
   what happens?
+
+
+```solution
+q = """
+SELECT DISTINCT
+  ?Class
+WHERE {
+  GRAPH <_:sample> {
+    [] a ?Class .
+  }
+}
+"""
+result = d.query(q)
+list(result)
+```
 
 Querying triples in a specific graph:
 
@@ -355,6 +377,12 @@ Exercise:
   having a `schema:nationality` property.
 
 ```python
+# Use this cell for the exercise.
+q = ...
+
+```
+
+```solution
 q = """
 SELECT DISTINCT
   ?s
@@ -376,7 +404,7 @@ result = d.query(q)
   - ?country has a schema:name ?country_name
   - ?country_name is in Italian
 
-```python
+```solution
 q = """
 SELECT DISTINCT
   ?subject ?country_name
@@ -447,7 +475,7 @@ result = simpsons.update(q)
 
 💪: check the graph
 
-```python
+```solution
 assert "Homer Simpson" in simpsons.serialize(format="turtle")
 ```
 
@@ -471,7 +499,7 @@ SELECT * WHERE {
 }
 """
 
-result = g.query(q)
+result = sample.query(q)
 [r.asdict() for r in result]
 ```
 
@@ -486,8 +514,26 @@ Exercise:
 
 ----
 
-Graph databases have an inference engine that can be used
-to process complex queries.
+Graph databases can find triples
+matching different sentences...
+
+... and even traverse paths.
+
+```mermaid
+graph LR
+
+r((r)) & j((j))
+d((d)) & m((m))
+h((h)) & k((k))
+q((q)) & a((a))
+
+r <-->|knows| j & d
+j <-->|knows| m & k
+d <-->|knows| k
+d <-->|knows| q
+m <-->|knows| k
+q <-->|knows| a
+```
 
 ```python
 q = """
@@ -500,7 +546,7 @@ WHERE {
 }
 """
 
-result = g.query(q)
+result = sample.query(q)
 [r.asdict() for r in result]
 ```
 
@@ -513,6 +559,21 @@ Exercise:
 
 - modify the above query replacing `foaf:knows` with `foaf:knows*`
   and see what happens.
+
+```solution
+q = """
+PREFIX foaf:  <http://xmlns.com/foaf/0.1/>
+
+SELECT *
+WHERE {
+  ?s a foaf:Person  .
+  ?s foaf:knows* ?o  .
+}
+"""
+
+result = sample.query(q)
+[r.asdict() for r in result]
+```
 
 SparQL supports GROUP BY and ORDER BY clauses.
 
@@ -531,7 +592,7 @@ WHERE {
 }
 GROUP BY ?s
 """
-result = g.query(q)
+result = sample.query(q)
 {str(r.s): {"network": str(r.friends) } for r in result}
 ```
 
@@ -557,7 +618,7 @@ WHERE {
 }
 """
 
-result = g.query(q)
+result = sample.query(q)
 [r.asdict() for r in result]
 ```
 
@@ -579,7 +640,7 @@ WHERE {
   ?user3 foaf:mbox ?mail3
 }
 """
-result = g.query(q)
+result = sample.query(q)
 {str(r.mail1): str(r.mail3) for r in result}
 ```
 
@@ -614,7 +675,6 @@ Exercise:
 - remove the GRAPH information from the query
   and see what happens.
 
-
 ---
 
 # Querying DBPedia
@@ -627,7 +687,7 @@ We can use it to learn sparql.
 
 - list concepts
 
-```text
+```sparql
 SELECT DISTINCT
   ?Concept
 WHERE {
@@ -640,7 +700,7 @@ LIMIT 20
 
 Now we want to list all `Person`
 
-```text
+```sparql
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 
 SELECT DISTINCT
@@ -672,7 +732,7 @@ LIMIT 10
 
 ... with their deathplaces
 
-```raw
+```sparql
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX dbp: <http://dbpedia.org/property/>
 PREFIX dbr: <http://dbpedia.org/resource/>
@@ -692,7 +752,7 @@ LIMIT 10
 
 If deathplace is in UK
 
-```raw
+```sparql
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX dbp: <http://dbpedia.org/property/>
 PREFIX dbr: <http://dbpedia.org/resource/>
@@ -783,3 +843,8 @@ SELECT DISTINCT * WHERE {
 }
 LIMIT 50
 ```
+
+## Closing question
+
+If you ask, should I rewrite all my data in RDF?
+NO :) Let's see how JSON-LD can help us.
