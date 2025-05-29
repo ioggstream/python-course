@@ -300,7 +300,7 @@ Exercise:
 - replace `?country` with `_:country`: does it work?
 - replace the two sentences with the following **one**: does it work?
 
-```raw
+```turtle
 ?p a :Person ;
    :nationality [
        skos:notation ?prefix

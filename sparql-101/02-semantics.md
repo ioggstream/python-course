@@ -355,7 +355,7 @@ These labels may or may not overlap (e.g., I can use labels
 from different vocabularies to describe the same data),
 like in the following example:
 
-```raw
+```turtle
 @prefix ex: <http://example.org/> .
 
 ex:Person a rdfs:Class ;
@@ -378,7 +378,7 @@ It contains Controlled Vocabularies and Ontologies,
 including the Italian Ontology for Person (CPV),
 that we can use to uniquely describe someone.
 
-```raw
+```turtle
 @prefix CPV: <https://w3id.org/italia/onto/CPV> .
 
 <email:robipolli@gmail.com>
