@@ -104,10 +104,13 @@ See [01-knowledge.ipynb](01-knowledge.ipynb).
 Vocabularies contain a set of terms (IRIs) and their relationships
 that can be used to describe the meaning of data.
 
+---
 
-----
+### Graphs and RDBMS
 
 An RDF dataset is a set of **graphs**.
+
+See the [RDF Dataset definition](https://www.w3.org/TR/rdf11-concepts/#section-dataset).
 
 ```mermaid
 graph LR
@@ -148,7 +151,6 @@ class p1,p2,p3 pad;
 ```
 ----
 
-### Graphs and RDBMS
 
 From a relationa perspective,
 you can see a dataset as a set of different tables
@@ -189,23 +191,29 @@ d = Dataset()
 
 - use the `Dataset.graphs` method to list the graphs in the dataset;
 
+```solution
+list(d.graphs())
+```
+
 - add a graph to the dataset.
 
 ```python
 simpsons = d.graph(identifier="_:simpsons")
 simpsons.parse("simpsons.ttl", format="turtle")
-
 ```
 
 - list the graphs in the dataset again, together with their identifiers.
 
-<!-- len(graphs) -->
-<!-- graphs = list(d.graphs()) -->
+```solution
+graphs = list(d.graphs())
+print(len(graphs))
+```
 
 - get the `identifier` of one graph. What's its type?
 
-
-<!-- [(g.identifier.n3(), type(g.identifier) ) for g in graphs] -->
+```solution
+[(g.identifier.n3(), type(g.identifier) ) for g in graphs]
+```
 
 Now list the graphs in the dataset:
 note that the default graph does not contain triples.
@@ -250,8 +258,6 @@ g = d.graph(identifier="_:my_dbpedia")
 
 ```
 
-
-
 - Get the URIs representing Tortellini and Food using the `Graph.subjects`  and `Graph.objects` methods.
 
 ```python
@@ -261,7 +267,12 @@ objects = set( ... )
 items = subjects | objects
 print(*items, sep="\n")
 ```
-<!-- print(set(g.subjects())) -->
+
+```solution
+subjects = set(g.subjects())
+objects = set(g.objects())
+```
+
 - what's the namespace of the `Tortellini` URI?
 - what's the namespace of the `Food` URI?
 - Open both URIs in a browser and check their content,
@@ -270,12 +281,42 @@ print(*items, sep="\n")
 
 ## Ontologies and controlled vocabularies
 
-Ontologies are used to standardize the semantics of digital content.
+Data modeling specifications
+(e.g., JSON Schema, XMLSchema, ... )
+describe the syntax
+of information.
+
+```yaml
+# A JSON Schema
+Person:
+  required: [name, surname]
+  properties:
+    name: { type: string, maxLength: 64 }
+    surname: { type: string, maxLength: 64 }
+    born_on: { type: string, format: date }
+```
+
+Ontologies describe the semantics of digital content
+in a given domain or ecosystem.
 
 - **Ontology**: a set of logical axioms
                 that conceptualize a domain of interest
                 by defining concepts (e.g., a `Person`)
                 and the semantics of relationships (e.g., `isParentOf`) between them.
+
+---
+
+An ontology:
+
+- is more generic than a JSON Schema or XMLSchema;
+- applies to a domain (e.g., the fiscal domain, the healthcare domain)
+  and not to a specific service / API;
+- may or may not describe the syntax details.
+
+A service can reference an ontology even if
+property names do not match the predicates,
+as long as the concept are the same
+(i.e. I can map each JSON property to an ontology predicate).
 
 Example: the Italian ontology for person defines:
 
@@ -309,17 +350,22 @@ givenName & familyName & isParentOf -.-o|domain| Person
 familyName & givenName ---->|range| xsd:string
 isParentOf -->|range| Person
 
-
 ```
+
+---
 
 - **Controlled vocabulary**: a vocabulary where the terms are validated by a designated authority.
   It can be of different types - e.g., a list (codelist), a hierarchical structure (taxonomy), a glossary and a thesaurus (which adds further constraints to a taxonomy).
+
+We'll see a vocabulary of EU countries with their names and properties.
 
 Examples of European controlled vocabularies are here <https://op.europa.eu/en/web/eu-vocabularies/controlled-vocabularies>
 
 ----
 
 ## Standard vocabularies
+
+Vocabularies can contain predicates and their relations.
 
 Standard vocabularies that are used to semantically describe data
 are:
@@ -331,7 +377,12 @@ are:
 Here are some example IRIs described using RDFS:
 
 ```turtle
+# Standard vocabularies.
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# Custom vocabulary.
 @prefix ex:  <http://example.org/> .
 
 # The ex:Person Resource classifies a group of Resources.
@@ -339,12 +390,51 @@ ex:Person rdf:type rdfs:Class .
 
 # ex:Alive classifies a group of ex:Person
 ex:Alive rdf:type rdfs:Class ;
-  rdfs:subClassOf ex:Person ;
+  rdfs:subClassOf ex:Person
   .
 
-ex:givenName rdf:type rdf:Property ;
+ex:name rdf:type rdfs:Property ;
+  rdfs:domain ex:Entity ;
+  rdfs:range xsd:string
+  .
+
+ex:givenName rdfs:subPropertyOf ex:name ;
   rdfs:domain ex:Person ;
-  rdfs:range xsd:string ;
+  rdfs:range xsd:string
+  .
+```
+
+```python
+from rdflib import Graph
+import tools
+
+sentences = """
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex:  <http://example.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+# The ex:Person Resource classifies a group of Resources.
+ex:Person rdf:type rdfs:Class .
+
+# ex:Alive classifies a group of ex:Person
+ex:Alive rdf:type rdfs:Class ;
+  rdfs:subClassOf ex:Person
+  .
+
+ex:name rdf:type rdfs:Property ;
+  rdfs:domain ex:Entity ;
+  rdfs:range xsd:string
+  .
+
+ex:givenName rdfs:subPropertyOf ex:name ;
+  rdfs:domain ex:Person ;
+  rdfs:range xsd:string
+  .
+"""
+g = Graph()
+g.parse(data=sentences, format="turtle")
+tools.plot_graph(g)
 
 ```
 
@@ -355,7 +445,7 @@ These labels may or may not overlap (e.g., I can use labels
 from different vocabularies to describe the same data),
 like in the following example:
 
-```raw
+```turtle
 @prefix ex: <http://example.org/> .
 
 ex:Person a rdfs:Class ;
@@ -378,7 +468,7 @@ It contains Controlled Vocabularies and Ontologies,
 including the Italian Ontology for Person (CPV),
 that we can use to uniquely describe someone.
 
-```raw
+```turtle
 @prefix CPV: <https://w3id.org/italia/onto/CPV> .
 
 <email:robipolli@gmail.com>

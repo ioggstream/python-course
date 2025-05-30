@@ -15,13 +15,24 @@ such as:
 
 
 ```python
-g=Graph(store="Oxigraph")
+from rdflib import Dataset
+# Create a dataset...
+d=Dataset(store="Oxigraph", default_union=True)
 
-# Load the graph.
-g.parse("countries-skos-ap-act.ttl", format="ox-turtle")
+# Bind the namespaces.
+d.bind("euvoc", "http://publications.europa.eu/ontology/euvoc#")
+d.bind("skos", "http://www.w3.org/2004/02/skos/core#")
+d.bind("country", "http://publications.europa.eu/resource/authority/country/")
+
+# Create a graph for the countries.
+country = d.graph("http://publications.europa.eu/resource/authority/country")
+
+# Load data into it.
+country.parse("countries-skos-ap-act.ttl", format="ox-turtle")
 ```
 
-And query the simplest metadata.
+And query the simplest metadata:
+the `rdf:type`s of the graph's subjects
 
 ```python
 q = """
@@ -31,17 +42,19 @@ WHERE {
   ?s a ?type .
 }
 """
-result = g.query(q)
+result = country.query(q)
 
 [r.type  for r in result]
 ```
 
-We can simplify the above query
-avoiding gathering `?s` at all
-using the `[]` syntax
-that matches anything.
+Since we are returning just `?type`,
+we can avoiding gathering `?s`
+using the `[]` placeholder.
 
-```python
+Try it!
+
+
+```solution
 q = """
 SELECT DISTINCT
   ?type
@@ -49,7 +62,7 @@ WHERE {
   [] a ?type .
 }
 """
-result = g.query(q)
+result = d.query(q)
 
 [r.type  for r in result]
 ```
@@ -67,7 +80,9 @@ and their labels.
 
 ```python
 q = """
-SELECT DISTINCT *
+SELECT DISTINCT
+  ?ConceptScheme
+  ?label
 WHERE {
   ?ConceptScheme
     a skos:ConceptScheme  ;
@@ -76,8 +91,8 @@ WHERE {
     FILTER (lang(?label) = "en")
 }
 """
-result = g.query(q)
-[r.asdict() for r in result]
+result = d.query(q)
+t = [r.asdict() for r in result]
 ```
 
 Exercise:
@@ -85,8 +100,21 @@ Exercise:
 - Rewrite the above query using
   two sentences.
 
-<!-- SELECT DISTINCT * WHERE { ?ConceptScheme a skos:ConceptScheme . ?ConceptScheme skos:prefLabel ?label . } -->
+```solution
+q = """
+SELECT DISTINCT
+  ?ConceptScheme
+  ?label
+WHERE {
+  ?ConceptScheme a skos:ConceptScheme .
+  ?ConceptScheme skos:prefLabel ?label .
+  FILTER (lang(?label) = "en")
+}
+"""
 
+result = d.query(q)
+assert t == [r.asdict() for r in result]
+```
 ----
 
 Now find all the triples
@@ -94,14 +122,14 @@ where the `object` is
 `<http://publications.europa.eu/resource/authority/country/0005>
 
 
-```python
+```solution
 q = """
 SELECT DISTINCT *
 WHERE {
   ?s ?p <http://publications.europa.eu/resource/authority/country/0005> .
 }
 """
-result = g.query(q)
+result = d.query(q)
 [r.asdict() for r in result]
 ```
 
@@ -110,10 +138,7 @@ Exercise:
 - Rewrite the above query using
   the PREFIX directive.
 
-<!-- PREFIX euvoc: <http://publications.europa.eu/resource/authority/country/> -->
-<!-- SELECT DISTINCT * WHERE { ?s ?p euvoc:0005 } LIMIT 6-->
-
-```python
+```solution
 q = """
 PREFIX euvoc: <http://publications.europa.eu/resource/authority/country/>
 
@@ -123,7 +148,7 @@ WHERE {
 }
 LIMIT 6
 """
-result = g.query(q)
+result = d.query(q)
 [r.asdict() for r in result]
 ```
 
@@ -141,7 +166,7 @@ graph
 skos:ConceptScheme
 skos:ConceptScheme -->|skos:prefLabel| _l1[/"Concept Scheme"/]
 
-country:0005 -.->|a| skos:ConceptScheme
+country:0005 -.->|a| skos:ConceptScheme((skos:ConceptScheme))
 country:0005 ---|skos:prefLabel| _l[/"Current EU members"/]
 
 country -.->|a| skos:ConceptScheme
@@ -149,6 +174,27 @@ country:AUT --->|skos:inScheme| country:0005
 country:BEL --->|skos:inScheme| country:0005
 country:... --->|skos:inScheme| country:0005
 
+```
+
+----
+
+Now, let's get the predicates associated with resources
+of a given type.
+
+```python
+q = """
+SELECT DISTINCT
+  ?type ?p
+WHERE {
+  [] a ?type ;
+     ?p []
+  .
+  FILTER (?p != rdf:type)
+}
+"""
+
+result = d.query(q)
+{ r.type: r.p for r in result }
 ```
 
 ---

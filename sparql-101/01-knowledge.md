@@ -69,7 +69,8 @@ subject((subject)) --- predicate(predicate) --> object
 
 ----
 
-Every term is identified by an absolute URI.
+Every term is identified by an absolute IRI (Internationalized Resource Identifier).
+IRI extends the concept of URI (Uniform Resource Identifier).
 
 The prefix identifies the vocabulary name,
 and the suffix identifies the term.
@@ -79,7 +80,7 @@ from rdflib import URIRef
 dog_uri = URIRef("https://dbpedia.org/data/Dog")
 ```
 
-We'll see how to use URIs to express knowledge.
+We'll see how to use IRIs to express knowledge.
 
 ----
 
@@ -197,7 +198,7 @@ But it is also the basis of the Web itself
 
 ----
 
-## RDF: Machine Readable Knowledge
+## Resource Description Framework: machine readable knowledge
 
 Encyclopedia voices on Wikipedia and dbpedia are expressed in
 [Resource Description Framework (RDF)](https://www.w3.org/TR/rdf11-primer/).
@@ -235,12 +236,12 @@ where each row is a sentence.
 
 ----
 
-## RDF: Machine Readable Knowledge
+## Resource Description Format: machine readable knowledge
 
-RDF uses [URIs](https://www.w3.org/TR/rdf11-concepts/#section-uris)
+RDF uses [IRIs](https://www.w3.org/TR/rdf11-concepts/#section-IRIs)
 to disambiguate the meaning of terms and provide semantics.
 
-Every term is identified by an absolute URI enclosed by `<>`.
+Every term is identified by an absolute IRI enclosed by `<>`.
 
 The prefix identifies the source of the term definition
 (that we'll call **vocabulary**),
@@ -259,11 +260,16 @@ RDF is based on:
 - **graphs** (sets of triples).
 - **vocabularies** (graphs containing terms and their definitions).
 
+See the definition of RDF concepts here:
+
+- [Graph data model](https://www.w3.org/TR/rdf11-concepts/#data-model)
+- [Graphs](https://www.w3.org/TR/rdf11-concepts/#section-rdf-graph)
+
 ### Elements
 
-Subjects and predicates are uniquely identified by URIs.
+Subjects and predicates are uniquely identified by IRIs.
 
-Objects can be either URIs or literals (strings, numbers, dates, etc.).
+Objects can be either IRIs or literals (strings, numbers, dates, etc.).
 
 ```python
 from rdflib import URIRef, Literal, BNode
@@ -370,7 +376,7 @@ We'll see JSON-LD in detail later.
 
 ## Graphs: Namespaces and cURIe
 
-RDF use namespace prefixes to shorten URIs
+RDF use namespace prefixes to shorten IRIs
 (the [cURIe](https://www.w3.org/TR/curie/) syntax).
 
 ```python
@@ -398,10 +404,32 @@ print(*g1_ns, sep="\n")
 g1.namespace_manager.expand_curie("dbr:Lasagne")
 ```
 
+rdflib has a set of predefined namespaces
+
+```python
+from rdflib import RDF, RDFS, SKOS, XSD
+
+print(
+  "The", RDFS.range,
+  "of an", RDF.type,
+  "is an", RDFS.Class
+)
+```
+
+While
+
+```python
+print(
+  "The", RDFS.range,
+  "of a", SKOS.prefLabel,
+  "is an", XSD.string
+)
+```
+
 ----
 
 Another vocabulary could provide a different definition for the same term.
-:warning: URI could not always be human-readable.
+:warning: URI are not always human-readable.
 
 ```python
 from rdflib import URIRef
@@ -438,7 +466,7 @@ sentences = """
 💪: parse the sentences using rdflib and answer the following questions
 
 - how many sentences are there?
-- how many subjects are there?
+- how many distinct subjects are there?
 - how many namespaces are there?
 
 ```python
@@ -447,6 +475,14 @@ from rdflib import Graph
 tortellini = Graph()
 
 # Use this cell for the exercise
+```
+
+```solution
+tortellini.parse(data=sentences, format="turtle")
+print(
+  len(tortellini).
+  len(set(tortellini.subjects())
+)
 ```
 
 💪: use `Graph.namespaces` to get the namespaces added by the sentences above
@@ -459,11 +495,21 @@ default_ns = set(Graph().namespaces())
 # Use this cell for the exercise
 ```
 
+```solution
+set(tortellini.namespaces()) - default_ns
+```
+
+
 💪: serialize the above graph in JSON-LD format
 
 ```python
 # Use this cell for the exercise
 tortellini_jsonld = ...
+```
+
+```solution
+tortellini_jsonld = tortellini.serialize(format="application/ld+json")
+print(tortellini_jsonld)
 ```
 
 💪: Load the JSON-LD object in a variable
@@ -475,7 +521,12 @@ tortellini_jsonld = ...
 import json
 
 # Use this cell for the exercise
-...
+```
+
+```solution
+import json
+data = json.loads(tortellini_jsonld)
+
 ```
 
 💪: Get a voice from dbpedia
@@ -523,6 +574,11 @@ print(*[str(s) for s in excerpt], sep="\n")
 # Use this cell for the exercise
 ```
 
+```solution
+len(sentences)
+set((len(x) for x in sentences))
+```
+
 ----
 
 ```python
@@ -544,7 +600,7 @@ There's plenty of knowledge in the web!
 
 ```python
 from rdflib import Graph
-from rdflib.namespace import RDFS
+from pathlib import Path
 
 tortellini_url = "https://dbpedia.org/data/Tortellini.n3"
 tortellini_n3 = Path("Tortellini.n3")
@@ -569,10 +625,16 @@ Exercise: how many sentences are there now?
 # Use this cell for the exercise
 ```
 
+```solution
+len(g)
+```
+
 Plot the graph again to see the new nodes and
 their relations.
 
 ```python
 import tools
+
+# Increase the limit if you can't see intersections.
 tools.plot_graph(g, label_property=RDFS.label, limit=50, pattern=".*/dbpedia.org")
 ```
