@@ -5,7 +5,7 @@ import pandas as pd
 from bokeh.io import output_notebook, show
 from bokeh.models import Circle, ColumnDataSource, HoverTool, LabelSet, MultiLine
 from bokeh.plotting import figure, from_networkx
-from rdflib import Graph
+from rdflib import RDF, RDFS, Graph
 from rdflib.extras.external_graph_libs import rdflib_to_networkx_multidigraph
 
 # Make sure your notebook displays bokeh plots inline
@@ -42,7 +42,7 @@ def plot_graph(
     fig=None,
 ) -> figure:
     # Convert the RDF Graph to a NetworkX MultiDiGraph
-    f = Graph()
+    filtered_graph = Graph()
     count = 0
     pattern = re.compile(pattern) if pattern else None
     for x in g:
@@ -50,14 +50,15 @@ def plot_graph(
             continue
         if x[1] == label_property:
             continue
-        f.add(x)
+        filtered_graph.add(x)
         count += 1
         if limit and count > limit:
             break
     if not count:
         raise ValueError("No triples found matching the pattern.")
 
-    G = rdflib_to_networkx_multidigraph(f)
+    # print(filtered_graph.serialize(format="turtle"))
+    G = rdflib_to_networkx_multidigraph(filtered_graph)
     fig = fig or figure(title="RDF Graph Visualization with Bokeh")
     fig.add_tools(HoverTool(tooltips=None), TapTool(), BoxSelectTool())
 
@@ -73,13 +74,26 @@ def plot_graph(
     graph_renderer = from_networkx(G, layout, scale=1, center=(0, 0))
 
     # Normalize node sizes based on degree
-    # Add node sizes to the data source
     node_sizes = {
         node: 0.01 + (degree / max_degree) * 0.05 for node, degree in degrees.items()
     }
     graph_renderer.node_renderer.data_source.data["node_size"] = [
         node_sizes[node] for node in G.nodes()
     ]
+
+    # Add edge styles for rdfs:subClassOf
+    edge_attrs = []
+    for start_node, end_node, edge_data, _ in G.edges(data=True, keys=True):
+        # print(edge_data)
+        if str(edge_data) in (
+            str(RDF.type),
+            str(RDFS.subClassOf),
+            str(RDFS.subPropertyOf),
+        ):
+            edge_attrs.append("dashed")
+        else:
+            edge_attrs.append("solid")
+    graph_renderer.edge_renderer.data_source.data["line_dash"] = edge_attrs
 
     graph_renderer.node_renderer.glyph = Circle(
         radius="node_size", fill_color="fill_color"
@@ -92,7 +106,7 @@ def plot_graph(
     )
 
     graph_renderer.edge_renderer.glyph = MultiLine(
-        line_color=line_color, line_alpha=0.8, line_width=1
+        line_color=line_color, line_alpha=0.8, line_width=1, line_dash="line_dash"
     )
     graph_renderer.edge_renderer.selection_glyph = MultiLine(
         line_color="red", line_width=5
