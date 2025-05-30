@@ -59,7 +59,16 @@ Best Practice, Data Engineering, Algorithms and Data Structures
 
 ## Environment setup
 
+Setup with docker
+
 ```bash
 git clone https://github.com/ioggstream/python-course
 cd python-course/sparql-101
+docker compose up course
+```
+
+Otherwise, you can run it with tox
+
+```bash
 tox -e py3
+```
