@@ -157,7 +157,7 @@ WHERE {
 """
 result = d.query(q)
 for r in result:
-    print(f"{r.techniqueLabel} protects {r.artifact}")
+    print(f"{r.technique_label} protects {r.artifact}")
 ```
 
 - replace `d3f:DefensiveTechnique` with `d3f:OffensiveTechnique`
@@ -166,20 +166,20 @@ for r in result:
 ```solution
 q = """
 SELECT DISTINCT
-    ?techniqueLabel
+    ?technique_label
     ?artifact
 WHERE {
   ?artifact rdfs:subClassOf* d3f:Server .
 
   ?technique rdfs:subClassOf* d3f:OffensiveTechnique ;
-    rdfs:label ?techniqueLabel ;
+    rdfs:label ?technique_label ;
     ?protects ?artifact
   .
 }
 """
 result = d.query(q)
 for r in result:
-    print(f"{r.techniqueLabel} attacks {r.artifact}")
+    print(f"{r.technique_label} attacks {r.artifact}")
 ```
 
 ## Packing it all together
@@ -247,7 +247,13 @@ WHERE {
   }
 }
 """
-list(d.query(q))
+for r in d.query(q):
+    print(
+      r.kube,
+      "is a",
+      # shorten using prefix
+      d.namespace_manager.curie(r.d3fend)
+    )
 ```
 
 So we actually get links between our application
@@ -280,27 +286,57 @@ the attack classes towards
 our components.
 
 ```python
-attack_surface = list(kube.query("""
+attack_surface = d.query("""
 SELECT DISTINCT
-  ?attack_label ?affects ?artifact ?uri
+  ?attack_label
+  ?affects
+  ?artifact
+  ?kube_resource
 WHERE {
+
+  ?kube_resource a ?kind .
+
+  # Get digital artifacts associated with Kubernetes resources.
+  ?kind rdfs:subClassOf* k8s:Kind,  .
   ?kind rdfs:subClassOf* d3f:DigitalArtifact .
-  ?kind rdfs:subClassOf* k8s:Kind .
   ?kind rdfs:subClassOf ?artifact .
+
 
   ?attack
     d3f:attack-id ?attack_id;
     rdfs:label ?attack_label .
 
   ?attack ?affects ?artifact .
-  ?uri a ?kind .
 
 }
-"""))
+""")
 
-print(*sorted([
-    (f"Attack: {a['attack_label']},"
-     f" {a['affects'].fragment} {a['artifact'].fragment} for {a['uri']}")
-    for a in attack_surface
-]), sep="\n")
+for attack in sorted(attack_surface):
+    print(f"{attack.attack_label}, "
+          f"{attack.affects.fragment} {attack.artifact.fragment} for {attack.kube_resource}")
+
 ```
+
+Exercise:
+
+- simplify the query materializing the digital artifacts
+  associated with Kubernetes resources
+  directly at the level of the `?kube_resource`, e.g.
+
+```turtle
+# Original graph
+...
+k8s:Secret rdfs:subClassOf d3f:Credential ;
+  rdfs:subClassOf k8s:Kind .
+
+<:secret> a k8s:Secret .
+
+# Add this triple too
+<:secret> a d3f:Credential .
+```
+
+
+## Summary
+
+That was the last lesson:
+you can mix and mingle all the information
