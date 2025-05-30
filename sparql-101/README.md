@@ -56,3 +56,10 @@ intermediate: python, JSON, YAML, HTML, HTTP
 good understanding of: databases, SQL, data modeling
 Tags
 Best Practice, Data Engineering, Algorithms and Data Structures
+
+## Environment setup
+
+```bash
+git clone https://github.com/ioggstream/python-course
+cd python-course/sparql-101
+tox -e py3
