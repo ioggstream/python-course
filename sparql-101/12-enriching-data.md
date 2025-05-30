@@ -40,9 +40,10 @@ may have a different schema.
 | <marge@simpsons.com> | Marge | Simpson ||
 | <bart@simpsons.com> | Bart  | Simpson |
 
-With RDF, there is no fixed schema.
-Instead, we have a public set of predicates
-that can be used to describe the same entity.
+With RDF, there is no fixed syntactic schema.
+Instead, we describe resources
+using a public set of predicates
+(`rdf:Property`es).
 
 ```mermaid
 graph LR
@@ -71,16 +72,14 @@ db1-surname --> familyName ~~~ db2-surname --> familyName
 db1-id --> mbox ~~~ db2-email --> mbox
 ```
 
-Storing data in a graph allows to use
-a set of predefined predicates (see them as properties)
-that are globally defined.
-
 ---
+
+Let's contextualize some data
+like we did in [07-jsonld](07-jsonld.ipynb).
 
 Start with a json dataset.
 
 ```python
-
 data = [
     {"email":"ft@a.test", "name": "Francisca", "surname": "Trujillo", "country": "ES"},
     {"email":"mr@a.test", "name": "Mario", "surname": "Rossi", "country": "IT"},
@@ -89,7 +88,7 @@ data = [
 ]
 ```
 
-Add a context to the dataset.
+Add a context to map the keys to IRIs.
 
 ```python
 context = {
@@ -119,7 +118,7 @@ Exercise:
 
 - add a `"@type": "Person"` to every entry
 
-```python
+```solution
 nodes_ld = {
     # Every country is a resource.
     "@graph": [ { "@type": "Person", **c} for c in nodes],
@@ -127,39 +126,61 @@ nodes_ld = {
 }
 ```
 
-And create a dataset and bind the selected namespaces.
+Now create a dataset.
 
 ```python
 from rdflib import Dataset
 
-d = Dataset(store='Oxigraph')
+# Remember the default_union option.
+d = Dataset(store='Oxigraph', default_union=True)
+```
+
+and bind the selected namespaces
+
+```python
 # Add ns shortcuts.
 d.bind("eu", "https://publications.europa.eu/resource/authority/")
 d.bind("schema": "https://schema.org/")
 d.bind("euvoc": "http://publications.europa.eu/ontology/euvoc#")
 d.bind("my":  "https://a.test/my#")
-
 ```
 
 Exercise:
 
 - list the graphs in the dataset; how many are there?
 
+```solution
+list(d.graphs())
+```
+
+Now load the JSON-LD data into a graph.
+
 ```python
 import json
 # Create a people graph and add the entries
-d.graph(identifier="urn:People").parse(data=json.dumps(nodes_ld), format="application/ld+json")
+people = d.graph(identifier="urn:People")
+people.parse(data=json.dumps(nodes_ld), format="application/ld+json")
 ```
 
 Exercise:
 
 - list the triples in the dataset;
+
+```solution
+[t for t in d]
+```
+
 - list the triples in the `urn:People` graph;
+
+```solution
+[t for t in people]
+```
 
 Load the countries vocabulary in a new graph.
 
 ```python
-d.graph(identifier="eu:country").parse("countries-skos-ap-act.ttl", format="ox-turtle")
+country = d.graph(identifier="eu:country")
+country.parse("countries-skos-ap-act.ttl", format="ox-turtle")
 ```
 
 Now we have a graph to enrich with external data.
@@ -203,7 +224,7 @@ Exercise:
 
 - Replace `<urn:People>` with `?g`: what happens?
 - Can you replace both GRAPHs values with `?variables`?
-- See the [string to datatype (STRDT) docs]
+- See the [string to datatype (STRDT) docs](https://www.w3.org/TR/sparql11-query/#func-strdt)
 
 If that's OK, we can update the graph with the country identifier.
 
@@ -246,8 +267,9 @@ print(d.graph(identifier="urn:People").serialize(format="turtle"))
 Now, we can even have a "fat" graph with all the information
 
 ```python
-q = """
+q_country = """
 PREFIX euvoc: <http://publications.europa.eu/ontology/euvoc#>
+
 INSERT {
     GRAPH <urn:People> {
         ?p my:countryName ?countryName .
@@ -262,8 +284,17 @@ WHERE {
     FILTER ( LANG(?countryName) = "en" )
 }
 """
-d.update(q)
+d.update(q_country)
 
+```
+
+Exercise:
+
+- in the first query, replace `?country` with `_:country`: does it work?
+
+```solution
+q = q_country.replace("?country", "_:country")
+d.update(q)
 ```
 
 We can also mangle the data a bit...
@@ -291,14 +322,21 @@ WHERE {
 }
 """
 d.update(q)
-
-
 ```
 
 Exercise:
 
-- replace `?country` with `_:country`: does it work?
-- replace the two sentences with the following **one**: does it work?
+- write a SELECT query replacing the sentences
+
+```turtle
+?p a :Person ;
+  :nationality _:country
+.
+
+_:country skos:notation ?prefix .
+```
+
+with the following **one**: does it work?
 
 ```turtle
 ?p a :Person ;
@@ -306,4 +344,25 @@ Exercise:
        skos:notation ?prefix
    ]
 .
+```
+
+```solution
+SELECT DISTINCT
+  *
+WHERE {
+    ?p a :Person ;
+       :nationality [
+        skos:notation ?prefix
+       ]
+    .
+    # We want the country name in English.
+    FILTER ( DATATYPE(?prefix) = euvoc:PHONE_PREFIX )
+
+    # Bind a modified value to the variable ?plus_prefix.
+    BIND (
+        CONCAT("+", str(?prefix)) AS ?plus_prefix
+    )
+}
+"""
+d.query(q).bindings
 ```
