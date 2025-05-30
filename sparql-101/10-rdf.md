@@ -23,6 +23,16 @@ Prerequisites:
 %pip install oxrdflib
 ```
 
+Decompress the countries dataset
+
+```python
+import gzip
+from pathlib import Path
+
+with gzip.open('countries-skos-ap-act.ttl.gz') as f:
+    Path('countries-skos-ap-act.ttl').write_bytes(f.read())
+```
+
 ---
 
 ## Graphs
