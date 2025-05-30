@@ -4,7 +4,7 @@
 
 Still stuck while modeling your data? Start managing your knowledge instead!
 This workshop introduces tools and techniques to get the best of your information,
-including graph databases, RDF, SparQL and vector embeddings.
+including graph databases, RDF, SparQL ~and vector embeddings~.
 
 ## Abstract
 
@@ -30,12 +30,17 @@ environment before the tutorial.
 
 ### Part 2
 
-- [ ] Storing data vs describing knowledge. [07-jsonld.md](07-jsonld.md)
+- [x] Storing data vs describing knowledge. [07-jsonld.md](07-jsonld.md)
+- [x] Metadata [11-sparql-metadata.md]
+- [x] Enriching data with external knowledge [12-enriching-data.md], [13-enriching-data-exercises.md]
+
 
 Exercises: the DevSecOps dataset as a Knowledge Graph
 Getting security insights using SparQL
 
 ### Part 3
+
+:warning: Not this year.
 
 Graphs and semantic search: mixing Graph and Vector databases
 Exercises: the EU Recruitment dataset (ESCO) and CV analysis
@@ -51,3 +56,19 @@ intermediate: python, JSON, YAML, HTML, HTTP
 good understanding of: databases, SQL, data modeling
 Tags
 Best Practice, Data Engineering, Algorithms and Data Structures
+
+## Environment setup
+
+Setup with docker
+
+```bash
+git clone https://github.com/ioggstream/python-course
+cd python-course/sparql-101
+docker compose up course
+```
+
+Otherwise, you can run it with tox
+
+```bash
+tox -e py3
+```
