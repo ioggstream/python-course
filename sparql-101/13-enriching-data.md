@@ -219,7 +219,7 @@ WHERE {
   ?kube rdfs:subClassOf* k8s:Kind .
 }
 """
-list(kube.query(q))
+[str(x[0]) for x in kube.query(q)]
 ```
 
 .. but even links to the D3FEND graph.

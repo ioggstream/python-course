@@ -84,7 +84,7 @@ def plot_graph(
     # Add edge styles for rdfs:subClassOf
     edge_attrs = []
     for start_node, end_node, edge_data, _ in G.edges(data=True, keys=True):
-        # print(edge_data)
+        print(edge_data)
         if str(edge_data) in (
             str(RDF.type),
             str(RDFS.subClassOf),
