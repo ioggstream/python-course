@@ -13,7 +13,7 @@ Author: <roberto.polli@par-tec.it>
 - 1h. Storing data or describing knowledge?
   Practical use of getting security insights from data.
 
-- Bonus track: Graphs and semantic search: mixing graphs and vector databases
+<!-- - Bonus track: Graphs and semantic search: mixing graphs and vector databases -->
 
 ### Hints
 
@@ -253,11 +253,8 @@ plot_graph(ret.graph, label_property=SKOS.prefLabel,)
 
 ## Transform kube infra in graph
 
-```python
-% pip install d3fendtools
-```
-
----
+Once you convert your infrastructure
+to a graph, you can do a lot of things!
 
 List Basic attacks on your kube infrastructure
 
