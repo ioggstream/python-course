@@ -7,52 +7,47 @@
   register: has_group_replication
   changed_when: false
   failed_when: false
-
 - when: has_group_replication.rc == 1
   block:
-  - name: close mysqld
-    shell: |
-      pkill -f mysqld
-    failed_when: false
-  - name: Create directory
-    shell: |
-      rm /var/lib/mysql/*  -fr
-  - name: Add server_id to my.cnf
-    lineinfile:
-      dest: /etc/my.cnf
-      line: |
-        server_id={{ ansible_default_ipv4_address | ipaddr("int") }}
-      insertafter: >-
-        ^[mysqld]
-  - name: Prepare node for group replication
-    blockinfile:
-      dest: /etc/my.cnf
-      insertafter: >-
-        ^[mysqld]
-      block: |
-        log_bin=1
-        gtid_mode=ON
-        enforce_gtid_consistency=ON
-        binlog_format=ROW
-        master_info_repository=TABLE
-        relay_log_info_repository=TABLE
-        report_port=3306
-        report_host={{ansible_default_ipv4_address}}
-        log_slave_updates=1
-        transaction_write_set_extraction=XXHASH64
-        binlog_checksum=NONE
-
-
-  - name: Initialize datadir
-    command: |
-      mysqld --initialize --user=mysql
-
+    - name: close mysqld
+      shell: |
+        pkill -f mysqld
+      failed_when: false
+    - name: Create directory
+      shell: |
+        rm /var/lib/mysql/*  -fr
+    - name: Add server_id to my.cnf
+      lineinfile:
+        dest: /etc/my.cnf
+        line: |
+          server_id={{ ansible_default_ipv4_address | ipaddr("int") }}
+        insertafter: >-
+          ^[mysqld]
+    - name: Prepare node for group replication
+      blockinfile:
+        dest: /etc/my.cnf
+        insertafter: >-
+          ^[mysqld]
+        block: |
+          log_bin=1
+          gtid_mode=ON
+          enforce_gtid_consistency=ON
+          binlog_format=ROW
+          master_info_repository=TABLE
+          relay_log_info_repository=TABLE
+          report_port=3306
+          report_host={{ansible_default_ipv4_address}}
+          log_slave_updates=1
+          transaction_write_set_extraction=XXHASH64
+          binlog_checksum=NONE
+    - name: Initialize datadir
+      command: |
+        mysqld --initialize --user=mysql
 - name: Eventually start mysql
   command: pgrep -fa mysqld.*--
   register: mysqld_status
   changed_when: false
   failed_when: false
-
 - name: First boot
   when: >-
     mysqld_status.rc != 0
@@ -61,21 +56,17 @@
   async: 300
   poll: 0
   register: mysqld_jid
-
 - name: Wait for mysql
   wait_for:
     host: 0.0.0.0
     port: 3306
     delay: 1
     timeout: 20
-
 - name: Prepare instance for clustering
   command: mysqlsh --js -f /code/ansible/check-cluster.js   --log-level=DEBUG4
   ignore_errors: true
-
 - name: Take a nap
   pause: seconds=5
-
 # - debug: msg="Contacting {{innodb[0]}} for creating cluster."
 - name: Deploy template files
   tags: template
@@ -83,24 +74,24 @@
     src: "{{item}}"
     dest: /root/
   with_items:
-  - create-cluster.js
-  - add-node.js
-
+    - create-cluster.js
+    - add-node.js
 - name: Create cluster on local node
   run_once: yes
   delegate_to: "{{groups['innodb'][0]}}"
   shell: >
     mysqlsh --uri icroot@{{ansible_default_ipv4_address}}:3306
+
+
+
        --password=Secret%2017 --log-level=DEBUG4
        --js -f /root/create-cluster.js
-
 - name: Add instances to cluster
   delegate_to: "{{groups['innodb'][0]}}"
   when: >-
     ansible_hostname in groups['innodb'][1:]
   shell: >
-    mysqlsh --uri icroot@localhost:3306  --password=Secret%2017 --log-level=DEBUG4
-    --js -f /root/add-node.js
+    mysqlsh --uri icroot@localhost:3306  --password=Secret%2017 --log-level=DEBUG4 --js -f /root/add-node.js
 
 - name: Kill mysql
   command: pkill -f mysqld

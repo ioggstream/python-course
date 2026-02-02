@@ -48,8 +48,6 @@ info:
     Qui e' possibile introdurre brevi informazioni tecniche ed esempi.
     Attenzione: la `description` non sostituisce la documentazione di progetto,
     deve pero' facilitare l'esecuzione delle prime richieste.
-
-
   # I termini del servizio contengono un riferimento
   #   a tutte le indicazioni e le note legali per l'utilizzo
   #   del servizio, inclusi gli eventuali riferimenti utili al GDPR.
@@ -69,7 +67,6 @@ info:
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
-
   # Per dare indicazioni sul ciclo di vita dell'API
   # si puo' usare un parametro come:
   x-lifecycle:

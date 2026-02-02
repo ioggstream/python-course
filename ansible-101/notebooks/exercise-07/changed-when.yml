@@ -5,10 +5,10 @@
 #
 - hosts: all
   tasks:
-  - name: >
-     Settin changed_when and check_mode after
-     writing the command may be safer.
-    shell: |
-      pgrep -f oracle
-    check_mode: no
-    changed_when: no
+    - name: >
+        Settin changed_when and check_mode after writing the command may be safer.
+
+      shell: |
+        pgrep -f oracle
+      check_mode: no
+      changed_when: no

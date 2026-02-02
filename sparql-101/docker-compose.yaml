@@ -2,13 +2,13 @@ services:
   course:
     build: .
     volumes:
-    - ".:/code:rw"
+      - ".:/code:rw"
     working_dir: /code/notebooks
     user: "1000"
     environment:
-    - "HOME=/code/notebooks"
+      - "HOME=/code/notebooks"
     ports:
-    - "8888:8888"
+      - "8888:8888"
     command:
-    - notebook
-    - --ip=0.0.0.0
+      - notebook
+      - --ip=0.0.0.0

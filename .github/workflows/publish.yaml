@@ -1,5 +1,4 @@
 name: CI Test and Publish Workflow
-
 on:
   push:
     branches: [main]
@@ -16,7 +15,6 @@ env:
   IMAGE_NAME: ${{ github.repository }}
   DOCKER_BUILDKIT: "1"
   TERM: linux
-
 jobs:
   security:
     strategy:
