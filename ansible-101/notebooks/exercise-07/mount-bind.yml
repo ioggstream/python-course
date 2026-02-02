@@ -11,14 +11,13 @@
 #
 - hosts: all
   tasks:
-  - name: >
-      Mount /var under /mnt/bind with a bind mount.
-      Check the mount module docs to populate all
-      the options.
-    mount:
-      name:
-      src:
-      opts:
-      fstype:
-      state:
-    register: fstab
+    - name: >
+        Mount /var under /mnt/bind with a bind mount. Check the mount module docs to populate all the options.
+
+      mount:
+        name:
+        src:
+        opts:
+        fstype:
+        state:
+      register: fstab

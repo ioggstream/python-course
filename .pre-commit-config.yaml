@@ -6,57 +6,74 @@
 #
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
+default_stages:
+  - pre-commit
 repos:
--   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0
-    hooks:
-    -   id: trailing-whitespace
-    -   id: end-of-file-fixer
-    -   id: check-yaml
-        args: [--allow-multiple-documents]
-    -   id: check-added-large-files
-- repo: https://github.com/myint/autoflake
-  rev: v2.2.1
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v6.0.0
   hooks:
-    - id: autoflake
-      args:
-        - --in-place
-        - --remove-unused-variables
-        - --remove-all-unused-imports
--   repo: https://github.com/psf/black
-    rev: 23.11.0
-    hooks:
-    -   id: black
-- repo: https://github.com/pycqa/isort
-  rev: 5.12.0
+  # Manage spaces.
+  - id: trailing-whitespace
+  - id: end-of-file-fixer
+  - id: check-added-large-files
+  - id: check-symlinks
+  - id: mixed-line-ending
+    args: [--fix=lf]
+  # Check file syntax/format
+  - id: check-xml
+  - id: check-json
+  - id: check-yaml
+    args: [--allow-multiple-documents]
+  # Security checks.
+  - id: detect-private-key
+  - id: detect-aws-credentials
+    args:
+    # See https://github.com/pre-commit/pre-commit-hooks/issues/174
+    - --allow-missing-credentials
+- repo: https://github.com/google/yamlfmt
+  rev: v0.21.0
   hooks:
-    - id: isort
-      name: isort (python)
-      # Use black profile for isort to avoid conflicts
-      #   see https://github.com/PyCQA/isort/issues/1518
-      args: ["--profile", "black"]
-    - id: isort
-      name: isort (cython)
-      types: [cython]
-    - id: isort
-      name: isort (pyi)
-      types: [pyi]
-- repo: https://github.com/pycqa/flake8
-  rev: 6.1.0
+  - id: yamlfmt
+    files: \.(yaml|yml)$
+    exclude: 'config\.yaml'
+#
+# Python linters.
+#
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  # Ruff version.
+  rev: v0.14.13
   hooks:
-  - id: flake8
-- repo: https://github.com/PyCQA/bandit
-  rev: 1.7.5
+  # Run the linter.
+  - id: ruff
+    args: [--fix]
+    files: ^python-high-school/
+    exclude: ^ansible-101/|python-for-sysadmin|\.ipynb$
+  - # Run the formatter.
+    id: ruff-format
+    files: ^python-high-school/
+    exclude: ^ansible-101/|python-for-sysadmin|\.ipynb$
+- repo: https://github.com/pre-commit/mirrors-mypy
+  rev: v1.19.1
   hooks:
-    - id: bandit
-      name: bandit
-      args: ["-c", ".bandit.yaml"]
-      description: 'Bandit is a tool for finding common security issues in Python code'
-      entry: bandit
-      language: python
-      language_version: python3
-      types: [python]
-- repo: https://github.com/Lucas-C/pre-commit-hooks-safety
-  rev: v1.3.2
+  - id: mypy
+    additional_dependencies: [types-PyYAML]
+    exclude: ^tests/
+#
+# Security linters.
+#
+- repo: https://github.com/bridgecrewio/checkov.git
+  rev: 3.2.497  # change to tag or sha
   hooks:
-    - id: python-safety-dependencies-check
+  - id: checkov
+  - id: checkov_secrets
+    stages: ["pre-push"]
+- repo: local
+  hooks:
+  - id: trufflehog
+    name: TruffleHog
+    description: Detect secrets in your data.
+    entry: bash -c 'docker run --rm -v "$(pwd):/workdir" -i --rm
+      trufflesecurity/trufflehog:latest git file:///workdir --since-commit
+      HEAD --results=verified,unknown --fail'
+    language: system
+    stages: ["pre-push"]

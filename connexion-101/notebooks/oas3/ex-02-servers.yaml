@@ -6,7 +6,6 @@
 openapi: 3
 info:
   version: 0.1
-
 # One or more server
 #   You can add production, staging and test environments.
 #   We are using the custom `x-sandbox` to identify
@@ -23,6 +22,5 @@ servers:
       url: https://api.example.com/datetime/v1/status
       interval: 300
       timeout: 15
-
 paths: {}
 components: {}

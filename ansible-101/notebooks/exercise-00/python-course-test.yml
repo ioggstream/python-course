@@ -6,12 +6,10 @@
   tasks:
     - name: The /notebooks directory should exist
       file: path="/notebooks" state=directory
-
     - name: jupyter is responding on 8888
       uri:
         url: http://0.0.0.0:8888/notebooks
         validate_certs: false
-        status_code: 200  # modify this line to simulate an error and see the outcome!
-
+        status_code: 200 # modify this line to simulate an error and see the outcome!
     - name: The template.conf is in place
       file: path="/tmp/template.conf" state=file

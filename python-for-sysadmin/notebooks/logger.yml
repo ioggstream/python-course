@@ -3,7 +3,6 @@ formatters:
   detailed:
     class: logging.Formatter
     format: '%(asctime)s %(name)-15s %(levelname)-8s %(processName)-10s %(message)s'
-
 handlers:
   console:
     class: logging.StreamHandler
@@ -12,11 +11,9 @@ handlers:
     class: logging.handlers.SysLogHandler
     formatter: detailed
     level: DEBUG
-
 loggers:
   os:
     handlers: [syslog]
-
 root:
   handlers: [console, syslog]
   level: DEBUG

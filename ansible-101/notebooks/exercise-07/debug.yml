@@ -2,18 +2,19 @@
   tags: gather_facts
   name: those tasks are run on localhost only
   tasks:
-  - name: This is the debug module.
-    debug: msg="A string"
-  - name: The debug module can print a variable too...
-    debug: var=ansible_hostname
-
+    - name: This is the debug module.
+      debug: msg="A string"
+    - name: The debug module can print a variable too...
+      debug: var=ansible_hostname
 - hosts: web
   tags: groups
   name: Those tasks are run on every web host
   tasks:
-  - name: Iterating over the host in the "web" group.
-    debug:
-      msg: >
-        Host: {{ item }}
-    with_items: >
-      {{ groups['web'] }}
+    - name: Iterating over the host in the "web" group.
+      debug:
+        msg: >
+          Host: {{ item }}
+
+      with_items: >
+        {{ groups['web'] }}
+
