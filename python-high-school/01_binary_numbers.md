@@ -1,5 +1,9 @@
 # More on numbers
 
+Audience: students with no programming experience,
+  but with knowledge of decimal and binary notation,
+  polynomials, logic operations and basic set theory.
+
 ## More on binary numbers
 
 We can use f-strings to print the binary representation of a number.
@@ -166,85 +170,3 @@ The OR operator has a physical meaning: it is used to check if, in a circuit, at
 [![](https://mermaid.ink/img/pako:eNpdkL1uAyEQhF8FbRHZkolkl1ekSro4luLOIQUcyx0SBxdYFFmW3z17P25CtcN8zIq5QZssQgMupN-215nE-6eKKpZquqzHXpxYWp-xJZ_ibAo-5svpxmlpNBHmq6Q-I8qfygGYy_cKCSnliyh78STKYREBrZDPPJiFYc1RZcoKvuvJ1GDE6WNNKPvNZllEqesCyhS329U6_LecmzyMVkXYwYB50N7y127TAwXU44AKGh4tOl0DKVDxzmgdrSZ8s55ShoZyxR3oSul8je1DL8yr19zKALw2FL4ddbykNDwgnCOOS6Nzsfc_f7R0Qw?type=png)](https://mermaid.live/edit#pako:eNpdkL1uAyEQhF8FbRHZkolkl1ekSro4luLOIQUcyx0SBxdYFFmW3z17P25CtcN8zIq5QZssQgMupN-215nE-6eKKpZquqzHXpxYWp-xJZ_ibAo-5svpxmlpNBHmq6Q-I8qfygGYy_cKCSnliyh78STKYREBrZDPPJiFYc1RZcoKvuvJ1GDE6WNNKPvNZllEqesCyhS329U6_LecmzyMVkXYwYB50N7y127TAwXU44AKGh4tOl0DKVDxzmgdrSZ8s55ShoZyxR3oSul8je1DL8yr19zKALw2FL4ddbykNDwgnCOOS6Nzsfc_f7R0Qw)
 
 ---
-
-
-## Mathematical built-int functions
-
-Python has some built-in functions for numbers:
-
-```python
-M = max(1, 2)
-m = min(1, 2, -3)
-absolute_value = abs(-3)
-approximate_positive = round(1.4)
-approximate_negative = round(-1.4)
-```
-
-Execise:
-
-- see the [python manual](https://docs.python.org/3/library/functions.html)
-for a list of built-in functions;
-- share with your classmates the ones you know.
-
-
-Mathematical built-in functions can be used to implement simple algorithms,
-such as the Euclidean algorithm for the greatest common divisor (GCD)
-(:it: massimo comun divisore - MCD)
-
-```python
-# Let's define two positive integers.
-b = 234
-c = 64
-# Reorder the numbers so that b is smaller than c.
-b, c = min(b, c), max(b, c)
-print("b =", b, "c =", c)
-```
-
-Now execute the cell below many times, and see what happens.
-
-```python
-# Iterate until b is zero.
-d = c - b
-b, c = min(d, b), max(d, b)
-print("b =", b, "c =", c)
-```
-
----
-
-## Importing functionalities
-
-----
-
-```python
-# Importing new features
-# ..is easy. Features are collected
-# in packages or modules. Just
-import math  # to use the
-math.sqrt  # function
-
-math.sqrt(2)
-```
-
-```python
-# We can even import single functions
-#  or constants from a module
-from math import pi as π
-π / 2
-```
-
-----
-
-Modules contain documentation in the form of docstrings,
-that jupyter presents in scrollable boxes.
-
-```python
-
-# Read the module documentation...
-help(math)
-```
-
-```python
-# ...or the function documentation
-help(math.sqrt)
-
-```
