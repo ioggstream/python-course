@@ -1,5 +1,56 @@
-# Interoperable REST API
+# Mastering API Design at Scale
 
+Design resilient, well-documented APIs that are easy to integrate!
+Learn to use OpenAPI and JSON Schema in a contract-first approach to define data formats,
+meaning and service behavior.
+Apply HTTP standards for caching, throttling, and security,
+building APIs that are predictable and robust.
+
+## Abstract
+
+In this workshop you will learn to design REST APIs that are
+secure, resilient and well-documented, following web standars,
+such as OpenAPI, HTTP and JSON-LD.
+
+We’ll adopt a contract-first approach to ensure clarity and consistency,
+while also discussing when code-first tools like FastAPI can be safely used.
+
+A methodological introduction will guide you in aligning business goals
+with technical implementation using the “API Canvas”.
+
+Finally, we’ll explore strategies for maintaining consistency
+across APIs in multi-organization ecosystems, including:
+
+enforcing API guidelines for service management and security.
+aligning schema semantics through schema registries and linked data principles.
+
+## Agenda
+
+10' Goals and Setup
+15' Introducing OpenAPI, JSON Schema and service HTTP headers
+15' Contract-First or Code-First?
+15' API Canvas Design Metodology
+break
+15' Assisted API Design (with Spectral and <https://italia.github.io/api-oas-checker/>)
+15' Secure schema modeling
+10' Schema registries and semantics with JSON-LD
+10' Adding API Semantics (with JSON-LD and Schema Editor)
+break
+15' API Semantics reprise
+15' The importance of service management
+10' Rate Limiting
+10' Caching
+10' Closing remarks
+Preparation
+
+The workshop requires:
+
+- internet connection
+- access online tools that we’ll use to design the API
+- customizable python3 intepreter
+
+Sources, docker-compose and further materials
+will be available on github.com before the date.
 
 ## Local Setup
 
@@ -21,63 +72,16 @@ ExecStart=/usr/bin/dockerd -H fd:// -H tcp://172.17.0.1:2375
 
 On Mac, check [the FAQ and this issue](https://github.com/docker/for-mac/issues/770#issuecomment-252560286)
 
-
 Consider having enough bandwidth for the first run to download the images.
-
 
 Run the environemnt with:
 
-    # make course
+```bash
+make course
+```
 
 And point the browser on the printed URL, eg.
 
-    # firefox http://localhost:8888
-
-
-## Playing the course on DigitalOcean and Ansible
-
-Once you have a digitalocean account, just
-set your ssh key info in `site-digitalocean.yml`
-then run the playbook:
-
+```bash
+xdg-open http://localhost:8888
 ```
-$ export DO_API_TOKEN=xxxx
-$ ansible-playbook -v site-digitalocean.yml
-```
-
-This will create one (or more) vms with
-the course installed.
-
-Get the jupyter notebook url at the end of the deployment.
-
-## Playing the course on DigitalOcean
-
-If you don't use ansible, you can always setup everything
-by hand.
-
-  - create an Ubuntu 18.04 docker droplet from the menu and ssh into your host
-  - expose docker on local http port
-
-```
-# vim /etc/systemd/system/multi-user.target.wants/docker.service
-[Service]
-...
-ExecStart=/usr/bin/dockerd -H fd:// -H tcp://172.17.0.1:2375
-...
-```
-
-  - clone and run the project
-
-```
- # git clone https://github.com/ioggstream/python-course.git
- # cd python-course/ansible-101
- # make course
-
-
-```
-
- - point to the reference url
-
-See asciicast here
-
-[![asciicast](https://asciinema.org/a/9xqX4akNND7Yc0Q1sTb3ZnEhI.png)](https://asciinema.org/a/9xqX4akNND7Yc0Q1sTb3ZnEhI)
