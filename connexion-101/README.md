@@ -12,13 +12,13 @@ In this workshop you will learn to design REST APIs that are
 secure, resilient and well-documented, following web standars,
 such as OpenAPI, HTTP and JSON-LD.
 
-We’ll adopt a contract-first approach to ensure clarity and consistency,
+We'll adopt a contract-first approach to ensure clarity and consistency,
 while also discussing when code-first tools like FastAPI can be safely used.
 
 A methodological introduction will guide you in aligning business goals
 with technical implementation using the “API Canvas”.
 
-Finally, we’ll explore strategies for maintaining consistency
+Finally, we'll explore strategies for maintaining consistency
 across APIs in multi-organization ecosystems, including:
 
 enforcing API guidelines for service management and security.
@@ -46,7 +46,7 @@ Preparation
 The workshop requires:
 
 - internet connection
-- access online tools that we’ll use to design the API
+- access online tools that we'll use to design the API
 - customizable python3 intepreter
 
 Sources, docker-compose and further materials
