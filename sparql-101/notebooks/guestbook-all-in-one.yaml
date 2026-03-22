@@ -8,8 +8,8 @@ metadata:
     role: master
 spec:
   ports:
-  - port: 6379
-    targetPort: 6379
+    - port: 6379
+      targetPort: 6379
   selector:
     app: redis
     tier: backend
@@ -34,14 +34,14 @@ spec:
         tier: backend
     spec:
       containers:
-      - name: master
-        image: registry.k8s.io/redis:e2e  # or just image: redis
-        resources:
-          requests:
-            cpu: 100m
-            memory: 100Mi
-        ports:
-        - containerPort: 6379
+        - name: master
+          image: registry.k8s.io/redis:e2e # or just image: redis
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          ports:
+            - containerPort: 6379
 ---
 apiVersion: v1
 kind: Service
@@ -53,7 +53,7 @@ metadata:
     role: replica
 spec:
   ports:
-  - port: 6379
+    - port: 6379
   selector:
     app: redis
     tier: backend
@@ -78,22 +78,22 @@ spec:
         tier: backend
     spec:
       containers:
-      - name: replica
-        image: gcr.io/google_samples/gb-redisslave:v1
-        resources:
-          requests:
-            cpu: 100m
-            memory: 100Mi
-        env:
-        - name: GET_HOSTS_FROM
-          value: dns
-          # If your cluster config does not include a dns service, then to
-          # instead access an environment variable to find the master
-          # service's host, comment out the 'value: dns' line above, and
-          # uncomment the line below:
-          # value: env
-        ports:
-        - containerPort: 6379
+        - name: replica
+          image: gcr.io/google_samples/gb-redisslave:v1
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          env:
+            - name: GET_HOSTS_FROM
+              value: dns
+              # If your cluster config does not include a dns service, then to
+              # instead access an environment variable to find the master
+              # service's host, comment out the 'value: dns' line above, and
+              # uncomment the line below:
+              # value: env
+          ports:
+            - containerPort: 6379
 ---
 apiVersion: v1
 kind: Service
@@ -109,7 +109,7 @@ spec:
   # an external load-balanced IP for the frontend service.
   # type: LoadBalancer
   ports:
-  - port: 80
+    - port: 80
   selector:
     app: guestbook
     tier: frontend
@@ -131,19 +131,19 @@ spec:
         tier: frontend
     spec:
       containers:
-      - name: php-redis
-        image: gcr.io/google-samples/gb-frontend:v5
-        resources:
-          requests:
-            cpu: 100m
-            memory: 100Mi
-        env:
-        - name: GET_HOSTS_FROM
-          value: dns
-          # If your cluster config does not include a dns service, then to
-          # instead access environment variables to find service host
-          # info, comment out the 'value: dns' line above, and uncomment the
-          # line below:
-          # value: env
-        ports:
-        - containerPort: 80
+        - name: php-redis
+          image: gcr.io/google-samples/gb-frontend:v5
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          env:
+            - name: GET_HOSTS_FROM
+              value: dns
+              # If your cluster config does not include a dns service, then to
+              # instead access environment variables to find service host
+              # info, comment out the 'value: dns' line above, and uncomment the
+              # line below:
+              # value: env
+          ports:
+            - containerPort: 80

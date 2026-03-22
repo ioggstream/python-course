@@ -21,7 +21,6 @@ x-commons:
       $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/headers/X-RateLimit-Remaining'
     X-RateLimit-Reset:
       $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/headers/X-RateLimit-Reset'
-
 openapi: 3.0.1
 info:
   title: Flask store API.
@@ -95,7 +94,7 @@ paths:
     get:
       operationId: openapi.get_status
       responses:
-        <<: *common-responses
+        !!merge <<: *common-responses
         200:
           description: |
             The API is working properly.
@@ -111,7 +110,6 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/Problem'
-
   /stores:
     get:
       operationId: openapi.list_files
@@ -123,11 +121,11 @@ paths:
         - $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/parameters/fields'
         - $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/parameters/limit'
       responses:
-        <<: *common-responses
+        !!merge <<: *common-responses
         '200':
           description: Retrieve a list of stored files.
           headers:
-            <<: *throttling-headers
+            !!merge <<: *throttling-headers
           content:
             application/json:
               schema:
@@ -158,15 +156,14 @@ paths:
         content:
           multipart/related:
             schema: {}
-              # $ref: '#/components/schemas/UploadFiles'
-
+            # $ref: '#/components/schemas/UploadFiles'
       responses:
-        <<: *common-responses
+        !!merge <<: *common-responses
         '201':
           description: |-
             The files are properly indexed and stored.
           headers:
-            <<: *throttling-headers
+            !!merge <<: *throttling-headers
           content:
             multipart/related: {}
 components:
@@ -186,7 +183,6 @@ components:
           items:
             type: string
             format: binary
-
     Problem:
       $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/schemas/Problem'
     Metadata:
@@ -200,7 +196,6 @@ components:
           type: number
         id:
           type: string
-
   responses:
     # Predefined error codes for this API
     400BadRequest:

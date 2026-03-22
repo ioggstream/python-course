@@ -1,4 +1,3 @@
----
 #
 # This playbook has 3 tasklists, each with a different tag.
 #
@@ -11,10 +10,10 @@
     - debug:
         msg: >
           {{ ansible_hostname }} {{ one }}
+
     - debug:
         msg: >
           The output is {{ one + pi }}
-
 
 - hosts: localhost
   tags: filters
@@ -32,7 +31,7 @@
   name: Use this cell for the exercise
   tasks:
     - name: >
-        Show the free percentage of the local disk using
-        facts and filters
+        Show the free percentage of the local disk using facts and filters
+
       debug:
         msg: "Replace me"

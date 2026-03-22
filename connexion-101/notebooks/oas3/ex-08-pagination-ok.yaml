@@ -2,7 +2,6 @@ openapi: 3.0.0
 info:
   title: foo
   version: "0.1"
-
 # One or more server
 #   You can add production, staging and test environments.
 #   We are using the custom `x-sandbox` to identify
@@ -19,7 +18,6 @@ servers:
       url: https://api.example.com/datetime/v1/status
       interval: 300
       timeout: 15
-
 x-commons:
   throttling-headers: &throttling-headers
     X-RateLimit-Limit:
@@ -28,13 +26,11 @@ x-commons:
       $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/headers/X-RateLimit-Remaining'
     X-RateLimit-Reset:
       $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/headers/X-RateLimit-Reset'
-
   common-responses: &common-responses
     '429':
       $ref: "#/components/responses/429TooManyRequests"
     '503':
       $ref: "#/components/responses/503ServiceUnavailable"
-
 #
 # Complete the /status path
 #
@@ -48,7 +44,7 @@ paths:
         un errore.
       operationId: api.get_status
       responses:
-        <<: *common-responses
+        !!merge <<: *common-responses
         '200':
           description: |
             Il server ha ritornato lo status. In caso di problemi
@@ -61,12 +57,12 @@ paths:
                 title: OK
                 status: 200
                 detail: The app is running smoothly.
-  /echo:  # TODO implement this
+  /echo: # TODO implement this
     get:
       security:
-      - myBasicAuth: []
+        - myBasicAuth: []
       parameters:
-      - $ref: '#/components/parameters/tz'
+        - $ref: '#/components/parameters/tz'
       summary: Return the current timestamp in RFC3339
       description: |
         Return the current timestamp, in the specified
@@ -75,12 +71,12 @@ paths:
         the given timezone is not in our database.
       operationId: api.get_echo
       responses:
-        <<: *common-responses
+        !!merge <<: *common-responses
         '200':
           description: |
             The current timestamp.
           headers:
-            <<: *throttling-headers
+            !!merge <<: *throttling-headers
           content:
             application/problem+json:
               schema:
@@ -88,12 +84,12 @@ paths:
               example:
                 datetime: 20010507T00:00:10Z
         '400':
-           $ref: '#/components/responses/400BadRequest'
-  /timezones:  # TODO implement this
+          $ref: '#/components/responses/400BadRequest'
+  /timezones: # TODO implement this
     get:
       parameters:
-      - $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/parameters/limit"
-      - $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/parameters/offset"
+        - $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/parameters/limit"
+        - $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/parameters/offset"
       summary: Return the supported timezones
       description: |
         Return a paginated list of supported
@@ -101,27 +97,27 @@ paths:
         list of entries is returned.
       operationId: api.get_timezones
       responses:
-        <<: *common-responses
+        !!merge <<: *common-responses
         '200':
           description: |
             A list of timezones between offset and limit.
           headers:
-            <<: *throttling-headers
+            !!merge <<: *throttling-headers
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/Timezones"
               example:
-                entries: [ "Europe/Rome", "Asia/Calcutta", "UTC" ]
+                entries: ["Europe/Rome", "Asia/Calcutta", "UTC"]
                 limit: 3
                 offset: 10
                 count: 3
-  /timezones/{continent}:  # TODO implement this
+  /timezones/{continent}: # TODO implement this
     get:
       parameters:
-      - $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/parameters/limit"
-      - $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/parameters/offset"
-      - $ref: "#/components/parameters/continent_path"
+        - $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/parameters/limit"
+        - $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/parameters/offset"
+        - $ref: "#/components/parameters/continent_path"
       summary: Return the supported timezones
       description: |
         Return a paginated list of supported
@@ -129,32 +125,29 @@ paths:
         out of bound.
       operationId: api.get_timezones_by_continent
       responses:
-        <<: *common-responses
+        !!merge <<: *common-responses
         '200':
           description: |
             A list of timezones between offset and limit.
           headers:
-            <<: *throttling-headers
+            !!merge <<: *throttling-headers
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/Timezones"
               example:
-                entries: [ "Europe/Amsterdam", "Europe/Andorra", "Europe/Astrakhan" ]
+                entries: ["Europe/Amsterdam", "Europe/Andorra", "Europe/Astrakhan"]
                 limit: 3
                 offset: 0
                 count: 3
         '404':
-           $ref: '#/components/responses/404NotFound'
-
-
+          $ref: '#/components/responses/404NotFound'
 components:
   securitySchemes:
     myBasicAuth:
-     type: http
-     scheme: basic
-     x-basicInfoFunc: security.my_auth
-
+      type: http
+      scheme: basic
+      x-basicInfoFunc: security.my_auth
   parameters:
     continent_path:
       name: continent
@@ -167,7 +160,6 @@ components:
       in: query
       schema:
         $ref: '#/components/schemas/Timezone'
-
   responses:
     400BadRequest:
       $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/responses/400BadRequest"
@@ -177,14 +169,13 @@ components:
       $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/responses/429TooManyRequests"
     503ServiceUnavailable:
       $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/responses/503ServiceUnavailable"
-
   schemas:
     Timezones:
       required:
-      - limit
-      - count
-      - offset
-      - entries
+        - limit
+        - count
+        - offset
+        - entries
       properties:
         limit:
           type: number
@@ -207,7 +198,7 @@ components:
       example: Europe/Rome
     Datetime:
       required:
-      - timestamp
+        - timestamp
       properties:
         timestamp:
           type: string

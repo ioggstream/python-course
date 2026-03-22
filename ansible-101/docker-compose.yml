@@ -2,66 +2,58 @@
 version: "2"
 services:
   dev:
-      build: .
-      hostname: sysadminpy
-      environment:
+    build: .
+    hostname: sysadminpy
+    environment:
       - USE_HTTP=1
       - PASSWORD=secret
-      ports:
+    ports:
       - 8888:8888
-      volumes:
+    volumes:
       - ./notebooks:/notebooks:z
       - ./notebooks/custom.css:/root/.jupyter/custom/custom.css
       - .:/code:z
-      network_mode: bridge
-      entrypoint: /bin/sh
-      command: -c "/usr/local/bin/jupyter-notebook --ip 0.0.0.0 --allow-root"
-
-
+    network_mode: bridge
+    entrypoint: /bin/sh
+    command: -c "/usr/local/bin/jupyter-notebook --ip 0.0.0.0 --allow-root"
   test:
-      image: ioggstream/python-course
-      volumes:
+    image: ioggstream/python-course
+    volumes:
       - ./notebooks:/notebooks:z
       # entrypoint: tail -f /etc/hosts
-
-
   # Official image from docker hub
   course:
-      image: ghcr.io/ioggstream/python-course:python27
-      user: root
-      environment:
+    image: ghcr.io/ioggstream/python-course:python27
+    user: root
+    environment:
       - USE_HTTP=1
       - DOCKER_HOST=172.17.0.1
       - SHELL=/bin/bash
-      volumes:
+    volumes:
       - ./notebooks:/notebooks:z
       - ./notebooks/custom.css:/root/.jupyter/custom/custom.css
       - .:/code:z
-      network_mode: bridge
-      ports:
+    network_mode: bridge
+    ports:
       - 8888:8888
-      entrypoint: /bin/sh
-      command: -c "/usr/local/bin/jupyter-notebook --ip 0.0.0.0 --allow-root"
-
-
+    entrypoint: /bin/sh
+    command: -c "/usr/local/bin/jupyter-notebook --ip 0.0.0.0 --allow-root"
   # Some ssh-enabled docker containers
   #  for student homework
   bastion:
-      build:
-          context: .
-          dockerfile:  Dockerfile.ssh
-      volumes:
+    build:
+      context: .
+      dockerfile: Dockerfile.ssh
+    volumes:
       - .:/code:z
-      network_mode: bridge
-
-
+    network_mode: bridge
   # Some ssh-enabled docker containers
   #  for student homework
   web:
-      build:
-          context: .
-          dockerfile:  Dockerfile.ssh
-      volumes:
+    build:
+      context: .
+      dockerfile: Dockerfile.ssh
+    volumes:
       - .:/code:z
-      # - ./notebooks/exercise-01/id_ansible.pub:/root/.ssh/authorized_keys:z
-      network_mode: bridge
+    # - ./notebooks/exercise-01/id_ansible.pub:/root/.ssh/authorized_keys:z
+    network_mode: bridge

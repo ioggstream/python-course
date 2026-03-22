@@ -94,6 +94,7 @@ Exercise: print the content of the sets.
 ## Tuples (Vectors)
 
 A python `tuple` (:it: n-pla) represents an ordered list of objects,
+(e.g, numbers)
 and can contain duplicates.
 
 They seem like vectors,
