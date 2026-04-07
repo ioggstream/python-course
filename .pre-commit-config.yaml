@@ -8,6 +8,7 @@
 # See https://pre-commit.com/hooks.html for more hooks
 default_stages:
   - pre-commit
+exclude: "^archived/"
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v6.0.0
@@ -24,6 +25,7 @@ repos:
   - id: check-json
   - id: check-yaml
     args: [--allow-multiple-documents]
+    exclude: 'ex-.*\.yaml'
   # Security checks.
   - id: detect-private-key
   - id: detect-aws-credentials
@@ -35,7 +37,7 @@ repos:
   hooks:
   - id: yamlfmt
     files: \.(yaml|yml)$
-    exclude: 'config\.yaml'
+    exclude: 'config\.yaml|ex-.*\.yaml'
 #
 # Python linters.
 #
@@ -47,22 +49,16 @@ repos:
   - id: ruff
     args: [--fix]
     files: ^python-high-school/
-    exclude: ^ansible-101/|python-for-sysadmin|\.ipynb$
+    exclude: ^python-for-sysadmin|\.ipynb$
   - # Run the formatter.
     id: ruff-format
     files: ^python-high-school/
-    exclude: ^ansible-101/|python-for-sysadmin|\.ipynb$
-- repo: https://github.com/pre-commit/mirrors-mypy
-  rev: v1.19.1
-  hooks:
-  - id: mypy
-    additional_dependencies: [types-PyYAML]
-    exclude: ^tests/
+    exclude: ^python-for-sysadmin|\.ipynb$
 #
 # Security linters.
 #
 - repo: https://github.com/bridgecrewio/checkov.git
-  rev: 3.2.497  # change to tag or sha
+  rev: 3.2.507  # change to tag or sha
   hooks:
   - id: checkov
   - id: checkov_secrets
@@ -70,10 +66,14 @@ repos:
 - repo: local
   hooks:
   - id: trufflehog
-    name: TruffleHog
+    name: TruffleHog v3.93.3
     description: Detect secrets in your data.
-    entry: bash -c 'docker run --rm -v "$(pwd):/workdir" -i --rm
-      trufflesecurity/trufflehog:latest git file:///workdir --since-commit
+    entry: bash -c 'docker run -c 2 --rm -v "$(pwd):/workdir" -i --rm
+      docker.io/trufflesecurity/trufflehog@sha256:06c1f230512cbb694954716fa5e0adbfb95809c7bfb5a50c25110847417b69db git file:///workdir --since-commit
       HEAD --results=verified,unknown --fail'
     language: system
     stages: ["pre-push"]
+- repo: https://github.com/zizmorcore/zizmor-pre-commit
+  rev: v1.22.0
+  hooks:
+    - id: zizmor
