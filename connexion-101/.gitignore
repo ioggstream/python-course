@@ -7,3 +7,5 @@
 *.retry
 core*
 *_python_intro.ipynb
+.tox
+*generated*

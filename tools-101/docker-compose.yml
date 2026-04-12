@@ -2,45 +2,41 @@
 version: "2"
 services:
   dev:
-      build:
-        dockerfile: python27.dockerfile
-        context: .
-      hostname: sysadminpy
-      environment:
+    build:
+      dockerfile: python27.dockerfile
+      context: .
+    hostname: sysadminpy
+    environment:
       - USE_HTTP=1
       - PASSWORD=secret
       - SHELL=/bin/bash
-      ports:
+    ports:
       - 8888:8888
-      volumes:
+    volumes:
       - ./notebooks:/notebooks:z
       - ./notebooks/custom.css:/root/.jupyter/custom/custom.css
       - .:/code:z
-      network_mode: bridge
-      entrypoint: /bin/sh
-      command: -c "/usr/local/bin/jupyter-notebook --ip 0.0.0.0 --allow-root"
-
-
+    network_mode: bridge
+    entrypoint: /bin/sh
+    command: -c "/usr/local/bin/jupyter-notebook --ip 0.0.0.0 --allow-root"
   test:
-      image: ghcr.io/ioggstream/python-course:python27
-      volumes:
+    image: ghcr.io/ioggstream/python-course:python27
+    volumes:
       - ./notebooks:/notebooks:z
       # entrypoint: tail -f /etc/hosts
-
-
   # Official image from docker hub
   course:
-      image: ghcr.io/ioggstream/python-course:python27
-      user: root
-      environment:
+    image: ghcr.io/ioggstream/python-course:python27
+    user: root
+    environment:
       - USE_HTTP=1
       - DOCKER_HOST=172.17.0.1
-      volumes:
+    volumes:
       - ./notebooks:/notebooks:z
       - ./notebooks/custom.css:/root/.jupyter/custom/custom.css
       - .:/code:z
-      network_mode: bridge
-      ports:
+    network_mode: bridge
+    ports:
       - 8888:8888
-      entrypoint: /bin/sh
-      command: -c "/usr/local/bin/jupyter-notebook --ip 0.0.0.0 --allow-root"
+    entrypoint: /bin/sh
+    command: -c "/usr/local/bin/jupyter-notebook --ip 0.0.0.0 --allow-root"

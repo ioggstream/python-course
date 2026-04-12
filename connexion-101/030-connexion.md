@@ -1,6 +1,7 @@
 # Connexion
 
-[Connexion](https://github.com/spec-first/connexion) is a python framework which streamlines API creation
+[Connexion](https://github.com/spec-first/connexion) is a python framework
+which streamlines API creation
 of contract-first REST APIs.
 
 Once you have your OAS3 spec, `connexion` uses it to:
@@ -29,7 +30,6 @@ Remember:
 - default port is `:5000`
 - the Swagger GUI is at the `/ui` path.
 
-
 ```python
 # A request on a generic PATH on the server returns a
 # nicely formatted and explicative error.
@@ -37,24 +37,18 @@ Remember:
 !curl http://0.0.0.0:5000 -kv
 ```
 
-
-```python
-render_markdown(f'''
 Open the [documentation URL]({api_server_url('ui')}) and check the outcome!
 
-Play a bit with Swagger UI.''')
-
-```
+Play a bit with Swagger UI.
 
 ## Defining endpoints in OAS3
 
 Now that we have added our metadata, we can **provide informations about the endpoints**.
 OAS3 allows multiple endpoints because good APIs have many.
 
-Every endpoint can start with a prefix path (eg. `/datetime/v1`).
+Every endpoint can start with a base path (eg. `/datetime/v1`).
 
-
-```
+```yaml
 # One or more server
 #   You can add production, staging and test environments.
 #   We
@@ -91,13 +85,13 @@ Edit the `servers` attribute so that it points to your actual endpoint URL (eg. 
 
 Now check the outcome.
 
-```
+```bash
 connexion run /code/notebooks/oas3/ex-02-servers-ok.yaml
 ```
 
 ## Defining `paths`
 
-Now we can define our first `path` that is the `/status` one.
+Now we can define our first path that is the `/status` one.
 
 An interoperable API should declare an URL for checking its status.
 
@@ -115,8 +109,7 @@ An OAS3 path references:
 - the associated METHOD (eg. get|post|..)
 - a `summary` and a `description` of the operation
 
-
-```
+```yaml
   /status:
     get:
       summary: Returns the application status.
@@ -128,14 +121,14 @@ An OAS3 path references:
 
 - a reference to the python object to call when the
 
-```
+```yaml
       operationId: get_status
 ```
 
 - the http statuses of the possible responses, each with its description,
   content-type and examples
 
-```
+```yaml
       responses:
         '200':
           description: |
@@ -160,7 +153,7 @@ An OAS3 path references:
 
 ```
 
-### Exercise
+### Exercise {#ex-status-stub}
 
 - open the [ex-03-02-path.yaml](/edit/notebooks/oas3/ex-03-02-path.yaml)
   eventually copy/paste the code from/to the swagger editor.
@@ -170,11 +163,11 @@ We haven't already implemented the function `get_status()` referenced by `operat
 so [to run the spec in a terminal](/terminals/1) we tell the server
 to ignore this with `--stub`
 
-```
+```bash
 connexion run /code/notebooks/oas3/ex-03-02-path.yaml --stub
 ```
 
-### Exercise
+### Exercise {#ex-status-mock}
 
 1- What happens if I get the `/status` resource of my API now?
 
@@ -182,10 +175,9 @@ connexion run /code/notebooks/oas3/ex-03-02-path.yaml --stub
 
 3- Restart the server via
 
-```
+```bash
 connexion run /code/notebooks/oas3/ex-03-02-path.yaml --mock notimplemented
 ```
-
 
 ```python
 # Exercise:  what's the expected output of the following command?
@@ -200,7 +192,7 @@ connexion run /code/notebooks/oas3/ex-03-02-path.yaml --mock notimplemented
 
 Solution on the unimplemented method
 
-```
+```bash
 $ curl http://0.0.0.0:8889/datetime/v1/status
 {
   "detail": "Empty module name",
@@ -212,7 +204,7 @@ $ curl http://0.0.0.0:8889/datetime/v1/status
 
 Solution on other paths
 
-```
+```bash
 $ curl http://0.0.0.0:8889/datetime/v1/missing
 {
   "detail": "The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.",
@@ -220,72 +212,4 @@ $ curl http://0.0.0.0:8889/datetime/v1/missing
   "title": "Not Found",
   "type": "about:blank"
 }
-```
-
-## Schemas
-
-OAS3 allows defining, using and reusing schemas.
-
-They can be defined inline,  in the `component` section or referenced from another file, like below.
-The  URL fragment part can be used to navigate inside the yaml (eg. `#/schemas/Problem`).
-
-```
-components:
-    schemas:
-      Problem:
-        $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/schemas/Problem'
-
-```
-
-
-
-```python
-print(show_component('https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/schemas/Problem'))
-```
-
-
-```python
-# Exercise: use the yaml and requests libraries
-# to download the Problem schema
-from requests import get
-ret  = get('https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml')
-
-# Yaml parse the definitions
-definitions = yaml.safe_load(ret.content)
-
-# Nicely print the Problem schema
-print(yaml.dump(definitions['schemas']['Problem']))
-```
-
-
-```python
-### Exercise
-# Read the definitions above
-# - https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml
-#
-# Then use this cell to list all the structures present in definitions
-```
-
-
-```python
-for sections, v in definitions.items():
-    for items, vv in v.items():
-        print(f'{sections}.{items}')
-```
-
-## Exercise
-
-Edit [ex-03-02-path.yaml](/edit/notebooks/oas3/ex-03-02-path.yaml) so that every `/status` response uses
-the `Problem` schema.
-
-Look at [simple.yaml](https://github.com/teamdigitale/api-starter-kit/blob/master/openapi/simple.yaml) to
-see a complete implementation.
-
-
-```python
-## Exercise
-
-#Test the new setup
-
-
 ```

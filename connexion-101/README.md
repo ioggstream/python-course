@@ -21,21 +21,25 @@ with technical implementation using the “API Canvas”.
 Finally, we'll explore strategies for maintaining consistency
 across APIs in multi-organization ecosystems, including:
 
-enforcing API guidelines for service management and security.
-aligning schema semantics through schema registries and linked data principles.
+- enforcing API guidelines for service management and security.
+- aligning schema semantics through schema registries and linked data principles.
 
 ## Agenda
 
 10' Goals and Setup
-15' Introducing OpenAPI, JSON Schema and service HTTP headers
 15' Contract-First or Code-First?
 15' API Canvas Design Metodology
+15' Introducing OpenAPI, JSON Schema and service HTTP headers
+
 break
+
 15' Assisted API Design (with Spectral and <https://italia.github.io/api-oas-checker/>)
 15' Secure schema modeling
 10' Schema registries and semantics with JSON-LD
 10' Adding API Semantics (with JSON-LD and Schema Editor)
+
 break
+
 15' API Semantics reprise
 15' The importance of service management
 10' Rate Limiting

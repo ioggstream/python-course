@@ -15,13 +15,12 @@ Welcome to the API-First training!
 - [x] [Using YAML features and `$ref` to enforce API behavior](/notebooks/notebooks/05-reusing-and-bundling.ipynb)
 - [x] Authorization: [basic auth](/notebooks/notebooks/06-connexion-authorization-basic.ipynb)
 - [x] Service management with [interoperabile throttling headers](/notebooks/notebooks/07-connexion-throttling-headers.ipynb)
-- [x] [Pagination](/notebooks/notebooks/08-pagination.ipynb)
+- [x] [Pagination]s(/notebooks/notebooks/08-pagination.ipynb)
 - [ ] [Validation intro](/notebooks/notebooks/09-connexion-validation.ipynb)
 
 Bonus tracks:
 
 - [x] Authorization with JWT
-
 
 ## Strategy
 
@@ -40,9 +39,9 @@ It's not a way for not doing your homework ;)
 
 You can:
 
-  - [open a terminal on the local machine](/terminals/example)
-  - [edit an existing file](/edit/notebooks/untitled.txt)
-  - add more cells with `ALT+ENTER`
+- [open a terminal on the local machine](/terminals/example)
+- [edit an existing file](/edit/notebooks/untitled.txt)
+- add more cells with `ALT+ENTER`
 
 FIXME: Go to the [basic python course](/tree/notebooks/rendered_notebooks/python-basic)
 
@@ -75,7 +74,7 @@ Whenever you complete an exercise, you should run
 connexion run /code/notebooks/oas3/openapi.yaml
 ```
 
-## If you can't do an exercise...
+## If you can't do an exercise
 
 During the course we'll write two files:
 
@@ -89,12 +88,10 @@ you can run the solution (which ends with `-ok.yaml` instead, with
 connexion run /code/notebooks/oas3/ex-03-02-path-ok.yaml
 ```
 
-
 ```python
 # An API Editor is available at the following address
 print(oas_editor_url(''))
 ```
-
 
 ```python
 # You can evaluate maths and strings
@@ -105,7 +102,6 @@ s = s + 1
 print("now s is increased " + str(s))
 ```
 
-
 ```python
 # Note: all notebooks preload the definitions in
 !ls -l /root/.ipython/profile_default/startup
@@ -115,10 +111,7 @@ print("now s is increased " + str(s))
 
 Exercise solutions are folded. You can show them clicking on the `+` sign.
 
-
-
-### Don't do that :D just try and ...
-
+### Don't do that :D just try and
 
 ![Do your homework](http://s2.quickmeme.com/img/43/438ccdc454bc53dfe79f6190ee43b2be19bd578ad002426efcf90f7a327cedd1.jpg)
 
@@ -129,7 +122,6 @@ Create a docker-18-04 droplet and `ssh` into it.
 ## Setup example
 
 [![asciicast](https://asciinema.org/a/3DhEypBrk3WapL2F5yrcszFZ6.png)](https://asciinema.org/a/3DhEypBrk3WapL2F5yrcszFZ6)
-
 
 ## Docker must listen on 172.17.0.1:2735
 
@@ -159,8 +151,6 @@ make course
 ```
 firefox http://43.32.54.212:8888/tree/notebooks/?token=....
 ```
-
-
 
 ```python
 

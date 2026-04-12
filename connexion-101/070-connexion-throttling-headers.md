@@ -26,7 +26,6 @@ x-commons:
 
 ```
 
-
 ## Returning throttling headers
 
 Now we can use the anchor in our `get /echo responses`

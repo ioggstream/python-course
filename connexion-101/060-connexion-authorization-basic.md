@@ -15,12 +15,11 @@ Between supported security schemes we have:
 `connexion` can reference a python function via `x-basicInfoFunc`.
 Authenticated operations gets user informations via the `user` parameter.
 
-
 ### OAS3: basic auth
 
 Here we are defining the `myBasicAuth` security scheme.
 
-```
+```yaml
 components:
  securitySchemes:
    myBasicAuth:
@@ -31,7 +30,7 @@ components:
 
 We can then reference `myBasicAuth` in one or more paths
 
-```
+```yaml
 paths:
   /echo
     get:
@@ -59,7 +58,6 @@ Implement the `my_auth` function in [security.py](/edit/notebooks/oas3/security.
 
 Use the cell below to implement it,
 
-
 ```python
 # Test here the my_auth implementation.
 def my_auth(username, password,required_scopes=None):
@@ -78,13 +76,10 @@ def my_auth(username, password,required_scopes=None):
 
 Operations like `get_echo` gets user informations via the `user` param.
 
-
 Modify get_echo in [api.py](/edit/notebooks/oas3/api.py) such that:
 
 - unauthenticated replies returns a `401` http status
 - the authenticated reply contains user informations `{"timestamp": "2019-01-01T21:04:00Z", "user": "jon"}`
-
-
 
 ```python
 def get_echo(tz, user=None):
@@ -104,7 +99,6 @@ with the usual
 connexion run /code/notebooks/oas3/ex-06-01-auth-ok.yaml
 ```
 
-
 ```python
 render_markdown(
 f'''
@@ -114,7 +108,6 @@ Play a bit with
 
 ''')
 ```
-
 
 ```python
 # Try to curl some requests!
@@ -128,7 +121,7 @@ Bearer tokens are supported:
 - in OAS via the `scheme: bearer`
 - in connexion via the `x-bearerInfoFunc`
 
-```
+```yaml
 components:
   securitySchemes:
     jwt:
@@ -146,7 +139,6 @@ Once you send the header
 the `token` string will be passed to a function like the following
 
 NOTE: the `bearerFormat` is a free identifier of the token format and the associated syntax may not be enforced by the spec.
-
 
 ```python
 def decode_token(token):
@@ -167,11 +159,9 @@ def decode_token(token):
 
 You can learn more on Connexion Security on:
 
-- https://github.com/zalando/connexion/blob/master/docs/security.rst
-
+- <https://github.com/zalando/connexion/blob/master/docs/security.rst>
 
 A complete JWT example is [here](https://github.com/zalando/connexion/blob/master/examples/openapi3/jwt/app.py)
-
 
 ```python
 

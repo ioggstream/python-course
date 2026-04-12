@@ -37,7 +37,7 @@ repos:
   hooks:
   - id: yamlfmt
     files: \.(yaml|yml)$
-    exclude: 'config\.yaml|ex-.*\.yaml'
+    exclude: 'config\.yaml|ex-.*\.yaml|mysql.*'
 #
 # Python linters.
 #

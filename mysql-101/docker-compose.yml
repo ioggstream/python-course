@@ -1,20 +1,17 @@
-
 centos:
   image: centos/systemd
   privileged: true
   volumes:
-  - .:/code:z
-
+    - .:/code:z
 mysql:
   image: ioggstream/mysql-community:5.7-systemd
   privileged: true
   volumes:
-  - .:/code:z
-
+    - .:/code:z
 revealjs:
   image: amouat/revealjs
   ports:
     - "8000:8000"
     - "35729:35729"
   volumes:
-  - .:/revealjs/slides:ro
+    - .:/revealjs/slides:ro
