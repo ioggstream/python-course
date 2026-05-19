@@ -101,4 +101,4 @@ cat generated_model.py
 
 And some tools to visually navigate API Schemas:
 
-- [Schema Editor](https://teamdigitale.github.io/dati-semantic-schema-editor/)
+- [Schema Editor](https://teamdigitale.github.io/dati-semantic-schema-editor/latest/#url=https://raw.githubusercontent.com/ioggstream/python-course/refs/heads/main/connexion-101/notebooks/oas3/person.yaml)
