@@ -1,0 +1,45 @@
+# openapi.yaml
+openapi: 3.0.0
+info:
+  title: Person API
+  version: 1.0.0
+paths:
+  /persons/{person_id}:
+    get:
+      parameters:
+        - name: person_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A person
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Person'
+components:
+  schemas:
+    Person:
+      description: |-
+        A person is a human being.
+      x-jsonld-type: https://schema.org/Person
+      x-jsonld-context:
+        name: https://schema.org/givenName
+        surname: https://schema.org/familyName
+        email: https://schema.org/email
+      type: object
+      required:
+        - name
+        - surname
+      properties:
+        name:
+          type: string
+          pattern: '^[A-Z][a-z]+$'
+        surname:
+          type: string
+          pattern: '^[A-Z][a-z]+$'
+        email:
+          type: string
+          format: email

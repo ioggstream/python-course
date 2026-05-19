@@ -3,6 +3,7 @@
 #
 connexion[swagger-ui]
 connexion
+schemathesis
 openapi-resolver
 pyyaml
 flask_testing

@@ -86,6 +86,12 @@
 
 
 
+
+
+
+
+
+
        --password=Secret%2017 --log-level=DEBUG4
        --js -f /root/create-cluster.js
 - name: Add instances to cluster

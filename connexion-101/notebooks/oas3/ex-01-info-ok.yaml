@@ -1,15 +1,54 @@
 openapi: 3.0.0
 info:
   version: "1.0.0"
-  # Il `title` e' il nome del tuo prodotto/servizio!
-  # E' la prima cosa ad apparire in pagine web e cataloghi.
-  # Dev'essere chiaro e conciso.
+  # The `title` is the name of your product/service!
+  # It is the first thing to appear in web pages and catalogs.
+  # It must be clear and concise.
   title: |-
-    Ora esatta.
+    Exact Time.
   x-summary: >-
-    Questo servizio ritorna la data e l'ora attuali in UTC.
+    This service returns the current date and time in UTC.
   description: |
-    #### Documentazione
+    #### Documentation :flag-en:
+    The Exact Time service returns the server time in RFC5424 (syslog) format.
+
+    `2018-12-30T12:23:32Z`
+
+    Here goes the main documentation of the service.
+    The text should be divided into multiple parts, all written in Markdown.
+
+    This section is informative. Remember to include:
+
+      * what these APIs do
+      * who can benefit from them
+      * why they are useful
+
+    ##### Subsections
+    It is possible to use - with discretion - subsections.
+
+    #### Note
+
+    The service does not require authentication, but it must be used in compliance
+    with the throttling headers exposed in accordance with the Interoperability Model Guidelines.
+
+    Use this section for specific notes, regulatory references, and/or disclaimers not included in `termsOfService`.
+
+    #### Technical Information and Examples
+
+    Example:
+
+    ```
+    http http://localhost:8443/datetime/v1/echo
+    {
+      'datetime': '2018-12-30T12:23:32Z'
+    }
+    ```
+
+    Here it is possible to introduce brief technical information and examples.
+    Note: the `description` does not replace the project documentation, but it should
+    facilitate the execution of the first requests.
+
+    #### Documentazione :flag-it:
     Il servizio Ora esatta ritorna l'ora del server in formato RFC5424 (syslog).
 
     `2018-12-30T12:23:32Z`
@@ -48,27 +87,26 @@ info:
     Qui e' possibile introdurre brevi informazioni tecniche ed esempi.
     Attenzione: la `description` non sostituisce la documentazione di progetto,
     deve pero' facilitare l'esecuzione delle prime richieste.
-  # I termini del servizio contengono un riferimento
-  #   a tutte le indicazioni e le note legali per l'utilizzo
-  #   del servizio, inclusi gli eventuali riferimenti utili al GDPR.
-  termsOfService: 'http://swagger.io/terms/'
-  # Chi posso contattare per informazioni sul servizio e sul suo stato?
+  # Terms of service contain a reference
+  #   to all the indications and legal notes for the use
+  #   of the service, including any references useful for GDPR.
+  termsOfService: "http://swagger.io/terms/"
+  # Who can I contact for information about the service and its status?
   contact:
     email: robipolli@gmail.com
     name: Roberto Polli
     url: https://twitter.com/ioggstream
-  # L'audience delle API. Attualmente e' definito solamente
-  #   la tipologia `public`.
+  # The audience of the API. Currently only `public` is defined.
   x-audience:
     - public
-  # Ogni API deve avere un UUID, invariante nel tempo e
-  #   rispetto al `title`.
+  # Every API must have a UUID, invariant over time and
+  #   with respect to the `title`.
   x-api-id: 00000000-0000-0000-0000-000000000000
   license:
     name: Apache 2.0
-    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
-  # Per dare indicazioni sul ciclo di vita dell'API
-  # si puo' usare un parametro come:
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+  # To provide information about the API lifecycle
+  # you can use a parameter like `x-lifecycle` with the following fields:
   x-lifecycle:
     published: 1970-01-01
     deprecated: 2050-01-01

@@ -1,17 +1,13 @@
-scipy
+docker-py
 ipython
-matplotlib
-nose
-psutil
-simplejson
-pyzmq
-markupsafe
-tornado
 jsonschema
 jupyter
-ansible
-docker-py
+markupsafe
+psutil
 pyyaml
+pyzmq
+simplejson
+pytest
 
 # jupyter tools
 nbstripout
