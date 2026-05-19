@@ -5,18 +5,7 @@ Author: <roberto.polli@par-tec.it>
 
 ---
 
-## Agenda
-
-- 15' Contract-First or Code-First?
-- 15' API Canvas Design Methodology
-- 15' Introducing OpenAPI, JSON Schema and service HTTP headers
-
-break
-
-- 15' Assisted API Design (with Spectral and validation tools)
-- 15' Secure schema modeling
-
-### Hints
+## Hints
 
 - **Type in** exercises so you can learn from your mistakes
 - If your notebook get stuck, **restart the kernel and run all** cells
