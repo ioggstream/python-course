@@ -45,7 +45,8 @@ break
 10' Rate Limiting
 10' Caching
 10' Closing remarks
-Preparation
+
+### Preparation
 
 The workshop requires:
 
@@ -55,6 +56,8 @@ The workshop requires:
 
 Sources, docker-compose and further materials
 will be available on github.com before the date.
+
+We'll use [connexion](https://github.com/spec-first/connexion), a python framework which streamlines API creation.
 
 ## Local Setup
 

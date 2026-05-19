@@ -1,18 +1,18 @@
 FILES=$(wildcard [0-9]*.md)
 BOOKS = $(patsubst %.md,notebooks/%.ipynb,$(FILES))
-SLIDES = $(patsubst %.ipynb,%.html,$(BOOKS))
+SLIDES = $(patsubst %.ipynb,%.slides.html,$(BOOKS))
 
 
-all: $(BOOKS)
-	@echo $(BOOKS) $(SLIDES)
+all: $(SLIDES)
+	@echo $(SLIDES)
 
 notebooks/%.ipynb: %.md
 
 	notedown --to notebook $^ > $@
 
-%.html: %.ipynb
+%.slides.html: %.ipynb
 
-	jupyter nbconvert --to slides $^ --post serve
+	jupyter nbconvert --to slides $<
 
 clean:
-	rm notebooks/*.ipynb -f
+	rm -f notebooks/*.ipynb notebooks/*.slides.html

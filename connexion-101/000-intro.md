@@ -63,7 +63,7 @@ all the course under `/code`.
     └── startup  # startup files for jupyter, don't touch ;)
 ```
 
-## Customizing the flask app
+## Customizing the app
 
 To simplify things, during the training we'll run the connexion-flask app with the `connexion run` command.
 You can always provide a custom `__main__.py` like you normally do with your flask app (eg: enable TLS, ...).

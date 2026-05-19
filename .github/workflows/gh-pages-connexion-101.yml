@@ -1,0 +1,65 @@
+# Converts connexion-101 notebooks to reveal.js slide decks and deploys them
+# to the gh-pages branch under connexion-101/.
+#
+# Other top-level directories in gh-pages (docker-101/, …) are never touched.
+# The connexion-101/ directory is always wiped and recreated from scratch.
+#
+# After the first run, enable GitHub Pages in:
+#   Settings → Pages → Source: gh-pages branch / (root)
+# The slides will be available at:
+#   https://ioggstream.github.io/python-course/connexion-101/
+name: Deploy connexion-101 to GitHub Pages
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'connexion-101/**'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.14'
+          cache: pip
+      - name: Install tox
+        run: pip install tox
+      - name: Build slides
+        run: |
+          cd connexion-101 && tox -e make
+          mkdir -p ../_site
+          cp notebooks/*.slides.html ../_site/
+          cp notebooks/custom.css ../_site/ 2>/dev/null || true
+      - name: Generate index.html
+        run: |
+          python3 - <<'EOF'
+          import os, glob
+          files = sorted(glob.glob("_site/*.slides.html"))  # produced by tox -e make
+          items = "\n".join(
+              f'  <li><a href="{os.path.basename(f)}">{os.path.basename(f)}</a></li>'
+              for f in files
+          )
+          html = (
+              "<!DOCTYPE html>\n<html lang=\"en\">\n"
+              "<head><meta charset=\"utf-8\"><title>connexion-101</title></head>\n"
+              "<body>\n<h1>connexion-101</h1>\n<ul>\n"
+              + items +
+              "\n</ul>\n</body>\n</html>\n"
+          )
+          with open("_site/index.html", "w") as fh:
+              fh.write(html)
+          EOF
+      # clean: true  → wipes connexion-101/ before deploying (scratch rebuild)
+      # Files outside connexion-101/ in gh-pages are never modified.
+      - uses: JamesIves/github-pages-deploy-action@d92aa235d04922e8f08b40ce78cc5442fcfbfa2f # v4
+        with:
+          branch: gh-pages
+          folder: _site
+          target-folder: connexion-101
+          clean: true
