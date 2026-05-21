@@ -1,13 +1,19 @@
 # Reusing and bundling
 
-Our strategy to standardize default responses, schemas and other components between
-different API providers, is to provide those definitions in a shared and versioned file,
-like <https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml>
+To standardize default responses,
+schemas and other components between
+different API providers,
+publish definitions in a shared and versioned file
+(e.g., [components.oas3.yaml](/edit/notebooks/oas3/components.oas3.yaml)).
+
+----
 
 API providers can then:
 
 - `$ref`erence reusable components
 - eventualy create a single bundled file containing all the resolved references (eg. with `openapi_resolver`)
+
+----
 
 With a set of common components API designers can create
 better interfaces and ask themself questions like:
@@ -16,7 +22,9 @@ better interfaces and ask themself questions like:
 - can I reuse already existing schemas?
 - should I implement a new schema for this object?
 
-### Reusable components in OAS3
+---
+
+## Reusable components in OAS3
 
 Supported reusable components can be:
 
@@ -25,25 +33,26 @@ Supported reusable components can be:
 - `responses`: http responses
 - `securitySchemes`: security requirements to be applied to a given path
 
-NOTE: in this course we won't go indeep on all the possibilities of OAS3, which you can see on the [OAS website](https://TODO)
+NOTE: this course doesn't cover on all the possibilities of OAS3.
+See the [OAS website](https://github.com/OAI/OpenAPI-Specification).
+
+----
 
 ### Exercise: replacing definitions with $refs
 
-- Open this complete file [ex-05-01-bundle.yaml](ex-05-01-bundle.yaml)
-- replace as many definitions as possible with references from the shared [definitions.yaml](https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml).
-
+- Open [ex-05-01-bundle.yaml](/edit/notebooks/oas3/ex-05-01-bundle.yaml)
+- replace as many definitions as possible with references from the shared [components.oas3.yaml]().
 
 ```python
 # Exercise: create a bundle from the previous file with
-!python -m openapi_resolver /code/notebooks/oas3/ex-05-01-bundle.yaml
 ```
 
 ### YAML anchors are your friends
 
-YAML has a very nice feature, named **anchors**. They allow to define and reference
+YAML has a nice feature, named **anchors**. They allow to define and reference
 given portions of a YAML file.
 
-```
+```yaml
 # the following &anchor stores the `foo` value
 a: &this_is_an_anchor foo
 
@@ -57,6 +66,7 @@ See [anchors.yaml](/edit/notebooks/anchors.yaml)
 ```python
 #  Check yaml file content.
 from pathlib import Path
+import yaml
 
 content = Path('anchors.yaml').read_text()
 

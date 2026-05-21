@@ -1,12 +1,24 @@
-# A new path: /echo
+# Implementing requests
+
+Now we'll add new paths and add
+request parameters, including
+their schema.
+
+Pagination parameters (`limit`, `offset`, `cursor`)
+should be implemented consistently across APIs:
+this can be easily achieved
+publishing shared OAS3 components
+(see [components.oas3.yaml](/edit/notebooks/oas3/components.oas3.yaml)).
+
+---
+
+## A new path: /echo
 
 Now we're going to write a new path: `/echo`.
 
-Our goal is the following:
-
 - when invoking `/datetime/v1/echo` the API will return
   the current datetime;
-- the response is enveloped in the following example json object:
+- the response is enveloped in a json object:
 
 ```json
 { "timestamp": "2019-12-25T00:00:00Z" }
@@ -14,9 +26,11 @@ Our goal is the following:
 
 - the status code for a successful response is `200`
 
+----
+
 ### Exercise: write /echo specs
 
-Edit the [ex-04-02-echo-ok.yaml](/edit/notebooks/oas3/ex-04-02-echo.yaml) and write the `echo` specifications:
+Edit [ex-04-02-echo-ok.yaml](/edit/notebooks/oas3/ex-04-02-echo.yaml) and write the `echo` specifications:
 
 1- define the new `Datetime` schema to be used in the response;
 
@@ -33,13 +47,15 @@ Edit the [ex-04-02-echo-ok.yaml](/edit/notebooks/oas3/ex-04-02-echo.yaml) and wr
 
 Hint: feel free to reuse as much yaml code as possible.
 
+----
+
 ### Exercise: test /echo mocks
 
-Run your spec [in the terminal](/terminals/1) and check that it properly returns the mock objects.
+Run your spec [in the terminal](/terminal/connexion) and check that it properly returns the mock objects.
 
 Use
 
-```
+```text
 connexion run --mock all /code/notebooks/oas3/ex-04-02-echo-ok.yaml
 ```
 
@@ -48,22 +64,28 @@ connexion run --mock all /code/notebooks/oas3/ex-04-02-echo-ok.yaml
 !curl http://localhost:5000/datetime/v1/echo -vk
 ```
 
+---
+
 ## Request parameters
 
 OAS3 allows to specify parameters both in `path`, `query` and  `headers`.
 
 Interoperable APIs should follow simple rules when using parameters:
 
-- define parameter conventions for common patterns, eg: limit, offset;
+- define parameter conventions for common patterns, eg: `limit`, `offset`, `cursor`;
 - use standard HTTP headers when possible.
 
-As many APIs implement pagination, it's a good think to converge to a common
-set of parameters to use. Our choice is:
+----
 
-- limit: max number of entries to retrieve
-- offset: the number of entries to skip in a paginated request
-- cursor: an identifier (cursor) of the first entry to be returned
+We introduce the following pagination
+parameters:
+
+- `limit`: max number of entries to retrieve
+- `offset`: the number of entries to skip in a paginated request
+- `cursor`: an identifier (cursor) of the first entry to be returned
   [Slack APIs provide an example of cursor-based pagination](https://api.slack.com/docs/pagination)
+
+---
 
 ## Adding request parameters to `/echo`
 
@@ -81,15 +103,11 @@ components:
 # - it's a `query` parameter
 # - its name
 # - its schema
-print(show_component('https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/parameters/limit'))
+oas3 = yaml.safe_load(open("oas3/components.oas3.yaml"))
+print(yaml.safe_dump(oas3["components"]["parameters"]["limit"]))
 ```
 
-    description: How many items to return at one time (max 100)
-    in: query
-    name: limit
-    schema:
-      format: int32
-      type: integer
+----
 
 ### Exercise: adding parameters to `/echo`
 
@@ -160,24 +178,15 @@ def get_echo(tz='UTC'):
 
 ```
 
-Now  [run the spec in a terminal](/terminals/1) using
+Now  [run the spec in a terminal](/terminals/connexion) using
 
-```
-cd /code/notebooks/oas3/
+```text
 connexion run /code/notebooks/oas3/ex-04-02-echo-ok.yaml
 ```
 
-```python
-render_markdown(f'''
-play a bit with the [Swagger UI]({api_server_url('ui')})
-
-and try making a request!
-''')
-```
+and use the Swagger UI to test the API.
 
 ```python
-## TODO do we have enough time to show flask_testing?
-
 # Check that default works
 !curl http://localhost:5000/datetime/v1/echo -kv
 ```
@@ -187,13 +196,7 @@ and try making a request!
 !curl http://localhost:5000/datetime/v1/echo?tz=Europe/Rome -kv
 ```
 
-
 ```python
 # Test an invalid timezone
 !curl http://localhost:5000/datetime/v1/echo?tz=Frittole -kv
-```
-
-
-```python
-
 ```

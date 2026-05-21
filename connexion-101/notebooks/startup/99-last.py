@@ -5,9 +5,8 @@ from urllib.parse import urlparse
 
 import yaml
 from IPython.display import Markdown, display
-from openapi_resolver import OpenapiResolver
 from requests import get
-
+r
 
 def render_markdown(s):
     return display(Markdown(s))
@@ -29,12 +28,3 @@ def api_server_url(path):
 
 def oas_editor_url(url):
     return editor_url + url
-
-
-def show_component(url):
-    U = urlparse(url)
-    fragment = U.fragment.strip("/").split("/")
-    ret = yaml.safe_load(get(url).content)
-    for k in fragment:
-        ret = ret[k]
-    return OpenapiResolver.yaml_dump_pretty(ret)

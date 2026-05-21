@@ -6,10 +6,20 @@ They:
 - define the syntax of exchanged data;
 - may define the semantics (aka the meaning) of the data.
 
-The main tools to avoid schema proliferation are:
+Schemas should be:
+
+- safe (e.g., prevent injection attacks);
+- evolvable (e.g., allow adding new fields without breaking clients);
+- consistent (e.g., use the same field names and formats across APIs).
+
+----
+
+To avoid schema proliferation, use:
 
 - catalogs;
-- guidelines.
+- guidelines based on common specifications.
+
+---
 
 ## Agenda
 
@@ -46,9 +56,17 @@ This promotes reuse and consistency.
 
 ### Reusable schemas
 
-OAS schemas must always be embedded in the `#/components/schemas` section
+OAS schemas must be embedded in the `#/components/schemas` section
 of an OAS document.
-Schemas outside OAS documents must be defined as JSON Schema files, with all the proper headings and metadata.
+Schemas outside OAS documents must be defined as JSON Schema files,
+with all the proper headings and metadata.
+
+:warning: A schema used for request or response,
+should always be a JSON object, even if it has only one field.
+This allows adding new fields in the future without breaking clients
+and provides a consistent structure for all requests and responses.
+
+----
 
 :warning: If your API ecosystem relies on OAS,
 embedding all schemas in OAS is a sensible choice.
@@ -76,6 +94,8 @@ components:
           maxLength: 200
 ```
 
+----
+
 You can publish it on the web (e.g. GitHub Pages) and reference it from other specs with `$ref`:
 
 ```yaml
@@ -83,6 +103,16 @@ You can publish it on the web (e.g. GitHub Pages) and reference it from other sp
 schema:
   $ref: '#/components/schemas/Person'
 ```
+
+----
+
+### Infrastructural components schemas
+
+OAS allows defining schemas for both domain entities (e.g. `Person`) and infrastructural components(e.g. `Problem`, `Pagination`, `ThrottlingHeaders`).
+
+----
+
+For example
 
 In your ecosystem, you should have a curated registry of common schemas
 for infrastructural components (e.g. `Problem`, `Pagination`, `ThrottlingHeaders`).
@@ -233,17 +263,23 @@ Here the goal shifts from security to stability and evolvability.
 While the model can be more flexible, you may want to ensure
 that your system generates the expected structures.
 
+----
+
 :warning: Your API architecture may be configured
 to enforce response schemas at runtime: this avoids
 accidental publication of extra fields
 or errored response.
+
+----
 
 Some hints:
 
 - Don't remove required fields in new versions - that is a breaking change.
 - Mark read-only fields with `readOnly: true` (e.g. `id`, `created_at`).
 
-OAS allows annotating fields with `readOnly` and `writeOnly`
+----
+
+Annotate fields with `readOnly` and `writeOnly`
 to control their visibility in requests and responses.
 
 This allows reusing the same schema for both
@@ -285,6 +321,7 @@ components:
       type: string
       nullable: true
 ```
+----
 
 JSON Schema is more flexible but implementing tools may require tweaks.
 
@@ -334,6 +371,8 @@ components:
     Problem:
       $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/schemas/Problem'
 ```
+
+----
 
 Then use it for all error responses, including `default`:
 

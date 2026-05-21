@@ -13,6 +13,8 @@ We'll start filling the following grid.
 |------|-------|-----|------|-------|-------|
 | Who are the users of the API? | What do they want to do? | How do they do it? | What data do they send? Where do they get it from? | What data do they get fro the API? How do they use it? | What are their goals? |
 
+---
+
 ### Case Study: Defibrillators API
 
 To make this concrete we will design a hypothetical API that allows

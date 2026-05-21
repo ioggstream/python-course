@@ -6,7 +6,13 @@
 openapi: 3.0.0
 info:
   title: Status API
-  version: "0.1"
+  version: "0.1.0"
+  contact:
+    name: API Support
+    url: https://www.example.com/support
+    email: robipolli@gmail.com
+  description: |
+    This API provides the status of the application. It can be used for health checks and monitoring purposes.
 # One or more server
 #   You can add production, staging and test environments.
 #   We are using the custom `x-sandbox` to identify
@@ -14,6 +20,7 @@ info:
 servers:
   - description: Development server
     url: https://localhost:8443/datetime/v1
+    x-sandbox: true
   - description: Test server
     url: https://api.example.com/datetime/v1
     x-sandbox: true
