@@ -19,16 +19,25 @@ Once you have your OAS3 spec, `connexion` uses it to:
 !pip install connexion[swagger-ui] connexion
 ```
 
-Now  [run the spec in a terminal](/terminals/1) using
+## Running an API
 
-```bash
-connexion run /code/notebooks/oas3/ex-01-info-ok.yaml
+Now  [run the spec in a terminal](/terminals/connexion) using
+
+```python
+import socket
+host = socket.gethostbyname(socket.gethostname())
+port = 5000
+print(f"$ connexion run notebooks/oas3/ex-01-info-ok.yaml --host {host} --port {port}")
+print()
+print(f"Then open the documentation URL: http://{host}:{port}/ui")
 ```
 
 Remember:
 
 - default port is `:5000`
-- the Swagger GUI is at the `/ui` path.
+- the Swagger UI is at the `/ui` path.
+
+----
 
 ```python
 # A request on a generic PATH on the server returns a
@@ -39,27 +48,35 @@ Remember:
 
 Open the [documentation URL]({api_server_url('ui')}) and check the outcome!
 
-Play a bit with Swagger UI.
+### Exercises {#connexion-run-ex}
+
+- issue a `POST /ui` request and check that the status code is `405 Method Not Allowed`.
+- issue a `GET /MISSING` request and check that the status code is `404 Not Found`.
+- the `Content-Type` header field conveys the media type of the returned content;
+  what's the content type of the error responses?
+
+----
 
 ## Defining endpoints in OAS3
 
-Now that we have added our metadata, we can **provide informations about the endpoints**.
-OAS3 allows multiple endpoints because good APIs have many.
+Now that we have added our metadata, we can **provide informations about server endpoints**.
+OAS3 allows multiple server endpoints because
+stakeholders interactions go through various lifecycle stages.
 
 Every endpoint can start with a base path (eg. `/datetime/v1`).
 
 ```yaml
 # One or more server
 #   You can add production, staging and test environments.
-#   We
-#   sandbox instances
+#   A tip is to mark non-production instances as sandboxes.
 servers:
   - description: |
       An interoperable API has many endpoints.
       One for development...
     url: https://localhost:8443/datetime/v1
+    x-sandbox: true
 
-  - description:
+  - description: |
       One for testing in a sandboxed environment. This
       is especially important to avoid clients to
       test in production.
@@ -76,16 +93,17 @@ servers:
       url: https://api.example.com/datetime/v1/status
       interval: 300
       timeout: 15
-
 ```
+
+----
 
 ### Exercise: the `servers` parameter
 
 Edit the `servers` attribute so that it points to your actual endpoint URL (eg. your IP/port).
 
-Now check the outcome.
+Now check the outcome in the [terminal](/terminals/connexion).
 
-```bash
+```text
 connexion run /code/notebooks/oas3/ex-02-servers-ok.yaml
 ```
 
