@@ -26,18 +26,18 @@ components:
         A person is a human being.
       x-jsonld-type: https://schema.org/Person
       x-jsonld-context:
-        name: https://schema.org/givenName
-        surname: https://schema.org/familyName
+        given_name: https://schema.org/givenName
+        family_name: https://schema.org/familyName
         email: https://schema.org/email
       type: object
       required:
-        - name
-        - surname
+        - given_name
+        - family_name
       properties:
-        name:
+        given_name:
           type: string
           pattern: '^[A-Z][a-z]+$'
-        surname:
+        family_name:
           type: string
           pattern: '^[A-Z][a-z]+$'
         email:
