@@ -7435,7 +7435,7 @@ main {
 <main>
 <div class="reveal">
 <div class="slides"><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=0c31cd21">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b2fc6db1">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7444,7 +7444,39 @@ main {
 <h1 id="Connexion">Connexion<a class="anchor-link" href="#Connexion">¶</a></h1><p><a href="https://github.com/spec-first/connexion">Connexion</a> is a python framework
 which streamlines API creation
 of contract-first REST APIs.</p>
-<p>Once you have your OAS3 spec, <code>connexion</code> uses it to:</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=d668f76c">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Install it with the swagger module</span>
+<span class="c1">#   that renders the spec in a web-ui</span>
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>connexion<span class="o">[</span>swagger-ui<span class="o">]</span><span class="w"> </span>connexion
+
+<span class="c1"># And load some gobal settings for the exercises.</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">socket</span>
+<span class="n">host</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">gethostbyname</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">gethostname</span><span class="p">())</span>
+<span class="n">port</span> <span class="o">=</span> <span class="mi">5000</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=328c97a3">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
+<p><code>connexion</code> uses your OAS3 specification to:</p>
 <ul>
 <li>dispatch requests</li>
 <li>serve mock responses on unimplemented methods</li>
@@ -7455,35 +7487,19 @@ of contract-first REST APIs.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=9e43e8c2">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># At first ensure connexion is installed</span>
-<span class="c1"># together with the swagger module used to render the OAS3 spec</span>
-<span class="c1"># in the web-ui</span>
-<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>connexion<span class="o">[</span>swagger-ui<span class="o">]</span><span class="w"> </span>connexion
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1e3fbe03">
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=e1cf7554">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Now  <a href="/terminals/1">run the spec in a terminal</a> using</p>
+<hr/>
+<h2 id="Running-an-API">Running an API<a class="anchor-link" href="#Running-an-API">¶</a></h2><p>Now  <a href="/terminals/connexion">run the spec in a terminal</a> using</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=572ba5a5">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=cba9f892">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7491,15 +7507,16 @@ of contract-first REST APIs.</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span>%%bash
-connexion<span class="w"> </span>run<span class="w"> </span>/code/notebooks/oas3/ex-01-info-ok.yaml
+<div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"$ connexion run notebooks/oas3/ex-01-info-ok.yaml --host </span><span class="si">{</span><span class="n">host</span><span class="si">}</span><span class="s2"> --port </span><span class="si">{</span><span class="n">port</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Then open the documentation URL: http://</span><span class="si">{</span><span class="n">host</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">port</span><span class="si">}</span><span class="s2">/ui"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d0847ab9">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fea595d4">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7508,12 +7525,23 @@ connexion<span class="w"> </span>run<span class="w"> </span>/code/notebooks/oas3
 <p>Remember:</p>
 <ul>
 <li>default port is <code>:5000</code></li>
-<li>the Swagger GUI is at the <code>/ui</code> path.</li>
+<li>the Swagger UI is at the <code>/ui</code> path.</li>
 </ul>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=1f96c3ef">
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b7f38448">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=79377b64">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7531,22 +7559,63 @@ connexion<span class="w"> </span>run<span class="w"> </span>/code/notebooks/oas3
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f2f15e61">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fff16f1f">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Open the <a href="%7Bapi_server_url(%27ui%27">documentation URL</a>}) and check the outcome!</p>
-<p>Play a bit with Swagger UI.</p>
-<h2 id="Defining-endpoints-in-OAS3">Defining endpoints in OAS3<a class="anchor-link" href="#Defining-endpoints-in-OAS3">¶</a></h2><p>Now that we have added our metadata, we can <strong>provide informations about the endpoints</strong>.
-OAS3 allows multiple endpoints because good APIs have many.</p>
+<h3 id="Exercises-%7B%23connexion-run-ex%7D">Exercises {#connexion-run-ex}<a class="anchor-link" href="#Exercises-%7B%23connexion-run-ex%7D">¶</a></h3><ul>
+<li>issue a <code>POST /ui</code> request and check that the status code is <code>405 Method Not Allowed</code>.</li>
+<li>issue a <code>GET /MISSING</code> request and check that the status code is <code>404 Not Found</code>.</li>
+<li>the <code>Content-Type</code> header field conveys the media type of the returned content;
+what's the content type of the error responses?</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=79782517">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
+<h2 id="Defining-endpoints-in-OAS3">Defining endpoints in OAS3<a class="anchor-link" href="#Defining-endpoints-in-OAS3">¶</a></h2><p>Now that we have added our metadata, we can <strong>provide informations about server endpoints</strong>.
+OAS3 allows multiple server endpoints because
+stakeholders interactions go through various lifecycle stages.</p>
 <p>Every endpoint can start with a base path (eg. <code>/datetime/v1</code>).</p>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=5b66d809">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=626da55b">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=cb893f2f">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<ul>
+<li></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b2acabc1">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7554,19 +7623,19 @@ OAS3 allows multiple endpoints because good APIs have many.</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <div class="highlight"><pre><span></span><span class="c1"># One or more server</span>
 <span class="c1">#   You can add production, staging and test environments.</span>
-<span class="c1">#   We</span>
-<span class="c1">#   sandbox instances</span>
+<span class="c1">#   A tip is to mark non-production instances as sandboxes.</span>
 <span class="nt">servers</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 <span class="w">      </span><span class="no">An interoperable API has many endpoints.</span>
 <span class="w">      </span><span class="no">One for development...</span>
 <span class="w">    </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://localhost:8443/datetime/v1</span>
+<span class="w">    </span><span class="nt">x-sandbox</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">description</span><span class="p">:</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">One for testing in a sandboxed environment. This</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">is especially important to avoid clients to</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">test in production.</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">We are using the custom `x-sandbox` to identify</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">      </span><span class="no">One for testing in a sandboxed environment. This</span>
+<span class="w">      </span><span class="no">is especially important to avoid clients to</span>
+<span class="w">      </span><span class="no">test in production.</span>
+<span class="w">      </span><span class="no">We are using the custom `x-sandbox` to identify</span>
 <span class="w">    </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://api.example.com/datetime/v1</span>
 <span class="w">    </span><span class="nt">x-sandbox</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 
@@ -7583,19 +7652,24 @@ OAS3 allows multiple endpoints because good APIs have many.</p>
 </div>
 </div>
 </div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=357de751">
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=221a7ca0">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Exercise:-the-servers-parameter">Exercise: the <code>servers</code> parameter<a class="anchor-link" href="#Exercise:-the-servers-parameter">¶</a></h3><p>Edit the <code>servers</code> attribute so that it points to your actual endpoint URL (eg. your IP/port).</p>
-<p>Now check the outcome.</p>
+<hr/>
+<h3 id="Exercise:-the-servers-parameter">Exercise: the <code>servers</code> parameter<a class="anchor-link" href="#Exercise:-the-servers-parameter">¶</a></h3><p><a href="/edit/notebooks/oas3/ex-02-servers.yaml">Edit the <code>servers</code> attribute</a> and make it point to:</p>
+<ul>
+<li>the <code>/datetime/v1</code> base path;</li>
+<li>your actual endpoint URL (eg. your IP/port).</li>
+</ul>
+<p>Now check the outcome in the <a href="/terminals/connexion">terminal</a>.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=e50d35e1">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=52b8837b">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7603,35 +7677,63 @@ OAS3 allows multiple endpoints because good APIs have many.</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span>%%bash
-connexion<span class="w"> </span>run<span class="w"> </span>/code/notebooks/oas3/ex-02-servers-ok.yaml
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Use ex-02-servers-ok.yaml as a reference if you get stuck.</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"$ connexion run notebooks/oas3/ex-02-servers.yaml --host </span><span class="si">{</span><span class="n">host</span><span class="si">}</span><span class="s2"> --port </span><span class="si">{</span><span class="n">port</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fcd01b29">
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=75340a77">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Defining-paths">Defining <code>paths</code><a class="anchor-link" href="#Defining-paths">¶</a></h2><p>Now we can define our first path that is the <code>/status</code> one.</p>
-<p>An interoperable API should declare an URL for checking its status.</p>
+<hr/>
+<h2 id="Defining-paths">Defining <code>paths</code><a class="anchor-link" href="#Defining-paths">¶</a></h2><p>The <code>paths</code> section declares the API endpoints and their operations.
+Our first path that is the <code>/status</code> one,
+that is used for health-checking the API.</p>
 <p>This allows implementers to plan a suitable method for testing it (eg. it could be
-a simple OK/KO method or can execute basic checks like. databases are reachable, smoke testing other components, ..)</p>
-<h2 id="Caveats-on-/status">Caveats on <code>/status</code><a class="anchor-link" href="#Caveats-on-/status">¶</a></h2><p><strong>NB: the <code>/status</code> path is not a replacement for proper monitoring your APIs, but a way to communicate to your peers that you're online.</strong></p>
-<h2 id="Paths-anatomy">Paths anatomy<a class="anchor-link" href="#Paths-anatomy">¶</a></h2><p>An OAS3 path references:</p>
+a simple OK/KO method or can execute basic checks like: databases are reachable, smoke testing other components, ..)</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=11d7281e">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
+<h3 id="Caveats-on-/status">Caveats on <code>/status</code><a class="anchor-link" href="#Caveats-on-/status">¶</a></h3><p><strong>NB: the <code>/status</code> path is not a replacement for proper monitoring your APIs, but a way to communicate to your peers that you're online.</strong></p>
+<p>Without it, clients may implement custom ways to check your API,
+such as issuing real requests (e.g. <code>GET /datetime/v1/now</code>)
+that may result in unintended side effects (e.g., hitting always the same
+database entries, hitting caches, ..).</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f35a00e7">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
+<h2 id="Paths-anatomy">Paths anatomy<a class="anchor-link" href="#Paths-anatomy">¶</a></h2><p><code>paths</code> references:</p>
 <ul>
-<li>the associated METHOD (eg. get|post|..)</li>
+<li>the associated METHODs (eg. get|post|..)</li>
 <li>a <code>summary</code> and a <code>description</code> of the operation</li>
 </ul>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a842d32e">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=069adaca">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7648,21 +7750,22 @@ a simple OK/KO method or can execute basic checks like. databases are reachable,
 </div>
 </div>
 </div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=530d042f">
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ed7fe6d2">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
 <ul>
-<li>a reference to the python object to call when the</li>
+<li>an identifier, that <code>connexion</code> uses to map to the python callable</li>
 </ul>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=e76f4423">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b93d53d3">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7673,22 +7776,23 @@ a simple OK/KO method or can execute basic checks like. databases are reachable,
 </div>
 </div>
 </div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1f29e6d7">
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=90ef2826">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
 <ul>
-<li>the http statuses of the possible responses, each with its description,
-content-type and examples</li>
+<li>the HTTP statuses of the possible responses, each with its description,
+media type and <strong>examples</strong></li>
 </ul>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fb578e9f">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=dfc4c474">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7717,25 +7821,30 @@ content-type and examples</li>
 </div>
 </div>
 </div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d28b4d92">
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a17ee7c0">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
 <h3 id="Exercise-%7B%23ex-status-stub%7D">Exercise {#ex-status-stub}<a class="anchor-link" href="#Exercise-%7B%23ex-status-stub%7D">¶</a></h3><ul>
-<li>open the <a href="/edit/notebooks/oas3/ex-03-02-path.yaml">ex-03-02-path.yaml</a>
+<li>open <a href="/edit/notebooks/oas3/ex-03-02-path.yaml">ex-03-02-path.yaml</a>
 eventually copy/paste the code from/to the swagger editor.</li>
 <li>complete the <code>get /status</code> path</li>
+<li>use the <a href="https://italia.github.io/api-oas-checker/">OAS Checker</a>
+:warning: with the "Italian Guidelines Full + Extra Security Checks" profile
+to identify and fix syntax errors.</li>
+<li>what's the name of the function referenced by <code>#/paths/status/get/operationId</code>?</li>
 </ul>
-<p>We haven't already implemented the function <code>get_status()</code> referenced by <code>operationId</code>,
-so <a href="/terminals/1">to run the spec in a terminal</a> we tell the server
-to ignore this with <code>--stub</code></p>
+<p>We haven't implemented the function referenced by <code>operationId</code>,
+so <a href="/terminals/connexion">to run the spec in a terminal</a>
+we tell <code>connexion</code> to ignore unimplemented methods with <code>--mock notimplemented</code>:</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=f8864497">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=6d7de747">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7743,27 +7852,38 @@ to ignore this with <code>--stub</code></p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span>%%bash
-connexion<span class="w"> </span>run<span class="w"> </span>/code/notebooks/oas3/ex-03-02-path.yaml<span class="w"> </span>--stub
+<div class="highlight hl-ipython3"><pre><span></span><span class="p">(</span>
+<span class="s2">"bash$"</span>
+<span class="s2">"connexion run notebooks/oas3/ex-03-02-path.yaml"</span>
+<span class="sa">f</span><span class="s2">" --host </span><span class="si">{</span><span class="n">host</span><span class="si">}</span><span class="s2"> --port </span><span class="si">{</span><span class="n">port</span><span class="si">}</span><span class="s2">"</span>
+<span class="s2">" --mock notimplemented"</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=e0490159">
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=604ca735">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Exercise-%7B%23ex-status-mock%7D">Exercise {#ex-status-mock}<a class="anchor-link" href="#Exercise-%7B%23ex-status-mock%7D">¶</a></h3><p>1- What happens if I get the <code>/status</code> resource of my API now?</p>
-<p>2- And if I invoke another path which is not mentioned in the spec?</p>
-<p>3- Restart the server via</p>
+<hr/>
+<h3 id="Exercise-%7B%23ex-status-mock%7D">Exercise {#ex-status-mock}<a class="anchor-link" href="#Exercise-%7B%23ex-status-mock%7D">¶</a></h3><ol>
+<li>What happens if I get the <code>/status</code> resource of my API now?</li>
+<li>And if I invoke another path which is not mentioned in the spec?</li>
+<li>Edit <a href="/edit/notebooks/oas3/api.py">api.py</a> and rename <code>_get_status</code> function
+to <code>get_status</code>.
+What happens if you call the <code>/status</code> resource now?</li>
+<li>Restart the server using <code>--mock all</code> and call <code>/status</code> again.
+What happens now?</li>
+</ol>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=a4b0bc49">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=cd659ca1">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7771,14 +7891,14 @@ connexion<span class="w"> </span>run<span class="w"> </span>/code/notebooks/oas3
 <div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span>%%bash
-connexion<span class="w"> </span>run<span class="w"> </span>/code/notebooks/oas3/ex-03-02-path.yaml<span class="w"> </span>--mock<span class="w"> </span>notimplemented
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Exercise: what's the expected output of the following command?</span>
+<span class="o">!</span>curl<span class="w"> </span>http://0.0.0.0:5000/datetime/v1/status
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=59fcc213">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=239922e3">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7786,79 +7906,27 @@ connexion<span class="w"> </span>run<span class="w"> </span>/code/notebooks/oas3
 <div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Exercise:  what's the expected output of the following command?</span>
-
-<span class="o">!</span>curl<span class="w"> </span>http://0.0.0.0:5000/datetime/v1/status
-
-<span class="c1"># Exercise: what happens if you GET an unexisting path?</span>
-
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Exercise: what happens if you GET an unexisting path?</span>
 <span class="o">!</span>curl<span class="w"> </span>http://0.0.0.0:5000/datetime/v1/MISSING
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=cd86bb5e">
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=3bced7bf">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Solution on the unimplemented method</p>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=9194c5b8">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span>%%bash
-$<span class="w"> </span>curl<span class="w"> </span>http://0.0.0.0:8889/datetime/v1/status
-<span class="o">{</span>
-<span class="w">  </span><span class="s2">"detail"</span>:<span class="w"> </span><span class="s2">"Empty module name"</span>,
-<span class="w">  </span><span class="s2">"status"</span>:<span class="w"> </span><span class="m">501</span>,
-<span class="w">  </span><span class="s2">"title"</span>:<span class="w"> </span><span class="s2">"Not Implemented"</span>,
-<span class="w">  </span><span class="s2">"type"</span>:<span class="w"> </span><span class="s2">"about:blank"</span>
-<span class="o">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d5f87fea">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Solution on other paths</p>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=65619e7d">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span>%%bash
-$<span class="w"> </span>curl<span class="w"> </span>http://0.0.0.0:8889/datetime/v1/missing
-<span class="o">{</span>
-<span class="w">  </span><span class="s2">"detail"</span>:<span class="w"> </span><span class="s2">"The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again."</span>,
-<span class="w">  </span><span class="s2">"status"</span>:<span class="w"> </span><span class="m">404</span>,
-<span class="w">  </span><span class="s2">"title"</span>:<span class="w"> </span><span class="s2">"Not Found"</span>,
-<span class="w">  </span><span class="s2">"type"</span>:<span class="w"> </span><span class="s2">"about:blank"</span>
-<span class="o">}</span>
-</pre></div>
-</div>
+<hr/>
+<h3 id="Exercise-%7B%23ex-status-impl%7D">Exercise {#ex-status-impl}<a class="anchor-link" href="#Exercise-%7B%23ex-status-impl%7D">¶</a></h3><ol>
+<li>Implement the <code>get_status</code> function in <a href="/edit/notebooks/oas3/api.py">api.py</a>
+to return a problem+json with status 200, title "OK" and a successful
+message in detail.</li>
+<li>Modify <code>get_status</code> to return <code>503</code> (Service Temporarily Unavailable) 1 in 5 requests.</li>
+</ol>
 </div>
 </div>
 </div>

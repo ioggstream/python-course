@@ -7435,24 +7435,42 @@ main {
 <main>
 <div class="reveal">
 <div class="slides"><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=6666db4d">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b90ecc22">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="A-new-path:-/echo">A new path: /echo<a class="anchor-link" href="#A-new-path:-/echo">¶</a></h1><p>Now we're going to write a new path: <code>/echo</code>.</p>
-<p>Our goal is the following:</p>
+<h1 id="Implementing-requests">Implementing requests<a class="anchor-link" href="#Implementing-requests">¶</a></h1><p>Now we'll add new paths and add
+request parameters, including
+their schema.</p>
+<p>Pagination parameters (<code>limit</code>, <code>offset</code>, <code>cursor</code>)
+should be implemented consistently across APIs:
+this can be easily achieved
+publishing shared OAS3 components
+(see <a href="/edit/notebooks/oas3/components.oas3.yaml">components.oas3.yaml</a>).</p>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a896e5d9">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
+<h2 id="A-new-path:-/echo">A new path: /echo<a class="anchor-link" href="#A-new-path:-/echo">¶</a></h2><p>Now we're going to write a new path: <code>/echo</code>.</p>
 <ul>
 <li>when invoking <code>/datetime/v1/echo</code> the API will return
 the current datetime;</li>
-<li>the response is enveloped in the following example json object:</li>
+<li>the response is enveloped in a json object:</li>
 </ul>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=390b4b4a">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=bec4f953">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7464,7 +7482,7 @@ the current datetime;</li>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=936e7a9b">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=3ad1a66e">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7473,7 +7491,18 @@ the current datetime;</li>
 <ul>
 <li>the status code for a successful response is <code>200</code></li>
 </ul>
-<h3 id="Exercise:-write-/echo-specs">Exercise: write /echo specs<a class="anchor-link" href="#Exercise:-write-/echo-specs">¶</a></h3><p>Edit the <a href="/edit/notebooks/oas3/ex-04-02-echo.yaml">ex-04-02-echo-ok.yaml</a> and write the <code>echo</code> specifications:</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8994afda">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
+<h3 id="Exercise:-write-/echo-specs">Exercise: write /echo specs<a class="anchor-link" href="#Exercise:-write-/echo-specs">¶</a></h3><p>Edit <a href="/edit/notebooks/oas3/ex-04-02-echo.yaml">ex-04-02-echo-ok.yaml</a> and write the <code>echo</code> specifications:</p>
 <p>1- define the new <code>Datetime</code> schema to be used in the response;</p>
 <p>2- define the new <code>/echo</code> path supporting the <code>get</code> method and:</p>
 <ul>
@@ -7486,26 +7515,35 @@ the current datetime;</li>
 </ul>
 <p>4- don't forget <code>operationId</code> !</p>
 <p>Hint: feel free to reuse as much yaml code as possible.</p>
-<h3 id="Exercise:-test-/echo-mocks">Exercise: test /echo mocks<a class="anchor-link" href="#Exercise:-test-/echo-mocks">¶</a></h3><p>Run your spec <a href="/terminals/1">in the terminal</a> and check that it properly returns the mock objects.</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=3b310cc2">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
+<h3 id="Exercise:-test-/echo-mocks">Exercise: test /echo mocks<a class="anchor-link" href="#Exercise:-test-/echo-mocks">¶</a></h3><p>Run your spec <a href="/terminal/connexion">in the terminal</a> and check that it properly returns the mock objects.</p>
 <p>Use</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=761aa780">
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=37bfa778">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">connexion</span> <span class="n">run</span> <span class="o">--</span><span class="n">mock</span> <span class="nb">all</span> <span class="o">/</span><span class="n">code</span><span class="o">/</span><span class="n">notebooks</span><span class="o">/</span><span class="n">oas3</span><span class="o">/</span><span class="n">ex</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="n">echo</span><span class="o">-</span><span class="n">ok</span><span class="o">.</span><span class="n">yaml</span>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="highlight"><pre><span></span>connexion run --mock all /code/notebooks/oas3/ex-04-02-echo-ok.yaml
 </pre></div>
 </div>
 </div>
 </div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=1d0c44f7">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=bc935699">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7520,33 +7558,56 @@ the current datetime;</li>
 </div>
 </div>
 </div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9397581e">
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1d595cf8">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
 <h2 id="Request-parameters">Request parameters<a class="anchor-link" href="#Request-parameters">¶</a></h2><p>OAS3 allows to specify parameters both in <code>path</code>, <code>query</code> and  <code>headers</code>.</p>
 <p>Interoperable APIs should follow simple rules when using parameters:</p>
 <ul>
-<li>define parameter conventions for common patterns, eg: limit, offset;</li>
+<li>define parameter conventions for common patterns, eg: <code>limit</code>, <code>offset</code>, <code>cursor</code>;</li>
 <li>use standard HTTP headers when possible.</li>
 </ul>
-<p>As many APIs implement pagination, it's a good think to converge to a common
-set of parameters to use. Our choice is:</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=008478c0">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
+<p>We introduce the following pagination
+parameters:</p>
 <ul>
-<li>limit: max number of entries to retrieve</li>
-<li>offset: the number of entries to skip in a paginated request</li>
-<li>cursor: an identifier (cursor) of the first entry to be returned
+<li><code>limit</code>: max number of entries to retrieve</li>
+<li><code>offset</code>: the number of entries to skip in a paginated request</li>
+<li><code>cursor</code>: an identifier (cursor) of the first entry to be returned
 <a href="https://api.slack.com/docs/pagination">Slack APIs provide an example of cursor-based pagination</a></li>
 </ul>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=bd8e7c6c">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
 <h2 id="Adding-request-parameters-to-/echo">Adding request parameters to <code>/echo</code><a class="anchor-link" href="#Adding-request-parameters-to-/echo">¶</a></h2><p><code>Query</code> and <code>header</code> request parameters can be defined in</p>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=6a2069a5">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1ff94ea6">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7560,7 +7621,7 @@ set of parameters to use. Our choice is:</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=cb3327d2">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=fc8aa634">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7572,38 +7633,21 @@ set of parameters to use. Our choice is:</p>
 <span class="c1"># - it's a `query` parameter</span>
 <span class="c1"># - its name</span>
 <span class="c1"># - its schema</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">show_component</span><span class="p">(</span><span class="s1">'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/parameters/limit'</span><span class="p">))</span>
+<span class="n">oas3</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s2">"oas3/components.oas3.yaml"</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">yaml</span><span class="o">.</span><span class="n">safe_dump</span><span class="p">(</span><span class="n">oas3</span><span class="p">[</span><span class="s2">"components"</span><span class="p">][</span><span class="s2">"parameters"</span><span class="p">][</span><span class="s2">"limit"</span><span class="p">]))</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=a8294cb6">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">description</span><span class="p">:</span> <span class="n">How</span> <span class="n">many</span> <span class="n">items</span> <span class="n">to</span> <span class="k">return</span> <span class="n">at</span> <span class="n">one</span> <span class="n">time</span> <span class="p">(</span><span class="nb">max</span> <span class="mi">100</span><span class="p">)</span>
-<span class="ow">in</span><span class="p">:</span> <span class="n">query</span>
-<span class="n">name</span><span class="p">:</span> <span class="n">limit</span>
-<span class="n">schema</span><span class="p">:</span>
-  <span class="nb">format</span><span class="p">:</span> <span class="n">int32</span>
-  <span class="nb">type</span><span class="p">:</span> <span class="n">integer</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4d4bb1dc">
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c17decdf">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
 <h3 id="Exercise:-adding-parameters-to-/echo">Exercise: adding parameters to <code>/echo</code><a class="anchor-link" href="#Exercise:-adding-parameters-to-/echo">¶</a></h3><p>Let's add a <code>tz</code> parameter to <code>/echo</code>:</p>
 <ul>
 <li><p>create a <code>#/components/schemas/Timezone</code> schema definition. Valid example values are:</p>
@@ -7625,7 +7669,7 @@ the <a href="https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=18f83cdd">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=92a5455f">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7640,7 +7684,7 @@ connexion<span class="w"> </span>run<span class="w"> </span>--mock<span class="w
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=2def09fa">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=319752af">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7655,7 +7699,7 @@ connexion<span class="w"> </span>run<span class="w"> </span>--mock<span class="w
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=472e8fc3">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=26f67a12">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7669,7 +7713,7 @@ connexion<span class="w"> </span>run<span class="w"> </span>--mock<span class="w
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=5b686d16">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=c5146a57">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7684,7 +7728,7 @@ connexion<span class="w"> </span>run<span class="w"> </span>--mock<span class="w
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=c5bdd17f">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=8f7f3a22">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7700,7 +7744,7 @@ connexion<span class="w"> </span>run<span class="w"> </span>--mock<span class="w
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=41c6c49d">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=db88a5e5">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7714,7 +7758,7 @@ connexion<span class="w"> </span>run<span class="w"> </span>--mock<span class="w
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=247b1502">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=9cdcbc86">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7729,7 +7773,7 @@ connexion<span class="w"> </span>run<span class="w"> </span>--mock<span class="w
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=72ead8fc">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=a1168385">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7743,7 +7787,7 @@ connexion<span class="w"> </span>run<span class="w"> </span>--mock<span class="w
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=10ddf614">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=a17b7481">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7767,32 +7811,40 @@ connexion<span class="w"> </span>run<span class="w"> </span>--mock<span class="w
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f13533bd">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c0c50735">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Now  <a href="/terminals/1">run the spec in a terminal</a> using</p>
+<p>Now  <a href="/terminals/connexion">run the spec in a terminal</a> using</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=73a54d82">
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b33f5672">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">code</span><span class="o">/</span><span class="n">notebooks</span><span class="o">/</span><span class="n">oas3</span><span class="o">/</span>
-<span class="n">connexion</span> <span class="n">run</span> <span class="o">/</span><span class="n">code</span><span class="o">/</span><span class="n">notebooks</span><span class="o">/</span><span class="n">oas3</span><span class="o">/</span><span class="n">ex</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="n">echo</span><span class="o">-</span><span class="n">ok</span><span class="o">.</span><span class="n">yaml</span>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="highlight"><pre><span></span>connexion run /code/notebooks/oas3/ex-04-02-echo-ok.yaml
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=8da2eaae">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=971ac084">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>and use the Swagger UI to test the API.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=8d2910b7">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7800,34 +7852,14 @@ connexion<span class="w"> </span>run<span class="w"> </span>--mock<span class="w
 <div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">render_markdown</span><span class="p">(</span><span class="sa">f</span><span class="s1">'''</span>
-<span class="s1">play a bit with the [Swagger UI](</span><span class="si">{</span><span class="n">api_server_url</span><span class="p">(</span><span class="s1">'ui'</span><span class="p">)</span><span class="si">}</span><span class="s1">)</span>
-
-<span class="s1">and try making a request!</span>
-<span class="s1">'''</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=f90172f8">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1">## TODO do we have enough time to show flask_testing?</span>
-
-<span class="c1"># Check that default works</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Check that default works</span>
 <span class="o">!</span>curl<span class="w"> </span>http://localhost:5000/datetime/v1/echo<span class="w"> </span>-kv
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=db83a51e">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=365d1c8d">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7842,7 +7874,7 @@ connexion<span class="w"> </span>run<span class="w"> </span>--mock<span class="w
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=bf10b37d">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=7dde3514">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>

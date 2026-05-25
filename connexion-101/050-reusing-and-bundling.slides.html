@@ -7435,20 +7435,44 @@ main {
 <main>
 <div class="reveal">
 <div class="slides"><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=96abcc28">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=018e6629">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="Reusing-and-bundling">Reusing and bundling<a class="anchor-link" href="#Reusing-and-bundling">¶</a></h1><p>Our strategy to standardize default responses, schemas and other components between
-different API providers, is to provide those definitions in a shared and versioned file,
-like <a href="https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml">https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml</a></p>
+<h1 id="Reusing-and-bundling">Reusing and bundling<a class="anchor-link" href="#Reusing-and-bundling">¶</a></h1><p>To standardize default responses,
+schemas and other components between
+different API providers,
+publish definitions in a shared and versioned file
+(e.g., <a href="/edit/notebooks/oas3/components.oas3.yaml">components.oas3.yaml</a>).</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=35a31ace">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
 <p>API providers can then:</p>
 <ul>
 <li><code>$ref</code>erence reusable components</li>
 <li>eventualy create a single bundled file containing all the resolved references (eg. with <code>openapi_resolver</code>)</li>
 </ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d6c83f8d">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
 <p>With a set of common components API designers can create
 better interfaces and ask themself questions like:</p>
 <ul>
@@ -7456,22 +7480,45 @@ better interfaces and ask themself questions like:</p>
 <li>can I reuse already existing schemas?</li>
 <li>should I implement a new schema for this object?</li>
 </ul>
-<h3 id="Reusable-components-in-OAS3">Reusable components in OAS3<a class="anchor-link" href="#Reusable-components-in-OAS3">¶</a></h3><p>Supported reusable components can be:</p>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=61e76d81">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
+<h2 id="Reusable-components-in-OAS3">Reusable components in OAS3<a class="anchor-link" href="#Reusable-components-in-OAS3">¶</a></h2><p>Supported reusable components can be:</p>
 <ul>
 <li><code>schemas</code>: data types and objects</li>
 <li><code>parameters</code>: request parameters, that may be defined in <code>headers</code>, <code>query</code> and <code>path</code></li>
 <li><code>responses</code>: http responses</li>
 <li><code>securitySchemes</code>: security requirements to be applied to a given path</li>
 </ul>
-<p>NOTE: in this course we won't go indeep on all the possibilities of OAS3, which you can see on the <a href="https://TODO">OAS website</a></p>
+<p>NOTE: this course doesn't cover on all the possibilities of OAS3.
+See the <a href="https://github.com/OAI/OpenAPI-Specification">OAS website</a>.</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b8ee85db">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
 <h3 id="Exercise:-replacing-definitions-with-$refs">Exercise: replacing definitions with $refs<a class="anchor-link" href="#Exercise:-replacing-definitions-with-$refs">¶</a></h3><ul>
-<li>Open this complete file <a href="ex-05-01-bundle.yaml">ex-05-01-bundle.yaml</a></li>
-<li>replace as many definitions as possible with references from the shared <a href="https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml">definitions.yaml</a>.</li>
+<li>Open <a href="/edit/notebooks/oas3/ex-05-01-bundle.yaml">ex-05-01-bundle.yaml</a></li>
+<li>replace as many definitions as possible with references from the shared <a href="">components.oas3.yaml</a>.</li>
 </ul>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=fecd7f0f">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=001e2cda">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7480,44 +7527,41 @@ better interfaces and ask themself questions like:</p>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Exercise: create a bundle from the previous file with</span>
-<span class="o">!</span>python<span class="w"> </span>-m<span class="w"> </span>openapi_resolver<span class="w"> </span>/code/notebooks/oas3/ex-05-01-bundle.yaml
 </pre></div>
 </div>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a49c3769">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=cb4128d4">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="YAML-anchors-are-your-friends">YAML anchors are your friends<a class="anchor-link" href="#YAML-anchors-are-your-friends">¶</a></h3><p>YAML has a very nice feature, named <strong>anchors</strong>. They allow to define and reference
+<h3 id="YAML-anchors-are-your-friends">YAML anchors are your friends<a class="anchor-link" href="#YAML-anchors-are-your-friends">¶</a></h3><p>YAML has a nice feature, named <strong>anchors</strong>. They allow to define and reference
 given portions of a YAML file.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=635e56a0">
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=5dfb3c54">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># the following &amp;anchor stores the `foo` value</span>
-<span class="n">a</span><span class="p">:</span> <span class="o">&amp;</span><span class="n">this_is_an_anchor</span> <span class="n">foo</span>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="highlight"><pre><span></span><span class="c1"># the following &amp;anchor stores the `foo` value</span>
+<span class="nt">a</span><span class="p">:</span><span class="w"> </span><span class="nl">&amp;this_is_an_anchor</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">foo</span>
 
 <span class="c1"># *star dereferences the anchor</span>
-<span class="n">b</span><span class="p">:</span> <span class="o">*</span><span class="n">this_is_an_anchor</span>
+<span class="nt">b</span><span class="p">:</span><span class="w"> </span><span class="nv">*this_is_an_anchor</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c82b36ed">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=955c9e21">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7527,7 +7571,7 @@ given portions of a YAML file.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=2b56913e">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=bd505c81">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7537,6 +7581,7 @@ given portions of a YAML file.</p>
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1">#  Check yaml file content.</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
 
 <span class="n">content</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">'anchors.yaml'</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
 
@@ -7546,7 +7591,7 @@ given portions of a YAML file.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=724f0c19">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=21d26d4e">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7565,7 +7610,7 @@ given portions of a YAML file.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=cab8367f">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=cd0a5586">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7581,7 +7626,7 @@ given portions of a YAML file.</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9e7c7a2f">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c6afabed">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7596,7 +7641,7 @@ given portions of a YAML file.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=4f3172b7">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=54e0653e">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7615,7 +7660,7 @@ given portions of a YAML file.</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=6e8d7fa8">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=75680f28">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7625,7 +7670,7 @@ given portions of a YAML file.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=4a66b3cb">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=ae54c3aa">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7650,7 +7695,7 @@ given portions of a YAML file.</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a4931f8a">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f63af7b2">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>

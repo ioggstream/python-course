@@ -7435,38 +7435,62 @@ main {
 <main>
 <div class="reveal">
 <div class="slides"><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=73153599">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ee00689a">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="OpenAPI-&amp;-Modeling">OpenAPI &amp; Modeling<a class="anchor-link" href="#OpenAPI-&amp;-Modeling">¶</a></h1><h2 id="OpenAPI-is-a-specification-language"><a href="https://www.openapis.org/">OpenAPI</a> is a specification language<a class="anchor-link" href="#OpenAPI-is-a-specification-language">¶</a></h2><p>OpenAPI is a specification language for REST APIs that documents:</p>
+<h1 id="OpenAPI-&amp;-Modeling">OpenAPI &amp; Modeling<a class="anchor-link" href="#OpenAPI-&amp;-Modeling">¶</a></h1><p><a href="https://www.openapis.org/">OpenAPI</a> is a specification language
+for REST APIs that documents:</p>
 <ul>
 <li>technical specifications</li>
 <li>metadata</li>
 <li>docs &amp; references</li>
 </ul>
-<h2 id="OpenAPI-is-driven-by-a-Foundation">OpenAPI is driven by a <a href="https://www.openapis.org/">Foundation</a><a class="anchor-link" href="#OpenAPI-is-driven-by-a-Foundation">¶</a></h2><p>The OpenAPI Foundation is an initiative under the Linux Foundation,
-participated by government &amp; companies  (gov.uk, Microsoft, Google, Oracle, IBM, ..):</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c873d175">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
+<p>OpenAPI is driven by a <a href="https://www.openapis.org/">Foundation</a>
+under the Linux Foundation,
+participated by government &amp; companies
+(gov.uk, Microsoft, Google, Oracle, IBM, ..):</p>
 <ul>
-<li><p>Driver for API adoption</p>
-</li>
-<li><p>Evolution of Swagger 2.0</p>
-</li>
-<li><p>Lightweight format: YAML or JSON</p>
-</li>
-<li><p>Generates docs &amp; code via tools (e.g., <a href="https://editor.swagger.io">swagger-editor</a>)</p>
-</li>
-<li><p>Allows reusable components via hyperlink (eg. <code>$ref</code>)</p>
-</li>
+<li>Driver for API adoption</li>
+<li>Evolution of Swagger 2.0</li>
+<li>Lightweight format: YAML or JSON</li>
+<li>Generates docs &amp; code via tools (e.g., <a href="https://editor.swagger.io">swagger-editor</a>)</li>
+<li>Allows reusable components via hyperlink (eg. <code>$ref</code>)</li>
 </ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=114a0fd6">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
+<p>Latest version is 3.2, and there's work ongoing on the 4.0.
+This workshop is based on 3.0, but the most significant
+changes in 3.1 and 4.0 are about the support of JSON Schema,
+so they don't affect the basics of API modeling.</p>
 <h2 id="OpenAPI-Editor">OpenAPI Editor<a class="anchor-link" href="#OpenAPI-Editor">¶</a></h2><p>Every OAS3 document begins with</p>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=3980f386">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d658c155">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7478,27 +7502,32 @@ participated by government &amp; companies  (gov.uk, Microsoft, Google, Oracle, 
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f1c589f4">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=0d7ec5af">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Latest version is 3.2, and there's work ongoing on the 4.0.
-This workshop is based on 3.0, but the most significant
-changes in 3.1 and 4.0 are about the support of JSON Schema,
-so they don't affect the basics of API modeling.</p>
 <p><a href="https://editor.swagger.io/?url=https://raw.githubusercontent.com/teamdigitale/api-starter-kit/master/openapi/simple.yaml.src">Swagger Editor</a> is a simple webapp for editing OpenAPI 3 language specs.</p>
 <p>The Italian Govenment built a couple of tools that help implementing interoperable APIs
 (disclaimer: I authored the tools when I worked there):</p>
 <ul>
-<li><p><a href="https://italia.github.io/api-oas-checker/">OAS Checker</a>
-is a tool to check if your OAS3 respects the Italian API guidelines.</p>
-</li>
-<li><p><a href="https://teamdigitale.github.io/dati-semantic-schema-editor/">Schema Editor</a> supports editing JSON Schema,
-with visual navigation.</p>
-</li>
+<li><a href="https://italia.github.io/api-oas-checker/">OAS Checker</a>
+is a tool to check if your OAS3 respects the Italian API guidelines.</li>
+<li><a href="https://teamdigitale.github.io/dati-semantic-schema-editor/">Schema Editor</a> supports editing JSON Schema,
+with visual navigation.</li>
 </ul>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ca9a6dad">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
 <h2 id="Start-with-Metadata">Start with Metadata<a class="anchor-link" href="#Start-with-Metadata">¶</a></h2><p>In OAS we start by describing metadata, to clarify:</p>
 <ul>
 <li>API goals, audience and context;</li>
@@ -7507,18 +7536,18 @@ with visual navigation.</p>
 </ul>
 <p>This step ensures that:</p>
 <ul>
-<li>the API is designed with a clear goal and audience in mind,
+<li>goal and audience are clear,
 and you can actually write a meaningful description of your service,
-of its bounndaries and context of use;</li>
+of its boundaries and context of use;</li>
 <li>legal and organizational requirements are taken into account from the beginning
 (eg. terms of service, GDPR, etc.);</li>
 </ul>
-<p>Here's a simple OAS3 metadata part, contained in the <code>info</code> section.</p>
+<p>The metadata is in the <code>info</code> section:</p>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=abca9b5b">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=08b87169">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7533,7 +7562,7 @@ of its bounndaries and context of use;</li>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=69f7905c">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f767b32d">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7558,8 +7587,8 @@ url: '<a href="http://www.apache.org/licenses/LICENSE-2.0.html">http://www.apach
 </div>
 </div>
 </div>
-</div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=6f7dce6a">
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=21327368">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7569,7 +7598,7 @@ url: '<a href="http://www.apache.org/licenses/LICENSE-2.0.html">http://www.apach
 <h2 id="OpenAPI-Metadata-exercise">OpenAPI Metadata exercise<a class="anchor-link" href="#OpenAPI-Metadata-exercise">¶</a></h2><ol>
 <li><p>open <a href="https://editor.swagger.io/?url=https://raw.githubusercontent.com/ioggstream/python-course/main/connexion-101/notebooks/oas3/ex-01-info.yaml">this incomplete OAS3 spec</a>.</p>
 </li>
-<li><p>fix all errors and adding the missing fields: don't need to add all details for now.</p>
+<li><p>fix all errors and add the missing fields: no need to add all details for now.</p>
 </li>
 <li><p>describe the first API we're going to implement: a service which returns the current
 timestamp in <a href="https://tools.ietf.org/html/rfc5424#section-6.2.3">RFC5454</a>
@@ -7580,6 +7609,17 @@ UTC (eg. <code>2019-01-01T00:00:00Z</code>).</p>
 <li><p>Feel free to add as many details as you want.</p>
 </li>
 </ol>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=5301bfb0">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
 <h3 id="Custom-fields">Custom fields<a class="anchor-link" href="#Custom-fields">¶</a></h3><p>Specific ecosystems may add custom OAS fields via the <code>x-</code> prefix.
 This should be done with care, to avoid clashes between different ecosystems.</p>
 <p>When using custom fields, consider prefixing them
@@ -7589,8 +7629,19 @@ fields: these should be "registered" and should not use
 the <code>x-</code> prefix. We won't go into these details during
 this course.</p>
 <p>To backport new fields from OAS3.1 to OAS3.0, you can use custom fields, eg. <code>x-summary</code> for the <code>summary</code> field:</p>
-<p>When establishing an API ecosystem, you may want to define
-core lifecycle events and how to publish them.</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=87e0c1e3">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
+<h4 id="Lifecycle-management">Lifecycle management<a class="anchor-link" href="#Lifecycle-management">¶</a></h4><p>An API ecosystem needs a way to publish core lifecycle events, such as deprecation and retirement.
+This allows users to have the time to adapt to changes</p>
 <p>HTTP provides a couple of standard headers for <code>Deprecation</code> and <code>Sunset</code>
 while most of the lifecycle management is left to the API providers.</p>
 <p><strong>x-api-id</strong> you may want to assign a time-persistend UUID to your API, so that you can change its <code>title</code> in the future.</p>
@@ -7598,7 +7649,7 @@ while most of the lifecycle management is left to the API providers.</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=26783f9a">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=110eab89">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7610,7 +7661,7 @@ while most of the lifecycle management is left to the API providers.</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=542df1a4">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=5e21ea97">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7619,10 +7670,26 @@ while most of the lifecycle management is left to the API providers.</p>
 <p>Other custom fields could provide ecosystem-specific information,
 such as GDPR roles or geodata references.
 achine readable format</p>
-<h2 id="OpenAPI-Metadata-exercise:-2">OpenAPI Metadata exercise: 2<a class="anchor-link" href="#OpenAPI-Metadata-exercise:-2">¶</a></h2><p>1- open <a href="/edit/notebooks/oas3/ex-01-info.yaml">the previous OAS3 spec</a>.</p>
-<p>2- copy its content in the <a href="%7Boas_editor_url(%27%27">Swagger Editor Online</a>}).</p>
-<p>3- provide further informations via custom fields: if you think of any interesting
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1887b0ed">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
+<h2 id="OpenAPI-Metadata-exercise:-2">OpenAPI Metadata exercise: 2<a class="anchor-link" href="#OpenAPI-Metadata-exercise:-2">¶</a></h2><ol>
+<li><p>open <a href="/edit/notebooks/oas3/ex-01-info.yaml">the previous OAS3 spec</a>.</p>
+</li>
+<li><p>copy its content in the <a href="%7Boas_editor_url(%27%27">Swagger Editor Online</a>}).</p>
+</li>
+<li><p>provide further informations via custom fields: if you think of any interesting
 label, define them and comment properly using <code>#</code></p>
+</li>
+</ol>
 <h2 id="Feature-gap">Feature gap<a class="anchor-link" href="#Feature-gap">¶</a></h2><p>OAS 3 does not support the following features:</p>
 <ul>
 <li>API lifecycle management (eg. sandboxing, deprecation, retirement, ..)</li>

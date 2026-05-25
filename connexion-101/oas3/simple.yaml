@@ -1,0 +1,80 @@
+openapi: 3.0.1
+info:
+  version: 0.1.1
+  title: hi
+  contact:
+    name: API Support
+    url: https://example.com/support
+  description: |-
+    This simple OAS file is used in 000-teaser.md to show how to use
+    Connextion to stub a simple API.
+
+    Run:
+
+    ```bash
+    connexion run --mock=all oas3/simple.yaml
+    ```
+
+    Note: don't use authentication features (e.g., x-bearerInfoFunc) in this file
+    because the stub/mock server doesn't support them.
+servers:
+  - url: "http://localhost"
+    description: |-
+      This is a development server. Don't use it in production.
+      To simplify the showcase, don't use path components for now.
+  - url: "https://localhost:8443/hello/v1"
+paths:
+  /echo:
+    get:
+      summary: Reply with the same text
+      operationId: get_hello
+      parameters:
+        - in: query
+          name: text
+          required: true
+          schema:
+            type: string
+          example: Hello, World!
+      responses:
+        "200":
+          description: Hi!
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Text"
+        "400":
+          description: Unexpected error
+          content:
+            application/problem+json:
+              schema: {}
+    post:
+      summary: Reply with the same text
+      operationId: post_hello
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Text"
+      responses:
+        "200":
+          description: Hi!
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Text"
+        "400":
+          description: Unexpected error
+          content:
+            application/problem+json:
+              schema: {}
+components:
+  schemas:
+    Text:
+      required:
+        - text
+      properties:
+        text:
+          type: string
+      example:
+        text: Hello, World!

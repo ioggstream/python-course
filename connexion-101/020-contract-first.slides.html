@@ -7435,7 +7435,7 @@ main {
 <main>
 <div class="reveal">
 <div class="slides"><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=60cefd91">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4f8b6122">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7446,7 +7446,7 @@ main {
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d5dd1d6b">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=0439ecc1">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7469,15 +7469,38 @@ and instructions on how the APIs can be used.
 <li>service metadata;</li>
 <li>documents and references.</li>
 </ul>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=6107051b">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
 <h2 id="Interface-Description-Language">Interface Description Language<a class="anchor-link" href="#Interface-Description-Language">¶</a></h2><p>Digital service description requires an Interface Description Language.
 That's a <strong>machine readable language</strong> that describes the interface.</p>
 <p><strong>For REST APIs, the standard IDL is OpenAPI Specification, aka OAS</strong>.</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=dc39c24d">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
+<p>Disambiguate API definitions and usage.</p>
 <p>For example, a web service accepting the following request <code>GET /echo</code> and returning a json object could be described in OAS3 like the following:</p>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d90b8a47">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9b8d5524">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7497,34 +7520,39 @@ That's a <strong>machine readable language</strong> that describes the interface
 </div>
 </div>
 </div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=3665a885">
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d6734715">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>This disambiguates the API definitions and usage.</p>
-<h2 id="Contract-first,-Code-first">Contract first, Code first<a class="anchor-link" href="#Contract-first,-Code-first">¶</a></h2><p>There are two paths towards API implementation:</p>
+<hr/>
+<h2 id="Contract-first,-Code-first">Contract first, Code first<a class="anchor-link" href="#Contract-first,-Code-first">¶</a></h2><p>There are two paths towards API implementation</p>
 <ul>
-<li><p>Code First: you develop a function in a specific language
-and then use some tool to generate the IDL.
-An example function generating the above IDL could be</p>
-<div class="highlight"><pre><span></span><span class="nd">@app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">"/echo"</span><span class="p">)</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">echo</span><span class="p">(</span><span class="n">body</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""</span>
-<span class="sd">    Reply with the request content.</span>
-<span class="sd">    """</span>
-    <span class="n">item</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"hello"</span><span class="p">:</span> <span class="n">body</span><span class="p">}</span>
-    <span class="n">status_code</span> <span class="o">=</span> <span class="mi">200</span>
-    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'content-type'</span><span class="p">:</span> <span class="s1">'application/json'</span><span class="p">}</span>
-</pre></div>
-</li>
+<li>Code First: we are not covering it today :)</li>
+<li>Contract First</li>
 </ul>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=a3690df9">
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=150560df">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
+<h3 id="Code-First">Code First<a class="anchor-link" href="#Code-First">¶</a></h3><ol>
+<li>Develop language-specific code.</li>
+<li>Code-specific tools generate the IDL.</li>
+<li>Share the IDL to get feedback from stakeholders.</li>
+</ol>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=e1a70b2d">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7532,49 +7560,131 @@ An example function generating the above IDL could be</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="k">return</span> <span class="n">item</span><span class="p">,</span> <span class="n">status_code</span><span class="p">,</span> <span class="n">headers</span>
-  <span class="err">```</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="nd">@app</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">"/echo"</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">echo</span><span class="p">(</span><span class="n">body</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Reply with the request content.</span>
+<span class="sd">    """</span>
+    <span class="n">item</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"hello"</span><span class="p">:</span> <span class="n">body</span><span class="p">}</span>
+    <span class="n">status_code</span> <span class="o">=</span> <span class="mi">200</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'content-type'</span><span class="p">:</span> <span class="s1">'application/json'</span><span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">item</span><span class="p">,</span> <span class="n">status_code</span><span class="p">,</span> <span class="n">headers</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a62d7a19">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=dca85f96">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>This approach is very popular, but it strongly
-discouraged in a large ecosystem :)
-We are NOT covering this today.</p>
-<ul>
-<li>Contract First: you write down the interface in an IDL
-(a.k.a "The Contract"), share it with the stakeholders,
-and then let the tools generate the code stubs or the wiring.</li>
-</ul>
-<h2 id="Contract-first-improves-standardization">Contract first improves standardization<a class="anchor-link" href="#Contract-first-improves-standardization">¶</a></h2><p>Code-first has a lot of traction between developers,
+<ol>
+<li>Very popular.</li>
+<li>Discouraged in a large ecosystem :)</li>
+</ol>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a404421d">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
+<p>Lot of traction between developers,
 as they could focus on writing the actual code
-and leave the interface (and documentation) as an underproduct.
-This approach rarely works in a large ecosystem where</p>
+and leave the (boring) interface (and documentation) as an underproduct.</p>
+<p>Rarely works in a large ecosystem where</p>
 <ul>
 <li>different actors</li>
 <li>in a long timeframe</li>
 <li>works with different frameworks and enviroments.</li>
 </ul>
-<p>A contract-first approach, instead:</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c30337a7">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
+<h3 id="Contract-First">Contract First<a class="anchor-link" href="#Contract-First">¶</a></h3><ol>
+<li>Write the interface in an IDL
+(a.k.a "The Contract")</li>
+<li>Share and get feedback from stakeholders</li>
+<li>Tools generate the code stubs or the wiring.</li>
+<li>Implement the code.</li>
+</ol>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=042455c2">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
+<p>Independent from the implementation language and framework.</p>
+<p>Early feedback on the design and goals.</p>
+<p>Still free to early implement the code to validate the design.</p>
+<p>Stakeholders can implement clients
+in parallel.</p>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=78f899ea">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
+<h2 id="Contract-first-improves-standardization">Contract first improves standardization<a class="anchor-link" href="#Contract-first-improves-standardization">¶</a></h2><p>A contract-first approach:</p>
 <ul>
-<li>allows to focus on the actual design of the API,
-without being entangled by implementation details;</li>
-<li>it's independent from the framework and language
+<li>focus on the actual design of the API</li>
+<li>lower entanglement with implementation details</li>
+<li>independent from the framework and language
 people use for their client/server implementation
 and from how frameworks generate the specs (which may be buggy);</li>
 </ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a9a080cd">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
 <p>Focusing on the specs allows to create <em>API modeling iterations</em>
 that enable the API to change fast
 and involve stakeholders in the modeling and in the API lifecycle.</p>
-<p>NB: this doesn't mean iterations don't involve testing that the actual code works ;)
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=86acaa15">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
+<p>Iterations <em>still</em> involve testing that the actual code works ;)
 you can still write tests and stub implementation alongside the API modeling iterations
 to ensure that both the API design supports both functional and non-functional requirements
 such as reliability, security and performance.</p>

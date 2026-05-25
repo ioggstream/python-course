@@ -1,0 +1,62 @@
+openapi: 3.0.1
+info: {version: 0.1.1, title: hi}
+# servers:
+#  - url: "https://localhost:8443/hello/v1"
+#  description: dev
+paths:
+  /echo:
+    get:
+      summary: Just a method
+      operationId: get_hello
+      responses:
+        "200":
+          description: Hi!
+          content:
+            application/json:
+              schema: {}
+    post:
+      summary: Just a method
+      operationId: post_hello
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Text"
+      responses:
+        "200":
+          description: Hi!
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Text"
+  /basic-auth:
+    get:
+      summary: Just a method
+      security:
+        - basic: []
+      operationId: get_hello_auth
+      responses:
+        "200":
+          description: Hi!
+          content:
+            application/json:
+              schema: {}
+components:
+  schemas:
+    Text:
+      required:
+        - text
+      properties:
+        text:
+          type: string
+  securitySchemes:
+    jwt:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      x-bearerInfoFunc: forward_token
+    basic:
+      type: http
+      scheme: basic
+      x-basicInfoFunc: basic_auth

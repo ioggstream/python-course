@@ -7435,7 +7435,7 @@ main {
 <main>
 <div class="reveal">
 <div class="slides"><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=311aaaab">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1b37f958">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7447,11 +7447,39 @@ They:</p>
 <li>define the syntax of exchanged data;</li>
 <li>may define the semantics (aka the meaning) of the data.</li>
 </ul>
-<p>The main tools to avoid schema proliferation are:</p>
+<p>Schemas should be:</p>
+<ul>
+<li>safe (e.g., prevent injection attacks);</li>
+<li>evolvable (e.g., allow adding new fields without breaking clients);</li>
+<li>consistent (e.g., use the same field names and formats across APIs).</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=2dc8e0b3">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
+<p>To avoid schema proliferation, use:</p>
 <ul>
 <li>catalogs;</li>
-<li>guidelines.</li>
+<li>guidelines based on common specifications.</li>
 </ul>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=89471308">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
 <h2 id="Agenda">Agenda<a class="anchor-link" href="#Agenda">¶</a></h2><ul>
 <li>Schemas: definition, reuse, and <code>$ref</code></li>
 <li>Generating schemas: <code>datamodel-code-generator</code></li>
@@ -7466,7 +7494,7 @@ They:</p>
 </div>
 </div>
 </div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=6b41e618">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8cdc5b02">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7482,7 +7510,7 @@ They:</p>
 </div>
 </div>
 </div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a36a0b49">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=294fc365">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7499,23 +7527,39 @@ This promotes reuse and consistency.</p>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=659f4397">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=df110182">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <hr/>
-<h3 id="Reusable-schemas">Reusable schemas<a class="anchor-link" href="#Reusable-schemas">¶</a></h3><p>OAS schemas must always be embedded in the <code>#/components/schemas</code> section
+<h3 id="Reusable-schemas">Reusable schemas<a class="anchor-link" href="#Reusable-schemas">¶</a></h3><p>OAS schemas must be embedded in the <code>#/components/schemas</code> section
 of an OAS document.
-Schemas outside OAS documents must be defined as JSON Schema files, with all the proper headings and metadata.</p>
+Schemas outside OAS documents must be defined as JSON Schema files,
+with all the proper headings and metadata.</p>
+<p>:warning: A schema used for request or response,
+should always be a JSON object, even if it has only one field.
+This allows adding new fields in the future without breaking clients
+and provides a consistent structure for all requests and responses.</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4ec2e137">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
 <p>:warning: If your API ecosystem relies on OAS,
 embedding all schemas in OAS is a sensible choice.</p>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=375ed82c">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b70fc7d9">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7532,7 +7576,7 @@ embedding all schemas in OAS is a sensible choice.</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9eeb56d6">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=165ca0a6">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7559,19 +7603,20 @@ properties:
 </div>
 </div>
 </div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=827142b4">
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8790aded">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
 <p>You can publish it on the web (e.g. GitHub Pages) and reference it from other specs with <code>$ref</code>:</p>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=03ca1300">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=385faa14">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7584,13 +7629,27 @@ properties:
 </div>
 </div>
 </div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f7eedb49">
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=bfec86b9">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
+<h3 id="Infrastructural-components-schemas">Infrastructural components schemas<a class="anchor-link" href="#Infrastructural-components-schemas">¶</a></h3><p>OAS allows defining schemas for both domain entities (e.g. <code>Person</code>) and infrastructural components(e.g. <code>Problem</code>, <code>Pagination</code>, <code>ThrottlingHeaders</code>).</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=496bc26a">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
+<p>For example</p>
 <p>In your ecosystem, you should have a curated registry of common schemas
 for infrastructural components (e.g. <code>Problem</code>, <code>Pagination</code>, <code>ThrottlingHeaders</code>).
 All APIs can reference them via <code>$ref</code> to ensure consistency.</p>
@@ -7598,7 +7657,7 @@ All APIs can reference them via <code>$ref</code> to ensure consistency.</p>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=3bb66aee">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f069c823">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7610,7 +7669,7 @@ All APIs can reference them via <code>$ref</code> to ensure consistency.</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ad45825c">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4dc3f941">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7625,7 +7684,7 @@ All APIs can reference them via <code>$ref</code> to ensure consistency.</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f4ff3c13">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c4308822">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7646,7 +7705,7 @@ and not downloadable URLs: you may need to use a specific resolver for them.</p>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=70a28d74">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8d0cb50b">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7658,7 +7717,7 @@ from a <a href="/terminal/">Terminal</a> with <code>datamodel-code-generator</co
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=acbd4164">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=0c5d9839">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7676,7 +7735,7 @@ from a <a href="/terminal/">Terminal</a> with <code>datamodel-code-generator</co
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=defe2ccb">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=9283ebb7">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7691,7 +7750,7 @@ from a <a href="/terminal/">Terminal</a> with <code>datamodel-code-generator</co
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=10e59263">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=99db4e2e">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7704,7 +7763,7 @@ without modifying the generated file (e.g. <code>generated_model.py</code>).</p>
 </div>
 </div>
 </div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=23521d21">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=68d8f918">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7728,7 +7787,7 @@ and beware that users tend to trust examples more than descriptions or specifica
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f9555f17">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c238da97">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7742,7 +7801,7 @@ This can lead to security issues and data pollution if not handled properly.</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=57cd3c82">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=5fb006b6">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7772,7 +7831,7 @@ This can lead to security issues and data pollution if not handled properly.</p>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=5cf9d80b">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=7ab7bb1b">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7789,7 +7848,7 @@ This can lead to security issues and data pollution if not handled properly.</p>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=081f45d7">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=56f72123">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7812,7 +7871,7 @@ to match latin unicode letters
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=63af494d">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=bc622b41">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7834,7 +7893,7 @@ to match latin unicode letters
 </div>
 </div>
 </div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b16931d9">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1a24fb0d">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7845,16 +7904,49 @@ to match latin unicode letters
 Here the goal shifts from security to stability and evolvability.
 While the model can be more flexible, you may want to ensure
 that your system generates the expected structures.</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=544cdb19">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
 <p>:warning: Your API architecture may be configured
 to enforce response schemas at runtime: this avoids
 accidental publication of extra fields
 or errored response.</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=55ab3726">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
 <p>Some hints:</p>
 <ul>
 <li>Don't remove required fields in new versions - that is a breaking change.</li>
 <li>Mark read-only fields with <code>readOnly: true</code> (e.g. <code>id</code>, <code>created_at</code>).</li>
 </ul>
-<p>OAS allows annotating fields with <code>readOnly</code> and <code>writeOnly</code>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=82829b3e">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
+<p>Annotate fields with <code>readOnly</code> and <code>writeOnly</code>
 to control their visibility in requests and responses.</p>
 <p>This allows reusing the same schema for both
 requests and responses,
@@ -7864,7 +7956,7 @@ are only present in one direction.</p>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9bd35ad8">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b49f7818">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7876,7 +7968,7 @@ are only present in one direction.</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b07934a8">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8bd5493b">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7899,7 +7991,7 @@ are only present in one direction.</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=905a36d2">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9105aa1b">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7912,7 +8004,7 @@ JSON Schema allows setting <code>type: ["string", "null"]</code> to allow null v
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=82894608">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c0e8c3ac">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7928,19 +8020,20 @@ JSON Schema allows setting <code>type: ["string", "null"]</code> to allow null v
 </div>
 </div>
 </div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=277c5106">
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=53d9a3f6">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
 <p>JSON Schema is more flexible but implementing tools may require tweaks.</p>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4196d020">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=10e7890d">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7961,7 +8054,7 @@ JSON Schema allows setting <code>type: ["string", "null"]</code> to allow null v
 </div>
 </div>
 </div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=db97dd9a">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=32a5cc4f">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7975,7 +8068,7 @@ a standard JSON structure for HTTP error responses.</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=6bd9096c">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fa1220d6">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7993,7 +8086,7 @@ a standard JSON structure for HTTP error responses.</p>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=0a5136db">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=e10c4e42">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8008,7 +8101,7 @@ to ensure consistent errors
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=307a3c26">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=2c40097b">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8022,19 +8115,20 @@ to ensure consistent errors
 </div>
 </div>
 </div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=437f9e2a">
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=38e55ba2">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
 <p>Then use it for all error responses, including <code>default</code>:</p>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ff6261b8">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a42efe40">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8059,7 +8153,7 @@ to ensure consistent errors
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c6247b89">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=67410a26">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8079,7 +8173,7 @@ this is great to block malicious payloads before they reach your application.</p
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=25ce4239">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=dc808c53">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8094,7 +8188,7 @@ this is great to block malicious payloads before they reach your application.</p
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1d2d6f06">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=74be9e71">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8115,7 +8209,7 @@ this is great to block malicious payloads before they reach your application.</p
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=bc4055aa">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c6b15d38">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8127,7 +8221,7 @@ Problem Details lets you decouple the user-facing <code>detail</code> from your 
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=2f570b96">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=208dc279">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8149,7 +8243,7 @@ Problem Details lets you decouple the user-facing <code>detail</code> from your 
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4e8606d2">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=5fc0e9f8">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8161,7 +8255,7 @@ by redacting responses before they are sent to clients.</p>
 </div>
 </div>
 </div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=6c7881e4">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=49345f9d">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8183,7 +8277,7 @@ just adding them to your Spectral/Super-Linter configuration.</p>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=3db84c72">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8cdd9f05">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8196,7 +8290,7 @@ and review the rule violations on the right panel.</p>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=3ca32caa">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=305b80cf">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8215,7 +8309,7 @@ a visual interface to:</p>
 </div>
 </div>
 </div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=13732ad7">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=21b748b3">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8233,7 +8327,7 @@ a visual interface to:</p>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=54720f00">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=da4195a4">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8244,7 +8338,7 @@ a visual interface to:</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=6c2b7db6">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=2dc3ea02">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8264,7 +8358,7 @@ a visual interface to:</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=44b552dc">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=416b7f41">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8283,7 +8377,7 @@ a visual interface to:</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=253f3c71">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=163e61bb">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
