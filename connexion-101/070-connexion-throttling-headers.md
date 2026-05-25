@@ -1,8 +1,8 @@
 # Throttling headers
 
-Service management is an essential component of a stable API Ecosystem.
+Service management is key for the reliability of an API ecosystem.
 
-Basic compontents for service management are communicating:
+Basic components for service management communicates:
 
 - when you are not operational, and explicit
   how long it will take to be up and running again;
@@ -10,11 +10,10 @@ Basic compontents for service management are communicating:
 - if they are over quota and
   prevent overquota via throttling headers.
 
-
 While it could be annoying to explicitly state that every response
-should contain throttling headers, you can use yaml anchors for that!
+should contain throttling headers, you can use YAML anchors for that!
 
-```
+```yaml
 x-commons:
   throttling-headers: &throttling-headers
     X-RateLimit-Limit:
@@ -30,9 +29,9 @@ x-commons:
 
 Now we can use the anchor in our `get /echo responses`
 
-```
+```yaml
 paths:
-  /echo
+  /echo:
     get:
       ...
       operationId: api.get_echo
@@ -59,7 +58,7 @@ Use the `throttling_quota` utilities either:
 - or implement your own throttling
 
 
-```
+```python
 # Decorate with `throttle`
 from oas3.throttling_quota import throttle
 

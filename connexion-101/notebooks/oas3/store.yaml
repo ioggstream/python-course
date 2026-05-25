@@ -94,7 +94,7 @@ paths:
     get:
       operationId: openapi.get_status
       responses:
-        !!merge <<: *common-responses
+        <<: *common-responses
         200:
           description: |
             The API is working properly.
@@ -121,11 +121,11 @@ paths:
         - $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/parameters/fields'
         - $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/parameters/limit'
       responses:
-        !!merge <<: *common-responses
+        <<: *common-responses
         '200':
           description: Retrieve a list of stored files.
           headers:
-            !!merge <<: *throttling-headers
+            <<: *throttling-headers
           content:
             application/json:
               schema:
@@ -158,12 +158,12 @@ paths:
             schema: {}
             # $ref: '#/components/schemas/UploadFiles'
       responses:
-        !!merge <<: *common-responses
+        <<: *common-responses
         '201':
           description: |-
             The files are properly indexed and stored.
           headers:
-            !!merge <<: *throttling-headers
+            <<: *throttling-headers
           content:
             multipart/related: {}
 components:

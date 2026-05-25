@@ -32,6 +32,7 @@ paths:
         exist returns 400 Bad Request, specifying that
         the given timezone is not in our database.
       operationId: api.get_echo
+      summary: Return the current timestamp in RFC3339
       parameters:
         - $ref: '#/components/parameters/tz'
       responses:
@@ -48,7 +49,8 @@ paths:
             The current timestamp.
         '400':
           $ref: '#/components/responses/400BadRequest'
-      summary: Return the current timestamp in RFC3339
+        'default':
+          $ref: '#/components/responses/GenericError'
   /status:
     get:
       description: |
@@ -88,6 +90,17 @@ components:
       schema:
         $ref: '#/components/schemas/Timezone'
   responses:
+    GenericError:
+      description: |-
+        Generic error response, used when no more specific
+        response is suitable.
+      headers:
+        Retry-After:
+          $ref: '#/components/headers/Retry-After'
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
     400BadRequest:
       content:
         application/problem+json:

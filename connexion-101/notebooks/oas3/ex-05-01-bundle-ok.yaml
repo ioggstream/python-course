@@ -38,7 +38,8 @@ x-commons:
   common-responses: &common-responses
     "503":
       $ref: "#/components/responses/503ServiceUnavailable"
-#
+    "GenericError":
+      $ref: "#/components/responses/GenericError"
 # Complete the /status path
 #
 paths:
@@ -51,7 +52,7 @@ paths:
         un errore.
       operationId: api.get_status
       responses:
-        !!merge <<: *common-responses
+        <<: *common-responses
         '200':
           description: |
             Il server ha ritornato lo status. In caso di problemi
@@ -76,7 +77,7 @@ paths:
         the given timezone is not in our database.
       operationId: api.get_echo
       responses:
-        !!merge <<: *common-responses
+        <<: *common-responses
         '200':
           description: |
             The current timestamp.
@@ -100,6 +101,8 @@ components:
       $ref: "https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/responses/400BadRequest"
     503ServiceUnavailable:
       $ref: "https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/responses/503ServiceUnavailable"
+    GenericError:
+      $ref: "https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/responses/GenericError"
   schemas:
     Timezone:
       description: |

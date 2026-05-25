@@ -44,7 +44,7 @@ paths:
         un errore.
       operationId: api.get_status
       responses:
-        !!merge <<: *common-responses
+        <<: *common-responses
         '200':
           description: |
             Il server ha ritornato lo status. In caso di problemi
@@ -71,12 +71,12 @@ paths:
         the given timezone is not in our database.
       operationId: api.get_echo
       responses:
-        !!merge <<: *common-responses
+        <<: *common-responses
         '200':
           description: |
             The current timestamp.
           headers:
-            !!merge <<: *throttling-headers
+            <<: *throttling-headers
           content:
             application/problem+json:
               schema:
@@ -97,12 +97,12 @@ paths:
         list of entries is returned.
       operationId: api.get_timezones
       responses:
-        !!merge <<: *common-responses
+        <<: *common-responses
         '200':
           description: |
             A list of timezones between offset and limit.
           headers:
-            !!merge <<: *throttling-headers
+            <<: *throttling-headers
           content:
             application/json:
               schema:
@@ -125,12 +125,12 @@ paths:
         out of bound.
       operationId: api.get_timezones_by_continent
       responses:
-        !!merge <<: *common-responses
+        <<: *common-responses
         '200':
           description: |
             A list of timezones between offset and limit.
           headers:
-            !!merge <<: *throttling-headers
+            <<: *throttling-headers
           content:
             application/json:
               schema:

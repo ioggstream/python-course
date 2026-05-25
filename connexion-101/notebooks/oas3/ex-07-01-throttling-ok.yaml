@@ -49,7 +49,7 @@ paths:
         un errore.
       operationId: api.get_status
       responses:
-        !!merge <<: *common-responses
+        <<: *common-responses
         '200':
           description: |
             Il server ha ritornato lo status. In caso di problemi
@@ -76,7 +76,7 @@ paths:
         the given timezone is not in our database.
       operationId: api.get_echo
       responses:
-        !!merge <<: *common-responses
+        <<: *common-responses
         '200':
           description: |
             The current timestamp.
