@@ -206,7 +206,14 @@ components:
         application/problem+json:
           schema:
             $ref: "#/components/schemas/Problem"
-    ServiceUnavailable:
+    400BadRequest:
+      description: |-
+        Bad request, e.g. when the client provides invalid input.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+    503ServiceUnavailable:
       description: |-
         Service unavailable, e.g. when
         the server is overloaded or down for maintenance.

@@ -41,10 +41,13 @@ See the [OAS website](https://github.com/OAI/OpenAPI-Specification).
 ### Exercise: replacing definitions with $refs
 
 - Open [ex-05-01-bundle.yaml](/edit/notebooks/oas3/ex-05-01-bundle.yaml)
-- replace as many definitions as possible with references from the shared [components.oas3.yaml]().
+- replace as many definitions as possible with references from the shared
+<https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml>
 
-```python
+```bash
 # Exercise: create a bundle from the previous file with
+docker run --rm -v $PWD:/app
+docker.io/redocly/cli@sha256:78fa111b6c84522383d419a0631c984aefa76c5fbd39d8904a201b86e3b44168 /app/oas3/ex-05-01-bundle-ok.yaml bundle --output /app/deleteme.yaml
 ```
 
 ### YAML anchors are your friends
