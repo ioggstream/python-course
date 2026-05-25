@@ -4,10 +4,13 @@ Now we'll add new paths and add
 request parameters, including
 their schema.
 
-Some parameters implement
-common patterns, such as pagination parameters (`limit`, `offset`, `cursor`).
-It is important to use the same set of
-parameters across APIs to ease integration.
+Pagination parameters (`limit`, `offset`, `cursor`)
+should be implemented consistently across APIs:
+this can be easily achieved
+publishing shared OAS3 components
+(see [components.oas3.yaml](/edit/notebooks/oas3/components.oas3.yaml)).
+
+---
 
 ## A new path: /echo
 
@@ -177,22 +180,13 @@ def get_echo(tz='UTC'):
 
 Now  [run the spec in a terminal](/terminals/connexion) using
 
-```
-cd /code/notebooks/oas3/
+```text
 connexion run /code/notebooks/oas3/ex-04-02-echo-ok.yaml
 ```
 
-```python
-render_markdown(f'''
-play a bit with the [Swagger UI]({api_server_url('ui')})
-
-and try making a request!
-''')
-```
+and use the Swagger UI to test the API.
 
 ```python
-## TODO do we have enough time to show flask_testing?
-
 # Check that default works
 !curl http://localhost:5000/datetime/v1/echo -kv
 ```
@@ -202,13 +196,7 @@ and try making a request!
 !curl http://localhost:5000/datetime/v1/echo?tz=Europe/Rome -kv
 ```
 
-
 ```python
 # Test an invalid timezone
 !curl http://localhost:5000/datetime/v1/echo?tz=Frittole -kv
-```
-
-
-```python
-
 ```

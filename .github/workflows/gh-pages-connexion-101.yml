@@ -36,6 +36,8 @@ jobs:
           mkdir -p ../_site
           cp notebooks/*.slides.html ../_site/
           cp notebooks/custom.css ../_site/ 2>/dev/null || true
+          cp notebooks/*.ipynb ../_site/ 2>/dev/null || true
+          cp -r notebooks/oas3 ../_site/ 2>/dev/null || true
       - name: Generate index.html
         run: |
           python3 - <<'EOF'

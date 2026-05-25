@@ -6,6 +6,14 @@ They:
 - define the syntax of exchanged data;
 - may define the semantics (aka the meaning) of the data.
 
+Schemas should be:
+
+- safe (e.g., prevent injection attacks);
+- evolvable (e.g., allow adding new fields without breaking clients);
+- consistent (e.g., use the same field names and formats across APIs).
+
+----
+
 To avoid schema proliferation, use:
 
 - catalogs;
@@ -52,6 +60,11 @@ OAS schemas must be embedded in the `#/components/schemas` section
 of an OAS document.
 Schemas outside OAS documents must be defined as JSON Schema files,
 with all the proper headings and metadata.
+
+:warning: A schema used for request or response,
+should always be a JSON object, even if it has only one field.
+This allows adding new fields in the future without breaking clients
+and provides a consistent structure for all requests and responses.
 
 ----
 

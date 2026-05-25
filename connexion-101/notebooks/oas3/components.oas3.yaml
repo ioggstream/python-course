@@ -1,12 +1,16 @@
-openapi: 3.0.4
+openapi: "3.0.4"
 info:
   title: Reusable components for OAS3 APIs.
+  version: "1.0.0"
   description: |-
     This document defines common components
     for interoperable APIs.
 
     It is meant to be imported in other OAS3 documents, and does not define any path or server.
-  version: 1.0.0
+  contact:
+    name: Roberto Polli
+    url: https://github.com/ioggstream/python-course
+    email: robipolli@gmail.com
 paths: {}
 # spectral:disable-next-line oas3-api-servers
 servers: []
@@ -34,26 +38,16 @@ components:
         $ref: "#/components/schemas/Offset"
       example: 0
       # Common schemas.
-    agencyIdPath:
-      name: agencyId
+    idWithSlashPath:
+      name: idWithSlashPath
       in: path
       description: |-
-        Agency identifier matched via the latest path segment of the agency URI.
-        For example, for the agency URI `https://w3id.org/italia/data/public-organization/ISTAT`, `istat` is a valid agencyIdPath.
+        Identifier matched via the latest path segment of the agency URI.
+        For example, for the agency URI `https://w3id.org/italia/data/public-organization/ISTAT`, `istat` is a valid idWithSlashPath.
       required: true
       schema:
         $ref: "#/components/schemas/AsciiText"
       example: istat
-    keyConceptPath:
-      name: keyConcept
-      in: path
-      description: |-
-        Key concept identifier matched via the latest path segment of the key concept URI.
-        For example, for the key concept URI `https://w3id.org/italia/data/public-organization/ISTAT/ente`, `ente` is a valid keyConceptPath.
-      required: true
-      schema:
-        $ref: "#/components/schemas/AsciiText"
-      example: ateco-2025
   schemas:
     AsciiText:
       description: |-
@@ -149,7 +143,7 @@ components:
         - status
       properties:
         type:
-          !!merge <<: *URI
+          <<: *URI
           default: about:blank
         title:
           type: string
@@ -197,7 +191,8 @@ components:
         type: integer
   responses:
     TooManyRequests:
-      description: Too many requests.
+      description: |-
+        Reusable response for Too many requests.
       headers:
         X-RateLimit-Limit:
           $ref: "#/components/headers/X-RateLimit-Limit"
@@ -212,7 +207,10 @@ components:
           schema:
             $ref: "#/components/schemas/Problem"
     ServiceUnavailable:
-      description: Service unavailable.
+      description: |-
+        Service unavailable, e.g. when
+        the server is overloaded or down for maintenance.
+         The client should retry after the indicated time.
       headers:
         Retry-After:
           $ref: "#/components/headers/Retry-After"
@@ -223,6 +221,8 @@ components:
     GenericError:
       description: |-
         The request was not successful.
+        This response can be used for any error status code (4xx or 5xx) that is not covered by more specific responses.
+        The client should retry after the indicated time if the error is temporary (5xx).
       headers:
         Retry-After:
           $ref: "#/components/headers/Retry-After"

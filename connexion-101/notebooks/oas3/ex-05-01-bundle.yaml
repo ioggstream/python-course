@@ -1,7 +1,18 @@
 openapi: 3.0.0
 info:
   title: foo
-  version: '0.1'
+  version: '0.0.1'
+  description: |-
+    Replace all redundant definitions with common
+    $refs to components.oas3.yaml.
+
+    Then, create a single bundled file to be used
+    by you API implemenation and to be published
+    in an API catalog.
+  contact:
+    name: API Support
+    url: https://www.example.com/support
+    email: robipolli@gmail.com
 servers:
   - description: Development server
     url: https://localhost:8443/datetime/v1
@@ -24,13 +35,13 @@ paths:
       parameters:
         - $ref: '#/components/parameters/tz'
       responses:
-        503:
+        "503":
           $ref: '#/components/responses/503ServiceUnavailable'
         '200':
           content:
             application/problem+json:
               example:
-                datetime: 20010507T00:00:10Z
+                timestamp: "20010507T00:00:10Z"
               schema:
                 $ref: '#/components/schemas/Datetime'
           description: |
@@ -46,7 +57,7 @@ paths:
         un errore.
       operationId: api.get_status
       responses:
-        503:
+        "503":
           $ref: '#/components/responses/503ServiceUnavailable'
         '200':
           content:
@@ -96,7 +107,7 @@ components:
     Datetime:
       properties:
         timestamp:
-          example: 2019-01-01 00:00:00
+          example: 2019-01-01T00:00:00
           format: datetime
           type: string
       required:
