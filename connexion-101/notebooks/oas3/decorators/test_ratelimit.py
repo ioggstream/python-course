@@ -1,7 +1,7 @@
 """Tests for throttling_quota middleware."""
 
-import throttling_quota as mod
-from throttling_quota import RateLimitMiddleware, ThrottlingQuota, make_connexion_app
+import notebooks.oas3.decorators.ratelimit as mod
+from notebooks.oas3.decorators.ratelimit import RateLimitMiddleware, ThrottlingQuota, make_connexion_app
 
 
 def test_throttlingquota_basic():

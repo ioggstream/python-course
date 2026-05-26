@@ -42,10 +42,12 @@ Use a custom policy name for multi-policy setups::
     )
 """
 
+import functools
 import sys
 from pathlib import Path
 from time import time
 
+import connexion
 from http_sf import ser
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request
@@ -175,6 +177,64 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
         response.headers["RateLimit"] = rl
         response.headers["RateLimit-Policy"] = rl_policy
         return response
+
+
+# ---------------------------------------------------------------------------
+# Handler decorator
+# ---------------------------------------------------------------------------
+
+
+def ratelimit(quota: ThrottlingQuota, key_func=None, policy_name="default"):
+    """Decorate a connexion handler to enforce a per-key request quota.
+
+    Mirrors :class:`RateLimitMiddleware` at the handler level: attaches
+    ``RateLimit`` and ``RateLimit-Policy`` headers on every response and
+    short-circuits with 429 when the quota is exceeded.
+
+    Args:
+        quota:       a :class:`ThrottlingQuota` instance shared across requests.
+        key_func:    ``() -> str`` throttle key. Defaults to client IP.
+        policy_name: label for the RateLimit headers.
+
+    Example::
+
+        quota = ThrottlingQuota(ttl=60, limit=10)
+
+        @ratelimit(quota)
+        async def get_echo(tz="Zulu"):
+            ...
+    """
+    _key = key_func or (lambda: connexion.request.client.host)
+
+    def decorator(func):
+        @functools.wraps(func)
+        async def wrapper(*args, **kwargs):
+            result = quota.consume(_key())
+
+            rl = ser([(policy_name, {"r": result["remaining"], "t": result["reset"]})])
+            rl_policy = ser([(policy_name, {"q": quota.limit, "w": quota.ttl})])
+            rate_headers = {"RateLimit": rl, "RateLimit-Policy": rl_policy}
+
+            if result["over_quota"]:
+                return connexion.problem(
+                    status=429,
+                    title="Too Many Requests",
+                    detail="Quota exceeded.",
+                    headers={"Retry-After": str(result["reset"]), **rate_headers},
+                )
+
+            response = await func(*args, **kwargs)
+
+            match response:
+                case (body, int(status), dict(existing)):
+                    return body, status, {**existing, **rate_headers}
+                case (body, int(status)):
+                    return body, status, rate_headers
+                case body:
+                    return body, 200, rate_headers
+
+        return wrapper
+    return decorator
 
 
 # ---------------------------------------------------------------------------

@@ -65,6 +65,7 @@ components:
     Want-Content-Digest:
       name: Want-Content-Digest
       in: header
+      required: false
       description: |-
         A request header used to ask the server to include a Content-Digest header in the response,
         with the specified digest algorithms.
@@ -219,7 +220,8 @@ components:
       type: string
       maxLength: 64
       example: sha-256=10, sha-512=0
-      pattern: "^(sha-256|sha-512=1?[0-9])(, *(sha-256|sha-512=1?[0-9]))*$"
+      pattern: >-
+        ^((sha-256|sha-512)=1?[0-9])(, *(sha-256|sha-512)=1?[0-9])*$
   headers:
     #
     # Response Integrity
@@ -290,7 +292,7 @@ components:
         minimum: 0
         type: integer
   responses:
-    TooManyRequests:
+    429TooManyRequests:
       description: |-
         Reusable response for Too many requests.
       headers:

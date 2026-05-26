@@ -17,11 +17,11 @@ x-commons:
       $ref: '#/components/responses/default'
   throttling-headers: &throttling-headers
     X-RateLimit-Limit:
-      $ref: 'https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/headers/X-RateLimit-Limit'
+      $ref: 'components.oas3.yaml#/components/headers/X-RateLimit-Limit'
     X-RateLimit-Remaining:
-      $ref: 'https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/headers/X-RateLimit-Remaining'
+      $ref: 'components.oas3.yaml#/components/headers/X-RateLimit-Remaining'
     X-RateLimit-Reset:
-      $ref: 'https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/headers/X-RateLimit-Reset'
+      $ref: 'components.oas3.yaml#/components/headers/X-RateLimit-Reset'
 openapi: 3.0.1
 info:
   title: Flask store API.
@@ -114,8 +114,8 @@ paths:
         name: filename
         schema:
           type: string
-      - $ref: 'https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/parameters/fields'
-      - $ref: 'https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/parameters/limit'
+      - $ref: 'components.oas3.yaml#/components/parameters/fields'
+      - $ref: 'components.oas3.yaml#/components/parameters/limit'
       responses:
         <<: *common-responses
         '200':
@@ -180,7 +180,7 @@ components:
             type: string
             format: binary
     Problem:
-      $ref: 'https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/schemas/Problem'
+      $ref: 'components.oas3.yaml#/components/schemas/Problem'
     Metadata:
       properties:
         filename: {type: string}
@@ -195,12 +195,12 @@ components:
   responses:
     # Predefined error codes for this API
     400BadRequest:
-      $ref: "https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/responses/400BadRequest"
+      $ref: "components.oas3.yaml#/components/responses/400BadRequest"
     404NotFound:
-      $ref: "https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/responses/404NotFound"
+      $ref: "components.oas3.yaml#/components/responses/404NotFound"
     429TooManyRequests:
-      $ref: "https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/responses/429TooManyRequests"
+      $ref: "components.oas3.yaml#/components/responses/429TooManyRequests"
     503ServiceUnavailable:
-      $ref: "https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/responses/503ServiceUnavailable"
+      $ref: "components.oas3.yaml#/components/responses/503ServiceUnavailable"
     default:
-      $ref: "https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/responses/default"
+      $ref: "components.oas3.yaml#/components/responses/default"

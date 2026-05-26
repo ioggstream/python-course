@@ -89,9 +89,9 @@ components:
         $ref: '#/components/schemas/Timezone'
   responses:
     400BadRequest:
-      $ref: "https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/responses/400BadRequest"
+      $ref: "components.oas3.yaml#/components/responses/400BadRequest"
     503ServiceUnavailable:
-      $ref: "https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/responses/503ServiceUnavailable"
+      $ref: "components.oas3.yaml#/components/responses/503ServiceUnavailable"
   schemas:
     Timezone:
       description: |
@@ -108,4 +108,4 @@ components:
           format: datetime
           example: 2019-01-01T00:00:00Z
     Problem:
-      $ref: 'https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/schemas/Problem'
+      $ref: 'components.oas3.yaml#/components/schemas/Problem'

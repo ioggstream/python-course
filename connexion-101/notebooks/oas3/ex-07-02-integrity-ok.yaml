@@ -26,15 +26,15 @@ servers:
 x-commons:
   throttling-headers: &throttling-headers
     X-RateLimit-Limit:
-      $ref: 'https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/headers/X-RateLimit-Limit'
+      $ref: 'components.oas3.yaml#/components/headers/X-RateLimit-Limit'
     X-RateLimit-Remaining:
-      $ref: 'https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/headers/X-RateLimit-Remaining'
+      $ref: 'components.oas3.yaml#/components/headers/X-RateLimit-Remaining'
     X-RateLimit-Reset:
-      $ref: 'https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/headers/X-RateLimit-Reset'
+      $ref: 'components.oas3.yaml#/components/headers/X-RateLimit-Reset'
   common-responses: &common-responses
-    429:
+    "429":
       $ref: "#/components/responses/429TooManyRequests"
-    503:
+    "503":
       $ref: "#/components/responses/503ServiceUnavailable"
 #
 # Complete the /status path
@@ -68,20 +68,27 @@ paths:
         - myBasicAuth: []
       parameters:
         - $ref: '#/components/parameters/tz'
+        - $ref: '#/components/parameters/Want-Content-Digest'
       summary: Return the current timestamp in RFC3339
       description: |
         Return the current timestamp, in the specified
         timezone. If the timezone does not
         exist returns 400 Bad Request, specifying that
         the given timezone is not in our database.
+
+        We may request for a Content-Digest header in the response, by sending
+        the `Want-Content-Digest` header in the request.
       operationId: api.get_echo
       responses:
         <<: *common-responses
         '200':
           description: |
             The current timestamp.
+          headers:
+            Content-Digest:
+              $ref: 'components.oas3.yaml#/components/headers/Content-Digest'
           content:
-            application/problem+json:
+            application/json:
               schema:
                 $ref: "#/components/schemas/Datetime"
               example:
@@ -100,13 +107,18 @@ components:
       in: query
       schema:
         $ref: '#/components/schemas/Timezone'
+    Want-Content-Digest:
+      $ref: 'components.oas3.yaml#/components/parameters/Want-Content-Digest'
+  headers:
+    Content-Digest:
+      $ref: 'components.oas3.yaml#/components/headers/Content-Digest'
   responses:
     400BadRequest:
-      $ref: "https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/responses/400BadRequest"
+      $ref: "components.oas3.yaml#/components/responses/400BadRequest"
     429TooManyRequests:
-      $ref: "https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/responses/429TooManyRequests"
+      $ref: "components.oas3.yaml#/components/responses/429TooManyRequests"
     503ServiceUnavailable:
-      $ref: "https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/responses/503ServiceUnavailable"
+      $ref: "components.oas3.yaml#/components/responses/503ServiceUnavailable"
   schemas:
     Timezone:
       description: |
@@ -123,4 +135,4 @@ components:
           format: datetime
           example: 2019-01-01T00:00:00Z
     Problem:
-      $ref: 'https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/schemas/Problem'
+      $ref: 'components.oas3.yaml#/components/schemas/Problem'

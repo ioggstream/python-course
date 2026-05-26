@@ -9,6 +9,9 @@ info:
     Then, create a single bundled file to be used
     by you API implemenation and to be published
     in an API catalog.
+
+    The remote URL is
+    - https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/
   contact:
     name: API Support
     url: https://www.example.com/support
