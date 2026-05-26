@@ -14,10 +14,14 @@ info:
     Then, create a single bundled file to be used
     by you API implemenation and to be published
     in an API catalog.
+  x-summary: >-
+    This API provides datetime and timezone information via bundled components.
   contact:
     name: API Support
     url: https://www.example.com/support
     email: robipolli@gmail.com
+  termsOfService: "https://example.com/terms/"
+  x-api-id: 00000000-0000-0000-0000-000000000000
 # One or more server
 #   You can add production, staging and test environments.
 #   We are using the custom `x-sandbox` to identify
@@ -96,6 +100,7 @@ components:
       in: query
       schema:
         $ref: '#/components/schemas/Timezone'
+      example: Europe/Rome
   responses:
     400BadRequest:
       $ref: "components.oas3.yaml#/components/responses/400BadRequest"
@@ -111,6 +116,8 @@ components:
       type: string
       example: Europe/Rome
     Datetime:
+      example:
+        timestamp: "2019-01-01T00:00:00Z"
       required:
         - timestamp
       properties:

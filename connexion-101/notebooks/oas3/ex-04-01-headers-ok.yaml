@@ -6,7 +6,17 @@
 openapi: 3.0.0
 info:
   title: foo
-  version: "0.1"
+  version: "0.1.0"
+  x-summary: >-
+    This API provides datetime and application status information.
+  description: |
+    This API provides application status and related functionality.
+  termsOfService: "https://example.com/terms/"
+  contact:
+    email: robipolli@gmail.com
+    name: Roberto Polli
+    url: https://twitter.com/ioggstream
+  x-api-id: 00000000-0000-0000-0000-000000000000
 
 # One or more server
 #   You can add production, staging and test environments.
@@ -50,8 +60,8 @@ paths:
                 title: OK
                 status: 200
                 detail: The app is running smoothly.
-         '503':
-           $ref: '#/components/responses/503'
+        '503':
+          $ref: '#/components/responses/503'
 
 
 components:

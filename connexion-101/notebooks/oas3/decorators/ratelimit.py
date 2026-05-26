@@ -184,7 +184,7 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
 # ---------------------------------------------------------------------------
 
 
-def ratelimit(quota: ThrottlingQuota, key_func=None, policy_name="default"):
+def ratelimit(ttl, limit, key_func=None, policy_name="default"):
     """Decorate a connexion handler to enforce a per-key request quota.
 
     Mirrors :class:`RateLimitMiddleware` at the handler level: attaches
@@ -205,6 +205,7 @@ def ratelimit(quota: ThrottlingQuota, key_func=None, policy_name="default"):
             ...
     """
     _key = key_func or (lambda: connexion.request.client.host)
+    quota = ThrottlingQuota(ttl=ttl, limit=limit)
 
     def decorator(func):
         @functools.wraps(func)

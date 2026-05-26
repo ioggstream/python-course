@@ -54,7 +54,6 @@ async def get_echo(tz="Zulu", user=None, token_info=None):
 
 ALL_TIMEZONES = sorted(pytz.all_timezones)
 
-@ratelimit(quota=5, ttl=60)
 async def get_timezones(limit=5, offset=0, continent=None):
     entries = ALL_TIMEZONES
 
@@ -63,11 +62,12 @@ async def get_timezones(limit=5, offset=0, continent=None):
         entries = [x for x in entries if x.startswith(continent)]
 
     entries = entries[offset: offset + limit]
-    return {"limit": limit, "offset": offset, "entries": entries, "count": len(entries)}
+    return {"limit": limit, "offset": offset, "entries": entries, "count": len(entries)}, 200, {"content-type": "application/json"}
 
 
+@ratelimit(limit=5, ttl=60)
 async def get_timezones_by_continent(limit=5, offset=0, continent=None):
-    return get_timezones(limit, offset, continent)
+    return await get_timezones(limit, offset, continent)
 
 
 def create_connexion_app(spec: str):
@@ -85,7 +85,6 @@ def create_connexion_app(spec: str):
         for path_item in  spec_dict["paths"].values():
             for operation in path_item.values():
                 operation["operationId"] = operation["operationId"].replace("api.", "api_solution.")
-    app.add_middleware(OASDigestMiddleware, spec=spec_dict, max_response_size=1000)
     return app
 
 

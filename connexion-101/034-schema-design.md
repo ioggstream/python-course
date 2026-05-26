@@ -128,7 +128,7 @@ The `$ref` value is an URI.
 components:
   schemas:
     Problem:
-      $ref: 'https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/schemas/Problem'
+      $ref: 'components.oas3.yaml#/components/schemas/Problem'
 ```
 
 > Note: Schema registries guarantee consistency: if a shared schema adds a required field,
@@ -369,7 +369,7 @@ to ensure consistent errors
 components:
   schemas:
     Problem:
-      $ref: 'https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/schemas/Problem'
+      $ref: 'components.oas3.yaml#/components/schemas/Problem'
 ```
 
 ----

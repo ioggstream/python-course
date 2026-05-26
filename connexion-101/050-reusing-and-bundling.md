@@ -43,12 +43,12 @@ See the [OAS website](https://github.com/OAI/OpenAPI-Specification).
 - Open [ex-05-01-bundle.yaml](/edit/notebooks/oas3/ex-05-01-bundle.yaml)
 - replace as many definitions as possible with references from the shared
 <https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml>
-- "resolve" the OAS file as JSON.
+- "resolve" the OAS file as JSON, to ensure that anchors are removed.
 
 ```python
 import yaml, json
 d = yaml.safe_load(stream=open("oas3/ex-05-01-bundle-ok.yaml"))
-json.dump(d, open("deleteme.json", "w+"))
+json.dump(d, open("oas3/bundle.json", "w+"))
 ```
 
 ----
@@ -62,7 +62,7 @@ A bundle is a single file containing all the resolved references. It can be used
 ```bash
 # Exercise: create a bundle from the previous file with
 docker run --rm -v $PWD:/app
-docker.io/redocly/cli@sha256:78fa111b6c84522383d419a0631c984aefa76c5fbd39d8904a201b86e3b44168 /app/oas3/ex-05-01-bundle-ok.yaml bundle --output /app/deleteme.yaml
+docker run --rm -v $PWD:/app docker.io/redocly/cli@sha256:78fa111b6c84522383d419a0631c984aefa76c5fbd39d8904a201b86e3b44168 bundle /app/oas3/bundle.json  --output /app/bundle.yaml
 ```
 
 ---

@@ -1,7 +1,17 @@
 openapi: 3.0.0
 info:
   title: foo
-  version: "0.1"
+  version: "0.1.0"
+  x-summary: >-
+    This API provides datetime and timezone information with pagination.
+  description: |
+    This API provides application status, datetime, and paginated timezone information.
+  termsOfService: "https://example.com/terms/"
+  contact:
+    email: robipolli@gmail.com
+    name: Roberto Polli
+    url: https://twitter.com/ioggstream
+  x-api-id: 00000000-0000-0000-0000-000000000000
 # One or more server
 #   You can add production, staging and test environments.
 #   We are using the custom `x-sandbox` to identify
@@ -82,7 +92,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Datetime"
               example:
-                datetime: 20010507T00:00:10Z
+                timestamp: "2019-01-01T00:00:00Z"
         '400':
           $ref: '#/components/responses/400BadRequest'
   /timezones: # TODO implement this
@@ -155,11 +165,13 @@ components:
       required: true
       schema:
         type: string
+      example: Europe
     tz:
       name: tz
       in: query
       schema:
         $ref: '#/components/schemas/Timezone'
+      example: Europe/Rome
   responses:
     400BadRequest:
       $ref: "components.oas3.yaml#/components/responses/400BadRequest"
@@ -171,6 +183,15 @@ components:
       $ref: "components.oas3.yaml#/components/responses/503ServiceUnavailable"
   schemas:
     Timezones:
+      type: object
+      example:
+        limit: 10
+        offset: 0
+        count: 3
+        entries:
+          - Europe/Rome
+          - UTC
+          - Asia/Tokyo
       required:
         - limit
         - count
@@ -178,14 +199,17 @@ components:
         - entries
       properties:
         limit:
-          type: number
+          type: integer
           format: int32
+          example: 10
         count:
-          type: number
+          type: integer
           format: int32
+          example: 3
         offset:
-          type: number
+          type: integer
           format: int32
+          example: 0
         entries:
           type: array
           items:
@@ -197,12 +221,14 @@ components:
       type: string
       example: Europe/Rome
     Datetime:
+      example:
+        timestamp: "2019-01-01T00:00:00Z"
       required:
         - timestamp
       properties:
         timestamp:
           type: string
           format: datetime
-          example: 2019-01-01T00:00:00Z
+          example: "2019-01-01T00:00:00Z"
     Problem:
       $ref: 'components.oas3.yaml#/components/schemas/Problem'

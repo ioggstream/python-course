@@ -149,7 +149,7 @@ components:
 
 ----
 
-Or just `$ref` the `Retry-After` defined in <https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/headers/Retry-After>
+Or just `$ref` the `Retry-After` defined in <components.oas3.yaml#/components/headers/Retry-After>
 
 Modify [api.py:get_status](/edit/notebooks/oas3/api.py) such that:
 

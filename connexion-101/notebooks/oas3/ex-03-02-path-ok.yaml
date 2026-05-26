@@ -11,8 +11,12 @@ info:
     name: API Support
     url: https://www.example.com/support
     email: robipolli@gmail.com
+  x-summary: >-
+    This API provides the status of the application for health checks and monitoring.
   description: |
     This API provides the status of the application. It can be used for health checks and monitoring purposes.
+  termsOfService: "https://example.com/terms/"
+  x-api-id: 00000000-0000-0000-0000-000000000000
 # One or more server
 #   You can add production, staging and test environments.
 #   We are using the custom `x-sandbox` to identify
