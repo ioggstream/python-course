@@ -92,7 +92,7 @@ def get_echo(tz, user=None):
 
 ### Test the my_auth implementation
 
-Run the spec in the [terminal](/terminals/1)
+Run the spec in the [terminal](/terminals/connexion)
 with the usual
 
 ```
