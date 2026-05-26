@@ -1,7 +1,8 @@
+---
 openapi: 3.0.1
 info: {version: 0.1.1, title: hi}
 servers:
-  - url: 'https://localhost:8443/hello/v1'
+- url: 'https://localhost:8443/hello/v1'
 #  description: dev
 paths:
   /echo:
@@ -34,7 +35,7 @@ paths:
     get:
       summary: Just a method
       security:
-        - basic: []
+      - basic: []
       operationId: api.get_hello_auth
       responses:
         '200':
@@ -46,7 +47,7 @@ components:
   schemas:
     Text:
       required:
-        - text
+      - text
       properties:
         text:
           type: string

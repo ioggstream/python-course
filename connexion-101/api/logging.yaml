@@ -1,3 +1,4 @@
+---
 #
 # Flask log configuration.
 #
@@ -20,4 +21,4 @@ handlers:
 root:
   level: DEBUG
   handlers:
-    - rfc5424
+  - rfc5424

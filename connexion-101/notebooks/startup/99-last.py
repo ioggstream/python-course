@@ -18,7 +18,7 @@ def render_markdown(s):
 editor_url = f'http://{env["MAIN_IP"]}' + ":8080/?url="
 api_url = f'http://{env["MAIN_IP"]}' + ":5000/"
 defintions_yaml = (
-    "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/parameters"
+    "https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/parameters"
 )
 
 

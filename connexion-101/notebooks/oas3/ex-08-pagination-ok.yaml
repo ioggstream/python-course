@@ -21,11 +21,11 @@ servers:
 x-commons:
   throttling-headers: &throttling-headers
     X-RateLimit-Limit:
-      $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/headers/X-RateLimit-Limit'
+      $ref: 'https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/headers/X-RateLimit-Limit'
     X-RateLimit-Remaining:
-      $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/headers/X-RateLimit-Remaining'
+      $ref: 'https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/headers/X-RateLimit-Remaining'
     X-RateLimit-Reset:
-      $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/headers/X-RateLimit-Reset'
+      $ref: 'https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/headers/X-RateLimit-Reset'
   common-responses: &common-responses
     '429':
       $ref: "#/components/responses/429TooManyRequests"
@@ -88,8 +88,8 @@ paths:
   /timezones: # TODO implement this
     get:
       parameters:
-        - $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/parameters/limit"
-        - $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/parameters/offset"
+        - $ref: "https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/parameters/limit"
+        - $ref: "https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/parameters/offset"
       summary: Return the supported timezones
       description: |
         Return a paginated list of supported
@@ -115,8 +115,8 @@ paths:
   /timezones/{continent}: # TODO implement this
     get:
       parameters:
-        - $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/parameters/limit"
-        - $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/parameters/offset"
+        - $ref: "https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/parameters/limit"
+        - $ref: "https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/parameters/offset"
         - $ref: "#/components/parameters/continent_path"
       summary: Return the supported timezones
       description: |
@@ -162,13 +162,13 @@ components:
         $ref: '#/components/schemas/Timezone'
   responses:
     400BadRequest:
-      $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/responses/400BadRequest"
+      $ref: "https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/responses/400BadRequest"
     404NotFound:
-      $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/responses/404NotFound"
+      $ref: "https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/responses/404NotFound"
     429TooManyRequests:
-      $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/responses/429TooManyRequests"
+      $ref: "https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/responses/429TooManyRequests"
     503ServiceUnavailable:
-      $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/responses/503ServiceUnavailable"
+      $ref: "https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/responses/503ServiceUnavailable"
   schemas:
     Timezones:
       required:
@@ -205,4 +205,4 @@ components:
           format: datetime
           example: 2019-01-01T00:00:00Z
     Problem:
-      $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/schemas/Problem'
+      $ref: 'https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/schemas/Problem'

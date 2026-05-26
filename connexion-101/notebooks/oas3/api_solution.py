@@ -6,7 +6,6 @@ from connexion import problem
 from throttling_quota import throttle
 
 
-@throttle
 def get_status():
     """Implement the get_status operation
     :return: a problem+json with status 200, title "OK" and a successful
@@ -24,8 +23,6 @@ def get_status():
         )
     return problem(status=200, title="OK", detail="So far so good.", headers=headers)
 
-
-@throttle
 def get_echo(tz="Zulu", user=None, token_info=None):
     if tz not in pytz.all_timezones:
         return problem(
@@ -50,7 +47,6 @@ def get_echo(tz="Zulu", user=None, token_info=None):
 ALL_TIMEZONES = sorted(pytz.all_timezones)
 
 
-# @throttle
 def get_timezones(limit=5, offset=0, continent=None):
     entries = ALL_TIMEZONES
 

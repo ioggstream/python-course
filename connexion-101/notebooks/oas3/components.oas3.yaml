@@ -1,3 +1,4 @@
+---
 openapi: "3.0.4"
 info:
   title: Reusable components for OAS3 APIs.
@@ -25,7 +26,8 @@ components:
       name: limit
       in: query
       explode: false
-      description: Maximum number of items to return. If unset, used default value 10.
+      description: Maximum number of items to return. If unset,
+        used default value 10.
       schema:
         $ref: "#/components/schemas/Limit"
       example: 10
@@ -48,6 +50,40 @@ components:
       schema:
         $ref: "#/components/schemas/AsciiText"
       example: istat
+    Content-Digest:
+      name: Content-Digest
+      in: header
+      description: |-
+        A digest of the response body, used to verify the integrity of the response.
+        See RFC 9530 for details.
+
+        Since OAS does not yet support Structured Fields serialization,
+        we use a basic regexp that can be tweaked to identify the selected digest algorithms
+        for your ecosystem.
+      schema:
+        $ref: "#/components/schemas/Digest"
+    Want-Content-Digest:
+      name: Want-Content-Digest
+      in: header
+      description: |-
+        A request header used to ask the server to include a Content-Digest header in the response,
+        with the specified digest algorithms.
+        See RFC 9530 for details.
+
+        Since OAS does not yet support Structured Fields serialization,
+        we use a basic regexp that can be tweaked to identify the selected digest algorithms
+        for your ecosystem.
+      schema:
+        $ref: "#/components/schemas/DigestAlgoritmsPreference"
+      examples:
+        ask-for-sha256:
+          value: sha-256=1
+          summary: Ask the server to include a sha-256 digest
+            in the response.
+        ask-for-sha512:
+          value: sha-512=1
+          summary: Ask the server to include a sha-512 digest
+            in the response.
   schemas:
     AsciiText:
       description: |-
@@ -80,7 +116,7 @@ components:
         A link to a resource.
       type: object
       required:
-        - href
+      - href
       properties:
         href:
           $ref: "#/components/schemas/URI"
@@ -139,8 +175,8 @@ components:
       additionalProperties: false
       type: object
       required:
-        - title
-        - status
+      - title
+      - status
       properties:
         type:
           <<: *URI
@@ -158,7 +194,69 @@ components:
           maxLength: 1024
         instance:
           $ref: "#/components/schemas/Url"
+    Digest:
+      description: |-
+        A digest of the response body, used to verify the integrity of the response.
+        See RFC 9530 for details.
+
+        Since OAS does not yet support Structured Fields serialization,
+        we use a basic regexp that can be tweaked to identify the selected digest algorithms
+        for your ecosystem.
+      type: string
+      maxLength: 512
+      example: >-
+        sha-256=:d435Qo+nKZ+gLcUHn7GQtQ72hiBVAgqoLsZnZPiTGPk=:,
+        sha-512=:YMAam51Jz/jOATT6/zvHrLVgOYTGFy1d6GJiOHTohq4yP+pgk4vf2aCsyRZOtw8MjkM7iw7yZ/WkppmM44T3qg==:
+      pattern: "^(sha-256|sha-512)=:[a-zA-Z0-9+/=]+:((, +)(sha-256|sha-512)=:[a-zA-Z0-9+/=]+:)*$"
+    DigestAlgoritmsPreference:
+      description: |-
+        A list of digest algorithms with preferences.
+        See RFC 9530 for details.
+
+        Since OAS does not yet support Structured Fields serialization,
+        we use a basic regexp that can be tweaked to identify the selected digest algorithms
+        for your ecosystem.
+      type: string
+      maxLength: 64
+      example: sha-256=10, sha-512=0
+      pattern: "^(sha-256|sha-512=1?[0-9])(, *(sha-256|sha-512=1?[0-9]))*$"
   headers:
+    #
+    # Response Integrity
+    #
+    Content-Digest:
+      description: |-
+        A digest of the response body, used to verify the integrity of the response.
+        See RFC 9530 for details.
+
+        Since OAS does not yet support Structured Fields serialization,
+        we use a basic regexp that can be tweaked to identify the selected digest algorithms
+        for your ecosystem.
+      schema:
+        $ref: "#/components/schemas/Digest"
+    Want-Content-Digest:
+      description: |-
+        A request header used to ask the server to include a Content-Digest header in the response,
+        with the specified digest algorithms.
+        See RFC 9530 for details.
+
+        Since OAS does not yet support Structured Fields serialization,
+        we use a basic regexp that can be tweaked to identify the selected digest algorithms
+        for your ecosystem.
+      schema:
+        $ref: "#/components/schemas/DigestAlgoritmsPreference"
+      examples:
+        ask-for-sha256:
+          value: sha-256=1
+          summary: Ask the server to include a sha-256 digest
+            in the response.
+        ask-for-sha512:
+          value: sha-512=1
+          summary: Ask the server to include a sha-512 digest
+            in the response.
+    #
+    # Service management.
+    #
     Retry-After:
       description: |-
         Retry contacting the endpoint *at least* after seconds.
@@ -169,14 +267,16 @@ components:
         minimum: 0
         type: integer
     X-RateLimit-Limit:
-      description: The number of allowed requests in the current period
+      description: The number of allowed requests in the current
+        period
       schema:
         format: int32
         maximum: 1000000
         minimum: 0
         type: integer
     X-RateLimit-Remaining:
-      description: The number of remaining requests in the current period
+      description: The number of remaining requests in the current
+        period
       schema:
         format: int32
         maximum: 1000000

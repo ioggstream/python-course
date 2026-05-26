@@ -1,3 +1,4 @@
+---
 openapi: 3.0.1
 info: {version: 0.1.1, title: hi}
 # servers:
@@ -34,7 +35,7 @@ paths:
     get:
       summary: Just a method
       security:
-        - basic: []
+      - basic: []
       operationId: get_hello_auth
       responses:
         "200":
@@ -46,7 +47,7 @@ components:
   schemas:
     Text:
       required:
-        - text
+      - text
       properties:
         text:
           type: string

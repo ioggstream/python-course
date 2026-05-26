@@ -1,3 +1,4 @@
+---
 #
 # Questo e' un progetto d'esempio in formato OpenAPI 3.0 API Starter Kit.
 #
@@ -16,11 +17,11 @@ x-commons:
       $ref: '#/components/responses/default'
   throttling-headers: &throttling-headers
     X-RateLimit-Limit:
-      $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/headers/X-RateLimit-Limit'
+      $ref: 'https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/headers/X-RateLimit-Limit'
     X-RateLimit-Remaining:
-      $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/headers/X-RateLimit-Remaining'
+      $ref: 'https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/headers/X-RateLimit-Remaining'
     X-RateLimit-Reset:
-      $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/headers/X-RateLimit-Reset'
+      $ref: 'https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/headers/X-RateLimit-Reset'
 openapi: 3.0.1
 info:
   title: Flask store API.
@@ -52,22 +53,17 @@ info:
     When storage is over a predefined quota,
     the application returns 503 and avoid saturation.
 
-
     ##### Subsection
 
     Write here subsections.
 
     #### Notes
 
-
     This service might be autenticated upfront.
-
 
     #### Technical information and examples
 
-
     Example:
-
 
     ```
     http https://localhost:8443/store/v0
@@ -78,17 +74,17 @@ info:
   termsOfService: 'http://swagger.io/terms/'
   x-api-id: 00000000-0000-0000-0000-000000000000
   x-audience:
-    - public
+  - public
 servers:
-  - description: Development server
-    url: 'https://localhost:8443/store/v0'
-  - description: Test server
-    url: 'https://api.example.com/store/v0'
+- description: Development server
+  url: 'https://localhost:8443/store/v0'
+- description: Test server
+  url: 'https://api.example.com/store/v0'
 tags:
-  - description: Retrieve informations
-    externalDocs:
-      url: 'http://docs.my-api.com/pet-operations.htm'
-    name: private
+- description: Retrieve informations
+  externalDocs:
+    url: 'http://docs.my-api.com/pet-operations.htm'
+  name: private
 paths:
   /status:
     get:
@@ -114,12 +110,12 @@ paths:
     get:
       operationId: openapi.list_files
       parameters:
-        - in: query
-          name: filename
-          schema:
-            type: string
-        - $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/parameters/fields'
-        - $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/parameters/limit'
+      - in: query
+        name: filename
+        schema:
+          type: string
+      - $ref: 'https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/parameters/fields'
+      - $ref: 'https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/parameters/limit'
       responses:
         <<: *common-responses
         '200':
@@ -142,11 +138,11 @@ paths:
     put:
       operationId: openapi.put_file
       parameters:
-        - in: path
-          name: filename
-          required: true
-          schema:
-            type: string
+      - in: path
+        name: filename
+        required: true
+        schema:
+          type: string
       requestBody:
         description: |
           A multipart/related containing at least
@@ -184,7 +180,7 @@ components:
             type: string
             format: binary
     Problem:
-      $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/schemas/Problem'
+      $ref: 'https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/schemas/Problem'
     Metadata:
       properties:
         filename: {type: string}
@@ -199,12 +195,12 @@ components:
   responses:
     # Predefined error codes for this API
     400BadRequest:
-      $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/responses/400BadRequest"
+      $ref: "https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/responses/400BadRequest"
     404NotFound:
-      $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/responses/404NotFound"
+      $ref: "https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/responses/404NotFound"
     429TooManyRequests:
-      $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/responses/429TooManyRequests"
+      $ref: "https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/responses/429TooManyRequests"
     503ServiceUnavailable:
-      $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/responses/503ServiceUnavailable"
+      $ref: "https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/responses/503ServiceUnavailable"
     default:
-      $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/responses/default"
+      $ref: "https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml#/components/responses/default"
