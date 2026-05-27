@@ -1,8 +1,8 @@
 # Throttling headers
 
-Service management is an essential component of a stable API Ecosystem.
+Service management is key for the reliability of an API ecosystem.
 
-Basic compontents for service management are communicating:
+Basic components for service management communicates:
 
 - when you are not operational, and explicit
   how long it will take to be up and running again;
@@ -10,11 +10,10 @@ Basic compontents for service management are communicating:
 - if they are over quota and
   prevent overquota via throttling headers.
 
-
 While it could be annoying to explicitly state that every response
-should contain throttling headers, you can use yaml anchors for that!
+should contain throttling headers, you can use YAML anchors for that!
 
-```
+```yaml
 x-commons:
   throttling-headers: &throttling-headers
     X-RateLimit-Limit:
@@ -30,9 +29,9 @@ x-commons:
 
 Now we can use the anchor in our `get /echo responses`
 
-```
+```yaml
 paths:
-  /echo
+  /echo:
     get:
       ...
       operationId: api.get_echo
@@ -59,7 +58,7 @@ Use the `throttling_quota` utilities either:
 - or implement your own throttling
 
 
-```
+```python
 # Decorate with `throttle`
 from oas3.throttling_quota import throttle
 
@@ -70,7 +69,7 @@ def f(user='foo'):
 ```
 
 
-```
+```python
 # Or write your own using
 from oas3.throttling_quota import ThrottlingQuota
 
@@ -80,11 +79,6 @@ for i in range(4):
     ret = quotas.consume(user=f'user1')
     print(ret)
 ```
-
-    {'limit': 3, 'remaining': 2, 'reset': 23, 'user': 'user1', 'comment': '2019-07-06T07:57:00'}
-    {'limit': 3, 'remaining': 1, 'reset': 23, 'user': 'user1', 'comment': '2019-07-06T07:57:00'}
-    {'limit': 3, 'remaining': 0, 'reset': 23, 'user': 'user1', 'comment': '2019-07-06T07:57:00'}
-    {'limit': 3, 'remaining': 0, 'reset': 23, 'user': 'user1', 'comment': '2019-07-06T07:57:00'}
 
 
 Modify [api.py:get_echo](/edit/notebooks/oas3/api.py) such that:
@@ -98,10 +92,9 @@ Modify [api.py:get_echo](/edit/notebooks/oas3/api.py) such that:
   - X-RateLimit-Remaining: remaining requests before the quota is consumed
 
 
-Now  [run the spec in a terminal](/terminals/1) using
+Now  [run the spec in a terminal](/terminals/connexion) using
 
-```
-cd /code/notebooks/oas3/
+```text
 connexion run /code/notebooks/oas3/ex-07-01-throttling-ok.yaml
 ```
 
@@ -111,11 +104,6 @@ and try making a request!
 
 
 
-```
+```python
 !curl http://localhost:5000/datetime/v1/echo -kv -ufoo:foo
-```
-
-
-```
-
 ```

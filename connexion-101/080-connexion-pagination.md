@@ -6,7 +6,7 @@ Moreover we stated that responses should always be enclosed in json objects, eg:
 
 * always return something that is extensible like
 
-```
+```http
 GET /timezones
 
 {
@@ -17,12 +17,13 @@ GET /timezones
 
 * don't return `string`, `number` or `array`, because
 
-```
+```http
 GET /dont-do-this
 
 [ "you can't", "extend them"]
 ```
 
+---
 
 ## Support pagination in `get /timezones`
 
@@ -48,7 +49,9 @@ Our goal is the following:
 
 - the status code for a successful response is `200`
 
-Remember: pagination should be implemented using a common
+----
+
+:warning: pagination should be implemented using a common
 set of parameters to use. Our choice is:
 
 - limit: max number of entries to retrieve
@@ -56,34 +59,38 @@ set of parameters to use. Our choice is:
 - cursor: an identifier (cursor) of the first entry to be returned
   [Slack APIs provide an example of cursor-based pagination](https://api.slack.com/docs/pagination)
 
+----
+
 ### Exercise: write /timezone specs
 
 Edit the [ex-08-pagination-ok.yaml](/edit/notebooks/oas3/ex-08-pagination-ok.yaml) and write the `timezones` specifications:
 
-1- define the new `Timezones` schema to be used in the response;
+1. define the new `Timezones` schema to be used in the response;
 
-2- define the new `/timezones` path supporting the `get` method:
+2. define the new `/timezones` path supporting the `get` method:
 
   * always write proper `summary` and `description` fields
 
-3- `get /timezones` possible responses are:
+3. `get /timezones` possible responses are:
 
   * `200` returning a `Timezones` in json format, with a complete `example` for mocks
   * `429` and `503` returning a `problem+json`
 
-4- this operation is not authenticated
+4. this operation is not authenticated
 
-5- don't forget `operationId: get_timezones` !
+5. don't forget `operationId: get_timezones` !
 
 Hint: feel free to reuse as much yaml code as possible.
 
+----
+
 ### Exercise: test /timezones mocks
 
-Run your spec [in the terminal](/terminals/1) and check that it properly returns the mock objects.
+Run your spec [in the terminal](/terminals/connexion) and check that it properly returns the mock objects.
 
 Use
 
-```
+```test
 connexion run --mock all /code/notebooks/oas3/ex-08-pagination-ok.yaml
 ```
 
@@ -121,6 +128,7 @@ connexion run --mock all /code/notebooks/oas3/ex-08-pagination-ok.yaml
     * Curl_http_done: called premature == 0
     * Closing connection 0
 
+---
 
 ## Path parameters
 
@@ -151,7 +159,7 @@ paths:
     ...
 ```
 
-
+----
 
 ### Exercise: adding `path` parameter to `/timezones`
 
@@ -172,6 +180,7 @@ connexion run --mock all /code/notebooks/oas3/ex-08-pagination-ok.yaml
 ```python
 # Use this cell to test your api
 ```
+----
 
 ### Exercise:  implement get_timezones operations
 
@@ -186,6 +195,8 @@ Let's implement the `get_timezones` operation in [api.py](/edit/notebooks/oas3/a
 # Check that default works
 !curl http://localhost:5000/datetime/v1/timezones -kv
 ```
+
+----
 
 ### Exercise:  implement get_timezones_by_continent operations
 
@@ -229,14 +240,14 @@ Let's implement the `get_timezones_by_continent` operation in [api.py](/edit/not
         return get_timezones(limit, offset, continent)
 
 
-Now  [run the spec in a terminal](/terminals/1) using
+Now  [run the spec in a terminal](/terminals/connexion) using
 
-```
+```text
 cd /code/notebooks/oas3/
 connexion run /code/notebooks/oas3/ex-08-pagination-ok.yaml
 ```
 
-
+TODO
 ```python
 render_markdown(f'''
 Play a bit with the [Swagger UI]({api_server_url('ui')})

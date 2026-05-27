@@ -6,18 +6,17 @@
 openapi: 3.0.0
 info:
   title: foo
-  version: "0.1.1"
+  version: "0.1.0"
   x-summary: >-
-    This API provides datetime and timezone information with authentication.
+    This API provides datetime information with integrity headers.
   description: |
-    This API provides application status and datetime information with basic auth.
+    This API provides application status and datetime information with Content-Digest integrity headers.
   termsOfService: "https://example.com/terms/"
   contact:
     email: robipolli@gmail.com
     name: Roberto Polli
     url: https://twitter.com/ioggstream
   x-api-id: 00000000-0000-0000-0000-000000000000
-
 # One or more server
 #   You can add production, staging and test environments.
 #   We are using the custom `x-sandbox` to identify
@@ -34,12 +33,19 @@ servers:
       url: https://api.example.com/datetime/v1/status
       interval: 300
       timeout: 15
-
 x-commons:
+  throttling-headers: &throttling-headers
+    X-RateLimit-Limit:
+      $ref: 'components.oas3.yaml#/components/headers/X-RateLimit-Limit'
+    X-RateLimit-Remaining:
+      $ref: 'components.oas3.yaml#/components/headers/X-RateLimit-Remaining'
+    X-RateLimit-Reset:
+      $ref: 'components.oas3.yaml#/components/headers/X-RateLimit-Reset'
   common-responses: &common-responses
+    "429":
+      $ref: "#/components/responses/429TooManyRequests"
     "503":
       $ref: "#/components/responses/503ServiceUnavailable"
-
 #
 # Complete the /status path
 #
@@ -66,39 +72,46 @@ paths:
                 title: OK
                 status: 200
                 detail: The app is running smoothly.
-  /echo:  # TODO implement this
+  /echo: # TODO implement this
     get:
       security:
-      - myBasicAuth: []
+        - myBasicAuth: []
       parameters:
-      - $ref: '#/components/parameters/tz'
+        - $ref: '#/components/parameters/tz'
+        - $ref: '#/components/parameters/Want-Content-Digest'
       summary: Return the current timestamp in RFC3339
       description: |
         Return the current timestamp, in the specified
         timezone. If the timezone does not
         exist returns 400 Bad Request, specifying that
         the given timezone is not in our database.
+
+        We may request for a Content-Digest header in the response, by sending
+        the `Want-Content-Digest` header in the request.
       operationId: api.get_echo
       responses:
         <<: *common-responses
         '200':
           description: |
             The current timestamp.
+          headers:
+            <<: *throttling-headers
+            Content-Digest:
+              $ref: 'components.oas3.yaml#/components/headers/Content-Digest'
           content:
-            application/problem+json:
+            application/json:
               schema:
                 $ref: "#/components/schemas/Datetime"
               example:
                 timestamp: "2019-01-01T00:00:00Z"
         '400':
-           $ref: '#/components/responses/400BadRequest'
+          $ref: '#/components/responses/400BadRequest'
 components:
   securitySchemes:
     myBasicAuth:
-     type: http
-     scheme: basic
-     x-basicInfoFunc: security.my_auth
-
+      type: http
+      scheme: basic
+      x-basicInfoFunc: security.my_auth
   parameters:
     tz:
       name: tz
@@ -106,9 +119,16 @@ components:
       schema:
         $ref: '#/components/schemas/Timezone'
       example: Europe/Rome
+    Want-Content-Digest:
+      $ref: 'components.oas3.yaml#/components/parameters/Want-Content-Digest'
+  headers:
+    Content-Digest:
+      $ref: 'components.oas3.yaml#/components/headers/Content-Digest'
   responses:
     400BadRequest:
       $ref: "components.oas3.yaml#/components/responses/400BadRequest"
+    429TooManyRequests:
+      $ref: "components.oas3.yaml#/components/responses/429TooManyRequests"
     503ServiceUnavailable:
       $ref: "components.oas3.yaml#/components/responses/503ServiceUnavailable"
   schemas:
@@ -122,7 +142,7 @@ components:
       example:
         timestamp: "2019-01-01T00:00:00Z"
       required:
-      - timestamp
+        - timestamp
       properties:
         timestamp:
           type: string

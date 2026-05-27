@@ -1,55 +1,45 @@
+---
 # Image for developing the course
 services:
   dev:
     build: .
     user: "1000"
     environment:
-      - USE_HTTP=1
-      - PASSWORD=secret
-      - "MAIN_IP=${MAIN_IP}"
-      - FOO=bar
-      - HOME=/code
+    - USE_HTTP=1
+    - PASSWORD=secret
+    - "MAIN_IP=${MAIN_IP}"
+    - FOO=bar
+    - HOME=/code
     ports:
-      - "8888"
-      - "5000"
+    - "8888:8888"
+    - "5000:5000"
     volumes:
-      - ./notebooks:/notebooks:z
-      - ./notebooks/custom.css:/root/.jupyter/custom/custom.css:z
-      - ./notebooks/startup:/root/.ipython/profile_default/startup:z
-      - .:/code:z
+    - ./notebooks:/notebooks:z
+    - ./notebooks/custom.css:/root/.jupyter/custom/custom.css:z
+    - ./notebooks/startup:/root/.ipython/profile_default/startup:z
+    - .:/code:z
     working_dir: /code
     network_mode: bridge
     entrypoint: /bin/sh
-    command: -c "/usr/local/bin/jupyter-notebook --ip 0.0.0.0 --NotebookApp.custom_display_url=http://$$(hostname -i):8888 --ServerApp.custom_display_url=http://$$(hostname -i):8888"
-  editor:
-    image: swaggerapi/swagger-editor
-    hostname: oas
-    environment:
-      - "MAIN_IP=${MAIN_IP}"
-    volumes:
-      - .:/code:z
-    network_mode: bridge
-    ports:
-      - 8080:8080
-  test:
-    image: ioggstream/python-course
-    volumes:
-      - ./notebooks:/notebooks:z
-      # entrypoint: tail -f /etc/hosts
-  # Official image from docker hub
+    command: -c "/usr/local/bin/jupyter-notebook --ip 0.0.0.0
+      --NotebookApp.custom_display_url=http://$$(hostname -i):8888
+      --ServerApp.custom_display_url=http://$$(hostname -i):8888"
   deleteme:
     image: ioggstream/python-course:3.6
     hostname: course
     environment:
-      - USE_HTTP=1
-      - DOCKER_HOST=172.17.0.1
+    - USE_HTTP=1
+    - DOCKER_HOST=172.17.0.1
     volumes:
-      - ./notebooks:/notebooks:z
-      - ./notebooks/custom.css:/root/.jupyter/custom/custom.css
-      - ./notebooks/startup:/root/.ipython/profile_default/startup:z
-      - .:/code:z
+    - ./notebooks:/notebooks:z
+    - ./notebooks/custom.css:/root/.jupyter/custom/custom.css
+    - ./notebooks/startup:/root/.ipython/profile_default/startup:z
+    - .:/code:z
     network_mode: bridge
     ports:
-      - 8888:8888
+    - 8888:8888
     entrypoint: /bin/sh
-    command: -c "/usr/local/bin/jupyter-notebook --ip 0.0.0.0 --allow-root --NotebookApp.custom_display_url=http://$$(hostname -i):8888 --ServerApp.custom_display_url=http://$$(hostname -i):8888"
+    command: -c "/usr/local/bin/jupyter-notebook --ip 0.0.0.0
+      --allow-root --NotebookApp.custom_display_url=http://$$(hostname
+      -i):8888 --ServerApp.custom_display_url=http://$$(hostname
+      -i):8888"

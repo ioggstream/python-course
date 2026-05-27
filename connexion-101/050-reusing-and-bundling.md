@@ -41,13 +41,45 @@ See the [OAS website](https://github.com/OAI/OpenAPI-Specification).
 ### Exercise: replacing definitions with $refs
 
 - Open [ex-05-01-bundle.yaml](/edit/notebooks/oas3/ex-05-01-bundle.yaml)
-- replace as many definitions as possible with references from the shared [components.oas3.yaml]().
+- replace as many definitions as possible with references from the shared
+<https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml>
+- "resolve" the OAS file as JSON, to ensure that anchors are removed.
 
 ```python
-# Exercise: create a bundle from the previous file with
+import yaml, json
+d = yaml.safe_load(stream=open("oas3/ex-05-01-bundle-ok.yaml"))
+json.dump(d, open("oas3/bundle.json", "w+"))
 ```
 
-### YAML anchors are your friends
+----
+
+### Exercise: create a bundle from the previous file
+
+If you have docker, you can use the Redocly CLI to create a bundle from the previous file.
+
+A bundle is a single file containing all the resolved references. It can be used to share your API definition with others, or to deploy it to a server.
+
+```bash
+# Exercise: create a bundle from the previous file with
+docker run --rm -v $PWD:/app
+docker run --rm -v $PWD:/app docker.io/redocly/cli@sha256:78fa111b6c84522383d419a0631c984aefa76c5fbd39d8904a201b86e3b44168 bundle /app/oas3/bundle.json  --output /app/bundle.yaml
+```
+
+---
+
+## YAML as a template engine
+
+YAML can be used as a template engine for your OAS files. It allows you to define reusable components and reference them in your OAS file.
+
+```mermaid
+graph TD
+
+YAML[YAML OAS source]
+-->|processing| JSON[JSON OAS with $refs]
+-->|bundling| --> BUNDLE[OAS with resolved $refs]
+```
+
+----
 
 YAML has a nice feature, named **anchors**. They allow to define and reference
 given portions of a YAML file.
@@ -58,8 +90,9 @@ a: &this_is_an_anchor foo
 
 # *star dereferences the anchor
 b: *this_is_an_anchor
-
 ```
+
+----
 
 See [anchors.yaml](/edit/notebooks/anchors.yaml)
 
@@ -73,6 +106,9 @@ content = Path('anchors.yaml').read_text()
 print(content)
 ```
 
+----
+
+Check anchor content:
 
 ```python
 ret = yaml.safe_load(content)
@@ -83,10 +119,39 @@ print(ret['foo'])
 print(ret['bar'])
 ```
 
-    {'name': 'Everyone has same name', 'age': 10}
-    {'name': 'Everyone has same name', 'age': 20}
+----
 
 ### Using YAML anchors in OAS3
+
+If you have a set of constants in your API definition
+e.g., maximum number of items in a list, or common responses, you can use YAML anchors to define them once and reuse them everywhere.
+
+```yaml
+openapi: 3.0.0
+...
+components:
+  schemas:
+    MaxItems:
+      type: integer
+      maximum: &max-items 100
+    Limit:
+      type: integer
+      maximum: *max-items  # Reuses the max-items anchor
+...
+```
+
+----
+
+### YAML merge keys
+
+Merge keys are a special feature of YAML that allows you to merge
+ the content of one or more dicts.
+ This can be useful when you have a set of common properties that you want to reuse across multiple objects.
+
+:warning: YAML merge keys are not supported by all YAML parsers, and they are not part of the OAS specification. While they are widely used on the web, they are formally deprecated in YAML 1.2.
+Nonetheles, I find them very useful to avoid using a specific template engine to generate OAS files and manage safely model composition without recurring to `allOf` and `oneOf` keywords, which might cause nesting and readability issues.
+
+
 
 As every operation may have a set of predefined responses, namely:
 
@@ -95,7 +160,7 @@ As every operation may have a set of predefined responses, namely:
 
 You can put them in an `x-` custom parameter.which will be ignored by the OAS spec parser.
 
-```
+```yaml
 x-common-responses: &common-responses
   503ServiceUnavailable:
     $ref: ...
@@ -104,9 +169,11 @@ x-common-responses: &common-responses
 
 ```
 
+----
+
 Then use the `<<:` keyword and  `*anchor_name`  to reference them.
 
-```
+```yaml
 paths:
   /status:
     get:
@@ -120,10 +187,8 @@ paths:
           ...
 ```
 
-## NOTE: ANCHORS ARE PROCESSED BY THE YAML PARSER, NOT BY OAS
+:warning: ANCHORS ARE PROCESSED BY THE YAML PARSER, NOT BY OAS
+:warning: OAS knows nothing about ANCHORS
 
-## OAS knows nothing about ANCHORS
-
-```python
-
-```
+For YAML interoperability considerations
+see <https://www.rfc-editor.org/rfc/rfc9512.html>.

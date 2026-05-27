@@ -1,7 +1,9 @@
+---
 #
 # YAML examples from https://learnxinyminutes.com/docs/yaml/
 #
-anchored_content: &anchor_name This string will appear as the value of two keys.
+anchored_content: &anchor_name This string will appear as the
+  value of two keys.
 other_anchor: *anchor_name
 # Anchors can be used to duplicate/inherit properties
 base: &base
@@ -10,8 +12,8 @@ base: &base
 # indicate that all the keys of one or more specified maps should be inserted
 # into the current map.
 foo: &foo
-  !!merge <<: *base
+  <<: *base
   age: 10
 bar: &bar
-  !!merge <<: *base
+  <<: *base
   age: 20

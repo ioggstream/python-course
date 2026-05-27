@@ -149,7 +149,7 @@ components:
 
 ----
 
-Or just `$ref` the `Retry-After` defined in <https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/headers/Retry-After>
+Or just `$ref` the `Retry-After` defined in <components.oas3.yaml#/components/headers/Retry-After>
 
 Modify [api.py:get_status](/edit/notebooks/oas3/api.py) such that:
 

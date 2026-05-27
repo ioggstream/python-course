@@ -6,7 +6,22 @@
 openapi: 3.0.0
 info:
   title: foo
-  version: "0.1"
+  version: '0.0.1'
+  description: |-
+    Replace all redundant definitions with common
+    $refs to components.oas3.yaml.
+
+    Then, create a single bundled file to be used
+    by you API implemenation and to be published
+    in an API catalog.
+  x-summary: >-
+    This API provides datetime and timezone information via bundled components.
+  contact:
+    name: API Support
+    url: https://www.example.com/support
+    email: robipolli@gmail.com
+  termsOfService: "https://example.com/terms/"
+  x-api-id: 00000000-0000-0000-0000-000000000000
 # One or more server
 #   You can add production, staging and test environments.
 #   We are using the custom `x-sandbox` to identify
@@ -25,9 +40,10 @@ servers:
       timeout: 15
 x-commons:
   common-responses: &common-responses
-    503:
+    "503":
       $ref: "#/components/responses/503ServiceUnavailable"
-#
+    "GenericError":
+      $ref: "#/components/responses/GenericError"
 # Complete the /status path
 #
 paths:
@@ -40,7 +56,7 @@ paths:
         un errore.
       operationId: api.get_status
       responses:
-        !!merge <<: *common-responses
+        <<: *common-responses
         '200':
           description: |
             Il server ha ritornato lo status. In caso di problemi
@@ -65,7 +81,7 @@ paths:
         the given timezone is not in our database.
       operationId: api.get_echo
       responses:
-        !!merge <<: *common-responses
+        <<: *common-responses
         '200':
           description: |
             The current timestamp.
@@ -74,7 +90,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Datetime"
               example:
-                datetime: 20010507T00:00:10Z
+                timestamp: "20010507T00:00:11Z"
         '400':
           $ref: '#/components/responses/400BadRequest'
 components:
@@ -84,11 +100,14 @@ components:
       in: query
       schema:
         $ref: '#/components/schemas/Timezone'
+      example: Europe/Rome
   responses:
     400BadRequest:
-      $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/responses/400BadRequest"
+      $ref: "components.oas3.yaml#/components/responses/400BadRequest"
     503ServiceUnavailable:
-      $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/responses/503ServiceUnavailable"
+      $ref: "components.oas3.yaml#/components/responses/503ServiceUnavailable"
+    GenericError:
+      $ref: "components.oas3.yaml#/components/responses/GenericError"
   schemas:
     Timezone:
       description: |
@@ -97,12 +116,14 @@ components:
       type: string
       example: Europe/Rome
     Datetime:
+      example:
+        timestamp: "2019-01-01T00:00:00Z"
       required:
         - timestamp
       properties:
         timestamp:
           type: string
           format: datetime
-          example: 2019-01-01T00:00:00Z
+          example: "2019-01-01T00:00:00Z"
     Problem:
-      $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/schemas/Problem'
+      $ref: 'components.oas3.yaml#/components/schemas/Problem'

@@ -64,6 +64,13 @@ We'll use [connexion](https://github.com/spec-first/connexion), a python framewo
 This course is based on Docker and Docker compose. As long as you have Docker
 you can run it on any operating system.
 
+
+```bash
+git clone https://github.com/ioggstream/python-course.git
+cd python-course/connexion-101
+```
+
+
 Docker should be exposed via TCP on 172.17.0.1:2375. If you have concerns
 in exposing docker, just use a temporary VM for the course (see below).
 
