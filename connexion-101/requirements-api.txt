@@ -7,3 +7,8 @@ schemathesis
 pyyaml
 pytz
 rfc9530
+starlette
+httpx
+pytest
+anyio[trio]
+http-sf

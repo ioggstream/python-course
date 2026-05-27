@@ -70,32 +70,21 @@ git clone https://github.com/ioggstream/python-course.git
 cd python-course/connexion-101
 ```
 
+If you have docker, you can run the environment with:
 
-Docker should be exposed via TCP on 172.17.0.1:2375. If you have concerns
-in exposing docker, just use a temporary VM for the course (see below).
-
-On Linux, set
-
-```
-# vim /etc/systemd/system/multi-user.target.wants/docker.service
-[Service]
-...
-ExecStart=/usr/bin/dockerd -H fd:// -H tcp://172.17.0.1:2375
-...
+```python
+docker compose up -d dev
 ```
 
-On Mac, check [the FAQ and this issue](https://github.com/docker/for-mac/issues/770#issuecomment-252560286)
-
-Consider having enough bandwidth for the first run to download the images.
-
-Run the environemnt with:
+If you want to use your local python environment, you can install the dependencies with:
 
 ```bash
-make course
+pip install uv tox-uv
+tox -e py
 ```
 
-And point the browser on the printed URL, eg.
+Finally, point the browser on the printed URL, eg.
 
 ```bash
-xdg-open http://localhost:8888
+open http://localhost:8888
 ```
