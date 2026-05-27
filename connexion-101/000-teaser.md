@@ -1,6 +1,7 @@
 # Mastering API Design at Scale
 
 Welcome to Mastering API Design at Scale!
+
 Author: <roberto.polli@par-tec.it>
 
 ---
@@ -10,7 +11,7 @@ Author: <roberto.polli@par-tec.it>
 - **Type in** exercises so you can learn from your mistakes
 - If your notebook get stuck, **restart the kernel and run all** cells
 - **Repetita iuvant**: concepts will be explained multiple times,
-  from different perspectives, thoughout various notebooks.
+  from different perspectives, throughout various notebooks.
 
 ## Teaser
 
@@ -42,15 +43,16 @@ such as [Connexion](https://connexion.readthedocs.io/en/latest/)
 To run an API server on
 
 ```python
-from socket import gethostname, gethostbyname
-hostname = gethostbyname(gethostname())
-print(f"http://{hostname}:8080/ui")
+# from socket import gethostname, gethostbyname
+# hostname = gethostbyname(gethostname())
+hostname = "127.0.0.1"
+print(f"http://{hostname}:5000/ui")
 ```
 
-open a [/terminal](/terminal) and run:
+open a [terminal](/terminals/connexion) and run:
 
 ```text
-connexion run --port 8080 --mock=all oas3/simple.yaml
+connexion run --host 0.0.0.0 --mock=all oas3/simple.yaml
 ```
 
 ... and contract-first tools to validate it, both statically
@@ -66,7 +68,8 @@ and dynamically with Schemathesis (that can be even integrated in pytest.)
 ```python
 !pip install schemathesis
 
-!schemathesis run --checks all  http://{hostname}:8080/openapi.yaml```
+!schemathesis run --checks all  http://{hostname}:5000/openapi.yaml
+```
 
 We will also introduce JSON-LD and the concept of Semantic APIs
 that allows referencing semantics to schemas,
@@ -84,6 +87,8 @@ You can create pydantic models from OAS3 schemas with [datamodel-code-generator]
 
 ```bash
 pip install datamodel-code-generator
+# Set path for docker container.
+export PATH+=:/code/.local/bin
 datamodel-codegen --input oas3/person.yaml --input-file-type openapi --output generated_model.py
 cat generated_model.py
 ```
@@ -91,3 +96,12 @@ cat generated_model.py
 And some tools to visually navigate API Schemas:
 
 - [Schema Editor](https://teamdigitale.github.io/dati-semantic-schema-editor/latest/#url=https://raw.githubusercontent.com/ioggstream/python-course/refs/heads/main/connexion-101/notebooks/oas3/person.yaml)
+
+Finally we will exemplify how to scale security requirements
+across an API ecosystem using HTTP headers to express security requirements and capabilities:
+
+- Confidentiality (with `Authorization` header (bonus track))
+- Integrity (with API Integrity `Content-Digest` header)
+- Availability of services (`RateLimit`, `Retry-After` headers)
+
+together with Catalogues and Technical specifications.

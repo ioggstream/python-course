@@ -63,10 +63,13 @@ all the course under `/code`.
     └── startup  # startup files for jupyter, don't touch ;)
 ```
 
+---
+
 ## Customizing the app
 
-To simplify things, during the training we'll run the connexion-flask app with the `connexion run` command.
-You can always provide a custom `__main__.py` like you normally do with your flask app (eg: enable TLS, ...).
+To simplify things, during the training we'll run the connexion app with the `connexion run` command.
+
+You can always provide a custom `__main__.py` like you normally do with your apps (eg: enable TLS, ...).
 
 Whenever you complete an exercise, you should run
 
@@ -84,13 +87,8 @@ During the course we'll write two files:
 You can find solutions in the training directory, so if you can't complete your openapi.yaml
 you can run the solution (which ends with `-ok.yaml` instead, with
 
-```
+```text
 connexion run /code/notebooks/oas3/ex-03-02-path-ok.yaml
-```
-
-```python
-# An API Editor is available at the following address
-print(oas_editor_url(''))
 ```
 
 ```python
@@ -107,35 +105,7 @@ print("now s is increased " + str(s))
 !ls -l /root/.ipython/profile_default/startup
 ```
 
-## Exercises
-
-Exercise solutions are folded. You can show them clicking on the `+` sign.
-
-### Don't do that :D just try and
-
-![Do your homework](http://s2.quickmeme.com/img/43/438ccdc454bc53dfe79f6190ee43b2be19bd578ad002426efcf90f7a327cedd1.jpg)
-
-## Setup with digitalocean (if you don't have your server)
-
-Create a docker-18-04 droplet and `ssh` into it.
-
-## Setup example
-
-[![asciicast](https://asciinema.org/a/3DhEypBrk3WapL2F5yrcszFZ6.png)](https://asciinema.org/a/3DhEypBrk3WapL2F5yrcszFZ6)
-
-## Docker must listen on 172.17.0.1:2735
-
-```
-# vim /etc/systemd/system/multi-user.target.wants/docker.service
-[Service]
-...
-ExecStart=/usr/bin/dockerd -H fd:// -H tcp://172.17.0.1:2375
-...
-#wq!
-
-systemctl daemon-reload
-systemctl restart docker
-```
+---
 
 ## Clone and start
 
@@ -150,8 +120,4 @@ make course
 
 ```
 firefox http://43.32.54.212:8888/tree/notebooks/?token=....
-```
-
-```python
-
 ```

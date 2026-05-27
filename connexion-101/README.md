@@ -70,10 +70,22 @@ git clone https://github.com/ioggstream/python-course.git
 cd python-course/connexion-101
 ```
 
+---
+
+Repo layout is the following:
+
+```text
+connexion-101
+└── notebooks  # Notebook directory
+    ├── oas3   # YAML and python files
+    │   └── decorators
+    └── startup
+```
+
 If you have docker, you can run the environment with:
 
 ```python
-docker compose up -d dev
+docker compose up dev
 ```
 
 If you want to use your local python environment, you can install the dependencies with:

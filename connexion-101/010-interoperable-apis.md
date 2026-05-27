@@ -1,9 +1,12 @@
 # Interoperable APIs
 
-Writing APIs seems simple ... but what happens when
-you have to maintain tens of APIs across different organizations, with different teams and frameworks?
+Writing APIs seems simple but ...
+what happens when maintaining
+tens of APIs
+across different organizations,
+with different teams and frameworks?
 
-This workshop is about creating an interoperable API ecosystem
+This workshop introduces the making of an interoperable API ecosystem
 with an uniform developer experience
 for country-wide contexts.
 
@@ -52,10 +55,10 @@ used by:
 
 ----
 
-The widespread of HTTP as a distributed computation protocol, and the rise of data give birth to REST.
+The rise of HTTP as a distributed computation protocol, and the ever-increasing importance of data give birth to REST.
 
 REST, aka REpresentation State Transfer, is not a protocol,
-but an architectural style which mimics the distributed characteristics of the web.
+but an architectural style which mimics the distributed characteristics of the Wrold Wide Web.
 
 ----
 
