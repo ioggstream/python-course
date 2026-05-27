@@ -7435,7 +7435,7 @@ main {
 <main>
 <div class="reveal">
 <div class="slides"><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c7aa518c">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a61c1905">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7486,7 +7486,7 @@ all the course under <code>/code</code>.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=75b4a16a">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=0905750f">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7505,20 +7505,21 @@ all the course under <code>/code</code>.</p>
 </div>
 </div>
 </div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=36945f38">
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8da08015">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Customizing-the-app">Customizing the app<a class="anchor-link" href="#Customizing-the-app">¶</a></h2><p>To simplify things, during the training we'll run the connexion-flask app with the <code>connexion run</code> command.
-You can always provide a custom <code>__main__.py</code> like you normally do with your flask app (eg: enable TLS, ...).</p>
+<hr/>
+<h2 id="Customizing-the-app">Customizing the app<a class="anchor-link" href="#Customizing-the-app">¶</a></h2><p>To simplify things, during the training we'll run the connexion app with the <code>connexion run</code> command.</p>
+<p>You can always provide a custom <code>__main__.py</code> like you normally do with your apps (eg: enable TLS, ...).</p>
 <p>Whenever you complete an exercise, you should run</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=471fcbeb">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=4284afe2">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7533,7 +7534,7 @@ You can always provide a custom <code>__main__.py</code> like you normally do wi
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=dd70c764">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=3b5ce998">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7549,36 +7550,19 @@ you can run the solution (which ends with <code>-ok.yaml</code> instead, with</p
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=ab1a3502">
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a741cad9">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">connexion</span> <span class="n">run</span> <span class="o">/</span><span class="n">code</span><span class="o">/</span><span class="n">notebooks</span><span class="o">/</span><span class="n">oas3</span><span class="o">/</span><span class="n">ex</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="n">path</span><span class="o">-</span><span class="n">ok</span><span class="o">.</span><span class="n">yaml</span>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="highlight"><pre><span></span>connexion run /code/notebooks/oas3/ex-03-02-path-ok.yaml
 </pre></div>
 </div>
 </div>
 </div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=743f8ea2">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># An API Editor is available at the following address</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">oas_editor_url</span><span class="p">(</span><span class="s1">''</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=4e20ff40">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=d628571c">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7597,7 +7581,7 @@ you can run the solution (which ends with <code>-ok.yaml</code> instead, with</p
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=68f91caf">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=85925f59">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7612,55 +7596,19 @@ you can run the solution (which ends with <code>-ok.yaml</code> instead, with</p
 </div>
 </div>
 </div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9c849605">
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b7fb0cbf">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Exercises">Exercises<a class="anchor-link" href="#Exercises">¶</a></h2><p>Exercise solutions are folded. You can show them clicking on the <code>+</code> sign.</p>
-<h3 id="Don't-do-that-:D-just-try-and">Don't do that :D just try and<a class="anchor-link" href="#Don't-do-that-:D-just-try-and">¶</a></h3><p><img alt="Do your homework" src="http://s2.quickmeme.com/img/43/438ccdc454bc53dfe79f6190ee43b2be19bd578ad002426efcf90f7a327cedd1.jpg"/></p>
-<h2 id="Setup-with-digitalocean-(if-you-don't-have-your-server)">Setup with digitalocean (if you don't have your server)<a class="anchor-link" href="#Setup-with-digitalocean-(if-you-don't-have-your-server)">¶</a></h2><p>Create a docker-18-04 droplet and <code>ssh</code> into it.</p>
-<h2 id="Setup-example">Setup example<a class="anchor-link" href="#Setup-example">¶</a></h2><p><a href="https://asciinema.org/a/3DhEypBrk3WapL2F5yrcszFZ6"><img alt="asciicast" src="https://asciinema.org/a/3DhEypBrk3WapL2F5yrcszFZ6.png"/></a></p>
-<h2 id="Docker-must-listen-on-172.17.0.1:2735">Docker must listen on 172.17.0.1:2735<a class="anchor-link" href="#Docker-must-listen-on-172.17.0.1:2735">¶</a></h2>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=ac1642e8">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># vim /etc/systemd/system/multi-user.target.wants/docker.service</span>
-<span class="p">[</span><span class="n">Service</span><span class="p">]</span>
-<span class="o">...</span>
-<span class="n">ExecStart</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">dockerd</span> <span class="o">-</span><span class="n">H</span> <span class="n">fd</span><span class="p">:</span><span class="o">//</span> <span class="o">-</span><span class="n">H</span> <span class="n">tcp</span><span class="p">:</span><span class="o">//</span><span class="mf">172.17.0.1</span><span class="p">:</span><span class="mi">2375</span>
-<span class="o">...</span>
-<span class="c1">#wq!</span>
-
-<span class="n">systemctl</span> <span class="n">daemon</span><span class="o">-</span><span class="n">reload</span>
-<span class="n">systemctl</span> <span class="n">restart</span> <span class="n">docker</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=16d0db30">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
 <h2 id="Clone-and-start">Clone and start<a class="anchor-link" href="#Clone-and-start">¶</a></h2>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=7c4420c2">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=05b9d17c">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7677,7 +7625,7 @@ you can run the solution (which ends with <code>-ok.yaml</code> instead, with</p
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=83040c73">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d6f13c0f">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7687,7 +7635,7 @@ you can run the solution (which ends with <code>-ok.yaml</code> instead, with</p
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=1d23bb08">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=936db45b">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
