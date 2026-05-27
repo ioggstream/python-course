@@ -7435,7 +7435,7 @@ main {
 <main>
 <div class="reveal">
 <div class="slides"><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4a33c73c">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=98ed0e38">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7447,7 +7447,7 @@ of contract-first REST APIs.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=48082d09">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=fdba7231">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7457,11 +7457,11 @@ of contract-first REST APIs.</p>
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Install it with the swagger module</span>
 <span class="c1">#   that renders the spec in a web-ui</span>
-<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>connexion<span class="o">[</span>swagger-ui<span class="o">]</span><span class="w"> </span>connexion
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>connexion<span class="o">[</span>swagger-ui<span class="o">]</span><span class="w"> </span>connexion<span class="w"> </span>httpie
 
 <span class="c1"># And load some gobal settings for the exercises.</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">socket</span>
-<span class="n">host</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">gethostbyname</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">gethostname</span><span class="p">())</span>
+<span class="n">host</span> <span class="o">=</span> <span class="s1">'0.0.0.0'</span> <span class="c1"># socket.gethostbyname(socket.gethostname())</span>
 <span class="n">port</span> <span class="o">=</span> <span class="mi">5000</span>
 </pre></div>
 </div>
@@ -7469,7 +7469,7 @@ of contract-first REST APIs.</p>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a40f7c4d">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b3a64e70">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7488,7 +7488,7 @@ of contract-first REST APIs.</p>
 </div>
 </div>
 </div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ab3ad2f5">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=eb84e54e">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7499,7 +7499,7 @@ of contract-first REST APIs.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=6e2fb180">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=64d1c388">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7507,7 +7507,7 @@ of contract-first REST APIs.</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"$ connexion run notebooks/oas3/ex-01-info-ok.yaml --host </span><span class="si">{</span><span class="n">host</span><span class="si">}</span><span class="s2"> --port </span><span class="si">{</span><span class="n">port</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"$ connexion run notebooks/oas3/ex-01-info-ok.yaml --host </span><span class="si">{</span><span class="n">host</span><span class="si">}</span><span class="s2"> "</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Then open the documentation URL: http://</span><span class="si">{</span><span class="n">host</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">port</span><span class="si">}</span><span class="s2">/ui"</span><span class="p">)</span>
 </pre></div>
@@ -7516,7 +7516,7 @@ of contract-first REST APIs.</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d7951aeb">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4199d95e">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7531,7 +7531,7 @@ of contract-first REST APIs.</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=2e910a80">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4427f83e">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7541,7 +7541,7 @@ of contract-first REST APIs.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=bf969155">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=6f6a548a">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7549,23 +7549,52 @@ of contract-first REST APIs.</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># A request on a generic PATH on the server returns a</span>
+<div class="highlight hl-ipython3"><pre><span></span>%%bash
+<span class="c1"># A request on a generic PATH on the server returns a</span>
 <span class="c1"># nicely formatted and explicative error.</span>
 <span class="c1"># Remember that we haven't already defined an operation.</span>
-<span class="o">!</span>curl<span class="w"> </span>http://0.0.0.0:5000<span class="w"> </span>-kv
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">+=</span>:/code/.local/bin
+http<span class="w"> </span>get<span class="w"> </span>http://localhost:5555<span class="w"> </span>-v
 </pre></div>
 </div>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=3295ea8a">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=93c32f4e">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Open the <a href="%7Bapi_server_url(%27ui%27">documentation URL</a>}) and check the outcome!</p>
+<p>Open the <a href="http://localhost:5555/ui">documentation URL</a> and check the outcome!</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=686158d4">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span>%%bash
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">+=</span>:/code/.local/bin
+http<span class="w"> </span>get<span class="w"> </span>http://localhost:5555/openapi.yaml
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=14bb0cc4">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
 <h3 id="Exercises-%7B%23connexion-run-ex%7D">Exercises {#connexion-run-ex}<a class="anchor-link" href="#Exercises-%7B%23connexion-run-ex%7D">¶</a></h3><ul>
 <li>issue a <code>POST /ui</code> request and check that the status code is <code>405 Method Not Allowed</code>.</li>
 <li>issue a <code>GET /MISSING</code> request and check that the status code is <code>404 Not Found</code>.</li>
@@ -7576,7 +7605,7 @@ what's the content type of the error responses?</li>
 </div>
 </div>
 </div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=2c169f5e">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c4bcc366">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7591,7 +7620,7 @@ stakeholders interactions go through various lifecycle stages.</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=e74f676c">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b0fee71a">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7602,7 +7631,7 @@ stakeholders interactions go through various lifecycle stages.</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=505b0f78">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=2c7ab8f7">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7615,7 +7644,7 @@ stakeholders interactions go through various lifecycle stages.</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f8980454">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b55cc511">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7653,7 +7682,7 @@ stakeholders interactions go through various lifecycle stages.</p>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ffd5a7f0">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1ccde5c6">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7669,7 +7698,7 @@ stakeholders interactions go through various lifecycle stages.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=5b8bf233">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=ef0a5a5f">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7678,14 +7707,14 @@ stakeholders interactions go through various lifecycle stages.</p>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Use ex-02-servers-ok.yaml as a reference if you get stuck.</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"$ connexion run notebooks/oas3/ex-02-servers.yaml --host </span><span class="si">{</span><span class="n">host</span><span class="si">}</span><span class="s2"> --port </span><span class="si">{</span><span class="n">port</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"$ connexion run notebooks/oas3/ex-02-servers.yaml --host </span><span class="si">{</span><span class="n">host</span><span class="si">}</span><span class="s2"> "</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
 </div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=99e32401">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a2cf63ed">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7701,7 +7730,7 @@ a simple OK/KO method or can execute basic checks like: databases are reachable,
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f00f7d1d">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=02a47ca2">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7717,7 +7746,7 @@ database entries, hitting caches, ..).</p>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1fccf25c">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=edc6e655">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7733,7 +7762,7 @@ database entries, hitting caches, ..).</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=5632c1b6">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9e31c0e8">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7751,7 +7780,7 @@ database entries, hitting caches, ..).</p>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ff28f27c">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=851af5fc">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7765,7 +7794,7 @@ database entries, hitting caches, ..).</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=0dfe1927">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a3f1bc61">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7777,7 +7806,7 @@ database entries, hitting caches, ..).</p>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=31fa10a3">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=beb52c28">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7792,7 +7821,7 @@ media type and <strong>examples</strong></li>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=30faf7ee">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=53bc478f">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7822,7 +7851,7 @@ media type and <strong>examples</strong></li>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=0eaadb56">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=869759e8">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7844,7 +7873,7 @@ we tell <code>connexion</code> to ignore unimplemented methods with <code>--mock
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=4c88d8f9">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=b9380fa6">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7855,7 +7884,7 @@ we tell <code>connexion</code> to ignore unimplemented methods with <code>--mock
 <div class="highlight hl-ipython3"><pre><span></span><span class="p">(</span>
 <span class="s2">"bash$"</span>
 <span class="s2">"connexion run notebooks/oas3/ex-03-02-path.yaml"</span>
-<span class="sa">f</span><span class="s2">" --host </span><span class="si">{</span><span class="n">host</span><span class="si">}</span><span class="s2"> --port </span><span class="si">{</span><span class="n">port</span><span class="si">}</span><span class="s2">"</span>
+<span class="sa">f</span><span class="s2">" --host </span><span class="si">{</span><span class="n">host</span><span class="si">}</span><span class="s2"> "</span>
 <span class="s2">" --mock notimplemented"</span>
 <span class="p">)</span>
 </pre></div>
@@ -7864,7 +7893,7 @@ we tell <code>connexion</code> to ignore unimplemented methods with <code>--mock
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a18c7d5b">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=74f94e2d">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7883,7 +7912,7 @@ What happens now?</li>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=956303c7">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=c8568f82">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7892,13 +7921,13 @@ What happens now?</li>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Exercise: what's the expected output of the following command?</span>
-<span class="o">!</span>curl<span class="w"> </span>http://0.0.0.0:5000/datetime/v1/status
+<span class="n">http</span> <span class="n">get</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">0.0.0.0</span><span class="p">:</span><span class="mi">5000</span><span class="o">/</span><span class="n">datetime</span><span class="o">/</span><span class="n">v1</span><span class="o">/</span><span class="n">status</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=d951ed28">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=7312196d">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7907,14 +7936,14 @@ What happens now?</li>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Exercise: what happens if you GET an unexisting path?</span>
-<span class="o">!</span>curl<span class="w"> </span>http://0.0.0.0:5000/datetime/v1/MISSING
+<span class="n">http</span> <span class="n">get</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">0.0.0.0</span><span class="p">:</span><span class="mi">5000</span><span class="o">/</span><span class="n">datetime</span><span class="o">/</span><span class="n">v1</span><span class="o">/</span><span class="n">MISSING</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1d7954a0">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f30125f2">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
