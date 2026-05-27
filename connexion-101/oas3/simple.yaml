@@ -1,3 +1,4 @@
+---
 openapi: 3.0.1
 info:
   version: 0.1.1
@@ -18,23 +19,23 @@ info:
     Note: don't use authentication features (e.g., x-bearerInfoFunc) in this file
     because the stub/mock server doesn't support them.
 servers:
-  - url: "http://localhost"
-    description: |-
-      This is a development server. Don't use it in production.
-      To simplify the showcase, don't use path components for now.
-  - url: "https://localhost:8443/hello/v1"
+- url: "http://localhost"
+  description: |-
+    This is a development server. Don't use it in production.
+    To simplify the showcase, don't use path components for now.
+- url: "https://localhost:8443/hello/v1"
 paths:
   /echo:
     get:
       summary: Reply with the same text
       operationId: get_hello
       parameters:
-        - in: query
-          name: text
-          required: true
-          schema:
-            type: string
-          example: Hello, World!
+      - in: query
+        name: text
+        required: true
+        schema:
+          type: string
+        example: Hello, World!
       responses:
         "200":
           description: Hi!
@@ -72,7 +73,7 @@ components:
   schemas:
     Text:
       required:
-        - text
+      - text
       properties:
         text:
           type: string

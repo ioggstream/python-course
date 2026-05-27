@@ -5,7 +5,7 @@
 <meta content="chrome=1" http-equiv="X-UA-Compatible"/>
 <meta content="yes" name="apple-mobile-web-app-capable"/>
 <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
-<title>000-teaser slides</title><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script><script type="module">
+<title>070-security-availability slides</title><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script><script type="module">
   import mermaid from 'https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.0/mermaid.esm.min.mjs';
   mermaid.initialize({ startOnLoad: true });
 </script>
@@ -7435,241 +7435,198 @@ main {
 <main>
 <div class="reveal">
 <div class="slides"><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=e054dd1b">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=7433df80">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="Mastering-API-Design-at-Scale">Mastering API Design at Scale<a class="anchor-link" href="#Mastering-API-Design-at-Scale">¶</a></h1><p>Welcome to Mastering API Design at Scale!
-Author: <a href="mailto:roberto.polli@par-tec.it">roberto.polli@par-tec.it</a></p>
-</div>
-</div>
-</div>
-</div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c9ec670a">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<hr/>
-<h2 id="Hints">Hints<a class="anchor-link" href="#Hints">¶</a></h2><ul>
-<li><strong>Type in</strong> exercises so you can learn from your mistakes</li>
-<li>If your notebook get stuck, <strong>restart the kernel and run all</strong> cells</li>
-<li><strong>Repetita iuvant</strong>: concepts will be explained multiple times,
-from different perspectives, thoughout various notebooks.</li>
-</ul>
-<h2 id="Teaser">Teaser<a class="anchor-link" href="#Teaser">¶</a></h2><p>In this course, we will learn how to design resilient APIs
-using OpenAPI and JSON Schema in a contract-first approach.</p>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=5fe3c3d4">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">pip</span> install connexion[swagger-ui] connexion[uvicorn] jsonschema openapi-spec-validator
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8d3e3d33">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>(and some validation tools)</p>
-<p>We will focus on API design, not on implementation,
-since features can be implemented in different ways:</p>
+<h1 id="Throttling-headers">Throttling headers<a class="anchor-link" href="#Throttling-headers">¶</a></h1><p>Service management is key for the reliability of an API ecosystem.</p>
+<p>Basic components for service management communicates:</p>
 <ul>
-<li>programmatically,</li>
-<li>using frameworks,</li>
-<li>or architectural components such as API gateways.</li>
+<li><p>when you are not operational, and explicit
+how long it will take to be up and running again;</p>
+</li>
+<li><p>if they are over quota and
+prevent overquota via throttling headers.</p>
+</li>
 </ul>
-<p>We will always start from an API Specification.</p>
+<p>While it could be annoying to explicitly state that every response
+should contain throttling headers, you can use YAML anchors for that!</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=63d76bba">
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a5078c61">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span>%%bash
-cat<span class="w"> </span>oas3/simple.yaml
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="highlight"><pre><span></span><span class="nt">x-commons</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">throttling-headers</span><span class="p">:</span><span class="w"> </span><span class="nl">&amp;throttling-headers</span>
+<span class="w">    </span><span class="nt">X-RateLimit-Limit</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">..</span>
+<span class="w">    </span><span class="nt">X-RateLimit-Remaining</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">..</span>
+<span class="w">    </span><span class="nt">X-RateLimit-Reset</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">..</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=17a16283">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a6f28ac1">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Use a contract-first API framework to test the design,
-such as <a href="https://connexion.readthedocs.io/en/latest/">Connexion</a></p>
-<p>To run an API server on</p>
+<h2 id="Returning-throttling-headers">Returning throttling headers<a class="anchor-link" href="#Returning-throttling-headers">¶</a></h2><p>Now we can use the anchor in our <code>get /echo responses</code></p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=21c8c8a7">
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a7beda3f">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">socket</span><span class="w"> </span><span class="kn">import</span> <span class="n">gethostname</span><span class="p">,</span> <span class="n">gethostbyname</span>
-<span class="n">hostname</span> <span class="o">=</span> <span class="n">gethostbyname</span><span class="p">(</span><span class="n">gethostname</span><span class="p">())</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"http://</span><span class="si">{</span><span class="n">hostname</span><span class="si">}</span><span class="s2">:8080/ui"</span><span class="p">)</span>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="highlight"><pre><span></span><span class="nt">paths</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">/echo</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">get</span><span class="p">:</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">operationId</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">api.get_echo</span>
+<span class="w">      </span><span class="nt">responses</span><span class="p">:</span>
+<span class="w">        </span><span class="s">'200'</span><span class="p p-Indicator">:</span>
+<span class="w">          </span><span class="nt">headers</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">&lt;&lt;</span><span class="p">:</span><span class="w"> </span><span class="nv">*throttling_headers</span>
+<span class="w">          </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f1237717">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=103d1203">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>open a <a href="/terminal">/terminal</a> and run:</p>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=10ef3397">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<div class="highlight"><pre><span></span>connexion run --port 8080 --mock=all oas3/simple.yaml
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=5b2e9ed1">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>... and contract-first tools to validate it, both statically
-with Spectral</p>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=cb14c8fd">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span>%%bash
-<span class="c1"># Run via docker.</span>
-docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>:/app<span class="w"> </span>-w<span class="w"> </span>/app<span class="w"> </span>docker.io/stoplight/spectral<span class="w"> </span>lint<span class="w"> </span>openapi.yaml
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=e5e2db3e">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>and dynamically with Schemathesis (that can be even integrated in pytest.)</p>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=5daf400a">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>schemathesis
-
-<span class="o">!</span>schemathesis<span class="w"> </span>run<span class="w"> </span>--checks<span class="w"> </span>all<span class="w">  </span>http://<span class="o">{</span>hostname<span class="o">}</span>:8080/openapi.yaml<span class="sb">```</span>
-
-<span class="n">We</span> <span class="n">will</span> <span class="n">also</span> <span class="n">introduce</span> <span class="n">JSON</span><span class="o">-</span><span class="n">LD</span> <span class="ow">and</span> <span class="n">the</span> <span class="n">concept</span> <span class="n">of</span> <span class="n">Semantic</span> <span class="n">APIs</span>
-<span class="n">that</span> <span class="n">allows</span> <span class="n">referencing</span> <span class="n">semantics</span> <span class="n">to</span> <span class="n">schemas</span><span class="p">,</span>
-<span class="n">to</span> <span class="n">enable</span> <span class="n">different</span> <span class="n">API</span> <span class="n">providers</span> <span class="n">to</span> <span class="n">align</span> <span class="n">their</span> <span class="n">APIs</span> <span class="n">without</span>
-<span class="n">sharing</span> <span class="n">the</span> <span class="n">same</span> <span class="n">schema</span><span class="o">.</span>
-
-<span class="err">```</span><span class="n">python</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
-<span class="n">spec</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s2">"oas3/person.yaml"</span><span class="p">))</span>
-<span class="n">schemas</span> <span class="o">=</span> <span class="n">spec</span><span class="p">[</span><span class="s2">"components"</span><span class="p">][</span><span class="s2">"schemas"</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">yaml</span><span class="o">.</span><span class="n">safe_dump</span><span class="p">(</span><span class="n">schemas</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=cbcf6484">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>You can create pydantic models from OAS3 schemas with <a href="https://koxudaxi.github.io/datamodel-code-generator/">datamodel-code-generator</a></p>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=a685164d">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span>%%bash
-pip<span class="w"> </span>install<span class="w"> </span>datamodel-code-generator
-datamodel-codegen<span class="w"> </span>--input<span class="w"> </span>oas3/person.yaml<span class="w"> </span>--input-file-type<span class="w"> </span>openapi<span class="w"> </span>--output<span class="w"> </span>generated_model.py
-cat<span class="w"> </span>generated_model.py
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a490bee7">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>And some tools to visually navigate API Schemas:</p>
+<h3 id="Exercise:-add-throttling-headers">Exercise: add throttling headers<a class="anchor-link" href="#Exercise:-add-throttling-headers">¶</a></h3><p>Modify the  <a href="/edit/notebooks/oas3/ex-07-01-throttling.yaml">ex-07-01-throttling.yaml</a> spec so that:</p>
 <ul>
-<li><a href="https://teamdigitale.github.io/dati-semantic-schema-editor/latest/#url=https://raw.githubusercontent.com/ioggstream/python-course/refs/heads/main/connexion-101/notebooks/oas3/person.yaml">Schema Editor</a></li>
+<li><code>get /echo responses</code> returns the throtting headers in case of <code>200</code>;</li>
+<li>ensure that in case of over-quota, a <code>429</code> response is returned</li>
 </ul>
+<h3 id="Exercise:-throttle-requests-in-api.py">Exercise: throttle requests in api.py<a class="anchor-link" href="#Exercise:-throttle-requests-in-api.py">¶</a></h3><p>Use the <code>throttling_quota</code> utilities either:</p>
+<ul>
+<li>the throttle decorator</li>
+<li>or implement your own throttling</li>
+</ul>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=81b36ecb">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Decorate with `throttle`</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">oas3.throttling_quota</span><span class="w"> </span><span class="kn">import</span> <span class="n">throttle</span>
+
+<span class="nd">@throttle</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="s1">'foo'</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">{},</span> <span class="mi">200</span><span class="p">,</span> <span class="p">{}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=e7b9e92f">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Or write your own using</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">oas3.throttling_quota</span><span class="w"> </span><span class="kn">import</span> <span class="n">ThrottlingQuota</span>
+
+<span class="n">quotas</span> <span class="o">=</span> <span class="n">ThrottlingQuota</span><span class="p">(</span><span class="n">ttl</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">quotas</span><span class="o">.</span><span class="n">consume</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="sa">f</span><span class="s1">'user1'</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a6504acc">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Modify <a href="/edit/notebooks/oas3/api.py">api.py:get_echo</a> such that:</p>
+<ul>
+<li><p>every authenticated user get its quota;</p>
+</li>
+<li><p>if quota is exceeded, <code>429</code> is returned;</p>
+</li>
+<li><p>the throttling infos are returned as integers in every response:</p>
+<ul>
+<li>X-RateLimit-Limit: maximum number of requests in the given interval</li>
+<li>X-RateLimit-Reset: when the quota expires</li>
+<li>X-RateLimit-Remaining: remaining requests before the quota is consumed</li>
+</ul>
+</li>
+</ul>
+<p>Now  <a href="/terminals/connexion">run the spec in a terminal</a> using</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9ef7ee5c">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="highlight"><pre><span></span>connexion run /code/notebooks/oas3/ex-07-01-throttling-ok.yaml
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a565d95b">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>play a bit with the <a href="https://TODO">Swagger UI</a></p>
+<p>and try making a request!</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=2fac7340">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="o">!</span>curl<span class="w"> </span>http://localhost:5000/datetime/v1/echo<span class="w"> </span>-kv<span class="w"> </span>-ufoo:foo
+</pre></div>
+</div>
 </div>
 </div>
 </div>

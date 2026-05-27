@@ -5,7 +5,7 @@
 <meta content="chrome=1" http-equiv="X-UA-Compatible"/>
 <meta content="yes" name="apple-mobile-web-app-capable"/>
 <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
-<title>060-connexion-authorization-basic slides</title><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script><script type="module">
+<title>073-security-integrity slides</title><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script><script type="module">
   import mermaid from 'https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.0/mermaid.esm.min.mjs';
   mermaid.initialize({ startOnLoad: true });
 </script>
@@ -7435,98 +7435,151 @@ main {
 <main>
 <div class="reveal">
 <div class="slides"><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=92b34f11">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=934aa4d0">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="Authorization-&amp;-securitySchemes">Authorization &amp; securitySchemes<a class="anchor-link" href="#Authorization-&amp;-securitySchemes">¶</a></h1><p>OAS allows to specify authorization policies in the spec,
-under <code>components.securitySchemes</code>.</p>
-<p>Between supported security schemes we have:</p>
+<h1 id="Response-integrity-with-Content-Digest">Response integrity with Content-Digest<a class="anchor-link" href="#Response-integrity-with-Content-Digest">¶</a></h1>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=0d45f78a">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="highlight"><pre><span></span>SPEC_FILE=ex-07-02-integrity-ok.yaml uvicorn api_solution:main  --reload
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=bb35add9">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Service management is not only about availability and quotas.</p>
+<p>Clients may also need a simple way to verify that the response body
+they received is exactly the one produced by the server.</p>
+<p>The HTTP fields <code>Want-Content-Digest</code> and <code>Content-Digest</code> can be used
+for that purpose:</p>
 <ul>
-<li>oauth and oidc</li>
-<li>basic auth</li>
-<li>JWT</li>
-<li>mutualTLS ( in OAS 3.1 )</li>
+<li><p>the client sends <code>Want-Content-Digest</code> to ask for a digest in the response;</p>
+</li>
+<li><p>the server replies with <code>Content-Digest</code>, containing the digest of the
+response body.</p>
+</li>
 </ul>
-<p><strong>When passing credentials in HTTP headers or payload you MUST use TLS</strong></p>
-<p><code>connexion</code> can reference a python function via <code>x-basicInfoFunc</code>.
-Authenticated operations gets user informations via the <code>user</code> parameter.</p>
-<h3 id="OAS3:-basic-auth">OAS3: basic auth<a class="anchor-link" href="#OAS3:-basic-auth">¶</a></h3><p>Here we are defining the <code>myBasicAuth</code> security scheme.</p>
+<p>In this lesson we only focus on describing these headers in the API
+contract. The implementation details of generating digests are out of scope.</p>
+<p>While it could be annoying to explicitly state these headers every time,
+you can define them once in shared components and reuse them from your
+operations.</p>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b0b0bf21">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=6c7d5bda">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <div class="highlight"><pre><span></span><span class="nt">components</span><span class="p">:</span>
-<span class="w"> </span><span class="nt">securitySchemes</span><span class="p">:</span>
-<span class="w">   </span><span class="nt">myBasicAuth</span><span class="p">:</span>
-<span class="w">     </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http</span>
-<span class="w">     </span><span class="nt">scheme</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">basic</span>
-<span class="w">     </span><span class="nt">x-basicInfoFunc</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">security.my_auth</span>
+<span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">Want-Content-Digest</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">'components.oas3.yaml#/components/parameters/Want-Content-Digest'</span>
+<span class="w">  </span><span class="nt">headers</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">Content-Digest</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">'components.oas3.yaml#/components/headers/Content-Digest'</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ae524720">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=45981ed4">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>We can then reference <code>myBasicAuth</code> in one or more paths</p>
+<h2 id="Requesting-response-digests">Requesting response digests<a class="anchor-link" href="#Requesting-response-digests">¶</a></h2><p>Now we can use these reusable definitions in our <code>get /echo</code> operation.</p>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=94e8932a">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=0bae72e9">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <div class="highlight"><pre><span></span><span class="nt">paths</span><span class="p">:</span>
-<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">/echo</span>
-<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">get</span><span class="p p-Indicator">:</span>
-<span class="w">      </span><span class="nt">security</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">myBasicAuth</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">...</span>
-<span class="w">      </span><span class="nt">operationId</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">api.get_echo</span>
-<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="w">  </span><span class="nt">/echo</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">get</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">'#/components/parameters/tz'</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">'#/components/parameters/Want-Content-Digest'</span>
+<span class="w">      </span><span class="nt">responses</span><span class="p">:</span>
+<span class="w">        </span><span class="s">'200'</span><span class="p p-Indicator">:</span>
+<span class="w">          </span><span class="nt">headers</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">Content-Digest</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="s">'components.oas3.yaml#/components/headers/Content-Digest'</span>
+<span class="w">          </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4d5ffab2">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b7f2d73f">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="OAS3-Exercise:-add-securitySchemes">OAS3 Exercise: add securitySchemes<a class="anchor-link" href="#OAS3-Exercise:-add-securitySchemes">¶</a></h3><p>Modify the OAS3 spec in <a href="/edit/notebooks/oas3/ex-06-01-auth-ok.yaml">ex-06-01-auth.yaml</a> and:</p>
+<h3 id="Exercise:-document-integrity-headers">Exercise: document integrity headers<a class="anchor-link" href="#Exercise:-document-integrity-headers">¶</a></h3><p>Read the <a href="/edit/notebooks/oas3/ex-07-02-integrity-ok.yaml">ex-07-02-integrity-ok.yaml</a>
+spec and identify:</p>
 <ul>
-<li>add a <code>myBasicAuth</code> security schemes like the above;</li>
-<li>reference <code>myBasicAuth</code> in <code>get /echo</code> path;</li>
-<li>validate the spec in your swagger editor and
-check what changed in the swagger-ui</li>
+<li>where the <code>Want-Content-Digest</code> request header is declared;</li>
+<li>where the <code>Content-Digest</code> response header is returned;</li>
+<li>how the <code>get /echo</code> description explains this behavior to clients.</li>
 </ul>
-<h3 id="Implement-my_auth">Implement my_auth<a class="anchor-link" href="#Implement-my_auth">¶</a></h3><p>Implement the <code>my_auth</code> function in <a href="/edit/notebooks/oas3/security.py">security.py</a> so that:</p>
-<ul>
-<li>when <code>username == password</code> the user is authenticated</li>
-</ul>
-<p>Use the cell below to implement it,</p>
+<h3 id="Exercise:-run-the-API-contract">Exercise: run the API contract<a class="anchor-link" href="#Exercise:-run-the-API-contract">¶</a></h3><p>Run the spec in a terminal using:</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=a5ee2273">
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1a56204c">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="highlight"><pre><span></span>connexion run /code/notebooks/oas3/ex-07-02-integrity-ok.yaml
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=733d28d3">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Then inspect the API from Swagger UI and try sending a request with
+the <code>Want-Content-Digest</code> header.</p>
+<p>For example:</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=c9af30ec">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7534,203 +7587,22 @@ check what changed in the swagger-ui</li>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Test here the my_auth implementation.</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">my_auth</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span><span class="n">required_scopes</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""An dummy authentication function.</span>
-<span class="sd">       :params: username, the username</span>
-<span class="sd">       :params: password, the password</span>
-<span class="sd">       :params: scopes, the scope</span>
-<span class="sd">       :returns: `{"sub": username, "scope": ""}` on success,</span>
-<span class="sd">                 None on failure</span>
-<span class="sd">    """</span>
-    <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="o">!</span>curl<span class="w"> </span>http://localhost:5000/datetime/v1/echo<span class="w"> </span>-kv<span class="w"> </span>-ufoo:foo<span class="w"> </span><span class="err">\</span>
+  <span class="o">-</span><span class="n">H</span> <span class="s1">'Want-Content-Digest: sha-256=1'</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9ad97f40">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=6c8d9ecd">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Add-user-support-in-get_echo">Add <code>user</code> support in get_echo<a class="anchor-link" href="#Add-user-support-in-get_echo">¶</a></h3><p>Operations like <code>get_echo</code> gets user informations via the <code>user</code> param.</p>
-<p>Modify get_echo in <a href="/edit/notebooks/oas3/api.py">api.py</a> such that:</p>
-<ul>
-<li>unauthenticated replies returns a <code>401</code> http status</li>
-<li>the authenticated reply contains user informations <code>{"timestamp": "2019-01-01T21:04:00Z", "user": "jon"}</code></li>
-</ul>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=90bb9a02">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">get_echo</span><span class="p">(</span><span class="n">tz</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""</span>
-<span class="sd">        :param: tz, the timezone</span>
-<span class="sd">        :param: user, the authenticated user passed by `connexion`</span>
-<span class="sd">    """</span>
-    <span class="k">raise</span> <span class="ne">NotImplementedError</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d88814d3">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Test-the-my_auth-implementation">Test the my_auth implementation<a class="anchor-link" href="#Test-the-my_auth-implementation">¶</a></h3><p>Run the spec in the <a href="/terminals/1">terminal</a>
-with the usual</p>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=65bb29d1">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">connexion</span> <span class="n">run</span> <span class="o">/</span><span class="n">code</span><span class="o">/</span><span class="n">notebooks</span><span class="o">/</span><span class="n">oas3</span><span class="o">/</span><span class="n">ex</span><span class="o">-</span><span class="mi">06</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="n">auth</span><span class="o">-</span><span class="n">ok</span><span class="o">.</span><span class="n">yaml</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=b9a3a891">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">render_markdown</span><span class="p">(</span>
-<span class="sa">f</span><span class="s1">'''</span>
-
-<span class="s1">Play a bit with</span>
-<span class="s1">[Swagger UI](</span><span class="si">{</span><span class="n">api_server_url</span><span class="p">(</span><span class="s2">"ui"</span><span class="p">)</span><span class="si">}</span><span class="s1">)</span>
-
-<span class="s1">'''</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=71634710">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Try to curl some requests!</span>
-<span class="o">!</span>curl<span class="w"> </span>http://localhost:5000/datetime/v1/echo<span class="w"> </span>-kv
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=13efe867">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Bearer-token-&amp;-JWT-Security">Bearer token &amp; JWT Security<a class="anchor-link" href="#Bearer-token-&amp;-JWT-Security">¶</a></h3><p>Bearer tokens are supported:</p>
-<ul>
-<li>in OAS via the <code>scheme: bearer</code></li>
-<li>in connexion via the <code>x-bearerInfoFunc</code></li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=2ef0d71b">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<div class="highlight"><pre><span></span><span class="nt">components</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">securitySchemes</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">jwt</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http</span>
-<span class="w">      </span><span class="nt">scheme</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bearer</span>
-<span class="w">      </span><span class="nt">bearerFormat</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">JWT</span>
-<span class="w">      </span><span class="nt">x-bearerInfoFunc</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">security.decode_token</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4a764243">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Once you send the header</p>
-<p><code>Authorization: Bearer token</code></p>
-<p>the <code>token</code> string will be passed to a function like the following</p>
-<p>NOTE: the <code>bearerFormat</code> is a free identifier of the token format and the associated syntax may not be enforced by the spec.</p>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=fcd1306a">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">decode_token</span><span class="p">(</span><span class="n">token</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""</span>
-<span class="sd">        :param: token, a generic token</span>
-<span class="sd">        :return: a json object compliant with RFC7662 OAUTH2</span>
-<span class="sd">    """</span>
-
-    <span class="k">if</span> <span class="n">token_is_valid</span><span class="p">:</span>
-        <span class="k">return</span> <span class="p">{</span>
-             <span class="s1">'iss'</span><span class="p">:</span> <span class="s1">'http://api.example.com'</span><span class="p">,</span>
-             <span class="s1">'iat'</span><span class="p">:</span> <span class="mi">1561296569</span><span class="p">,</span>
-             <span class="s1">'exp'</span><span class="p">:</span> <span class="mi">1561296571</span><span class="p">,</span>
-             <span class="s1">'sub'</span><span class="p">:</span> <span class="s1">'ioggstream'</span><span class="p">,</span>
-             <span class="s1">'scope'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'local'</span><span class="p">]</span>
-            <span class="p">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4fa8a37b">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>You can learn more on Connexion Security on:</p>
-<ul>
-<li><a href="https://github.com/zalando/connexion/blob/master/docs/security.rst">https://github.com/zalando/connexion/blob/master/docs/security.rst</a></li>
-</ul>
-<p>A complete JWT example is <a href="https://github.com/zalando/connexion/blob/master/examples/openapi3/jwt/app.py">here</a></p>
+<p>Check whether the response documents and exposes a <code>Content-Digest</code>
+header, and discuss how a client could use it to verify integrity</p>
 </div>
 </div>
 </div>

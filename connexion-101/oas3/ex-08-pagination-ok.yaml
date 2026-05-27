@@ -1,7 +1,17 @@
 openapi: 3.0.0
 info:
   title: foo
-  version: "0.1"
+  version: "0.1.0"
+  x-summary: >-
+    This API provides datetime and timezone information with pagination.
+  description: |
+    This API provides application status, datetime, and paginated timezone information.
+  termsOfService: "https://example.com/terms/"
+  contact:
+    email: robipolli@gmail.com
+    name: Roberto Polli
+    url: https://twitter.com/ioggstream
+  x-api-id: 00000000-0000-0000-0000-000000000000
 # One or more server
 #   You can add production, staging and test environments.
 #   We are using the custom `x-sandbox` to identify
@@ -21,11 +31,11 @@ servers:
 x-commons:
   throttling-headers: &throttling-headers
     X-RateLimit-Limit:
-      $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/headers/X-RateLimit-Limit'
+      $ref: 'components.oas3.yaml#/components/headers/X-RateLimit-Limit'
     X-RateLimit-Remaining:
-      $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/headers/X-RateLimit-Remaining'
+      $ref: 'components.oas3.yaml#/components/headers/X-RateLimit-Remaining'
     X-RateLimit-Reset:
-      $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/headers/X-RateLimit-Reset'
+      $ref: 'components.oas3.yaml#/components/headers/X-RateLimit-Reset'
   common-responses: &common-responses
     '429':
       $ref: "#/components/responses/429TooManyRequests"
@@ -44,7 +54,7 @@ paths:
         un errore.
       operationId: api.get_status
       responses:
-        !!merge <<: *common-responses
+        <<: *common-responses
         '200':
           description: |
             Il server ha ritornato lo status. In caso di problemi
@@ -71,25 +81,25 @@ paths:
         the given timezone is not in our database.
       operationId: api.get_echo
       responses:
-        !!merge <<: *common-responses
+        <<: *common-responses
         '200':
           description: |
             The current timestamp.
           headers:
-            !!merge <<: *throttling-headers
+            <<: *throttling-headers
           content:
             application/problem+json:
               schema:
                 $ref: "#/components/schemas/Datetime"
               example:
-                datetime: 20010507T00:00:10Z
+                timestamp: "2019-01-01T00:00:00Z"
         '400':
           $ref: '#/components/responses/400BadRequest'
   /timezones: # TODO implement this
     get:
       parameters:
-        - $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/parameters/limit"
-        - $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/parameters/offset"
+        - $ref: "components.oas3.yaml#/components/parameters/limit"
+        - $ref: "components.oas3.yaml#/components/parameters/offset"
       summary: Return the supported timezones
       description: |
         Return a paginated list of supported
@@ -97,12 +107,12 @@ paths:
         list of entries is returned.
       operationId: api.get_timezones
       responses:
-        !!merge <<: *common-responses
+        <<: *common-responses
         '200':
           description: |
             A list of timezones between offset and limit.
           headers:
-            !!merge <<: *throttling-headers
+            <<: *throttling-headers
           content:
             application/json:
               schema:
@@ -115,8 +125,8 @@ paths:
   /timezones/{continent}: # TODO implement this
     get:
       parameters:
-        - $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/parameters/limit"
-        - $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/parameters/offset"
+        - $ref: "components.oas3.yaml#/components/parameters/limit"
+        - $ref: "components.oas3.yaml#/components/parameters/offset"
         - $ref: "#/components/parameters/continent_path"
       summary: Return the supported timezones
       description: |
@@ -125,12 +135,12 @@ paths:
         out of bound.
       operationId: api.get_timezones_by_continent
       responses:
-        !!merge <<: *common-responses
+        <<: *common-responses
         '200':
           description: |
             A list of timezones between offset and limit.
           headers:
-            !!merge <<: *throttling-headers
+            <<: *throttling-headers
           content:
             application/json:
               schema:
@@ -155,22 +165,33 @@ components:
       required: true
       schema:
         type: string
+      example: Europe
     tz:
       name: tz
       in: query
       schema:
         $ref: '#/components/schemas/Timezone'
+      example: Europe/Rome
   responses:
     400BadRequest:
-      $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/responses/400BadRequest"
+      $ref: "components.oas3.yaml#/components/responses/400BadRequest"
     404NotFound:
-      $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/responses/404NotFound"
+      $ref: "components.oas3.yaml#/components/responses/404NotFound"
     429TooManyRequests:
-      $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/responses/429TooManyRequests"
+      $ref: "components.oas3.yaml#/components/responses/429TooManyRequests"
     503ServiceUnavailable:
-      $ref: "https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/responses/503ServiceUnavailable"
+      $ref: "components.oas3.yaml#/components/responses/503ServiceUnavailable"
   schemas:
     Timezones:
+      type: object
+      example:
+        limit: 10
+        offset: 0
+        count: 3
+        entries:
+          - Europe/Rome
+          - UTC
+          - Asia/Tokyo
       required:
         - limit
         - count
@@ -178,14 +199,17 @@ components:
         - entries
       properties:
         limit:
-          type: number
+          type: integer
           format: int32
+          example: 10
         count:
-          type: number
+          type: integer
           format: int32
+          example: 3
         offset:
-          type: number
+          type: integer
           format: int32
+          example: 0
         entries:
           type: array
           items:
@@ -197,12 +221,14 @@ components:
       type: string
       example: Europe/Rome
     Datetime:
+      example:
+        timestamp: "2019-01-01T00:00:00Z"
       required:
         - timestamp
       properties:
         timestamp:
           type: string
           format: datetime
-          example: 2019-01-01T00:00:00Z
+          example: "2019-01-01T00:00:00Z"
     Problem:
-      $ref: 'https://teamdigitale.github.io/openapi/0.0.5/definitions.yaml#/schemas/Problem'
+      $ref: 'components.oas3.yaml#/components/schemas/Problem'

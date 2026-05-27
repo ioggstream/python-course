@@ -7435,7 +7435,7 @@ main {
 <main>
 <div class="reveal">
 <div class="slides"><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=959590ec">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fdce1375">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7449,7 +7449,7 @@ main {
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=3e12d556">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=0ccdabce">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7468,7 +7468,7 @@ main {
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1d99871f">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=6840d8d6">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7480,7 +7480,7 @@ main {
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=4d2ebd18">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=80e4a954">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7496,13 +7496,14 @@ main {
 </div>
 </div>
 </div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=529805ff">
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=7e2e8ff7">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
 <h2 id="Support-pagination-in-get-/timezones">Support pagination in <code>get /timezones</code><a class="anchor-link" href="#Support-pagination-in-get-/timezones">¶</a></h2><p>We want to provide a <code>/timezones</code> path listing all the timezones supported
 by <code>get /echo</code></p>
 <p>Our goal is the following:</p>
@@ -7519,7 +7520,7 @@ the supported timezones in <code>pytz.all_timezones</code>;</li>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=3cbb2ad2">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=e1e72fc8">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7538,7 +7539,7 @@ the supported timezones in <code>pytz.all_timezones</code>;</li>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8f4e61ec">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=51b9612b">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7547,7 +7548,18 @@ the supported timezones in <code>pytz.all_timezones</code>;</li>
 <ul>
 <li>the status code for a successful response is <code>200</code></li>
 </ul>
-<p>Remember: pagination should be implemented using a common
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ed97c3fe">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
+<p>:warning: pagination should be implemented using a common
 set of parameters to use. Our choice is:</p>
 <ul>
 <li>limit: max number of entries to retrieve</li>
@@ -7555,26 +7567,58 @@ set of parameters to use. Our choice is:</p>
 <li>cursor: an identifier (cursor) of the first entry to be returned
 <a href="https://api.slack.com/docs/pagination">Slack APIs provide an example of cursor-based pagination</a></li>
 </ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ecc51bf4">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
 <h3 id="Exercise:-write-/timezone-specs">Exercise: write /timezone specs<a class="anchor-link" href="#Exercise:-write-/timezone-specs">¶</a></h3><p>Edit the <a href="/edit/notebooks/oas3/ex-08-pagination-ok.yaml">ex-08-pagination-ok.yaml</a> and write the <code>timezones</code> specifications:</p>
-<p>1- define the new <code>Timezones</code> schema to be used in the response;</p>
-<p>2- define the new <code>/timezones</code> path supporting the <code>get</code> method:</p>
+<ol>
+<li><p>define the new <code>Timezones</code> schema to be used in the response;</p>
+</li>
+<li><p>define the new <code>/timezones</code> path supporting the <code>get</code> method:</p>
+</li>
+</ol>
 <ul>
 <li>always write proper <code>summary</code> and <code>description</code> fields</li>
 </ul>
-<p>3- <code>get /timezones</code> possible responses are:</p>
+<ol start="3">
+<li><code>get /timezones</code> possible responses are:</li>
+</ol>
 <ul>
 <li><code>200</code> returning a <code>Timezones</code> in json format, with a complete <code>example</code> for mocks</li>
 <li><code>429</code> and <code>503</code> returning a <code>problem+json</code></li>
 </ul>
-<p>4- this operation is not authenticated</p>
-<p>5- don't forget <code>operationId: get_timezones</code> !</p>
+<ol start="4">
+<li><p>this operation is not authenticated</p>
+</li>
+<li><p>don't forget <code>operationId: get_timezones</code> !</p>
+</li>
+</ol>
 <p>Hint: feel free to reuse as much yaml code as possible.</p>
-<h3 id="Exercise:-test-/timezones-mocks">Exercise: test /timezones mocks<a class="anchor-link" href="#Exercise:-test-/timezones-mocks">¶</a></h3><p>Run your spec <a href="/terminals/1">in the terminal</a> and check that it properly returns the mock objects.</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=53cdba72">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
+<h3 id="Exercise:-test-/timezones-mocks">Exercise: test /timezones mocks<a class="anchor-link" href="#Exercise:-test-/timezones-mocks">¶</a></h3><p>Run your spec <a href="/terminals/connexion">in the terminal</a> and check that it properly returns the mock objects.</p>
 <p>Use</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=163020b2">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=aa3b4f05">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7588,7 +7632,7 @@ set of parameters to use. Our choice is:</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=cca95c96">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=513f59bd">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7603,7 +7647,7 @@ set of parameters to use. Our choice is:</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=27dd944d">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=136daea7">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7643,13 +7687,14 @@ set of parameters to use. Our choice is:</p>
 </div>
 </div>
 </div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ba43fce0">
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=86f02af0">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
 <h2 id="Path-parameters">Path parameters<a class="anchor-link" href="#Path-parameters">¶</a></h2><p>OAS3 allows to specify <code>path</code> parameters:</p>
 <ul>
 <li>in the path, with braces eg. <code>{continent}</code></li>
@@ -7660,7 +7705,7 @@ and a new operationId: get_timezones_by_continent</strong></p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=f3e14888">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=c314bad3">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7687,13 +7732,14 @@ and a new operationId: get_timezones_by_continent</strong></p>
 </div>
 </div>
 </div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=5ac4f0fc">
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=931e8fc2">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
 <h3 id="Exercise:-adding-path-parameter-to-/timezones">Exercise: adding <code>path</code> parameter to <code>/timezones</code><a class="anchor-link" href="#Exercise:-adding-path-parameter-to-/timezones">¶</a></h3><p>Let's add a <code>continent</code> path parameter to <code>/timezones</code>:</p>
 <ul>
 <li>create a <code>#/components/parameters/continent_path</code> parameter definition;</li>
@@ -7705,7 +7751,7 @@ the <a href="https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=f4182b82">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=fc2c6f63">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7719,7 +7765,7 @@ the <a href="https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=4a675713">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=971740d1">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7733,13 +7779,14 @@ the <a href="https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3
 </div>
 </div>
 </div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=34e61b07">
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1698adff">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
 <h3 id="Exercise:--implement-get_timezones-operations">Exercise:  implement get_timezones operations<a class="anchor-link" href="#Exercise:--implement-get_timezones-operations">¶</a></h3><p>Let's implement the <code>get_timezones</code> operation in <a href="/edit/notebooks/oas3/api.py">api.py</a> such that:</p>
 <ul>
 <li>is throttled</li>
@@ -7749,7 +7796,7 @@ the <a href="https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=416a70fb">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=0f296afb">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7764,13 +7811,14 @@ the <a href="https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3
 </div>
 </div>
 </div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a81b9bfb">
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=57848095">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
 <h3 id="Exercise:--implement-get_timezones_by_continent-operations">Exercise:  implement get_timezones_by_continent operations<a class="anchor-link" href="#Exercise:--implement-get_timezones_by_continent-operations">¶</a></h3><p>Let's implement the <code>get_timezones_by_continent</code> operation in <a href="/edit/notebooks/oas3/api.py">api.py</a> such that:</p>
 <ul>
 <li><p>extends <code>get_timezones</code> behavior;</p>
@@ -7784,7 +7832,7 @@ the <a href="https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=46083739">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=d71bc016">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7798,7 +7846,7 @@ the <a href="https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=81429b51">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=84dae9ef">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7812,7 +7860,7 @@ the <a href="https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=bb16b353">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=6b8ae6f4">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7846,32 +7894,41 @@ the <a href="https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=7041388d">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=51ab29d4">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Now  <a href="/terminals/1">run the spec in a terminal</a> using</p>
+<p>Now  <a href="/terminals/connexion">run the spec in a terminal</a> using</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=55de5f90">
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=24428f88">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">code</span><span class="o">/</span><span class="n">notebooks</span><span class="o">/</span><span class="n">oas3</span><span class="o">/</span>
-<span class="n">connexion</span> <span class="n">run</span> <span class="o">/</span><span class="n">code</span><span class="o">/</span><span class="n">notebooks</span><span class="o">/</span><span class="n">oas3</span><span class="o">/</span><span class="n">ex</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="n">pagination</span><span class="o">-</span><span class="n">ok</span><span class="o">.</span><span class="n">yaml</span>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="highlight"><pre><span></span>cd /code/notebooks/oas3/
+connexion run /code/notebooks/oas3/ex-08-pagination-ok.yaml
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=927a7d28">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b30ec35b">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>TODO</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=c9f54d24">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7890,7 +7947,7 @@ the <a href="https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a70cf952">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=53a019fc">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7901,7 +7958,7 @@ the <a href="https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=4ac92fce">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=85867987">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7922,7 +7979,7 @@ the <a href="https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=1424a037">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=8762cf18">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>

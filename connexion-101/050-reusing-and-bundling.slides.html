@@ -7435,7 +7435,7 @@ main {
 <main>
 <div class="reveal">
 <div class="slides"><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=018e6629">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=10d48143">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7450,7 +7450,7 @@ publish definitions in a shared and versioned file
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=35a31ace">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=93cbb686">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7466,7 +7466,7 @@ publish definitions in a shared and versioned file
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d6c83f8d">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ee46ea24">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7484,7 +7484,7 @@ better interfaces and ask themself questions like:</p>
 </div>
 </div>
 </div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=61e76d81">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=caea9b8c">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7504,7 +7504,7 @@ See the <a href="https://github.com/OAI/OpenAPI-Specification">OAS website</a>.<
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b8ee85db">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=81ea7698">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7513,12 +7513,14 @@ See the <a href="https://github.com/OAI/OpenAPI-Specification">OAS website</a>.<
 <hr/>
 <h3 id="Exercise:-replacing-definitions-with-$refs">Exercise: replacing definitions with $refs<a class="anchor-link" href="#Exercise:-replacing-definitions-with-$refs">¶</a></h3><ul>
 <li>Open <a href="/edit/notebooks/oas3/ex-05-01-bundle.yaml">ex-05-01-bundle.yaml</a></li>
-<li>replace as many definitions as possible with references from the shared <a href="">components.oas3.yaml</a>.</li>
+<li>replace as many definitions as possible with references from the shared
+<a href="https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml">https://raw.githubusercontent.com/ioggstream/python-course/refs/tags/v2026.05.1/connexion-101/notebooks/oas3/components.oas3.yaml</a></li>
+<li>"resolve" the OAS file as JSON, to ensure that anchors are removed.</li>
 </ul>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=001e2cda">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=c38b9f4d">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7526,26 +7528,88 @@ See the <a href="https://github.com/OAI/OpenAPI-Specification">OAS website</a>.<
 <div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Exercise: create a bundle from the previous file with</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span><span class="o">,</span><span class="w"> </span><span class="nn">json</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">stream</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s2">"oas3/ex-05-01-bundle-ok.yaml"</span><span class="p">))</span>
+<span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="s2">"oas3/bundle.json"</span><span class="p">,</span> <span class="s2">"w+"</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=cb4128d4">
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=6869eeae">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="YAML-anchors-are-your-friends">YAML anchors are your friends<a class="anchor-link" href="#YAML-anchors-are-your-friends">¶</a></h3><p>YAML has a nice feature, named <strong>anchors</strong>. They allow to define and reference
+<hr/>
+<h3 id="Exercise:-create-a-bundle-from-the-previous-file">Exercise: create a bundle from the previous file<a class="anchor-link" href="#Exercise:-create-a-bundle-from-the-previous-file">¶</a></h3><p>If you have docker, you can use the Redocly CLI to create a bundle from the previous file.</p>
+<p>A bundle is a single file containing all the resolved references. It can be used to share your API definition with others, or to deploy it to a server.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=87529ef3">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span>%%bash
+<span class="c1"># Exercise: create a bundle from the previous file with</span>
+docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-v<span class="w"> </span><span class="nv">$PWD</span>:/app
+docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-v<span class="w"> </span><span class="nv">$PWD</span>:/app<span class="w"> </span>docker.io/redocly/cli@sha256:78fa111b6c84522383d419a0631c984aefa76c5fbd39d8904a201b86e3b44168<span class="w"> </span>bundle<span class="w"> </span>/app/oas3/bundle.json<span class="w">  </span>--output<span class="w"> </span>/app/bundle.yaml
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1aa04a8c">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
+<h2 id="YAML-as-a-template-engine">YAML as a template engine<a class="anchor-link" href="#YAML-as-a-template-engine">¶</a></h2><p>YAML can be used as a template engine for your OAS files. It allows you to define reusable components and reference them in your OAS file.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=cc37b883">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-Mermaid"><pre class="mermaid">
+graph TD
+
+YAML[YAML OAS source]
+--&gt;|processing| JSON[JSON OAS with $refs]
+--&gt;|bundling| --&gt; BUNDLE[OAS with resolved $refs]
+</pre></div>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fba0d3a9">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
+<p>YAML has a nice feature, named <strong>anchors</strong>. They allow to define and reference
 given portions of a YAML file.</p>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=5dfb3c54">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b724a7d8">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7560,18 +7624,19 @@ given portions of a YAML file.</p>
 </div>
 </div>
 </div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=955c9e21">
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a7e9499e">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
 <p>See <a href="/edit/notebooks/anchors.yaml">anchors.yaml</a></p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=bd505c81">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=ff3776d4">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7591,7 +7656,19 @@ given portions of a YAML file.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=21d26d4e">
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=cabe02fe">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
+<p>Check anchor content:</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=6cfed427">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7610,29 +7687,55 @@ given portions of a YAML file.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=cd0a5586">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="p">{</span><span class="s1">'name'</span><span class="p">:</span> <span class="s1">'Everyone has same name'</span><span class="p">,</span> <span class="s1">'age'</span><span class="p">:</span> <span class="mi">10</span><span class="p">}</span>
-<span class="p">{</span><span class="s1">'name'</span><span class="p">:</span> <span class="s1">'Everyone has same name'</span><span class="p">,</span> <span class="s1">'age'</span><span class="p">:</span> <span class="mi">20</span><span class="p">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c6afabed">
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=10e75ee8">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Using-YAML-anchors-in-OAS3">Using YAML anchors in OAS3<a class="anchor-link" href="#Using-YAML-anchors-in-OAS3">¶</a></h3><p>As every operation may have a set of predefined responses, namely:</p>
+<hr/>
+<h3 id="Using-YAML-anchors-in-OAS3">Using YAML anchors in OAS3<a class="anchor-link" href="#Using-YAML-anchors-in-OAS3">¶</a></h3><p>If you have a set of constants in your API definition
+e.g., maximum number of items in a list, or common responses, you can use YAML anchors to define them once and reuse them everywhere.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=7c4324df">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="highlight"><pre><span></span><span class="nt">openapi</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.0.0</span>
+<span class="nn">...</span>
+<span class="nt">components</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">schemas</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">MaxItems</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">integer</span>
+<span class="w">      </span><span class="nt">maximum</span><span class="p">:</span><span class="w"> </span><span class="nl">&amp;max-items</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+<span class="w">    </span><span class="nt">Limit</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">integer</span>
+<span class="w">      </span><span class="nt">maximum</span><span class="p">:</span><span class="w"> </span><span class="nv">*max-items</span><span class="w">  </span><span class="c1"># Reuses the max-items anchor</span>
+<span class="nn">...</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9ccd2a26">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
+<h3 id="YAML-merge-keys">YAML merge keys<a class="anchor-link" href="#YAML-merge-keys">¶</a></h3><p>Merge keys are a special feature of YAML that allows you to merge
+the content of one or more dicts.
+This can be useful when you have a set of common properties that you want to reuse across multiple objects.</p>
+<p>:warning: YAML merge keys are not supported by all YAML parsers, and they are not part of the OAS specification. While they are widely used on the web, they are formally deprecated in YAML 1.2.
+Nonetheles, I find them very useful to avoid using a specific template engine to generate OAS files and manage safely model composition without recurring to <code>allOf</code> and <code>oneOf</code> keywords, which might cause nesting and readability issues.</p>
+<p>As every operation may have a set of predefined responses, namely:</p>
 <ul>
 <li>503 Service Unavailable</li>
 <li>429 Too Many Requests</li>
@@ -7641,67 +7744,67 @@ given portions of a YAML file.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=54e0653e">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">x</span><span class="o">-</span><span class="n">common</span><span class="o">-</span><span class="n">responses</span><span class="p">:</span> <span class="o">&amp;</span><span class="n">common</span><span class="o">-</span><span class="n">responses</span>
-  <span class="mi">503</span><span class="n">ServiceUnavailable</span><span class="p">:</span>
-    <span class="err">$</span><span class="n">ref</span><span class="p">:</span> <span class="o">...</span>
-  <span class="mi">429</span><span class="n">TooManyRequests</span><span class="p">:</span>
-    <span class="err">$</span><span class="n">ref</span><span class="p">:</span> <span class="o">...</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=75680f28">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f8caf2c8">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="highlight"><pre><span></span><span class="nt">x-common-responses</span><span class="p">:</span><span class="w"> </span><span class="nl">&amp;common-responses</span>
+<span class="w">  </span><span class="nt">503ServiceUnavailable</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="w">  </span><span class="nt">429TooManyRequests</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">$ref</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c4459a57">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
 <p>Then use the <code>&lt;&lt;:</code> keyword and  <code>*anchor_name</code>  to reference them.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=ae54c3aa">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">paths</span><span class="p">:</span>
-  <span class="o">/</span><span class="n">status</span><span class="p">:</span>
-    <span class="n">get</span><span class="p">:</span>
-      <span class="o">...</span>
-      <span class="n">responses</span><span class="p">:</span>
-        <span class="c1"># Add the anchored responses</span>
-        <span class="o">&lt;&lt;</span><span class="p">:</span> <span class="o">*</span><span class="n">common</span><span class="o">-</span><span class="n">responses</span>
-
-        <span class="c1"># And now the other ones.</span>
-        <span class="s1">'200'</span><span class="p">:</span>
-          <span class="o">...</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f63af7b2">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a6a724ff">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="NOTE:-ANCHORS-ARE-PROCESSED-BY-THE-YAML-PARSER,-NOT-BY-OAS">NOTE: ANCHORS ARE PROCESSED BY THE YAML PARSER, NOT BY OAS<a class="anchor-link" href="#NOTE:-ANCHORS-ARE-PROCESSED-BY-THE-YAML-PARSER,-NOT-BY-OAS">¶</a></h2><h2 id="OAS-knows-nothing-about-ANCHORS">OAS knows nothing about ANCHORS<a class="anchor-link" href="#OAS-knows-nothing-about-ANCHORS">¶</a></h2>
+<div class="highlight"><pre><span></span><span class="nt">paths</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">/status</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">get</span><span class="p">:</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">responses</span><span class="p p-Indicator">:</span>
+<span class="w">        </span><span class="c1"># Add the anchored responses</span>
+<span class="w">        </span><span class="nt">&lt;&lt;</span><span class="p">:</span><span class="w"> </span><span class="nv">*common-responses</span>
+
+<span class="w">        </span><span class="c1"># And now the other ones.</span>
+<span class="w">        </span><span class="s">'200'</span><span class="p p-Indicator">:</span>
+<span class="w">          </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=6c5ed2b0">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>:warning: ANCHORS ARE PROCESSED BY THE YAML PARSER, NOT BY OAS
+:warning: OAS knows nothing about ANCHORS</p>
+<p>For YAML interoperability considerations
+see <a href="https://www.rfc-editor.org/rfc/rfc9512.html">https://www.rfc-editor.org/rfc/rfc9512.html</a>.</p>
 </div>
 </div>
 </div>
