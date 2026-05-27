@@ -7,11 +7,11 @@ of contract-first REST APIs.
 ```python
 # Install it with the swagger module
 #   that renders the spec in a web-ui
-!pip install connexion[swagger-ui] connexion
+!pip install connexion[swagger-ui] connexion httpie
 
 # And load some gobal settings for the exercises.
 import socket
-host = socket.gethostbyname(socket.gethostname())
+host = '0.0.0.0' # socket.gethostbyname(socket.gethostname())
 port = 5000
 ```
 
@@ -32,7 +32,7 @@ port = 5000
 Now  [run the spec in a terminal](/terminals/connexion) using
 
 ```python
-print(f"$ connexion run notebooks/oas3/ex-01-info-ok.yaml --host {host} --port {port}")
+print(f"$ connexion run notebooks/oas3/ex-01-info-ok.yaml --host {host} ")
 print()
 print(f"Then open the documentation URL: http://{host}:{port}/ui")
 ```
@@ -44,14 +44,22 @@ Remember:
 
 ----
 
-```python
+```bash
 # A request on a generic PATH on the server returns a
 # nicely formatted and explicative error.
 # Remember that we haven't already defined an operation.
-!curl http://0.0.0.0:5000 -kv
+export PATH+=:/code/.local/bin
+http get http://localhost:5555 -v
 ```
 
-Open the [documentation URL]({api_server_url('ui')}) and check the outcome!
+Open the [documentation URL](http://localhost:5555/ui) and check the outcome!
+
+```bash
+export PATH+=:/code/.local/bin
+http get http://localhost:5555/openapi.yaml
+```
+
+----
 
 ### Exercises {#connexion-run-ex}
 
@@ -115,7 +123,7 @@ Now check the outcome in the [terminal](/terminals/connexion).
 
 ```python
 # Use ex-02-servers-ok.yaml as a reference if you get stuck.
-print(f"$ connexion run notebooks/oas3/ex-02-servers.yaml --host {host} --port {port}")
+print(f"$ connexion run notebooks/oas3/ex-02-servers.yaml --host {host} ")
 ```
 
 ---
@@ -214,7 +222,7 @@ we tell `connexion` to ignore unimplemented methods with `--mock notimplemented`
 (
 "bash$"
 "connexion run notebooks/oas3/ex-03-02-path.yaml"
-f" --host {host} --port {port}"
+f" --host {host} "
 " --mock notimplemented"
 )
 ```
@@ -233,12 +241,12 @@ f" --host {host} --port {port}"
 
 ```python
 # Exercise: what's the expected output of the following command?
-!curl http://0.0.0.0:5000/datetime/v1/status
+http get http://0.0.0.0:5000/datetime/v1/status
 ```
 
 ```python
 # Exercise: what happens if you GET an unexisting path?
-!curl http://0.0.0.0:5000/datetime/v1/MISSING
+http get http://0.0.0.0:5000/datetime/v1/MISSING
 ```
 
 ----

@@ -1,12 +1,8 @@
 # Describing APIs
 
-<!--
-So, we are going to build a lot of APIs that should interact
-with each other to create a digital ecosystem.
-
-Interactions require communication, and communication requires a common language,
+Interactions require communication,
+and communication requires a common language,
 and instructions on how the APIs can be used.
--->
 
 Providing **usable** digital services requires:
 
@@ -46,7 +42,6 @@ paths:
           application/json: {}
 ...
 ```
-
 
 ---
 
