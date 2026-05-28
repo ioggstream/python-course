@@ -7,16 +7,16 @@ Welcome to the API-First training!
 ## Agenda
 
 - [x] Course environment
-- [x] [Interoperability](/notebooks/notebooks/01-interoperable-apis.ipynb): Goals, REST, RPC, Contract First.
-- [x] [API modeling with OpenAPI 3](/notebooks/notebooks/02-openapi-3.ipynb)
-- [x] [The `connexion` framework](/notebooks/notebooks/03-connexion.ipynb),
+- [x] [Interoperability](/notebooks/notebooks/010-interoperable-apis.ipynb): Goals, REST, RPC, Contract First.
+- [x] [API modeling with OpenAPI 3](/notebooks/notebooks/025-openapi-3.ipynb)
+- [x] [The `connexion` framework](/notebooks/notebooks/030-connexion.ipynb),
    mocking our API model, returning Problem objects
-- [x] [Implementing the endpoints without request parameters](/notebooks/notebooks/04-01-connexion-writing-operationid.ipynb) and [with request parameters](http://192.168.1.115:8888/notebooks/notebooks/04-02-connexion-writing-operationid.ipynb)
-- [x] [Using YAML features and `$ref` to enforce API behavior](/notebooks/notebooks/05-reusing-and-bundling.ipynb)
-- [x] Authorization: [basic auth](/notebooks/notebooks/06-connexion-authorization-basic.ipynb)
-- [x] Service management with [interoperabile throttling headers](/notebooks/notebooks/07-connexion-throttling-headers.ipynb)
-- [x] [Pagination]s(/notebooks/notebooks/08-pagination.ipynb)
-- [ ] [Validation intro](/notebooks/notebooks/09-connexion-validation.ipynb)
+- [x] [Implementing the endpoints without request parameters](/notebooks/notebooks/040-01-connexion-writing-operationid.ipynb) and [with request parameters](/notebooks/notebooks/040-02-connexion-writing-operationid.ipynb)
+- [x] [Using YAML features and `$ref` to enforce API behavior](/notebooks/notebooks/050-reusing-and-bundling.ipynb)
+- [x] Authorization: [basic auth](/notebooks/notebooks/060-security-confidentiality.ipynb)
+- [x] Service management with [ratelimit headers](/notebooks/notebooks/070-security-availability.ipynb)
+- [x] [Pagination](/notebooks/notebooks/080-connexion-pagination.ipynb)
+- [ ] [Validation intro](/notebooks/notebooks/090-connexion-validation.ipynb)
 
 Bonus tracks:
 
@@ -48,13 +48,14 @@ FIXME: Go to the [basic python course](/tree/notebooks/rendered_notebooks/python
 ## Course services and directories
 
 - IP:`8888/notebooks`  this Jupyter notebook
-- IP:`8080` the API Documentation Web UI (Swagger UI)
 - IP:`5000`  the flask application we will execute during the course
 
-Once you open the [terminal](/terminal/1) you will find
-all the course under `/code`.
+Once you open the [terminal](/terminals/connexion) you will find the course under:
 
-```
+- `notebooks` if you run it locally;
+- `/code/notebooks` if you are on docker
+
+```text
 /code/
 │  
 └── notebooks    # All notebooks!
@@ -69,13 +70,34 @@ all the course under `/code`.
 
 To simplify things, during the training we'll run the connexion app with the `connexion run` command.
 
-You can always provide a custom `__main__.py` like you normally do with your apps (eg: enable TLS, ...).
 
 Whenever you complete an exercise, you should run
+the API with:
 
+```text
+connexion run oas3/openapi.yaml
 ```
-connexion run /code/notebooks/oas3/openapi.yaml
+
+Not covered in this workshop:
+if you need to tweak your application,
+you can still create a connexion app
+and run it with an `asgi` container:
+
+```python
+from connexion import AsyncApp
+
+def main():
+    """
+    Run me with
+    $ uvicorn api:main --port ...
+    """
+    app = AsyncApp(...)
+    app.add_api( ...)
+    ...
+    return app
 ```
+
+
 
 ## If you can't do an exercise
 
@@ -88,36 +110,21 @@ You can find solutions in the training directory, so if you can't complete your 
 you can run the solution (which ends with `-ok.yaml` instead, with
 
 ```text
-connexion run /code/notebooks/oas3/ex-03-02-path-ok.yaml
+connexion run oas3/ex-03-02-path-ok.yaml
 ```
 
-```python
-# You can evaluate maths and strings
-s = 1
-print("a string and the number " + str(s))
-
-s = s + 1
-print("now s is increased " + str(s))
-```
-
-```python
-# Note: all notebooks preload the definitions in
-!ls -l /root/.ipython/profile_default/startup
-```
 
 ---
 
 ## Clone and start
 
-```
+```text
 git clone https://github.com/ioggstream/python-course.git
-cd python-course/ansible-101
-make course
-
+cd python-course/connexion-101
 ```
 
 ## Connect to jupyter
 
-```
-firefox http://43.32.54.212:8888/tree/notebooks/?token=....
+```text
+open http://localhost:8888/tree/notebooks/?token=....
 ```

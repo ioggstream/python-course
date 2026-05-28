@@ -490,13 +490,13 @@ Use it when modeling complex nested objects - it is easier than editing YAML by 
 
 ## Exercise
 
-Edit [ex-03-02-path.yaml](/edit/notePersons/oas3/ex-03-02-path.yaml) so that:
+Edit [ex-03-02-path.yaml](/edit/notebooks/Persons/oas3/ex-03-02-path.yaml) so that:
 
 1. every `/status` response uses the `Problem` schema;
 2. the `components/schemas` section defines `Problem` via `$ref` to the external registry;
 3. both the `200` and `default` responses use `application/problem+json`.
 
-Look at [ex-03-02-path-ok.yaml](/edit/notePersons/oas3/ex-03-02-path-ok.yaml) for the solution.
+Look at [ex-03-02-path-ok.yaml](/edit/notebooks/Persons/oas3/ex-03-02-path-ok.yaml) for the solution.
 
 ----
 

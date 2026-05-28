@@ -3,10 +3,12 @@
 Connexion supports validating request parameters and returned items
 with:
 
-```
-connexion run --strict-validation /code/notebooks/oas3/ex-08-pagination-ok.yaml
+```text
+connexion run --strict-validation  oas3/ex-08-pagination-ok.yaml
 
 ```
+
+----
 
 ### Exercise: test the current spec with invalid requests.
 
@@ -14,23 +16,20 @@ connexion run --strict-validation /code/notebooks/oas3/ex-08-pagination-ok.yaml
 - pass string values to numeric parameters
 
 
+---
 
-
-```python
-# Use this cell for the exercise
-```
-
-# Response validation
+## Response validation
 
 Connexion can shield us from non-conformant API implementation and
 allow us to **validate responses** too. If the response is
 not conformant to the OAS spec, connexion returns an error.
 
 
-```
+```text
 connexion run --strict-validation --validate-responses /code/notebooks/oas3/ex-08-pagination-ok.yaml
-
 ```
+
+----
 
 ### Exercise: test response validation
 
@@ -42,12 +41,13 @@ What happens when you?
 
 Does `connexion` always behave as you expected?
 
-# Caveats
+----
+
+### Caveats
 
 Validation can be tricky as you may have different requirements and connexion behavior may not fit your goals.
 
 Connexion validators are quite tolerant, but you can write your own extending a validator class (eg. for request body, parameters, responses, ...)
-
 
 ```python
 from connexion.decorators.validation import (
@@ -59,16 +59,11 @@ def CustomBodyValidator(RequestBodyValidator):
     raise NotImplementedError
 
 def main():
-    app = FlaskApp()
+    app = AsyncApp(...)
     app.add_api("simple.yaml",
           validate_responses=True,
           validator_map={
                'body': CustomBodyValidator,
            }
      )
-```
-
-
-```python
-
 ```

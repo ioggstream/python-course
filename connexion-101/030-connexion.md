@@ -49,15 +49,13 @@ Remember:
 # nicely formatted and explicative error.
 # Remember that we haven't already defined an operation.
 export PATH+=:/code/.local/bin
-http get http://localhost:5555 -v
+http get http://localhost:5000 -v
 ```
 
-Open the [documentation URL](http://localhost:5555/ui) and check the outcome!
+Open:
 
-```bash
-export PATH+=:/code/.local/bin
-http get http://localhost:5555/openapi.yaml
-```
+- the [Swagger UI URL](http://localhost:5000/ui) and check the outcome!
+- the [documentation URL](http://localhost:5000/openapi.yaml).
 
 ----
 
@@ -67,6 +65,12 @@ http get http://localhost:5555/openapi.yaml
 - issue a `GET /MISSING` request and check that the status code is `404 Not Found`.
 - the `Content-Type` header field conveys the media type of the returned content;
   what's the content type of the error responses?
+
+```bash
+# Use this cell for the exercise.
+export PATH+=:/code/.local/bin
+http get http://localhost:5000 -v
+```
 
 ---
 
@@ -79,7 +83,7 @@ stakeholders interactions go through various lifecycle stages.
 Every endpoint can start with a base path (eg. `/datetime/v1`).
 
 ---
--
+
 ```yaml
 # One or more server
 #   You can add production, staging and test environments.
@@ -154,7 +158,7 @@ database entries, hitting caches, ..).
 
 `paths` references:
 
-- the associated METHODs (eg. get|post|..)
+- the associated METHODs (eg. `get` | `post`| ..)
 - a `summary` and a `description` of the operation
 
 ```yaml
@@ -167,9 +171,13 @@ database entries, hitting caches, ..).
         is always a problem+json.
 ```
 
+:warning: This is where you reason about goals,
+input and output of your operation: documentation
+is the result of this reasoning!
+
 ----
 
-- an identifier, that `connexion` uses to map to the python callable
+- an identifier, that `connexion` uses to map to the python callable (the "operation").
 
 ```yaml
       operationId: get_status
@@ -210,8 +218,8 @@ database entries, hitting caches, ..).
   eventually copy/paste the code from/to the swagger editor.
 - complete the `get /status` path
 - use the [OAS Checker](https://italia.github.io/api-oas-checker/)
-  :warning: with the "Italian Guidelines Full + Extra Security Checks" profile
-  to identify and fix syntax errors.
+  to identify and fix syntax errors
+  :warning: with the "Italian Guidelines Full + Extra Security Checks" profile.
 - what's the name of the function referenced by `#/paths/status/get/operationId`?
 
 We haven't implemented the function referenced by `operationId`,
@@ -241,12 +249,12 @@ f" --host {host} "
 
 ```python
 # Exercise: what's the expected output of the following command?
-http get http://0.0.0.0:5000/datetime/v1/status
+http get http://localhost:5000/datetime/v1/status
 ```
 
 ```python
 # Exercise: what happens if you GET an unexisting path?
-http get http://0.0.0.0:5000/datetime/v1/MISSING
+http get http://localhost:5000/datetime/v1/MISSING
 ```
 
 ----

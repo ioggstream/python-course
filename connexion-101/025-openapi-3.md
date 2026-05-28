@@ -70,7 +70,7 @@ The metadata is in the `info` section:
 openapi: 3.0.0
 info:
   version: "1.0.0"
-  title: |-
+  title: |
     Write a short, clear name of your service.
   description: |
     This field may contain the markdown documentation of the API,
@@ -92,7 +92,11 @@ info:
 
 ## OpenAPI Metadata exercise
 
-1. open [this incomplete OAS3 spec](https://editor.swagger.io/?url=https://raw.githubusercontent.com/ioggstream/python-course/main/connexion-101/notebooks/oas3/ex-01-info.yaml).
+1. open [this incomplete OAS3 spec](/edit/notebooks/oas3/ex-01-info.yaml)
+
+<!-- (https://editor.swagger.io/?url=https://raw.githubusercontent.com/ioggstream/python-course/main/connexion-101/notebooks/oas3/ex-01-info.yaml). -->
+
+1. copy it to [swagger editor](https://editor.swagger.io/)
 
 1. fix all errors and add the missing fields: no need to add all details for now.
 
@@ -103,6 +107,8 @@ info:
 1. provide contact informations and terms of services.
 
 1. Feel free to add as many details as you want.
+
+1. Save it back to your local notebook.
 
 ----
 
@@ -119,7 +125,7 @@ fields: these should be "registered" and should not use
 the `x-` prefix. We won't go into these details during
 this course.
 
-To backport new fields from OAS3.1 to OAS3.0, you can use custom fields, eg. `x-summary` for the `summary` field:
+To backport new fields from OAS3.1 to OAS3.0, you can use custom fields, eg. `x-summary` for the `summary` field.
 
 ----
 
@@ -147,7 +153,7 @@ achine readable format
 
 1. open [the previous OAS3 spec](/edit/notebooks/oas3/ex-01-info.yaml).
 
-1. copy its content in the [Swagger Editor Online]({oas_editor_url('')}).
+1. copy its content in the [Swagger Editor Online](https://editor.swagger.io) and try to use it.
 
 1. provide further informations via custom fields: if you think of any interesting
    label, define them and comment properly using `#`

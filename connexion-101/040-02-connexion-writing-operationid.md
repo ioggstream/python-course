@@ -1,4 +1,4 @@
-# Implementing requests
+# Implementing Operations
 
 Now we'll add new paths and add
 request parameters, including
@@ -14,7 +14,7 @@ publishing shared OAS3 components
 
 ## A new path: /echo
 
-Now we're going to write a new path: `/echo`.
+Let's write a new path: `/echo`.
 
 - when invoking `/datetime/v1/echo` the API will return
   the current datetime;
@@ -32,18 +32,13 @@ Now we're going to write a new path: `/echo`.
 
 Edit [ex-04-02-echo-ok.yaml](/edit/notebooks/oas3/ex-04-02-echo.yaml) and write the `echo` specifications:
 
-1- define the new `Datetime` schema to be used in the response;
-
-2- define the new `/echo` path supporting the `get` method and:
-
-- always write proper `summary` and `description` fields
-
-3- `get /echo` possible responses are:
-
-- `200` returning a `Datetime` in json format, with a complete `example` for mocks
-- `503` returning a `problem+json`
-
-4- don't forget `operationId` !
+1. define the new `Datetime` schema to be used in the response;
+2. define the new `/echo` path supporting the `get` method and:
+   - always write proper `summary` and `description` fields
+3. `get /echo` possible responses are:
+   - `200` returning a `Datetime` in json format, with a complete `example` for mocks
+   - `503` returning a `problem+json`
+4. don't forget `operationId` !
 
 Hint: feel free to reuse as much yaml code as possible.
 
@@ -59,9 +54,12 @@ Use
 connexion run --mock all /code/notebooks/oas3/ex-04-02-echo-ok.yaml
 ```
 
-```python
+```bash
 # Use this cell to test the output
-!curl http://localhost:5000/datetime/v1/echo -vk
+from requests import get
+res = get("http://localhost:5000/datetime/v1/status")
+print(res.headers)
+print(res.content)
 ```
 
 ---
@@ -127,7 +125,7 @@ Let's add a `tz` parameter to `/echo`:
 Finally, check that you can run the spec.
 
 ```bash
-connexion run --mock all /code/notebooks/oas3/ex-04-02-echo-ok.yaml
+connexion run --mock all oas3/ex-04-02-echo-ok.yaml
 ```
 
 ```python
@@ -136,7 +134,8 @@ connexion run --mock all /code/notebooks/oas3/ex-04-02-echo-ok.yaml
 
 ### Implement get_echo
 
-Let's implement the `get_echo` in [api.py](/edit/notebooks/oas3/api.py) function that:
+Let's implement the `get_echo` function
+in [api.py](/edit/notebooks/oas3/api.py) that:
 
 - takes the `tz` parameter, which defaults to `UTC`;
 - returns a `Datetime` object in its current timezone.
@@ -146,6 +145,7 @@ Let's implement the `get_echo` in [api.py](/edit/notebooks/oas3/api.py) function
 !pip install pytz
 ```
 
+You can play with pytz first
 
 ```python
 import pytz
@@ -153,35 +153,19 @@ tz = pytz.timezone('Europe/Rome')
 print(tz.zone)
 ```
 
-    Europe/Rome
+Enjoy Neverland :)
 
 ```python
 # No timezones in Neverland :)
 'Neverland' in pytz.all_timezones
 ```
 
-```python
-### Exercise solution
-```
-
-```python
-def get_echo(tz='UTC'):
-    if tz not in pytz.all_timezones:
-        return problem(
-            status=400,
-            title="Bad Timezone",
-            detail="The specified timezone is not valid",
-            ext={"valid_timezones": pytz.all_timezones}
-        )
-    d = datetime.now(tz=pytz.timezone(tz))
-    return {"timestamp": d.isoformat().replace('+00:00', 'Z')}
-
-```
+Solution is in [api_solution.py](/edit/notebooks/oas3/api_solutions.py).
 
 Now  [run the spec in a terminal](/terminals/connexion) using
 
 ```text
-connexion run /code/notebooks/oas3/ex-04-02-echo-ok.yaml
+connexion run oas3/ex-04-02-echo-ok.yaml
 ```
 
 and use the Swagger UI to test the API.

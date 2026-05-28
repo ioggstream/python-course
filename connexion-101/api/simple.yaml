@@ -2,7 +2,7 @@
 openapi: 3.0.1
 info: {version: 0.1.1, title: hi}
 servers:
-- url: 'https://localhost:8443/hello/v1'
+- url: "https://localhost:8443/hello/v1"
 #  description: dev
 paths:
   /echo:
@@ -10,7 +10,7 @@ paths:
       summary: Just a method
       operationId: api.get_hello
       responses:
-        '200':
+        "200":
           description: Hi!
           content:
             application/json:
@@ -23,14 +23,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Text'
+              $ref: "#/components/schemas/Text"
       responses:
-        '200':
+        "200":
           description: Hi!
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Text'
+                $ref: "#/components/schemas/Text"
   /basic-auth:
     get:
       summary: Just a method
@@ -38,7 +38,7 @@ paths:
       - basic: []
       operationId: api.get_hello_auth
       responses:
-        '200':
+        "200":
           description: Hi!
           content:
             application/json:

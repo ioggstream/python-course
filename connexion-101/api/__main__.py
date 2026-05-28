@@ -50,7 +50,7 @@ def configure_logger(log_config="logging.yaml"):
         return dictConfig(log_config)
 
 
-if __name__ == "__main__":
+if True: # __name__ == "__main__":
     configure_logger()
     app = FlaskApp(
         "hello",
@@ -58,5 +58,6 @@ if __name__ == "__main__":
         specification_dir=dirname(__file__),
         options={"swagger_ui": True},
     )
+    print("Ciao bellissimi")
     app.add_api("simple.yaml", validate_responses=True, strict_validation=True)
     app.run(ssl_context="adhoc", debug=True)
