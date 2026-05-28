@@ -3,8 +3,8 @@ BOOKS = $(patsubst %.md,notebooks/%.ipynb,$(FILES))
 SLIDES = $(patsubst %.ipynb,%.slides.html,$(BOOKS))
 
 
-all: $(SLIDES)
-	@echo $(SLIDES)
+all: $(BOOKS)
+	@echo $(BOOKS)
 
 notebooks/%.ipynb: %.md
 

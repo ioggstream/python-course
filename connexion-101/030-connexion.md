@@ -226,13 +226,8 @@ We haven't implemented the function referenced by `operationId`,
 so [to run the spec in a terminal](/terminals/connexion)
 we tell `connexion` to ignore unimplemented methods with `--mock notimplemented`:
 
-```python
-(
-"bash$"
-"connexion run notebooks/oas3/ex-03-02-path.yaml"
-f" --host {host} "
-" --mock notimplemented"
-)
+```text
+connexion run --mock notimplemented --host 0.0.0.0 oas3/ex-03-02-path.yaml
 ```
 
 ----
@@ -259,9 +254,4 @@ http get http://localhost:5000/datetime/v1/MISSING
 
 ----
 
-### Exercise {#ex-status-impl}
-
-1. Implement the `get_status` function in [api.py](/edit/notebooks/oas3/api.py)
-   to return a problem+json with status 200, title "OK" and a successful
-   message in detail.
-1. Modify `get_status` to return `503` (Service Temporarily Unavailable) 1 in 5 requests.
+In Connexion Writing OperationId, we'll see how to implement the `get_status` function and how to make it work with our API.

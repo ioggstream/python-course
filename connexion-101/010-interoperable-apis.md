@@ -28,6 +28,22 @@ An API ecosystem starts with communication requirements such as:
 - Reliability & Security (e.g., CIA triad: Confidentiality, Integrity and Availability)
 - Consistent Design & Schema Standardization
 
+```mermaid
+graph
+
+subgraph Security
+    Confidentiality
+    Integrity
+    Availability
+end
+
+subgraph Interoperability
+    Standardization
+    Consistent-Design
+    Discoverability[Discoverability & Catalogs]
+end
+```
+
 ----
 
 Basic standardization features to support these requirements include:

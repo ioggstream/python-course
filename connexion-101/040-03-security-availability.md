@@ -18,9 +18,6 @@ set the following expectations:
   when to retry.
 
 ```mermaid
----
-title: Circuit Breaker pattern
----
 graph LR
 
 A[Client] --> B[API]

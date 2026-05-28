@@ -72,7 +72,7 @@ def get_status():
 Now  [run the spec in a terminal](/terminals/connexion) using
 
 ```text
-connexion run /code/notebooks/oas3/ex-03-02-path.yaml
+connexion run oas3/ex-03-02-path.yaml
 ```
 
 play a bit with the [Swagger UI](http://localhost:5000/datetime/v1/ui)
