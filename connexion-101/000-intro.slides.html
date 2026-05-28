@@ -7435,7 +7435,7 @@ main {
 <main>
 <div class="reveal">
 <div class="slides"><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a61c1905">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f1c95126">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7445,16 +7445,16 @@ main {
 <p><a href="https://docs.google.com/presentation/d/1c_pH0nVY5WwMOlMpr0vaeC1Mblpw-HvffvuECQgH4Yc/edit#slide=id.p4">Intro slides</a></p>
 <h2 id="Agenda">Agenda<a class="anchor-link" href="#Agenda">¶</a></h2><ul>
 <li class="task-list-item"><input checked="" class="task-list-item-checkbox" disabled="" type="checkbox"/>Course environment</li>
-<li class="task-list-item"><input checked="" class="task-list-item-checkbox" disabled="" type="checkbox"/><a href="/notebooks/notebooks/01-interoperable-apis.ipynb">Interoperability</a>: Goals, REST, RPC, Contract First.</li>
-<li class="task-list-item"><input checked="" class="task-list-item-checkbox" disabled="" type="checkbox"/><a href="/notebooks/notebooks/02-openapi-3.ipynb">API modeling with OpenAPI 3</a></li>
-<li class="task-list-item"><input checked="" class="task-list-item-checkbox" disabled="" type="checkbox"/><a href="/notebooks/notebooks/03-connexion.ipynb">The <code>connexion</code> framework</a>,
+<li class="task-list-item"><input checked="" class="task-list-item-checkbox" disabled="" type="checkbox"/><a href="/notebooks/notebooks/010-interoperable-apis.ipynb">Interoperability</a>: Goals, REST, RPC, Contract First.</li>
+<li class="task-list-item"><input checked="" class="task-list-item-checkbox" disabled="" type="checkbox"/><a href="/notebooks/notebooks/025-openapi-3.ipynb">API modeling with OpenAPI 3</a></li>
+<li class="task-list-item"><input checked="" class="task-list-item-checkbox" disabled="" type="checkbox"/><a href="/notebooks/notebooks/030-connexion.ipynb">The <code>connexion</code> framework</a>,
 mocking our API model, returning Problem objects</li>
-<li class="task-list-item"><input checked="" class="task-list-item-checkbox" disabled="" type="checkbox"/><a href="/notebooks/notebooks/04-01-connexion-writing-operationid.ipynb">Implementing the endpoints without request parameters</a> and <a href="http://192.168.1.115:8888/notebooks/notebooks/04-02-connexion-writing-operationid.ipynb">with request parameters</a></li>
-<li class="task-list-item"><input checked="" class="task-list-item-checkbox" disabled="" type="checkbox"/><a href="/notebooks/notebooks/05-reusing-and-bundling.ipynb">Using YAML features and <code>$ref</code> to enforce API behavior</a></li>
-<li class="task-list-item"><input checked="" class="task-list-item-checkbox" disabled="" type="checkbox"/>Authorization: <a href="/notebooks/notebooks/06-connexion-authorization-basic.ipynb">basic auth</a></li>
-<li class="task-list-item"><input checked="" class="task-list-item-checkbox" disabled="" type="checkbox"/>Service management with <a href="/notebooks/notebooks/07-connexion-throttling-headers.ipynb">interoperabile throttling headers</a></li>
-<li class="task-list-item"><input checked="" class="task-list-item-checkbox" disabled="" type="checkbox"/>[Pagination]s(/notebooks/notebooks/08-pagination.ipynb)</li>
-<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"/><a href="/notebooks/notebooks/09-connexion-validation.ipynb">Validation intro</a></li>
+<li class="task-list-item"><input checked="" class="task-list-item-checkbox" disabled="" type="checkbox"/><a href="/notebooks/notebooks/040-01-connexion-writing-operationid.ipynb">Implementing the endpoints without request parameters</a> and <a href="/notebooks/notebooks/040-02-connexion-writing-operationid.ipynb">with request parameters</a></li>
+<li class="task-list-item"><input checked="" class="task-list-item-checkbox" disabled="" type="checkbox"/><a href="/notebooks/notebooks/050-reusing-and-bundling.ipynb">Using YAML features and <code>$ref</code> to enforce API behavior</a></li>
+<li class="task-list-item"><input checked="" class="task-list-item-checkbox" disabled="" type="checkbox"/>Authorization: <a href="/notebooks/notebooks/060-security-confidentiality.ipynb">basic auth</a></li>
+<li class="task-list-item"><input checked="" class="task-list-item-checkbox" disabled="" type="checkbox"/>Service management with <a href="/notebooks/notebooks/070-security-availability.ipynb">ratelimit headers</a></li>
+<li class="task-list-item"><input checked="" class="task-list-item-checkbox" disabled="" type="checkbox"/><a href="/notebooks/notebooks/080-connexion-pagination.ipynb">Pagination</a></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"/><a href="/notebooks/notebooks/090-connexion-validation.ipynb">Validation intro</a></li>
 </ul>
 <p>Bonus tracks:</p>
 <ul>
@@ -7478,35 +7478,35 @@ mocking our API model, returning Problem objects</li>
 <p>FIXME: Go to the <a href="/tree/notebooks/rendered_notebooks/python-basic">basic python course</a></p>
 <h2 id="Course-services-and-directories">Course services and directories<a class="anchor-link" href="#Course-services-and-directories">¶</a></h2><ul>
 <li>IP:<code>8888/notebooks</code>  this Jupyter notebook</li>
-<li>IP:<code>8080</code> the API Documentation Web UI (Swagger UI)</li>
 <li>IP:<code>5000</code>  the flask application we will execute during the course</li>
 </ul>
-<p>Once you open the <a href="/terminal/1">terminal</a> you will find
-all the course under <code>/code</code>.</p>
+<p>Once you open the <a href="/terminals/connexion">terminal</a> you will find the course under:</p>
+<ul>
+<li><code>notebooks</code> if you run it locally;</li>
+<li><code>/code/notebooks</code> if you are on docker</li>
+</ul>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=0905750f">
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=3c56ab8f">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="o">/</span><span class="n">code</span><span class="o">/</span>
-<span class="err">│</span>  
-<span class="err">└──</span> <span class="n">notebooks</span>    <span class="c1"># All notebooks!</span>
-    <span class="err">├──</span> <span class="n">oas3</span>     <span class="c1"># OpenAPI specifications, files and exercises</span>
-    <span class="err">│</span>  
-    <span class="err">└──</span> <span class="n">startup</span>  <span class="c1"># startup files for jupyter, don't touch ;)</span>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="highlight"><pre><span></span>/code/
+│  
+└── notebooks    # All notebooks!
+    ├── oas3     # OpenAPI specifications, files and exercises
+    │  
+    └── startup  # startup files for jupyter, don't touch ;)
 </pre></div>
 </div>
 </div>
 </div>
-</div>
 </div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8da08015">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ceeb4357">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7514,12 +7514,38 @@ all the course under <code>/code</code>.</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <hr/>
 <h2 id="Customizing-the-app">Customizing the app<a class="anchor-link" href="#Customizing-the-app">¶</a></h2><p>To simplify things, during the training we'll run the connexion app with the <code>connexion run</code> command.</p>
-<p>You can always provide a custom <code>__main__.py</code> like you normally do with your apps (eg: enable TLS, ...).</p>
-<p>Whenever you complete an exercise, you should run</p>
+<p>Whenever you complete an exercise, you should run
+the API with:</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=4284afe2">
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=2c7f4e30">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="highlight"><pre><span></span>connexion run oas3/openapi.yaml
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c2b52949">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Not covered in this workshop:
+if you need to tweak your application,
+you can still create a connexion app
+and run it with an <code>asgi</code> container:</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=bf0b2594">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7527,14 +7553,24 @@ all the course under <code>/code</code>.</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">connexion</span> <span class="n">run</span> <span class="o">/</span><span class="n">code</span><span class="o">/</span><span class="n">notebooks</span><span class="o">/</span><span class="n">oas3</span><span class="o">/</span><span class="n">openapi</span><span class="o">.</span><span class="n">yaml</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">connexion</span><span class="w"> </span><span class="kn">import</span> <span class="n">AsyncApp</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Run me with</span>
+<span class="sd">    $ uvicorn api:main --port ... </span>
+<span class="sd">    """</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">AsyncApp</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">add_api</span><span class="p">(</span> <span class="o">...</span><span class="p">)</span> 
+    <span class="o">...</span>
+    <span class="k">return</span> <span class="n">app</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=3b5ce998">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=34395242">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7551,53 +7587,19 @@ you can run the solution (which ends with <code>-ok.yaml</code> instead, with</p
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a741cad9">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9b0660e7">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<div class="highlight"><pre><span></span>connexion run /code/notebooks/oas3/ex-03-02-path-ok.yaml
+<div class="highlight"><pre><span></span>connexion run oas3/ex-03-02-path-ok.yaml
 </pre></div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=d628571c">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># You can evaluate maths and strings</span>
-<span class="n">s</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"a string and the number "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
-
-<span class="n">s</span> <span class="o">=</span> <span class="n">s</span> <span class="o">+</span> <span class="mi">1</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"now s is increased "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=85925f59">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Note: all notebooks preload the definitions in</span>
-<span class="o">!</span>ls<span class="w"> </span>-l<span class="w"> </span>/root/.ipython/profile_default/startup
-</pre></div>
-</div>
 </div>
 </div>
 </div>
 </div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b7fb0cbf">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=87ca2637">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7608,24 +7610,21 @@ you can run the solution (which ends with <code>-ok.yaml</code> instead, with</p
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=05b9d17c">
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1b1aedd9">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">ioggstream</span><span class="o">/</span><span class="n">python</span><span class="o">-</span><span class="n">course</span><span class="o">.</span><span class="n">git</span>
-<span class="n">cd</span> <span class="n">python</span><span class="o">-</span><span class="n">course</span><span class="o">/</span><span class="n">ansible</span><span class="o">-</span><span class="mi">101</span>
-<span class="n">make</span> <span class="n">course</span>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="highlight"><pre><span></span>git clone https://github.com/ioggstream/python-course.git
+cd python-course/connexion-101
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d6f13c0f">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ffebce64">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7635,17 +7634,15 @@ you can run the solution (which ends with <code>-ok.yaml</code> instead, with</p
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=936db45b">
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=60dfb8ca">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">firefox</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">43.32.54.212</span><span class="p">:</span><span class="mi">8888</span><span class="o">/</span><span class="n">tree</span><span class="o">/</span><span class="n">notebooks</span><span class="o">/</span><span class="err">?</span><span class="n">token</span><span class="o">=....</span>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="highlight"><pre><span></span>open http://localhost:8888/tree/notebooks/?token=....
 </pre></div>
-</div>
 </div>
 </div>
 </div>

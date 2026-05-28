@@ -7435,7 +7435,7 @@ main {
 <main>
 <div class="reveal">
 <div class="slides"><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=40a109df">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=7c10f29a">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7446,27 +7446,26 @@ with:</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=b5ba7c30">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">connexion</span> <span class="n">run</span> <span class="o">--</span><span class="n">strict</span><span class="o">-</span><span class="n">validation</span> <span class="o">/</span><span class="n">code</span><span class="o">/</span><span class="n">notebooks</span><span class="o">/</span><span class="n">oas3</span><span class="o">/</span><span class="n">ex</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="n">pagination</span><span class="o">-</span><span class="n">ok</span><span class="o">.</span><span class="n">yaml</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=5ef58d66">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=26e43462">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="highlight"><pre><span></span>connexion run --strict-validation  oas3/ex-08-pagination-ok.yaml
+</pre></div>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ec32cb0d">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
 <h3 id="Exercise:-test-the-current-spec-with-invalid-requests.">Exercise: test the current spec with invalid requests.<a class="anchor-link" href="#Exercise:-test-the-current-spec-with-invalid-requests.">¶</a></h3><ul>
 <li>invoke endpoints with unexisting parameters, eg. <code>/echo?missing=1</code></li>
 <li>pass string values to numeric parameters</li>
@@ -7474,54 +7473,40 @@ with:</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=2ac3b797">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Use this cell for the exercise</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9aad6035">
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=69db4609">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="Response-validation">Response validation<a class="anchor-link" href="#Response-validation">¶</a></h1><p>Connexion can shield us from non-conformant API implementation and
+<hr/>
+<h2 id="Response-validation">Response validation<a class="anchor-link" href="#Response-validation">¶</a></h2><p>Connexion can shield us from non-conformant API implementation and
 allow us to <strong>validate responses</strong> too. If the response is
 not conformant to the OAS spec, connexion returns an error.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=4632149c">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">connexion</span> <span class="n">run</span> <span class="o">--</span><span class="n">strict</span><span class="o">-</span><span class="n">validation</span> <span class="o">--</span><span class="n">validate</span><span class="o">-</span><span class="n">responses</span> <span class="o">/</span><span class="n">code</span><span class="o">/</span><span class="n">notebooks</span><span class="o">/</span><span class="n">oas3</span><span class="o">/</span><span class="n">ex</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="n">pagination</span><span class="o">-</span><span class="n">ok</span><span class="o">.</span><span class="n">yaml</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fb9a299d">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=73c467f2">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="highlight"><pre><span></span>connexion run --strict-validation --validate-responses /code/notebooks/oas3/ex-08-pagination-ok.yaml
+</pre></div>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=495bdbd2">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
 <h3 id="Exercise:-test-response-validation">Exercise: test response validation<a class="anchor-link" href="#Exercise:-test-response-validation">¶</a></h3><p>What happens when you?</p>
 <ul>
 <li>disable throtting on one of your operations, so that it won't return the 'X-RateLimit' headers;</li>
@@ -7529,12 +7514,23 @@ not conformant to the OAS spec, connexion returns an error.</p>
 <li>change the properties' returned type?</li>
 </ul>
 <p>Does <code>connexion</code> always behave as you expected?</p>
-<h1 id="Caveats">Caveats<a class="anchor-link" href="#Caveats">¶</a></h1><p>Validation can be tricky as you may have different requirements and connexion behavior may not fit your goals.</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a0dbaacf">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
+<h3 id="Caveats">Caveats<a class="anchor-link" href="#Caveats">¶</a></h3><p>Validation can be tricky as you may have different requirements and connexion behavior may not fit your goals.</p>
 <p>Connexion validators are quite tolerant, but you can write your own extending a validator class (eg. for request body, parameters, responses, ...)</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=f0905a71">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=96e790be">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7551,7 +7547,7 @@ not conformant to the OAS spec, connexion returns an error.</p>
     <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
-    <span class="n">app</span> <span class="o">=</span> <span class="n">FlaskApp</span><span class="p">()</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">AsyncApp</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
     <span class="n">app</span><span class="o">.</span><span class="n">add_api</span><span class="p">(</span><span class="s2">"simple.yaml"</span><span class="p">,</span>
           <span class="n">validate_responses</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
           <span class="n">validator_map</span><span class="o">=</span><span class="p">{</span>

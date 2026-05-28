@@ -5,7 +5,7 @@
 <meta content="chrome=1" http-equiv="X-UA-Compatible"/>
 <meta content="yes" name="apple-mobile-web-app-capable"/>
 <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
-<title>025-openapi-3 slides</title><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script><script type="module">
+<title>040-03-security-availability slides</title><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script><script type="module">
   import mermaid from 'https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.0/mermaid.esm.min.mjs';
   mermaid.initialize({ startOnLoad: true });
 </script>
@@ -7435,263 +7435,301 @@ main {
 <main>
 <div class="reveal">
 <div class="slides"><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1134b961">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=458e8056">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="OpenAPI-&amp;-Modeling">OpenAPI &amp; Modeling<a class="anchor-link" href="#OpenAPI-&amp;-Modeling">¶</a></h1><p><a href="https://www.openapis.org/">OpenAPI</a> is a specification language
-for REST APIs that documents:</p>
+<h1 id="Service-Management">Service Management<a class="anchor-link" href="#Service-Management">¶</a></h1><p>Our <code>api.get_status</code> implementation always returns <code>200 OK</code>,
+but real world APIs return different kinds of errors.</p>
+<p>An interoperable API should:</p>
 <ul>
-<li>technical specifications</li>
-<li>metadata</li>
-<li>docs &amp; references</li>
+<li>fail fast, avoiding that application errors result in stuck connections;</li>
+<li>implement a clean error semantic.</li>
 </ul>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9b49b03a">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=43f7ebfb">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <hr/>
-<p>OpenAPI is driven by a <a href="https://www.openapis.org/">Foundation</a>
-under the Linux Foundation,
-participated by government &amp; companies
-(gov.uk, Microsoft, Google, Oracle, IBM, ..):</p>
+<p>A Service Management framework should
+set the following expectations:</p>
 <ul>
-<li>Driver for API adoption</li>
-<li>Evolution of Swagger 2.0</li>
-<li>Lightweight format: YAML or JSON</li>
-<li>Generates docs &amp; code via tools (e.g., <a href="https://editor.swagger.io">swagger-editor</a>)</li>
-<li>Allows reusable components via hyperlink (eg. <code>$ref</code>)</li>
+<li>if the Service is unavailable, we must return <code>503 Service Unavailable</code> http status</li>
+<li>we must return the <code>Retry-After</code> header specifying the number of seconds
+when to retry.</li>
 </ul>
 </div>
 </div>
 </div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=e5111923">
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=0bdede79">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<hr/>
-<p>Latest version is 3.2, and there's work ongoing on the 4.0.
-This workshop is based on 3.0, but the most significant
-changes in 3.1 and 4.0 are about the support of JSON Schema,
-so they don't affect the basics of API modeling.</p>
-<h2 id="OpenAPI-Editor">OpenAPI Editor<a class="anchor-link" href="#OpenAPI-Editor">¶</a></h2><p>Every OAS3 document begins with</p>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4c9743e2">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<div class="highlight"><pre><span></span><span class="nt">openapi</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.0.0</span>
+<div class="jp-Mermaid"><pre class="mermaid">
+
 </pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fe2e716c">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p><a href="https://editor.swagger.io/?url=https://raw.githubusercontent.com/teamdigitale/api-starter-kit/master/openapi/simple.yaml.src">Swagger Editor</a> is a simple webapp for editing OpenAPI 3 language specs.</p>
-<p>The Italian Govenment built a couple of tools that help implementing interoperable APIs
-(disclaimer: I authored the tools when I worked there):</p>
-<ul>
-<li><a href="https://italia.github.io/api-oas-checker/">OAS Checker</a>
-is a tool to check if your OAS3 respects the Italian API guidelines.</li>
-<li><a href="https://teamdigitale.github.io/dati-semantic-schema-editor/">Schema Editor</a> supports editing JSON Schema,
-with visual navigation.</li>
-</ul>
 </div>
 </div>
 </div>
 </div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=474ad067">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8521e109">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <hr/>
-<h2 id="Start-with-Metadata">Start with Metadata<a class="anchor-link" href="#Start-with-Metadata">¶</a></h2><p>In OAS we start by describing metadata, to clarify:</p>
-<ul>
-<li>API goals, audience and context;</li>
-<li>Terms of service;</li>
-<li>Versioning.</li>
-</ul>
-<p>This step ensures that:</p>
-<ul>
-<li>goal and audience are clear,
-and you can actually write a meaningful description of your service,
-of its boundaries and context of use;</li>
-<li>legal and organizational requirements are taken into account from the beginning
-(eg. terms of service, GDPR, etc.);</li>
-</ul>
-<p>The metadata is in the <code>info</code> section:</p>
+<p>title: Circuit Breaker pattern</p>
 </div>
 </div>
 </div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=3c413c58">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<div class="highlight"><pre><span></span><span class="nt">openapi</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.0.0</span>
-<span class="nt">info</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">"1.0.0"</span>
-<span class="w">  </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-<span class="w">    </span><span class="no">Write a short, clear name of your service.</span>
-<span class="w">  </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-<span class="w">    </span><span class="no">This field may contain the markdown documentation of the API,</span>
-<span class="w">    </span><span class="no">including references to other docs and examples.</span>
-<span class="w">  </span><span class="c1">#</span>
-<span class="w">  </span><span class="c1"># Legal references and terms of services.</span>
-<span class="w">  </span><span class="c1">#</span>
-<span class="w">  </span><span class="nt">termsOfService</span><span class="p">:</span><span class="w"> </span><span class="s">'http://swagger.io/terms/'</span>
-<span class="w">  </span><span class="nt">contact</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">email</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">robipolli@gmail.com</span>
-<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Roberto Polli</span>
-<span class="w">    </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://github.com/ioggstream</span>
-<span class="w">  </span><span class="nt">license</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Apache 2.0</span>
-<span class="w">    </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="s">'http://www.apache.org/licenses/LICENSE-2.0.html'</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c31b929b">
+</div></section></section><section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=e8903c42">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <hr/>
-<h2 id="OpenAPI-Metadata-exercise">OpenAPI Metadata exercise<a class="anchor-link" href="#OpenAPI-Metadata-exercise">¶</a></h2><ol>
-<li>open <a href="/edit/notebooks/oas3/ex-01-info.yaml">this incomplete OAS3 spec</a></li>
-</ol>
-<!-- (https://editor.swagger.io/?url=https://raw.githubusercontent.com/ioggstream/python-course/main/connexion-101/notebooks/oas3/ex-01-info.yaml). -->
+<p>graph LR</p>
+<p>A[Client] --&gt; B[API]
+B --&gt; C{Is the service available?}
+C -- Yes --&gt; D[Process request]
+C -- No --&gt; E[Return 503 with Retry-After header]</p>
+<pre><code></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=3c2b2524">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>To implement this we must:</p>
 <ol>
-<li><p>copy it to <a href="https://editor.swagger.io/">swagger editor</a></p>
-</li>
-<li><p>fix all errors and add the missing fields: no need to add all details for now.</p>
-</li>
-<li><p>describe the first API we're going to implement: a service which returns the current
-timestamp in <a href="https://tools.ietf.org/html/rfc5424#section-6.2.3">RFC5454</a>
-UTC (eg. <code>2019-01-01T00:00:00Z</code>).</p>
-</li>
-<li><p>provide contact informations and terms of services.</p>
-</li>
-<li><p>Feel free to add as many details as you want.</p>
-</li>
-<li><p>Save it back to your local notebook.</p>
-</li>
+<li>add the returned headers in the OAS3 interface;</li>
+<li>pass the headers to the flask Response</li>
 </ol>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4da0bbe0">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=75facdf6">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <hr/>
-<h3 id="Custom-fields">Custom fields<a class="anchor-link" href="#Custom-fields">¶</a></h3><p>Specific ecosystems may add custom OAS fields via the <code>x-</code> prefix.
-This should be done with care, to avoid clashes between different ecosystems.</p>
-<p>When using custom fields, consider prefixing them
-with a common namespace, eg. <code>x-acme-</code> to avoid clashes with other ecosystems.</p>
-<p>:warning: OAS 3.1 introduced the concept of extension
-fields: these should be "registered" and should not use
-the <code>x-</code> prefix. We won't go into these details during
-this course.</p>
-<p>To backport new fields from OAS3.1 to OAS3.0, you can use custom fields, eg. <code>x-summary</code> for the <code>summary</code> field.</p>
+<h3 id="Exercise">Exercise<a class="anchor-link" href="#Exercise">¶</a></h3><p>Modify the OAS3 spec in <a href="/edit/notebooks/oas3/ex-04-01-headers-ok.yaml">ex-04-01-headers.yaml</a> and:</p>
+<ul>
+<li>add a <code>503</code> response to the <code>/status</code> path;</li>
+<li>when a <code>503</code> is returned, the <code>retry-after</code> header is returned.</li>
+</ul>
 </div>
 </div>
 </div>
 </div></section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=efc84a8f">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=6a6535fb">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <hr/>
-<h4 id="Lifecycle-management">Lifecycle management<a class="anchor-link" href="#Lifecycle-management">¶</a></h4><p>An API ecosystem needs a way to publish core lifecycle events, such as deprecation and retirement.
-This allows users to have the time to adapt to changes</p>
-<p>HTTP provides a couple of standard headers for <code>Deprecation</code> and <code>Sunset</code>
-while most of the lifecycle management is left to the API providers.</p>
-<p><strong>x-api-id</strong> you may want to assign a time-persistend UUID to your API, so that you can change its <code>title</code> in the future.</p>
+<p>Hint: you can define a header in <code>components/headers</code> like that:</p>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=6755c6f9">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=48184bdb">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<div class="highlight"><pre><span></span><span class="nt">x-acme-api-id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">00000000-0000-0000-0000-000000000000</span>
+<div class="highlight"><pre><span></span><span class="nt">components</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">headers</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">Retry-After</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1943185d">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b8578dec">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Other custom fields could provide ecosystem-specific information,
-such as GDPR roles or geodata references.
-achine readable format</p>
+<ul>
+<li><pre><code>  Retry contacting the endpoint *at least* after seconds.
+  See https://tools.ietf.org/html/rfc7231#section-7.1.3</code></pre>
+schema:
+type: integer
+format: int32
+example: 30</li>
+</ul>
+<pre><code></code></pre>
 </div>
 </div>
 </div>
-</div></section></section><section><section>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=06ac2f91">
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=31025545">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <hr/>
-<h2 id="OpenAPI-Metadata-exercise:-2">OpenAPI Metadata exercise: 2<a class="anchor-link" href="#OpenAPI-Metadata-exercise:-2">¶</a></h2><ol>
-<li><p>open <a href="/edit/notebooks/oas3/ex-01-info.yaml">the previous OAS3 spec</a>.</p>
-</li>
-<li><p>copy its content in the <a href="https://editor.swagger.io">Swagger Editor Online</a> and try to use it.</p>
-</li>
-<li><p>provide further informations via custom fields: if you think of any interesting
-label, define them and comment properly using <code>#</code></p>
-</li>
-</ol>
-<h2 id="Feature-gap">Feature gap<a class="anchor-link" href="#Feature-gap">¶</a></h2><p>OAS 3 does not support the following features:</p>
+<p>Or just <code>$ref</code> the <code>Retry-After</code> defined in &lt;components.oas3.yaml#/components/headers/Retry-After&gt;</p>
+<p>Modify <a href="/edit/notebooks/oas3/api.py">api.py:get_status</a> such that:</p>
 <ul>
-<li>API lifecycle management (eg. sandboxing, deprecation, retirement, ..)</li>
-<li>TODO: Healthcheck metadata, but you can use custom fields for that, eg. <code>x-healthcheck</code>:
-it makes sense to provide specific healthcheck endpoints to avoid that users
-use custom queries that may end up in performance issues or false expectations.</li>
+<li>returns a <code>503</code> on 20% of the requests;</li>
+<li>when a <code>503</code> is returned, the <code>retry-after</code> header is returned;</li>
+<li>on each response, return the <code>Cache-Control: no-store</code> header to avoid
+caching on service status.</li>
 </ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=547b0c68">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
+<p>Bonus track: <a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching">Google post on HTTP caching</a></p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=a8bb9114">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">random</span><span class="w"> </span><span class="kn">import</span> <span class="n">randint</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">connexion</span><span class="w"> </span><span class="kn">import</span> <span class="n">problem</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">get_status</span><span class="p">():</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"Cache-Control"</span><span class="p">:</span> <span class="s2">"no-store"</span><span class="p">}</span>
+
+    <span class="n">p</span> <span class="o">=</span> <span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">p</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">problem</span><span class="p">(</span>
+            <span class="n">status</span><span class="o">=</span><span class="mi">503</span><span class="p">,</span>
+            <span class="n">title</span><span class="o">=</span><span class="s2">"Service Temporarily Unavailable"</span><span class="p">,</span>
+            <span class="n">detail</span><span class="o">=</span><span class="s2">"Retry after the number of seconds specified in the the Retry-After header."</span><span class="p">,</span>
+            <span class="n">headers</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="o">**</span><span class="n">headers</span><span class="p">,</span> <span class="o">**</span><span class="p">{</span><span class="s1">'Retry-After'</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="p">)})</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">problem</span><span class="p">(</span>
+        <span class="n">status</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">"OK"</span><span class="p">,</span>
+        <span class="n">detail</span><span class="o">=</span><span class="s2">"So far so good."</span><span class="p">,</span>
+        <span class="n">headers</span><span class="o">=</span><span class="n">headers</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d95235ef">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>--</p>
+<h2 id="Reusing-default-responses">Reusing default responses<a class="anchor-link" href="#Reusing-default-responses">¶</a></h2><p>As <code>503</code> is a quite recurring response, it's worth to define it in a reusable yaml file,
+so that every path can reuse it.</p>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9afa1666">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
+<h3 id="Exercise:-reusable-responses">Exercise: reusable responses<a class="anchor-link" href="#Exercise:-reusable-responses">¶</a></h3><p>In the following exercise you should edit <a href="/edit/notebooks/oas3/ex-04-01-headers-ok.yaml">ex-04-01-headers.yaml</a> and:</p>
+<ul>
+<li>move the <code>503</code> response from the <code>/status</code> path definition to the <code>components/responses</code> one, eg.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=5e78a7e2">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="highlight"><pre><span></span><span class="nt">components</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">responses</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">503ServiceUnavailable</span><span class="p">:</span>
+<span class="w">      </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=85bc00e3">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<ul>
+<li>reference <code>#/components/responses/503ServiceUnavailable</code> in the <code>/status</code> path</li>
+</ul>
+</div>
+</div>
+</div>
+</div></section><section>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d2526b19">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
+<p>Your new file is semantically equivalent to the previous one: check that you can
+<code>connexion run</code> your file in <a href="/terminals/connexion">terminal</a>!</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8a1922c4">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="highlight"><pre><span></span>connexion run /code/notebooks/oas3/ex-04-01-headers.yaml
+</pre></div>
 </div>
 </div>
 </div>
