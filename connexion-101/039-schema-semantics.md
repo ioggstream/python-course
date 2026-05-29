@@ -44,6 +44,33 @@ components:
 
 ----
 
+```mermaid
+graph
+
+subgraph PersonIT
+nome
+cognome
+end
+
+
+
+subgraph semantic-context
+Person((Person))
+givenName & familyName -.->|domain| Person
+end
+
+PersonIT -.->|is-a| Person
+PersonEN -.->|is-a| Person
+nome -.->|is-a| givenName
+cognome -.->|is-a| familyName
+name -.->|is-a| givenName
+surname -.->|is-a| familyName
+subgraph PersonEN
+name
+surname
+end
+```
+
 ### Why this matters
 
 - APIs from different organizations can share data without sharing schemas.

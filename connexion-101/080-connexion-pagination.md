@@ -1,4 +1,4 @@
-# Pagination and encapsulation:
+# Pagination and encapsulation
 
 In our standardization policy, we defined a common set of pagination parameters.
 
@@ -7,7 +7,12 @@ Moreover we stated that responses should always be enclosed in json objects, eg:
 * always return something that is extensible like
 
 ```http
-GET /timezones
+GET /timezones HTTP/1.1
+Host: 127.0.0.1
+
+
+HTTP/1.1 200 OK
+Content-Type: application/json
 
 {
  "entries": [ "you", "can", "always", "add", "new", "keys" ]
@@ -18,10 +23,21 @@ GET /timezones
 * don't return `string`, `number` or `array`, because
 
 ```http
-GET /dont-do-this
+GET /dont-do-this HTTP/1.1
+Host: 127.0.0.1
+Content-Type: application/json
 
-[ "you can't", "extend them"]
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+ "you can't",
+ "extend them"
+]
+
 ```
+
 
 ---
 

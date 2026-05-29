@@ -15,7 +15,7 @@ participated by government & companies
 (gov.uk, Microsoft, Google, Oracle, IBM, ..):
 
 - Driver for API adoption
-- Evolution of Swagger 2.0
+- ~Evolution of Swagger 2.0~
 - Lightweight format: YAML or JSON
 - Generates docs & code via tools (e.g., [swagger-editor](https://editor.swagger.io))
 - Allows reusable components via hyperlink (eg. `$ref`)
@@ -27,6 +27,7 @@ This workshop is based on 3.0, but the most significant
 changes in 3.1 and 4.0 are about the support of JSON Schema,
 so they don't affect the basics of API modeling.
 
+---
 
 ## OpenAPI Editor
 
@@ -36,7 +37,7 @@ Every OAS3 document begins with
 openapi: 3.0.0
 ```
 
-[Swagger Editor](https://editor.swagger.io/?url=https://raw.githubusercontent.com/teamdigitale/api-starter-kit/master/openapi/simple.yaml.src) is a simple webapp for editing OpenAPI 3 language specs.
+[Swagger Editor](https://editor.swagger.io/?url=https://raw.githubusercontent.com/teamdigitale/api-starter-kit/master/openapi/simple.yaml.src) is a simple webapp for editing OAS3 language specs.
 
 The Italian Govenment built a couple of tools that help implementing interoperable APIs
 (disclaimer: I authored the tools when I worked there):
@@ -108,7 +109,7 @@ info:
 
 1. Feel free to add as many details as you want.
 
-1. Save it back to your local notebook.
+1. Save it back to your local notebook' `openapi.yaml`.
 
 ----
 
@@ -151,9 +152,9 @@ achine readable format
 
 ## OpenAPI Metadata exercise: 2
 
-1. open [the previous OAS3 spec](/edit/notebooks/oas3/ex-01-info.yaml).
+1. open the previous OAS3 spec [ex-01-info](/edit/notebooks/oas3/ex-01-info.yaml).
 
-1. copy its content in the [Swagger Editor Online](https://editor.swagger.io) and try to use it.
+1. copy its content in the [Swagger Editor Online](https://editor.swagger.io) and look for issues.
 
 1. provide further informations via custom fields: if you think of any interesting
    label, define them and comment properly using `#`

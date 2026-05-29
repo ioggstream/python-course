@@ -1,4 +1,3 @@
-docker-py
 ipython
 jsonschema
 jupyter
@@ -8,6 +7,7 @@ pyyaml
 pyzmq
 simplejson
 pytest
+httpie
 
 # jupyter tools
 nbstripout
