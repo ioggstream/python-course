@@ -12,6 +12,10 @@ for country-wide contexts.
 
 ---
 
+**Interoperability** is the ability of organizations to interact towards mutually beneficial goals.
+
+---
+
 In particular, this is based on the Italian public administration context, which includes:
 
 - 20 Regions
@@ -25,11 +29,11 @@ In particular, this is based on the Italian public administration context, which
 
 An API ecosystem starts with communication requirements such as:
 
-- Reliability & Security (e.g., CIA triad: Confidentiality, Integrity and Availability)
-- Consistent Design & Schema Standardization
+- Security (e.g., CIA triad: Confidentiality, Integrity and Availability)
+- Accessibility, Reliability & Efficiency (Discoverability, Completeness, Accuracy, Timeliness, etc.)
 
 ```mermaid
-graph
+graph LR
 
 subgraph Security
     Confidentiality
@@ -38,10 +42,16 @@ subgraph Security
 end
 
 subgraph Interoperability
-    Standardization
-    Consistent-Design
-    Discoverability[Discoverability & Catalogs]
+  subgraph pad[ ]
+      Accessibility
+      Reliability
+      Efficiency
+  end
+  Security
 end
+
+classDef pad stroke: none;
+class pad pad;
 ```
 
 ----
@@ -49,12 +59,20 @@ end
 Basic standardization features to support these requirements include:
 
 - API-first/Contract-first approach, with documentation and interface description as a first class citizen;
-
-- Catalogs for API and Data schemas;
-
+- Catalogs for API and for Data schemas;
 - Standardization of data formats, including dates and log timestamping format;
-
 - Availability strategy based on a distributed circuit-breaker and throttling patterns;
+
+```mermaid
+graph LR
+
+subgraph tools[Interoperability Instruments]
+  Standards
+  Documentation
+  Catalogs
+  SM[Service Management]
+end
+```
 
 <!-- Let's see how to manage such requirements -->
 ---
@@ -116,6 +134,16 @@ HTTP messages are composed by:
 - headers (includes metadata about the representation, such as content type, content language, content encoding, etc.)
 - an optional content
 
+```mermaid
+graph
+subgraph HTTP Message
+sl[Request/Status Line]
+h[Header Fields]
+c[Content]
+t[Trailer Fields]
+end
+
+```
 ----
 
 
@@ -184,18 +212,20 @@ WWW-Authenticate: Bearer
 
 ----
 
-TODO: http ongoing work on API description:
+## IETF is improving API standard features
+
+<https://httpwg.org/>
 
 - Integrity: Digest, HTTP Signatures, Unencoded Digest, etc.
 - Discovery: Link header
-- Error handling: Problem Details for HTTP APIs
 - Security: QUERY method
 - Efficiency: Resumable uploads
 
 <https://datatracker.ietf.org/wg/httpapi/about/>
 
+- Error handling: Problem Details for HTTP APIs
 - lifecycle: Deprecation, Sunset, etc.
-- catalog: RFC 9727
+- API catalogs: RFC 9727
 - YAML media type
 
 ---
